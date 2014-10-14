@@ -1,0 +1,25 @@
+
+<% if @item.errors.any? %>
+  <div id="error_expl" class="panel panel-danger">
+    <div class="panel-heading">
+      <h3 class="panel-title"><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h3>
+    </div>
+    <div class="panel-body">
+      <ul>
+      <% @item.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
+<%= f.input :title, as: :string %>
+
+<%= f.input :description, as: :text %>
+
+<%= f.input :image, as: :file %>
+
+<%= submit_tag 'Save', :class => 'btn btn-primary' %>
+<%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+          collection_items_path(@item.collection), :class => 'btn btn-default' %>
