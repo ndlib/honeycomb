@@ -141,6 +141,7 @@ GEM
     minitest (5.4.2)
     multi_json (1.10.1)
     mysql2 (0.3.16)
+    net-ldap (0.3.1)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -286,6 +287,7 @@ DEPENDENCIES
   jquery-fileupload-rails
   jquery-rails
   mysql2
+  net-ldap
   newrelic_rpm
   paperclip
   pry
