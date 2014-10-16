@@ -14,10 +14,12 @@ module ItemAdmin
       Rails.root.join('app', 'queries'),
       Rails.root.join('app', 'decorators'),
       Rails.root.join('app', 'services'),
-    ]
+      ]
     additional_autoload_directories.each do |directory|
-      config.autoload_paths += Dir[directory]
-      config.autoload_paths += Dir[File.join(directory, '{**}')].find_all { |f| File.stat(f).directory? }
+      config.autoload_paths += %W(#{config.root}/extras)
+      config.autoload_paths += Dir[Rails.root.join('lib', '{**}')]
+      config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
+      config.autoload_paths += Dir[Rails.root.join('app', 'controllers', '{**}')]
     end
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -30,7 +32,13 @@ module ItemAdmin
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
-
+    # Custom configs
+    config.honeycomb_ldap_host = 'directory.nd.edu'
+    config.honeycomb_ldap_port = 636
+    config.honeycomb_ldap_base = 'o=University of Notre Dame,st=Indiana,c=US'
+    config.honeycomb_ldap_service_dn = 'ndGuid=nd.edu.nddk4kq4,ou=objects,o=University of Notre Dame,st=Indiana,c=US'
+    config.honeycomb_ldap_service_password = 'zfkpqns8'
+    config.honeycomb_ldap_attrs = [ 'uid', 'givenname', 'sn', 'ndvanityname', 'nddepartment' ]
 
 
   end

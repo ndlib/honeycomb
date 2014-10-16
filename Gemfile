@@ -45,6 +45,8 @@ gem "rb-readline"
 gem 'devise'
 gem 'devise_cas_authenticatable'
 
+# LDAP lookups
+gem 'net-ldap'
 
 # Server monitoring
 gem 'newrelic_rpm'

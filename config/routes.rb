@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  devise_for :users
+  
   resources :collections do
     resources :items
     resources :items_uploads
