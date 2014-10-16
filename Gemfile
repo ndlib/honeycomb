@@ -42,6 +42,8 @@ gem 'draper'
 
 gem "rb-readline"
 
+# authentication
+gem 'rubycas-client'
 gem 'devise'
 gem 'devise_cas_authenticatable'
 
