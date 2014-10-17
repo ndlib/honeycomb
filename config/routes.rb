@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  devise_for :users
+  devise_for :users, controllers: { cas_sessions: 'simple_cas' }
+
+  root :to => 'collections#index'
   
   resources :collections do
     resources :items
