@@ -31,7 +31,6 @@ class ItemsController < ApplicationController
     end
   end
 
-
   def edit
     @item = collection.items.find(params[:id])
   end
