@@ -17,8 +17,6 @@ class SaveItem
 
     verify_title
 
-    puts item.valid?
-    puts item.errors.inspect
     item.save
   end
 
