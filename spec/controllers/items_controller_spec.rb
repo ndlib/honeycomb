@@ -6,6 +6,11 @@ RSpec.describe ItemsController, :type => :controller do
 
   before(:each) do
     Collection.stub(:find).and_return(collection)
+
+    @user = User.new(username: 'jhartzle')
+    @user.save!
+
+    sign_in @user
   end
 
   describe "GET #index" do
@@ -15,10 +20,6 @@ RSpec.describe ItemsController, :type => :controller do
 
       expect(response).to be_success
       expect(response).to have_http_status(200)
-    end
-
-    it "renders the index template" do
-      get :index, collection_id: collection.id
       expect(response).to render_template("index")
     end
 
@@ -37,12 +38,6 @@ RSpec.describe ItemsController, :type => :controller do
       get :new, collection_id: collection.id
       expect(response).to be_success
       expect(response).to have_http_status(200)
-    end
-
-    it "renders the new template" do
-      expect(collection.items).to receive(:build).and_return(item)
-
-      get :new, collection_id: collection.id
       expect(response).to render_template("new")
     end
 
@@ -94,10 +89,6 @@ RSpec.describe ItemsController, :type => :controller do
       get :edit, id: 1, collection_id: collection.id
       expect(response).to be_success
       expect(response).to have_http_status(200)
-    end
-
-    it "renders the new template" do
-      get :edit, id: 1, collection_id: collection.id
       expect(response).to render_template("edit")
     end
 
