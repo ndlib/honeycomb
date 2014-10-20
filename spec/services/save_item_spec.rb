@@ -20,28 +20,31 @@ RSpec.describe SaveItem, type: :model do
     subject
   end
 
-  it "sets the title to be the uploaded filename when the item is a new record?" do
-    expect(item).to receive(:new_record?).and_return(true)
-    expect(item).to receive(:title).and_return("")
-    expect(item).to receive(:image_file_name).and_return("filename")
-    expect(item).to receive("title=").with('filename')
+  context "no title on a new record" do
+    let(:item) { double(Item, "attributes=" => true, save: true, new_record?: true, image_file_name: 'filename', title: '' )}
 
-    subject
+    it "sets the title to be the uploaded filename when the item is a new record?" do
+      expect(item).to receive("title=").with('filename')
+
+      subject
+    end
   end
 
-  it "uses the existing title if it has a title " do
-    expect(item).to receive(:new_record?).and_return(true)
-    expect(item).to receive(:title).and_return("title")
+  context "existing title on a new record" do
+    let(:item) { double(Item, "attributes=" => true, save: true, new_record?: true, title: 'title ' )}
 
-    expect(item).to_not receive("title=")
-
-    subject
+    it "does not set the title to the uploaded file name" do
+      expect(item).to_not receive("title=").with('filename')
+      subject
+    end
   end
 
+  context "not a new record" do
 
-  it "does not set the title when it is not a new record " do
-    expect(item).to_not receive("title=")
+    it "does not set the title when it is not a new record " do
+      expect(item).to_not receive("title=")
 
-    subject
+      subject
+    end
   end
 end
