@@ -35,6 +35,7 @@ gem 'jquery-datatables-rails', '~> 2.2.3'
 
 
 gem "hesburgh_infrastructure", git: 'git@git.library.nd.edu:hesburgh_infrastructure'
+gem "hesburgh_api", git: 'git@git.library.nd.edu:hesburgh_api'
 
 gem 'simple_form', '~> 3.1.0rc1'
 
@@ -48,8 +49,6 @@ gem "rb-readline"
 gem 'devise'
 gem 'devise_cas_authenticatable'
 
-# LDAP lookups
-gem 'net-ldap'
 
 # Server monitoring
 gem 'newrelic_rpm'

@@ -1,0 +1,14 @@
+development:
+#  token: discover
+#  url: http://localhost:3005
+  token: 4N7mjqZLgospCNgc7YXS
+  url: https://apipprd.library.nd.edu
+test:
+  token: qtyZ5f6GrM67WWteGFp1
+  url: http://localhost:3005
+pre_production:
+  token: 4N7mjqZLgospCNgc7YXS
+  url: https://apipprd.library.nd.edu
+production:
+  token: QmwbTAXxp8RW7VqrB18V
+  url: https://api.library.nd.edu

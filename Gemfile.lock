@@ -1,4 +1,12 @@
 GIT
+  remote: git@git.library.nd.edu:hesburgh_api
+  revision: 312e4200d01dc3726e069432e15fc8a8d9d14da6
+  specs:
+    hesburgh_api (0.0.1)
+      faraday
+      rails (~> 4.0)
+
+GIT
   remote: git@git.library.nd.edu:hesburgh_infrastructure
   revision: be6d6aea79dfc32d343b072d847a87b26e617963
   specs:
@@ -88,6 +96,8 @@ GEM
     execjs (2.2.2)
     faker (1.4.3)
       i18n (~> 0.5)
+    faraday (0.9.0)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.6)
     formatador (0.2.5)
     growl (1.0.3)
@@ -143,8 +153,8 @@ GEM
     mini_portile (0.6.0)
     minitest (5.4.2)
     multi_json (1.10.1)
+    multipart-post (2.0.0)
     mysql2 (0.3.16)
-    net-ldap (0.8.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -291,12 +301,12 @@ DEPENDENCIES
   guard-rails
   guard-rspec
   guard-spring
+  hesburgh_api!
   hesburgh_infrastructure!
   jbuilder (~> 2.0)
   jquery-datatables-rails (~> 2.2.3)
   jquery-rails
   mysql2
-  net-ldap
   newrelic_rpm
   paper_trail (~> 3.0.6)
   paperclip
