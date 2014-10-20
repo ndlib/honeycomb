@@ -1,0 +1,15 @@
+<% content_for(:content_title) do %>
+  <div class="page-header"><h1>Edit <%= @user.display_name %></h1></div>
+<% end %>
+<div>
+<p>Select the collections this user should curate. </p>
+</div>
+<%= simple_form_for @user do | f | %>
+<%= f.error_notification %>
+<%= f.input :admin, :label => "Admin Rights:"%>
+
+  <div class="form-actions">
+    <%= f.submit :submit, :value=> 'Save', :class => 'btn btn-primary'%>
+    <%= link_to 'cancel', users_path %>
+  </div>
+<% end %>

@@ -1,0 +1,7 @@
+<%= f.error_notification %>
+<%= f.input :username, :label => "NetID"%>
+
+  <div class="form-actions">
+    <%= f.submit :submit, :value=> 'Save', :class => 'btn btn-primary'%>
+    <%= link_to 'cancel', users_path %>
+  </div>
