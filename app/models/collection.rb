@@ -3,8 +3,4 @@ class Collection < ActiveRecord::Base
 
   validates :title, presence: true
 
-
-  def new_item
-    items.build
-  end
 end

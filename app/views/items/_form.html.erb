@@ -16,10 +16,14 @@
 
 <%= f.input :title, as: :string %>
 
-<%= f.input :description, as: :text %>
+<%= f.input :description, as: :text do %>
+  <%= f.text_area :description, class: 'text optional form-control', rows: '3' %>
+<% end %>
 
 <%= f.input :image, as: :file %>
 
-<%= submit_tag 'Save', :class => 'btn btn-primary' %>
+
+<%= f.button :submit, "Save", class: 'btn btn-primary'%>
 <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-          collection_items_path(@item.collection), :class => 'btn btn-default' %>
+        collection_items_path(@item.collection), :class => 'btn btn-default' %>
+
