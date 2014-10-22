@@ -24,7 +24,6 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring',        group: :development
 
 gem "therubyracer"
 
@@ -61,14 +60,15 @@ group :development, :test do
   gem "rspec-collection_matchers"
   gem "capybara"
   gem "faker"
+  gem 'spring'
+  gem "spring-commands-rspec"
 
   gem "guard"
   gem "guard-bundler"
   gem "guard-coffeescript"
   gem "guard-rails"
   gem "guard-rspec"
-  gem "guard-spork"
-  gem "spork", "1.0.0rc4"
+  gem "guard-spring"
   gem "growl"
 end
 
