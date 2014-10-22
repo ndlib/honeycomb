@@ -1,4 +1,4 @@
-->
-  Dropzone.options.fileupload =
-    paramName: "item[image]"
+Dropzone.options.fileupload =
+  paramName: "item[image]"
+  acceptedFiles: 'image/*'
 

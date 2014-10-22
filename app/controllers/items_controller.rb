@@ -17,14 +17,12 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
 
-      puts params.inspect
       if SaveItem.call(@item, save_params)
-        @item = ItemJqueryUploadResponseDecorator.new(@item)
 
         flash[:notice] = t(:default_create_success_message)
 
         format.html { redirect_to collection_items_path(@item.collection) }
-        format.json { render json: {files: [@item.to_json]}, status: :created, location: collection_item_path(@item.collection, @item.id) }
+        format.json { render json: @item }
       else
         format.html { render action: "new" }
         format.json { render json: @item.errors, status: :unprocessable_entity }
