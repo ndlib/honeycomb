@@ -20,6 +20,13 @@ RSpec.describe SaveItem, type: :model do
     subject
   end
 
+  it "removes the image from the params if the image param is nil" do
+    params[:image] = nil
+    expect(params).to receive(:delete).with(:image)
+
+    subject
+  end
+
   context "no title on a new record" do
     let(:item) { double(Item, "attributes=" => true, save: true, new_record?: true, image_file_name: 'filename', title: '' )}
 

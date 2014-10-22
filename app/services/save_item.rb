@@ -13,6 +13,8 @@ class SaveItem
 
 
   def save
+    fix_image_param!
+
     item.attributes = params
 
     verify_title
@@ -27,5 +29,9 @@ class SaveItem
       if item.new_record? && item.title.blank?
         item.title = item.image_file_name
       end
+    end
+
+    def fix_image_param!
+      params.delete(:image) if params[:image].nil?
     end
 end
