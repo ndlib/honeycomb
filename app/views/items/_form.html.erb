@@ -20,10 +20,24 @@
   <%= f.text_area :description, class: 'text optional form-control', rows: '3' %>
 <% end %>
 
-<%= f.input :image, as: :file %>
+
+<%= f.input :image, as: :file do %>
+  <div class="dropzone">
+
+  <div class="fallback">
+    <%= f.file_field :image %>
+  </div>
+</div>
+<% end %>
 
 
 <%= f.button :submit, "Save", class: 'btn btn-primary'%>
 <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
         collection_items_path(@item.collection), :class => 'btn btn-default' %>
 
+
+  <% if f.object.image.present? %>
+    <div class="item-form-image">
+      <%= image_tag(f.object.image.to_s, width: '300') %>
+    </div>
+  <% end %>

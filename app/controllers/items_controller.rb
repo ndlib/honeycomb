@@ -17,6 +17,7 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
 
+      puts params.inspect
       if SaveItem.call(@item, save_params)
         @item = ItemJqueryUploadResponseDecorator.new(@item)
 

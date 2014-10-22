@@ -1,7 +1,7 @@
 class ItemsUploadsController < ApplicationController
 
   def new
-
+    @item = collection.items.build
   end
 
 

@@ -4,7 +4,7 @@
 </div>
 
 <section>
-<%= simple_form_for @item, html: { :class => "item" }, url: collection_items_path(@item.collection, @item) do |f| %>
-  <%= render :partial => 'multi_upload_form', locals: { f: f } %>
+<%= simple_form_for @item, html: { :class => "item dropzone" }, url: collection_items_path(@item.collection, @item) do |f| %>
+  <%= render :partial => 'form', locals: { f: f } %>
 <% end %>
 </section>
