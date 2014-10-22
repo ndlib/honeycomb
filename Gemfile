@@ -27,7 +27,10 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem "therubyracer"
-gem "twitter-bootstrap-rails"
+
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'
+
 gem 'jquery-fileupload-rails'
 gem 'paperclip'
 gem 'jquery-datatables-rails', '~> 2.2.3'
@@ -36,7 +39,7 @@ gem 'jquery-datatables-rails', '~> 2.2.3'
 
 gem "hesburgh_infrastructure", git: 'git@git.library.nd.edu:hesburgh_infrastructure'
 
-gem 'simple_form'
+gem 'simple_form', '~> 3.1.0rc1'
 
 gem 'draper'
 

@@ -10,8 +10,12 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
- *= require jquery.fileupload-ui
- *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
  *= require_self
  */
+
+@import "bootstrap-sprockets"
+@import "bootstrap"
+@import "bootstrap_and_overrides"
+@import "dataTables/bootstrap/3/jquery.dataTables.bootstrap"
+
+@import "jquery.fileupload-ui"

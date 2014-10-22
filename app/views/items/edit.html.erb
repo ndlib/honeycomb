@@ -3,6 +3,6 @@
   <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize %></h1>
 </div>
 
-<%= simple_form_for @item, html: { :class => "form-horizontal item" }, url: collection_item_path(@item.collection, @item) do |f| %>
+<%= simple_form_for @item, html: { :class => "item" }, url: collection_item_path(@item.collection, @item) do |f| %>
   <%= render :partial => 'form', locals: { f: f } %>
 <% end %>
