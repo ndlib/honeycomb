@@ -1,5 +1,7 @@
 class ItemsController < ApplicationController
 
+  helper_method :collection
+
   def index
     @items = collection.items
   end

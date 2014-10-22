@@ -45,10 +45,12 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">ItemAdmin</a>
+        <%= link_to "Honeycomb", collections_path(), class: 'navbar-brand' %>
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           <ul class="nav navbar-nav">
-            <li><%= link_to "Collections", collections_path  %></li>
+            <% top_nav_links.each do | link | %>
+              <li><%= link %></li>
+            <% end %>
           </ul>
         </div>
       </div>

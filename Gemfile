@@ -31,10 +31,8 @@ gem "therubyracer"
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 
-gem 'jquery-fileupload-rails'
 gem 'paperclip'
 gem 'jquery-datatables-rails', '~> 2.2.3'
-
 
 
 gem "hesburgh_infrastructure", git: 'git@git.library.nd.edu:hesburgh_infrastructure'
