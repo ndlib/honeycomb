@@ -15,4 +15,6 @@
 /log/*.log
 /tmp
 /public/system/*
-/vendor/bundle/
+/vendor/bundle
+/ssi/*
+/public/assets

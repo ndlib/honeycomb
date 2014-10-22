@@ -19,14 +19,18 @@ hesburgh_guard.rails do
   # Watch any custom paths
 end
 
-# Intelligently start/reload your RSpec Drb spork server
-# https://github.com/guard/guard-spork
-hesburgh_guard.spork do
-  # Watch any custom paths
-end
-
 # Automatically run your specs
 # https://github.com/guard/guard-rspec
 hesburgh_guard.rspec do
   # Watch any custom paths
+end
+
+guard 'spring', :rspec_cli => '--color' do
+  watch(%r{^spec/.+_spec\.rb$})
+  watch(%r{^spec/spec_helper\.rb$})                   { |m| 'spec' }
+  watch(%r{^app/(.+)\.rb$})                           { |m| "spec/#{m[1]}_spec.rb" }
+  watch(%r{^lib/(.+)\.rb$})                           { |m| "spec/lib/#{m[1]}_spec.rb" }
+  watch(%r{^app/controllers/(.+)_(controller)\.rb$})  do |m|
+    %W(spec/routing/#{m[1]}_routing_spec.rb spec/#{m[2]}s/#{m[1]}_#{m[2]}_spec.rb spec/requests/#{m[1]}_spec.rb)
+  end
 end
