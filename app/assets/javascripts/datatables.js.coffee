@@ -3,13 +3,14 @@ ItemDataTablesIndexes =
   updatedAt: 1
   updatedAtTimestamps: 2
   editFields: 3
+  sortableTitle: 4
 
 class ItemDataTable
   constructor: (@tableElement) ->
     @filterDescriptions = []
     if @tableElement.length > 0
       @setupTable()
-      #@setupFilters()
+      @setupFilters()
       #@setupForm()
 
   setupTable: ->
@@ -36,6 +37,12 @@ class ItemDataTable
         targets: ItemDataTablesIndexes['editFields']
         sortable: false
         searchable: false
+      ,
+        targets: ItemDataTablesIndexes['title']
+        orderData: [ItemDataTablesIndexes['sortableTitle']]
+      ,
+        targets: ItemDataTablesIndexes['sortableTitle']
+        visible: false
       ]
     )
 

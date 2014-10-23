@@ -18,6 +18,7 @@ class SaveItem
     item.attributes = params
 
     verify_title
+    set_sortable_title
 
     item.save
   end
@@ -33,5 +34,9 @@ class SaveItem
 
     def fix_image_param!
       params.delete(:image) if params[:image].nil?
+    end
+
+    def set_sortable_title
+      item.sortable_title = SortableTitleConverter.convert(item.title)
     end
 end

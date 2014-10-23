@@ -40,6 +40,9 @@ gem 'simple_form', '~> 3.1.0rc1'
 
 gem 'draper'
 
+# used to normaize the characters in a title sort
+gem 'sort_alphabetical'
+
 gem "rb-readline"
 
 gem 'devise'

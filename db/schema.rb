@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141023195502) do
+ActiveRecord::Schema.define(version: 20141023200258) do
 
   create_table "collections", force: true do |t|
     t.string   "title"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20141023195502) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.text     "sortable_title"
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree

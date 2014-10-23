@@ -7,11 +7,13 @@
     <div class="fallback">
       <%= f.file_field :image %>
     </div>
+
+    <%= link_to 'I am done uploading new items', collection_items_path(@item.collection), class: 'btn btn-large btn-primary' %>
   <% end %>
   </div>
   <div class="row">
     <div class=".col-xs-12">
-      <%= link_to 'Done', collection_items_path(@item.collection), class: 'btn btn-default' %>
+
     </div>
   </div>
 </div>

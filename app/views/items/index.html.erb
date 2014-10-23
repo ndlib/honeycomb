@@ -9,6 +9,7 @@
       <th>Last Modified</th>
       <th>Last Modified Timestamp</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      <th>Sortable Title</th>
     </tr>
   </thead>
   <tbody>
@@ -37,6 +38,9 @@
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure you want to delete this item?')) },
                       :class => 'btn btn-xs btn-danger' %>
+        </td>
+        <td>
+          <%= item.sortable_title %>
         </td>
       </tr>
     <% end %>
