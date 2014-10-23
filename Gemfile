@@ -51,6 +51,7 @@ gem 'net-ldap'
 # Server monitoring
 gem 'newrelic_rpm'
 
+gem 'paper_trail', '~> 3.0.6'
 
 group :development, :test do
   gem "pry"
