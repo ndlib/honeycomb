@@ -32,6 +32,10 @@ class ItemDataTable
         sortable: false
         searchable: false
         visible: false
+      ,
+        targets: ItemDataTablesIndexes['editFields']
+        sortable: false
+        searchable: false
       ]
     )
 
