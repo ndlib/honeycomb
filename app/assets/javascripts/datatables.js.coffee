@@ -19,6 +19,7 @@ class ItemDataTable
       object.infoCallback(settings, start, end, max, total, pre)
 
     @table = @tableElement.DataTable(
+      dom: "ftlpi",
       lengthChange: false
       deferRender: true
       pageLength: 100
@@ -45,6 +46,13 @@ class ItemDataTable
         visible: false
       ]
     )
+
+    @container = @tableElement.parent()
+    @filterContainer = @container.find('.dataTables_filter')
+
+  setupFilters: ->
+    object = @
+    @filterContainer.addClass('well').addClass('well-small')
 
   infoCallback: (settings, start, end, max, total, pre) ->
     if end == 0
