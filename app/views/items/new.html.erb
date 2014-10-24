@@ -3,17 +3,13 @@
 </div>
 <div class="container">
   <div class="row">
+    <%= link_to 'Back to Collection', collection_items_path(@item.collection), class: 'btn btn-large' %>
+  </div>
+  <div class="row">
   <%= form_for [@item.collection, @item], :html => { class: 'dropzone', :multipart => true, :id => "fileupload"  } do |f| %>
     <div class="fallback">
       <%= f.file_field :image %>
     </div>
-
-    <%= link_to 'I am done uploading new items', collection_items_path(@item.collection), class: 'btn btn-large btn-primary' %>
   <% end %>
-  </div>
-  <div class="row">
-    <div class=".col-xs-12">
-
-    </div>
   </div>
 </div>
