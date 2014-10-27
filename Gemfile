@@ -69,9 +69,11 @@ group :development, :test do
   gem "guard-coffeescript"
   gem "guard-rails"
   gem "guard-rspec"
-  gem "guard-spork"
+  gem "guard-spring"
   gem "spork", "1.0.0rc4"
   gem "growl"
+  gem "growl_notify"
+  gem "growl-rspec"
 end
 
 

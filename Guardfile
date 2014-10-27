@@ -13,20 +13,12 @@ hesburgh_guard.bundler gemspec: false do
   # Watch any custom paths
 end
 
-# Automatically start/restart your Rails development server
-# https://github.com/ranmocy/guard-rails
+# Spring used for preloading application
+# https://github.com/guard/guard-spring
+hesburgh_guard.spring do
+  # Watch any custom paths
+end
+
 hesburgh_guard.rails do
-  # Watch any custom paths
-end
-
-# Intelligently start/reload your RSpec Drb spork server
-# https://github.com/guard/guard-spork
-hesburgh_guard.spork do
-  # Watch any custom paths
-end
-
-# Automatically run your specs
-# https://github.com/guard/guard-rspec
-hesburgh_guard.rspec do
   # Watch any custom paths
 end
