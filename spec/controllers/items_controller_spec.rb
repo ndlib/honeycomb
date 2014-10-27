@@ -1,11 +1,17 @@
 require "rails_helper"
 
 RSpec.describe ItemsController, :type => :controller do
-  let(:item) { double(Item, id: 1, title: 'title', collection: double(Collection, id: 1, title: 'title')) }
-  let(:collection) { double(Collection, id: 1, title: 'title', items: [ item ]) }
+  let(:item) { double(Item) }
+  let(:collection) { double(Collection) }
 
   before(:each) do
-    Collection.stub(:find).and_return(collection)
+    allow(collection).to receive(:id).and_return(1)
+    allow(collection).to receive(:title).and_return('title')
+    allow(collection).to receive(:items).and_return([ item ])
+    allow(item).to receive(:id).and_return(1)
+    allow(item).to receive(:title).and_return('title')
+    allow(item).to receive(:collection).and_return(collection)
+    allow(Collection).to receive(:find).and_return(collection)
 
     @user = User.new(username: 'jhartzle')
     @user.save!
@@ -33,7 +39,7 @@ RSpec.describe ItemsController, :type => :controller do
   describe "GET #new" do
 
     it "returns a 200" do
-      expect(collection.items).to receive(:build).and_return(item)
+      allow(collection.items).to receive(:build).and_return(item)
 
       get :new, collection_id: collection.id
       expect(response).to be_success
@@ -52,7 +58,7 @@ RSpec.describe ItemsController, :type => :controller do
     let(:valid_params) { {collection_id: collection.id, item: { title: 'title' }} }
 
     before(:each) do
-      collection.items.stub(:build).and_return(item)
+      expect(collection.items).to receive(:build).and_return(item)
     end
 
     it "redirects on success" do
@@ -74,16 +80,12 @@ RSpec.describe ItemsController, :type => :controller do
     it "creates a blank new item" do
       expect(SaveItem).to receive(:call).and_return(true)
 
-      expect(collection.items).to receive(:build).and_return(item)
       post :create, valid_params
     end
   end
 
 
   describe "GET #edit" do
-    before(:each) do
-      collection.items.stub(:find).and_return(item)
-    end
 
     it "returns a 200" do
       get :edit, id: 1, collection_id: collection.id
@@ -93,7 +95,7 @@ RSpec.describe ItemsController, :type => :controller do
     end
 
     it "finds an existing item " do
-      expect(collection.items).to receive(:find).with("1")
+      expect(collection.items).to receive(:find).with("1").and_return(item)
       get :edit, id: 1, collection_id: collection.id
     end
   end
@@ -103,7 +105,7 @@ RSpec.describe ItemsController, :type => :controller do
     let(:valid_params) { {id: 1, collection_id: collection.id, item: { title: 'title' }} }
 
     before(:each) do
-      collection.items.stub(:find).and_return(item)
+      expect(collection.items).to receive(:find).and_return(item)
     end
 
     it "redirects on success" do
@@ -125,7 +127,6 @@ RSpec.describe ItemsController, :type => :controller do
     it "creates a blank new item" do
       expect(SaveItem).to receive(:call).and_return(true)
 
-      expect(collection.items).to receive(:find).with("1")
       put :update, valid_params
     end
   end
@@ -134,7 +135,7 @@ RSpec.describe ItemsController, :type => :controller do
   describe "DELETE #destroy" do
 
     before(:each) do
-      collection.items.stub(:find).and_return(item)
+      expect(collection.items).to receive(:find).and_return(item)
     end
 
     it "calls destroy on the item on success, redirects, and flashes " do
