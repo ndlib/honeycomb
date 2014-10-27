@@ -5,12 +5,10 @@ class SaveItem
     new(item, params).save
   end
 
-
   def initialize(item, params)
     @params = params
     @item = item
   end
-
 
   def save
     fix_image_param!
@@ -22,7 +20,6 @@ class SaveItem
 
     item.save
   end
-
 
   private
 

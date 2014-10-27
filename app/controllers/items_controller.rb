@@ -18,7 +18,6 @@ class ItemsController < ApplicationController
     @item = collection.items.build
 
     respond_to do |format|
-
       if SaveItem.call(@item, save_params)
 
         flash[:notice] = t(:default_create_success_message)
@@ -39,11 +38,16 @@ class ItemsController < ApplicationController
   def update
     @item = collection.items.find(params[:id])
 
-    if SaveItem.call(@item, save_params)
-      flash[:notice] = t(:default_update_success_message)
-      redirect_to collection_items_path(@item.collection)
-    else
-      render :edit
+    respond_to do |format|
+      if SaveItem.call(@item, save_params)
+        flash[:notice] = t(:default_update_success_message)
+
+        format.html { redirect_to collection_items_path(@item.collection) }
+        format.json { render json: @item }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @item.errors, status: :unprocessable_entity }
+      end
     end
   end
 
