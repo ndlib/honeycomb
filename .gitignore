@@ -7,6 +7,9 @@
 # Ignore bundler config.
 /.bundle
 
+# Ignore direnv config
+/.envrc
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
