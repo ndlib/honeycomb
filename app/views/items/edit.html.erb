@@ -3,6 +3,15 @@
   <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize %></h1>
 </div>
 
-<%= simple_form_for @item, html: { :class => "item" }, url: collection_item_path(@item.collection, @item) do |f| %>
-  <%= render :partial => 'form', locals: { f: f } %>
-<% end %>
+
+<div class="row">
+  <div class="col-md-8">
+    <%= simple_form_for [@item.collection, @item], html: { :class => "item edit-item-dropzone", id: 'edit-item' } do |f| %>
+      <%= render :partial => 'form', locals: { f: f } %>
+    <% end %>
+  </div>
+  <div class="col-md-4">
+    <%= image_tag(@item.image.to_s, width: '90%') %>
+  </div>
+</div>
+

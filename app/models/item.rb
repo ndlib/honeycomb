@@ -8,6 +8,4 @@ class Item < ActiveRecord::Base
 
   validates :title, :collection, presence: true
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
-
-
 end

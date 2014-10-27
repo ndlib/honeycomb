@@ -1,11 +1,12 @@
 <%- model_class = Item -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
-</div>
-
-<%= link_to 'Add Items',
+  <div class="pull-right">
+    <%= link_to 'Add Items',
             new_collection_item_path(collection),
             :class => 'btn btn-primary' %>
+  </div>
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
 
 <table class="table table-striped datatable">
   <thead>

@@ -80,6 +80,3 @@ jQuery ->
 
   $(document).ready ->
     ready()
-
-
-

@@ -14,22 +14,20 @@
   </div>
 <% end %>
 
-<div class="row">
-  <div class="col-md-8">
+<%= f.input :title, as: :string %>
 
-    <%= f.input :title, as: :string %>
+<%= f.input :description, as: :text do %>
+  <%= f.text_area :description, class: 'text optional form-control', rows: '3' %>
+<% end %>
 
-    <%= f.input :description, as: :text do %>
-      <%= f.text_area :description, class: 'text optional form-control', rows: '3' %>
-    <% end %>
-
-  </div>
-  <div class="col-md-4">
-    <%= image_tag(f.object.image.to_s, width: '90%') %>
+<div class="form-group">
+  <label>Replace Image</label>
+  <div class="dropzone">
+    <div class="dropzone-previews">
+    </div>
+    <div class="dz-default dz-message"><span>Drop files here to upload</span></div>
   </div>
 </div>
-
-
 <%= f.button :submit, "Save", class: 'btn btn-primary'%>
 <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
         collection_items_path(@item.collection), :class => 'btn btn-default' %>
