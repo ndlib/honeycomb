@@ -72,6 +72,8 @@ group :development, :test do
   gem "guard-rspec"
   gem "guard-spring"
   gem "growl"
+  gem "growl_notify"
+  gem "growl-rspec"
 end
 
 

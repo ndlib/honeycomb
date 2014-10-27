@@ -31,6 +31,8 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = :random
 
+  config.formatter = 'Growl::RSpec::Formatter'
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -51,7 +53,7 @@ RSpec.configure do |config|
     # Prevents you from mocking or stubbing a method that does not exist on
     # a real object. This is generally recommended, and will default to
     # `true` in RSpec 4.
-    mocks.verify_partial_doubles = true
+    # mocks.verify_partial_doubles = true
   end
-
 end
+

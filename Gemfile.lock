@@ -1,8 +1,8 @@
 GIT
   remote: git@git.library.nd.edu:hesburgh_infrastructure
-  revision: 27329d45161a87c87dae1fb7922e92cfa0f749a8
+  revision: e3bd99da343f70077f151efc11660dafe34cb4c6
   specs:
-    hesburgh_infrastructure (0.1.0)
+    hesburgh_infrastructure (0.2.1)
       capistrano (~> 2.15.0)
       rails
 
@@ -91,6 +91,11 @@ GEM
     ffi (1.9.6)
     formatador (0.2.5)
     growl (1.0.3)
+    growl-rspec (3.0.0)
+      growl
+      rspec (~> 3.0)
+    growl_notify (0.0.3)
+      rb-appscript
     guard (2.6.1)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -182,6 +187,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.3.2)
+    rb-appscript (0.6.1)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
@@ -277,6 +283,8 @@ DEPENDENCIES
   draper
   faker
   growl
+  growl-rspec
+  growl_notify
   guard
   guard-bundler
   guard-coffeescript
