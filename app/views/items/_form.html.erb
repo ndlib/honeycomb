@@ -14,16 +14,22 @@
   </div>
 <% end %>
 
-<%= f.input :title, as: :string %>
+<div class="row">
+  <div class="col-md-8">
 
-<%= f.input :description, as: :text do %>
-  <%= f.text_area :description, class: 'text optional form-control', rows: '3' %>
-<% end %>
+    <%= f.input :title, as: :string %>
 
-<%= f.input :image, as: :file %>
+    <%= f.input :description, as: :text do %>
+      <%= f.text_area :description, class: 'text optional form-control', rows: '3' %>
+    <% end %>
+
+  </div>
+  <div class="col-md-4">
+    <%= image_tag(f.object.image.to_s, width: '90%') %>
+  </div>
+</div>
 
 
 <%= f.button :submit, "Save", class: 'btn btn-primary'%>
 <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
         collection_items_path(@item.collection), :class => 'btn btn-default' %>
-

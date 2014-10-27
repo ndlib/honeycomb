@@ -1,10 +1,15 @@
-<%- model_class = Item -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize.pluralize %></h1>
+  <h1><%=t '.title', :default => "Upload New Items" %></h1>
 </div>
-
-<section>
-<%= simple_form_for @item, html: { :class => "item" }, url: collection_items_path(@item.collection, @item) do |f| %>
-  <%= render :partial => 'multi_upload_form', locals: { f: f } %>
-<% end %>
-</section>
+<div class="container">
+  <div class="row">
+    <%= link_to 'Back to Collection', collection_items_path(@item.collection), class: 'btn btn-large' %>
+  </div>
+  <div class="row">
+  <%= form_for [@item.collection, @item], :html => { class: 'dropzone', :multipart => true, :id => "fileupload"  } do |f| %>
+    <div class="fallback">
+      <%= f.file_field :image %>
+    </div>
+  <% end %>
+  </div>
+</div>

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe SaveItem, type: :model do
   subject { described_class.call(item, params) }
-  let(:item) { double(Item, "attributes=" => true, save: true, new_record?: false )}
+  let(:item) { Item.new }
   let(:params) { { title: 'title' } }
 
   it "returns when the item save is successful" do
@@ -27,10 +27,16 @@ RSpec.describe SaveItem, type: :model do
     subject
   end
 
+  it "uses the sortable title converter to convert the sortable title" do
+    expect(SortableTitleConverter).to receive(:convert).with("title")
+    subject
+  end
+
   context "no title on a new record" do
-    let(:item) { double(Item, "attributes=" => true, save: true, new_record?: true, image_file_name: 'filename', title: '' )}
+    let(:params) { {} }
 
     it "sets the title to be the uploaded filename when the item is a new record?" do
+      item.stub(:image_file_name).and_return('filename')
       expect(item).to receive("title=").with('filename')
 
       subject
@@ -38,10 +44,12 @@ RSpec.describe SaveItem, type: :model do
   end
 
   context "existing title on a new record" do
-    let(:item) { double(Item, "attributes=" => true, save: true, new_record?: true, title: 'title ' )}
 
     it "does not set the title to the uploaded file name" do
+      item.stub(:image_file_name).and_return('filename')
+      item.stub(:title).and_return("title")
       expect(item).to_not receive("title=").with('filename')
+
       subject
     end
   end
@@ -49,7 +57,9 @@ RSpec.describe SaveItem, type: :model do
   context "not a new record" do
 
     it "does not set the title when it is not a new record " do
-      expect(item).to_not receive("title=")
+      item.stub(:image_file_name).and_return('filename')
+      item.stub(:new_record?).and_return(false)
+      expect(item).to_not receive("title=").with('filename')
 
       subject
     end

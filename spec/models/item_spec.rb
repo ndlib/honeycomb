@@ -16,4 +16,8 @@ RSpec.describe Item do
   it "requires the collection field" do
     expect(subject).to have(1).error_on(:collection)
   end
+
+  it "has versioning " do
+    expect(subject).to respond_to(:versions)
+  end
 end

@@ -24,17 +24,14 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring',        group: :development
 
 gem "therubyracer"
 
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 
-gem 'jquery-fileupload-rails'
 gem 'paperclip'
 gem 'jquery-datatables-rails', '~> 2.2.3'
-
 
 
 gem "hesburgh_infrastructure", git: 'git@git.library.nd.edu:hesburgh_infrastructure'
@@ -42,6 +39,9 @@ gem "hesburgh_infrastructure", git: 'git@git.library.nd.edu:hesburgh_infrastruct
 gem 'simple_form', '~> 3.1.0rc1'
 
 gem 'draper'
+
+# used to normaize the characters in a title sort
+gem 'sort_alphabetical'
 
 gem "rb-readline"
 
@@ -56,6 +56,7 @@ gem 'net-ldap'
 # Server monitoring
 gem 'newrelic_rpm'
 
+gem 'paper_trail', '~> 3.0.6'
 
 group :development, :test do
   gem "pry"
@@ -63,6 +64,8 @@ group :development, :test do
   gem "rspec-collection_matchers"
   gem "capybara"
   gem "faker"
+  gem 'spring'
+  gem "spring-commands-rspec"
 
   gem "guard"
   gem "guard-bundler"
@@ -70,7 +73,6 @@ group :development, :test do
   gem "guard-rails"
   gem "guard-rspec"
   gem "guard-spring"
-  gem "spork", "1.0.0rc4"
   gem "growl"
   gem "growl_notify"
   gem "growl-rspec"

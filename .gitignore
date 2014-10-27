@@ -14,4 +14,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
-/vendor/bundle/
+/public/system/*
+/vendor/bundle
+/ssi/*
+/public/assets
