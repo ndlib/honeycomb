@@ -15,22 +15,25 @@ class MultiNewDropzoneForm
       clickable: ".dropzone"
       parallelUploads: 100
       maxFiles: 100
-            # The setting up of the dropzone
+      # The setting up of the dropzone
       init: ->
         myDropzone = this
         # First change the button to actually tell Dropzone to process the queue.
         formObject.find('input[type="submit"]').get(0).addEventListener "click", (e) ->
-
           # Make sure that the form isn't actually being sent.
-          e.preventDefault()
-          e.stopPropagation()
-          myDropzone.processQueue()
+          if myDropzone.getQueuedFiles().length
+            e.preventDefault()
+            e.stopPropagation()
+            myDropzone.processQueue()
           return
 
         # Gets triggered when the form is actually being sent.
         # Hide the success button or the complete form.
         @on "successmultiple", (files, response) ->
           window.location.replace(window.location + '/../')
+
+        @on "addedfile", (file) ->
+          this.element.classList.add("dz-started")
     )
 
 
@@ -57,17 +60,20 @@ class EditFormDropzone
 
         # First change the button to actually tell Dropzone to process the queue.
         formObject.children("input[type=submit]").get(0).addEventListener "click", (e) ->
-
           # Make sure that the form isn't actually being sent.
-          e.preventDefault()
-          e.stopPropagation()
-          myDropzone.processQueue()
+          if myDropzone.getQueuedFiles().length
+            e.preventDefault()
+            e.stopPropagation()
+            myDropzone.processQueue()
           return
 
         # Gets triggered when the form is actually being sent.
         # Hide the success button or the complete form.
         @on "success", (files, response) ->
           window.location.replace(window.location + '/../../')
+
+        @on "addedfile", (file) ->
+          this.element.classList.add("dz-started")
     )
 
 
