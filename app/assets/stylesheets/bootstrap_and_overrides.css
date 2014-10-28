@@ -8,5 +8,10 @@ div.dataTables_filter label {
 
 
 form.edit-item-dropzone div.dropzone {
-  min-height: 160px;
+  min-height: 252px;
 }
+
+.dz-started .dz-message {
+  display: none;
+}
+
