@@ -11,7 +11,7 @@ feature "Collection creation" do
     login_as @user
   end
   
-  scenario "Admin starts can access new collection page" do
+  scenario "Admin can access new collection page" do
     visit "/collections"
     click_link "New"
     expect(page).to have_text("Title")
