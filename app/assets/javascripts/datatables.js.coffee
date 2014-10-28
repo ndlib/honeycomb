@@ -1,9 +1,10 @@
 ItemDataTablesIndexes =
-  title: 0
-  updatedAt: 1
-  updatedAtTimestamps: 2
-  editFields: 3
-  sortableTitle: 4
+  image: 0
+  title: 1
+  updatedAt: 2
+  updatedAtTimestamps: 3
+  editFields: 4
+  sortableTitle: 5
 
 class ItemDataTable
   constructor: (@tableElement) ->
@@ -46,6 +47,10 @@ class ItemDataTable
       ,
         targets: ItemDataTablesIndexes['sortableTitle']
         visible: false
+      ,
+        targets: ItemDataTablesIndexes['image']
+        sortable: false
+        searchable: false
       ]
     )
 

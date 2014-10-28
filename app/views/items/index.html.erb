@@ -11,6 +11,7 @@
 <table class="table table-striped datatable">
   <thead>
     <tr>
+      <th></th>
       <th>Item</th>
       <th>Last Modified</th>
       <th>Last Modified Timestamp</th>
@@ -22,13 +23,11 @@
     <% @items.each do |item| %>
       <tr>
         <td>
-          <div class="media">
-            <%= link_to raw(image_tag(item.image.url, height: 64)), edit_collection_item_path(item.collection, item), class: "pull-left" %></a>
-            <div class="media-body">
-              <h4 class="media-heading"><%= h item.title %></h4>
-              <%= item.description %>
-            </div>
-          </div>
+          <%= link_to raw(image_tag(item.image.url, height: 64)), edit_collection_item_path(item.collection, item), class: "pull-left" %></a>
+        </td>
+        <td>
+          <h4 class="media-heading"><%= h item.title %></h4>
+          <%= h item.description %>
         </td>
         <td>
           <%= item.updated_at.to_s(:long) %>
