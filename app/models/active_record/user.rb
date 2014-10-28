@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
   before_validation :fetch_attributes_from_api
 
   # Setup accessible (or protected) attributes for your model
-  #attr_accessible :email, :username, :last_name, :first_name, :display_name
 
   validates :username, :email, :uniqueness => true
   validates_presence_of :email, :username, :first_name, :last_name, :display_name
