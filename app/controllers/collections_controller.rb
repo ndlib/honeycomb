@@ -12,11 +12,15 @@ class CollectionsController < ApplicationController
     @collection = Collection.new(params.require(:collection).permit([:title]))
 
     if @collection.save
-
+      puts @collection.title
       redirect_to @collection
     else
       render :new
     end
+  end
+
+  def show
+    @collection = Collection.find(params[:id])
   end
 
 end
