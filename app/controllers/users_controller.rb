@@ -51,12 +51,12 @@ helper_method :user
   protected
 
   def save_params
-    { first_name: params[:user][:first_name], last_name: params[:user][:last_name], display_name: params[:user][:display_name], email: params[:user][:email], username: params[:user][:username] }
+    { first_name: params[:user][:first_name], last_name: params[:user][:last_name], display_name: params[:user][:display_name], email: params[:user][:email], username: params[:user][:username], admin: params[:user][:admin] }
   end
 
 
   def user
-    @user ||= Yser.find(params[:username])
+    @user ||= User.find(params[:username])
   end
 
   private
