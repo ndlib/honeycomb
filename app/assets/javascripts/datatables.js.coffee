@@ -19,6 +19,8 @@ class ItemDataTable
       object.infoCallback(settings, start, end, max, total, pre)
 
     @table = @tableElement.DataTable(
+      language:
+        emptyTable: "There is nothing here!!  <br> Please consider creating new items or adjusting you search criteria."
       dom: "ftlpi",
       lengthChange: false
       deferRender: true
@@ -56,7 +58,7 @@ class ItemDataTable
 
   infoCallback: (settings, start, end, max, total, pre) ->
     if end == 0
-      text = "No items match your search criteria."
+      text = ""
     else
       text = "Showing #{@numberWithCommas(start)} to #{@numberWithCommas(end)} of #{@numberWithCommas(total)} items"
     if total < max
