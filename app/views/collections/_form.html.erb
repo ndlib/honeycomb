@@ -1,7 +1,6 @@
 <%= simple_form_for @collection, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= display_errors(@collection) %>
   <%= f.input :title %>
-  <%= error_span(@collection[:title]) %>
-
   <%= f.button :submit, :class => 'btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
                 collections_path, :class => 'btn btn-default' %>
