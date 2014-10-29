@@ -1,0 +1,3 @@
+class CollectionUser
+
+end
