@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-helper_method :user
+  helper_method :user
 
   def index
     check_admin_or_admin_masquerading_permission!
@@ -17,18 +17,12 @@ helper_method :user
 
   def create
     check_admin_or_admin_masquerading_permission!
-    @user = User.new(user_params)
-    if @user.save
-      flash[:success] = "#{@user.username} created successfully!"
-
-      redirect_to action: "edit", id: @user
-      return
-    end
-
-    render :new
+    @user = UserManager.create(params.require(:user).permit([:username]))
+    redirect_to action: "index"
   end
 
   def destroy
+    check_admin_or_admin_masquerading_permission!
     @user = User.find(params[:id])
     @user.delete()
 
@@ -46,23 +40,18 @@ helper_method :user
     check_admin_or_admin_masquerading_permission!
 
     @user = User.find(params[:id])
+    @user.admin = true
+    @user.save
     redirect_to users_path
   end
   protected
-
-  def save_params
-    { first_name: params[:user][:first_name], last_name: params[:user][:last_name], display_name: params[:user][:display_name], email: params[:user][:email], username: params[:user][:username], admin: params[:user][:admin] }
-  end
-
 
   def user
     @user ||= User.find(params[:username])
   end
 
-  private
-
   def user_params
-    params.require(:user).permit(:username)
+    { first_name: params[:user][:first_name], last_name: params[:user][:last_name], display_name: params[:user][:display_name], email: params[:user][:email], admin: params[:user][:admin] }
   end
 
 end
