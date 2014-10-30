@@ -12,9 +12,12 @@ class UserManager
   def self.create(username)
     @user = User.find_for_authentication(username)
     if @user.nil?
-      @user = User.new(username)
+      begin
+        @user = User.new(username)
+        @user.set_admin!
+      rescue
+      end
     end
-    @user.set_admin!
   end
 
   def self.save

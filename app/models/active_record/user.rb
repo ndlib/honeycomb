@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
   def fetch_attributes_from_api
     begin
       attributes = UserManager.fetch_attributes(username)
-      if attributes['data']['contact_information']['email'].nil?
+      if attributes.nil?
         errors.add(:username, "No person found with this username.")
       else
         begin
