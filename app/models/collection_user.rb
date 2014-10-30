@@ -1,3 +1,0 @@
-class CollectionUser
-
-end
