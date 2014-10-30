@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
-  has_many :collection_users
-  has_many :collections, :through => :collection_users
+  has_many :collections_users
+  has_many :collections, :through => :collections_users
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
