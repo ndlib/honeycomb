@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141029191346) do
+ActiveRecord::Schema.define(version: 20141103200853) do
 
   create_table "collections", force: true do |t|
     t.string   "title"
@@ -38,6 +38,12 @@ ActiveRecord::Schema.define(version: 20141029191346) do
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
+
+  create_table "tiled_images", force: true do |t|
+    t.string  "url"
+    t.integer "width"
+    t.integer "height"
+  end
 
   create_table "users", force: true do |t|
     t.string   "first_name"
