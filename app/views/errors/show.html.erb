@@ -1,0 +1,29 @@
+<% content_for(:content_title) do %>
+  <h1>Recent Error</h1>
+<% end %>
+
+<%
+breadcrumb([link_to('Errors', errors_path()), 'Error'])
+%>
+
+
+<dl class="dl-horizontal">
+  <dt>Message</dt>
+  <dd><%= @error.message %></dd>
+  <dt>Date</dt>
+  <dd><%= @error.created_at %></dd>
+  <dt>Status</dt>
+  <dd><%= @error.state %></dd>
+  <dt>Netid</dt>
+  <dd><%= @error.netid %></dd>
+  <dt>Path</dt>
+  <dd><%= @error.path %></dd>
+  <dt>User Agent</dt>
+  <dd><%= @error.user_agent %></dd>
+  <dt>Params</dt>
+  <dd><%= @error.params %></dd>
+</dl>
+
+  <h3>Trace</h3>
+  <strong><%= @error.exception_class %></strong>
+  <p><%= simple_format @error.stack_trace %></p>
