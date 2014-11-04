@@ -44,6 +44,21 @@ class UsersController < ApplicationController
     @user.save
     redirect_to users_path
   end
+
+  def revoke_admin
+    check_admin_or_admin_masquerading_permission!
+    @user = User.find(params[:user_id])
+    @user.revoke_admin!
+    redirect_to users_path
+  end
+
+  def set_admin
+    check_admin_or_admin_masquerading_permission!
+    @user = User.find(params[:user_id])
+    @user.set_admin!
+    redirect_to users_path
+  end
+
   protected
 
   def user

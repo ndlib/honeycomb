@@ -1,0 +1,29 @@
+<% content_for(:content_title) do %>
+  <div class="page-header">
+    <h1>Masquerade as Another User</h1>
+  </div>
+<% end %>
+
+<%#breadcrumb(['Masquerade']) %>
+
+<div class="six columns">
+
+   <%= form_tag masquerades_path, class: "form-inline" do %>
+
+    <label for="netid">Netid: </label>
+    <input id="netid" type="text" name="username" class="span3" value="<%= params[:username] %>">
+    <button type="submit" class="btn">Go</button>
+    <span class="help-block">Entering a netid and clicking go will allow you to experience the site as that user.</span>
+  <% end %>
+</div>
+<div class="six columns">
+  <h4> Determine a netid </h4>
+  <ol>
+    <li>Go to: <%= link_to 'https://apps.nd.edu/webdirectory/directory.cfm', 'https://apps.nd.edu/webdirectory/directory.cfm' %></li>
+    <li>Search for the person you want to login as</li>
+    <li>Click on More Info (underneath "View personal web page.")</li>
+    <li>Copy the field labeled "uid"</li>
+    <li>Paste it into the netid box on the left</li>
+  </ol>
+
+</div>

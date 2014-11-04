@@ -3,14 +3,26 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { cas_sessions: 'simple_cas' }
 
   root :to => 'collections#index'
-  
+
+  get '404', to: 'errors#catch_404'
+  get '500', to: 'errors#catch_500'
+
+  resource :masquerades, :only => [:new, :create] do
+    get :cancel
+  end
+
+  resources :errors
+
   resources :collections do
     resources :items
     resources :items_uploads
   end
 
   scope '/admin' do
-    resources :users
+    resources :users do
+      put :set_admin
+      put :revoke_admin
+    end
 
     # NOTE About this route.
     # the "ids" that are searched on can have "." in them and that throws off the rails routing. They need to be passed in as

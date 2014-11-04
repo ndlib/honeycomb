@@ -30,4 +30,8 @@ module ApplicationHelper
     ErrorMessageDecorator.new(obj).display_error
   end
 
+  def masquerade
+    @masquerade ||= Masquerade.new(self)
+  end
+
 end

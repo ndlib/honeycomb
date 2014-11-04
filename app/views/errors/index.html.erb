@@ -1,0 +1,32 @@
+<% content_for(:content_title) do %>
+  <h1>Recent Errors</h1>
+<% end %>
+<%
+breadcrumb(['Errors'])
+%>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Netid</th>
+      <th>Message</th>
+      <th>Path</th>
+      <th>Resolve</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @errors.each do | error | %>
+      <tr class="<%= error.state == 'new' ? 'warning' : '' %>">
+        <td><%= link_to error.created_at, error_path(error) %></td>
+        <td><%= error.netid %></td>
+        <td><%= error.message %></td>
+        <td><%= error.path %><br><%= error.params %></td>
+        <td>
+          <%= form_for error, url: error_path(error) do | f | %>
+            <%= f.submit 'Resolve', class: 'btn' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
