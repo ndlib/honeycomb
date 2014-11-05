@@ -5,9 +5,14 @@ RSpec.describe SaveItem, type: :model do
   let(:item) { Item.new }
   let(:params) { { title: 'title' } }
 
+  before(:each) do
+    # stub the call to the external service
+    SaveTiledImage.stub(:call).and_return(true)
+  end
+
   it "returns when the item save is successful" do
     expect(item).to receive(:save).and_return(true)
-    expect(subject).to be true
+    expect(subject).to be_kind_of(Item)
   end
 
   it "returns when the item save is not successful" do
@@ -29,6 +34,12 @@ RSpec.describe SaveItem, type: :model do
 
   it "uses the sortable title converter to convert the sortable title" do
     expect(SortableTitleConverter).to receive(:convert).with("title")
+    subject
+  end
+
+  it "sends successful requests to SaveTiledImage" do
+    expect(item).to receive(:save).and_return(true)
+    expect(SaveTiledImage).to receive(:call)
     subject
   end
 
