@@ -22,13 +22,14 @@ class SaveTiledImage
   private
 
     def tiled_image
-      item.tiled_image || item.tiled_image.build
+      item.tiled_image || item.build_tiled_image
     end
 
     def update_tiled_server(request)
-      tiled_image.width = request.body[:image][:width]
-      tiled_image.height = request.body[:image][:height]
-      tiled_image.uri = request.body[:image][:uri]
+      body = request.body.with_indifferent_access
+      tiled_image.width = body[:image][:width]
+      tiled_image.height = body[:image][:height]
+      tiled_image.uri = body[:image][:uri]
 
       tiled_image.save
     end
