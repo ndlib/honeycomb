@@ -40,7 +40,8 @@ ActiveRecord::Schema.define(version: 20141103200853) do
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
 
   create_table "tiled_images", force: true do |t|
-    t.string  "url"
+    t.integer "item_id"
+    t.string  "uri"
     t.integer "width"
     t.integer "height"
   end
