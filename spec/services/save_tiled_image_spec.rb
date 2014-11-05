@@ -8,7 +8,7 @@ RSpec.describe SaveTiledImage do
   let(:connection) do
     Faraday.new do |builder|
       builder.adapter :test do |stub|
-        stub.post('/image') { |env| [ 200, {content_type: 'application/json'}, jsonresponse ]}
+        stub.post('/images') { |env| [ 200, {content_type: 'application/json'}, jsonresponse ]}
       end
     end
   end
@@ -16,7 +16,7 @@ RSpec.describe SaveTiledImage do
   let(:failed_connection) do
     Faraday.new do |builder|
       builder.adapter :test do |stub|
-        stub.post('/image') { |env| [ 500, {content_type: 'application/json'}, "failed" ]}
+        stub.post('/images') { |env| [ 500, {content_type: 'application/json'}, "failed" ]}
       end
     end
   end
@@ -34,7 +34,7 @@ RSpec.describe SaveTiledImage do
     end
 
     it "sends a request to the json api" do
-      expect(connection).to receive(:post).with('/image', { namespace: 'honeycomb/1/1', image: kind_of(Faraday::UploadIO) }).and_return(faraday_response)
+      expect(connection).to receive(:post).with('/images', { namespace: 'honeycomb/1/1', image: kind_of(Faraday::UploadIO) }).and_return(faraday_response)
 
       subject
     end
