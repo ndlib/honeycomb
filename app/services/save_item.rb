@@ -14,26 +14,35 @@ class SaveItem
     fix_image_param!
 
     item.attributes = params
+    pre_process_title
 
-    verify_title
-    set_sortable_title
-
-    item.save
+    if item.save && update_titled_image
+      item
+    else
+      false
+    end
   end
 
   private
 
-    def verify_title
-      if item.new_record? && item.title.blank?
+    def pre_process_title
+      if title_should_be_filename?
         item.title = item.image_file_name
       end
+
+      item.sortable_title = SortableTitleConverter.convert(item.title)
+    end
+
+    def title_should_be_filename?
+      item.new_record? && item.title.blank?
     end
 
     def fix_image_param!
+      #sometimes the form is sending an empty image value and this is causing paperclip to delete the image.
       params.delete(:image) if params[:image].nil?
     end
 
-    def set_sortable_title
-      item.sortable_title = SortableTitleConverter.convert(item.title)
+    def update_titled_image
+      SaveTiledImage.call(item)
     end
 end
