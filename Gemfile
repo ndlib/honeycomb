@@ -55,6 +55,9 @@ gem 'newrelic_rpm'
 
 gem 'paper_trail', '~> 3.0.6'
 
+gem 'faraday'
+gem 'faraday_middleware'
+
 group :development, :test do
   gem "pry"
   gem "rspec-rails"
