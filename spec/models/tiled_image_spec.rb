@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe TiledImage do
-  [:width, :height, :url].each do | field |
+  [:width, :height, :uri, :item].each do | field |
     it "has field, #{field}" do
       expect(subject).to respond_to(field)
       expect(subject).to respond_to("#{field}=")
@@ -17,7 +17,7 @@ RSpec.describe TiledImage do
   end
 
   it "validates the url" do
-    expect(subject).to have(1).error_on(:url)
+    expect(subject).to have(1).error_on(:uri)
   end
 
 end
