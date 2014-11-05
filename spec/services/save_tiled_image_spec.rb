@@ -39,6 +39,13 @@ RSpec.describe SaveTiledImage do
       subject
     end
 
+    it "calls the build method if item does not have a tiled_image" do
+      expect(item).to receive(:tiled_image).and_return(nil)
+      expect(item).to receive(:build_tiled_image).and_return(tiled_image)
+
+      subject
+    end
+
     it "creates a database records when the requst is successful" do
       expect(subject).to be_kind_of(TiledImage)
     end
