@@ -35,7 +35,7 @@ class SaveTiledImage
     end
 
     def send_request
-      response = connection.post('/image', post)
+      response = connection.post('/images', post)
       if response.success?
         response
       else
