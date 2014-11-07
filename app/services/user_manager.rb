@@ -14,7 +14,6 @@ class UserManager
     if @user.nil?
       begin
         @user = User.new(username)
-        @user.set_admin!
       rescue
       end
     end

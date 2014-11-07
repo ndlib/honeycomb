@@ -1,5 +1,10 @@
 <%- model_class = Collection -%>
 <div class="page-header">
+    <div class="pull-right">
+      <%= link_to t('.new', :default => t("New Collection")),
+              new_collection_path,
+              :class => 'btn btn-primary' %>
+    </div>
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
 </div>
 <table class="table table-striped">
@@ -26,7 +31,3 @@
     <% end %>
   </tbody>
 </table>
-
-<%= link_to t('.new', :default => t("helpers.links.new")),
-            new_collection_path,
-            :class => 'btn btn-primary' %>
