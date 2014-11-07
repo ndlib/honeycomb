@@ -141,6 +141,8 @@ GEM
     jquery-rails (3.1.2)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (5.0.2)
+      railties (>= 3.2.16)
     json (1.8.1)
     libv8 (3.16.14.7)
     listen (2.7.11)
@@ -309,7 +311,8 @@ DEPENDENCIES
   hesburgh_infrastructure!
   jbuilder (~> 2.0)
   jquery-datatables-rails (~> 2.2.3)
-  jquery-rails
+  jquery-rails (= 3.1.2)
+  jquery-ui-rails (= 5.0.2)
   mysql2
   newrelic_rpm
   paper_trail (~> 3.0.6)
