@@ -6,7 +6,7 @@ RSpec.describe ItemJson do
   let(:tiled_image) { double(TiledImage, id: 3, uri: "url", width: '1000', height: '1000')}
 
   let(:options) { {} }
-  subject { described_class.new(item).to_json(options) }
+  subject { described_class.new(item).to_hash(options) }
 
   context "no options" do
     [:title, :description, :updated_at, :id].each do | field |

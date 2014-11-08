@@ -1,10 +1,14 @@
 class ItemJson < Draper::Decorator
 
   def to_json(options = {})
+    to_hash.to_json(options)
+  end
+
+  def to_hash(options = {})
     data = item_data
     data[:links] = add_links(options)
 
-    data.to_json
+    data
   end
 
   private
