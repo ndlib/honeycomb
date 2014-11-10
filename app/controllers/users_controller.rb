@@ -7,18 +7,22 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-
   def new
     check_admin_or_admin_masquerading_permission!
-
     @user = User.new
   end
 
-
   def create
     check_admin_or_admin_masquerading_permission!
-    @user = UserManager.create(params.require(:user).permit([:username]))
-    redirect_to action: "index"
+    @user = CreateUser.call(params.require(:user).permit([:username]))
+    @user = MapUserToApi.call(@user)
+    if @user.save
+      flash[:notice] = "New user created successfully."
+      redirect_to action: "index"
+    else
+      flash[:notice] = "User could not be created. Check that you entered a valid username and that the user does not already exist."
+      redirect_to action: "index"
+    end
   end
 
   def destroy
@@ -48,14 +52,16 @@ class UsersController < ApplicationController
   def revoke_admin
     check_admin_or_admin_masquerading_permission!
     @user = User.find(params[:user_id])
-    @user.revoke_admin!
+    RevokeAdminOnUser.call(@user)
+    flash[:notice] = "Revoked admin from " + @user.username
     redirect_to users_path
   end
 
   def set_admin
     check_admin_or_admin_masquerading_permission!
     @user = User.find(params[:user_id])
-    @user.set_admin!
+    SetAdminOnUser.call(@user)
+    flash[:notice] = "Granted admin to " + @user.username
     redirect_to users_path
   end
 
@@ -63,10 +69,6 @@ class UsersController < ApplicationController
 
   def user
     @user ||= User.find(params[:username])
-  end
-
-  def user_params
-    { first_name: params[:user][:first_name], last_name: params[:user][:last_name], display_name: params[:user][:display_name], email: params[:user][:email], admin: params[:user][:admin] }
   end
 
 end
