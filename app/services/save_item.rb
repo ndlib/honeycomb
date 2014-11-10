@@ -27,7 +27,7 @@ class SaveItem
 
     def pre_process_title
       if title_should_be_filename?
-        item.title = item.image_file_name
+        item.title = GenerateTitleFromFilename.call(item.image_file_name)
       end
 
       item.sortable_title = SortableTitleConverter.convert(item.title)
