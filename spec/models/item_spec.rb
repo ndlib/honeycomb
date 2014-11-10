@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Item do
+  let (:image_with_spaces) {  File.open(Rails.root.join('spec/fixtures', 'test copy.jpg'), 'r') }
+
   [:title, :description, :collection, :tiled_image].each do | field |
 
     it "has field, #{field}" do
@@ -23,5 +25,10 @@ RSpec.describe Item do
 
   it "has versioning " do
     expect(subject).to respond_to(:versions)
+  end
+
+  it "keeps spaces in the original filename" do
+    subject.image = image_with_spaces
+    expect(subject.image.original_filename).to eq("test copy.jpg")
   end
 end
