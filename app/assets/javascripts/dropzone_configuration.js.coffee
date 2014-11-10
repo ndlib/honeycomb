@@ -15,15 +15,18 @@ class MultiNewDropzoneForm
       clickable: ".dropzone"
       parallelUploads: 100
       maxFiles: 100
+      dictRemoveFile: "Cancel Upload"
+
       # The setting up of the dropzone
       init: ->
         myDropzone = this
         # First change the button to actually tell Dropzone to process the queue.
         formObject.find('input[type="submit"]').get(0).addEventListener "click", (e) ->
+          e.preventDefault()
+          e.stopPropagation()
+
           # Make sure that the form isn't actually being sent.
           if myDropzone.getQueuedFiles().length
-            e.preventDefault()
-            e.stopPropagation()
             myDropzone.processQueue()
           return
 
@@ -53,6 +56,7 @@ class EditFormDropzone
       url: @dropzoneForm.attr("action")
       previewsContainer: ".dropzone-previews"
       clickable: ".dropzone"
+      dictRemoveFile: "Cancel Upload"
 
       # The setting up of the dropzone
       init: ->
@@ -60,10 +64,11 @@ class EditFormDropzone
 
         # First change the button to actually tell Dropzone to process the queue.
         formObject.children("input[type=submit]").get(0).addEventListener "click", (e) ->
+          e.preventDefault()
+          e.stopPropagation()
+
           # Make sure that the form isn't actually being sent.
           if myDropzone.getQueuedFiles().length
-            e.preventDefault()
-            e.stopPropagation()
             myDropzone.processQueue()
           return
 
