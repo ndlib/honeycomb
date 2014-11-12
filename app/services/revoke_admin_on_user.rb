@@ -10,8 +10,8 @@ class RevokeAdminOnUser
   end
 
   def revoke_admin!
-    @user.admin = false
-    @user.save
+    user.admin = false
+    user.save
   end
 
   private

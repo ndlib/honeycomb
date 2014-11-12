@@ -14,9 +14,8 @@ class UsersController < ApplicationController
 
   def create
     check_admin_or_admin_masquerading_permission!
-    @user = CreateUser.call(params.require(:user).permit([:username]))
-    @user = MapUserToApi.call(@user)
-    if @user.save
+    @user = User.new
+    if CreateUser.call(@user, save_params)
       flash[:notice] = "New user created successfully."
       redirect_to action: "index"
     else
@@ -69,6 +68,10 @@ class UsersController < ApplicationController
 
   def user
     @user ||= User.find(params[:username])
+  end
+
+  def save_params
+    {username: params[:user][:username]}
   end
 
 end

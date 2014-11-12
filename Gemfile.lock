@@ -1,6 +1,6 @@
 GIT
   remote: git@git.library.nd.edu:hesburgh_api
-  revision: 312e4200d01dc3726e069432e15fc8a8d9d14da6
+  revision: e98a95cbe336edd735327e4ca28219a6d32a03c7
   specs:
     hesburgh_api (0.0.1)
       faraday

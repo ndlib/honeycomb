@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :cas_authenticatable, :trackable
 
+  before_validation :map_user
   # Setup accessible (or protected) attributes for your model
 
   validates :username, :email, :uniqueness => true
@@ -24,5 +25,10 @@ class User < ActiveRecord::Base
 
   def admin?
     self.admin
+  end
+
+  protected
+  def map_user
+    MapUserToApi.call(self)
   end
 end

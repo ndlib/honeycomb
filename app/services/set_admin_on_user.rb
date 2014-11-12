@@ -10,8 +10,8 @@ class SetAdminOnUser
   end
 
   def set_admin!
-    @user.admin = true
-    @user.save
+    user.admin = true
+    user.save
   end
 
   private
