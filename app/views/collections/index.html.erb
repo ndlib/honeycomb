@@ -15,15 +15,15 @@
     </tr>
   </thead>
   <tbody>
-    <% @collections.each do |collection| %>
+    <% @collections.where("collections.deleted IS NOT TRUE").each do |collection| %>
       <tr>
         <td><%= link_to collection.title, collection_items_path(collection) %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_collection_path(collection), :class => 'btn btn-default btn-xs' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      collection_path(collection),
-                      :method => :delete,
+                      collection_soft_delete_path(collection),
+                      :method => :put,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                       :class => 'btn btn-xs btn-danger' %>
         </td>

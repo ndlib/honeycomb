@@ -23,6 +23,15 @@ class CollectionsController < ApplicationController
     end
   end
 
+  def soft_delete
+    check_admin_or_admin_masquerading_permission!
+
+    @collection = Collection.find(params[:collection_id])
+    SoftDeleteCollection.call(@collection)
+    flash[:notice] = @collection.title + " has been deleted."
+    redirect_to collections_path
+  end
+
   def show
     @collection = Collection.find(params[:id])
   end
