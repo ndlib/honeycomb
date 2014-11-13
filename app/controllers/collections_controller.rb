@@ -8,6 +8,10 @@ class CollectionsController < ApplicationController
     @collection = Collection.new
   end
 
+  def edit
+    @collection = Collection.find(params[:id])
+  end
+
   def create
     @collection = Collection.new(params.require(:collection).permit([:title]))
 
