@@ -36,8 +36,6 @@ Rails.application.configure do
   config.ldap_lookup_flag                 = true
   config.honeycomb_upload_path             = '/shared/data/honeycomb_files'
   config.honeycomb_cas_base                = 'https://cas.library.nd.edu/cas'
-  config.honeycomb_cas_validate            = 'https://cas.library.nd.edu/cas/serviceValidate'
-  config.honeycomb_cas_logout              = 'https://cas.library.nd.edu/cas/logout'
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
