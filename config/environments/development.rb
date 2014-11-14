@@ -36,6 +36,7 @@ Rails.application.configure do
   config.ldap_lookup_flag                 = true
   config.honeycomb_upload_path             = '/shared/data/honeycomb_files'
   config.honeycomb_cas_base                = 'https://cas.library.nd.edu/cas'
+  config.honeypot_url = 'http://localhost:4567'
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true

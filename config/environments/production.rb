@@ -77,4 +77,5 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.honeycomb_cas_base = 'https://login.nd.edu/cas'
+  config.honeypot_url = 'http://honeypot.library.nd.edu'
 end
