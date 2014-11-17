@@ -64,7 +64,6 @@ class EditFormDropzone
 
         # First change the button to actually tell Dropzone to process the queue.
         formObject.children("input[type=submit]").get(0).addEventListener "click", (e) ->
-          e.preventDefault()
           e.stopPropagation()
 
           # Make sure that the form isn't actually being sent.
