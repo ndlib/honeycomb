@@ -13,7 +13,7 @@
     <% items.each do |item| %>
       <tr>
         <td>
-          <%= link_to raw(image_tag(item.image.url, height: 64)), edit_collection_item_path(item.collection, item), class: "pull-left" %></a>
+          <%= link_to raw(image_tag(item.image.url, height: 64)), collection_item_path(item.collection, item), class: "pull-left" %></a>
         </td>
         <td>
           <h4 class="media-heading"><%= h item.title %></h4>

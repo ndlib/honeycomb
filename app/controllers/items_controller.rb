@@ -16,7 +16,7 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = collection.items.find(params[:id])
+    @item = ItemDecorator.new(collection.items.find(params[:id]))
 
     respond_to do | format |
       format.json { render json: GenerateItemJson.new(@item, params) }
