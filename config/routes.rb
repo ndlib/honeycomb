@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
   root :to => 'collections#index'
 
+  # person search
+  get 'user_search', to: 'users#user_search'
+
   get '404', to: 'errors#catch_404'
   get '500', to: 'errors#catch_500'
 
