@@ -16,7 +16,6 @@ Rails.application.routes.draw do
   resources :collections do
     put :soft_delete
     resources :items
-    resources :items_uploads
   end
 
   scope '/admin' do
