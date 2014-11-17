@@ -37,7 +37,8 @@ gem 'paperclip'
 
 
 gem "hesburgh_infrastructure", git: 'git@git.library.nd.edu:hesburgh_infrastructure'
-gem "hesburgh_api", git: 'git@git.library.nd.edu:hesburgh_api'
+gem "hesburgh_api", path: '/Users/dwolfe2/Sites/hesburgh_api'
+# gem "hesburgh_api", git: 'git@git.library.nd.edu:hesburgh_api'
 
 gem 'simple_form', '~> 3.1.0rc1'
 
