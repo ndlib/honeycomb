@@ -21,3 +21,8 @@
 
 en:
   hello: "Hello world"
+  items:
+    collection_title: "Items"
+  item_children:
+    collection_title: "Additional Items"
+    add_link: "Add Additional Items"

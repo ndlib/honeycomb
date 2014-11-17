@@ -1,0 +1,45 @@
+<table class="table table-striped datatable">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Item</th>
+      <th>Last Modified</th>
+      <th>Last Modified Timestamp</th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      <th>Sortable Title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% items.each do |item| %>
+      <tr>
+        <td>
+          <%= link_to raw(image_tag(item.image.url, height: 64)), edit_collection_item_path(item.collection, item), class: "pull-left" %></a>
+        </td>
+        <td>
+          <h4 class="media-heading"><%= h item.title %></h4>
+          <%= h item.description %>
+        </td>
+        <td>
+          <%= item.updated_at.to_s(:long) %>
+        </td>
+        <td>
+          <%= item.updated_at.to_i %>
+        </td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_collection_item_path(item.collection, item), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      collection_item_path(item.collection, item),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm")) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+        <td>
+          <%= item.sortable_title %>
+        </td>
+        <td>
+          <%= item.image.original_filename %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
