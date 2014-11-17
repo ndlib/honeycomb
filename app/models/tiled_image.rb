@@ -1,5 +1,5 @@
 class TiledImage < ActiveRecord::Base
   belongs_to :item
 
-  validates :width, :height, :uri, presence: true
+  validates :width, :height, :host, :path, presence: true
 end
