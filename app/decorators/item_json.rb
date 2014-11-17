@@ -33,7 +33,8 @@ class ItemJson < Draper::Decorator
       return {} if object.tiled_image.nil?
       {
         id: object.tiled_image.id,
-        uri: object.tiled_image.uri,
+        host: object.tiled_image.host,
+        path: object.tiled_image.path,
         width: object.tiled_image.width,
         height: object.tiled_image.height,
       }

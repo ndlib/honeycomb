@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ItemJson do
   let(:item) { double(Item, title: "title", description: "description", updated_at: "2014-11-06 11:45:52 -0500", id: 1, collection: collection, tiled_image: tiled_image)}
   let(:collection) { double(Collection, id: 2, title: 'title')}
-  let(:tiled_image) { double(TiledImage, id: 3, uri: "url", width: '1000', height: '1000')}
+  let(:tiled_image) { double(TiledImage, id: 3, host: "localhost", path: "path", width: '1000', height: '1000')}
 
   let(:options) { {} }
   subject { described_class.new(item).to_hash(options) }
@@ -23,7 +23,7 @@ RSpec.describe ItemJson do
       end
     end
 
-    [:id, :uri, :width, :height].each do | field |
+    [:id, :host, :path, :width, :height].each do | field |
       it "does not include the field, #{field}, from collection " do
         expect(tiled_image).to_not receive(field)
         subject
@@ -49,7 +49,7 @@ RSpec.describe ItemJson do
       end
     end
 
-    [:id, :uri, :width, :height].each do | field |
+    [:id, :host, :path, :width, :height].each do | field |
       it "does not include the field, #{field}, from collection " do
         expect(tiled_image).to_not receive(field)
         subject
@@ -74,7 +74,7 @@ RSpec.describe ItemJson do
       end
     end
 
-    [:id, :uri, :width, :height].each do | field |
+    [:id, :path, :host, :width, :height].each do | field |
       it "does not include the field, #{field}, from tiled_image " do
         expect(tiled_image).to receive(field)
         subject
@@ -100,7 +100,7 @@ RSpec.describe ItemJson do
       end
     end
 
-    [:id, :uri, :width, :height].each do | field |
+    [:id, :path, :host, :width, :height].each do | field |
       it "does not include the field, #{field}, from tiled_image " do
         expect(tiled_image).to receive(field)
         subject
