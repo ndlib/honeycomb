@@ -41,9 +41,11 @@ ActiveRecord::Schema.define(version: 20141119153251) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.text     "sortable_title"
+    t.integer  "parent_id"
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
+  add_index "items", ["parent_id"], name: "index_items_on_parent_id", using: :btree
 
   create_table "tiled_images", force: true do |t|
     t.integer  "item_id"
