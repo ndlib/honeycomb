@@ -1,18 +1,17 @@
 GIT
-  remote: git@git.library.nd.edu:hesburgh_api
-  revision: e98a95cbe336edd735327e4ca28219a6d32a03c7
-  specs:
-    hesburgh_api (0.0.1)
-      faraday
-      rails (~> 4.0)
-
-GIT
   remote: git@git.library.nd.edu:hesburgh_infrastructure
   revision: be6d6aea79dfc32d343b072d847a87b26e617963
   specs:
     hesburgh_infrastructure (0.2.4)
       capistrano (~> 2.15.0)
       rails
+
+PATH
+  remote: /Users/dwolfe2/Sites/hesburgh_api
+  specs:
+    hesburgh_api (0.0.1)
+      faraday
+      rails (~> 4.0)
 
 GEM
   remote: https://rubygems.org/
