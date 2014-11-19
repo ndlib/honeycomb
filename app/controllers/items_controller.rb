@@ -52,7 +52,7 @@ class ItemsController < ApplicationController
       if SaveItem.call(@item, save_params)
         flash[:notice] = t(:default_update_success_message)
 
-        format.html { redirect_to collection_items_path(@item.collection) }
+        format.html { redirect_to collection_item_path(@item.collection, @item) }
         format.json { render json: @item }
       else
         format.html { render action: "edit" }
