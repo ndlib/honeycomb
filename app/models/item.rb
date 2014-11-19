@@ -2,6 +2,8 @@ class Item < ActiveRecord::Base
   has_paper_trail
 
   belongs_to :collection
+  belongs_to :parent, class_name: 'Item', foreign_key: :parent_id
+  has_many :children, class_name: 'Item', foreign_key: :parent_id
   has_one :tiled_image
 
   has_attached_file :image

@@ -29,7 +29,9 @@ class SaveTiledImage
       body = request.body.with_indifferent_access
       tiled_image.width = body[:image][:width]
       tiled_image.height = body[:image][:height]
-      tiled_image.uri = body[:image][:uri]
+      tiled_image.host = body[:image][:host]
+      tiled_image.path = body[:image][:path]
+
 
       tiled_image.save
     end

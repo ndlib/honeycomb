@@ -33,15 +33,26 @@ class ItemJson < Draper::Decorator
       return {} if object.tiled_image.nil?
       {
         id: object.tiled_image.id,
-        uri: object.tiled_image.uri,
+        host: object.tiled_image.host,
+        path: object.tiled_image.path,
         width: object.tiled_image.width,
         height: object.tiled_image.height,
       }
     end
 
+    def parent_data
+      object.parent_id
+    end
+
+    def children_data
+      object.child_ids
+    end
+
 
     def add_links(options ={})
       links = {}
+      links[:parent] = parent_data
+      links[:children] = children_data
       if options && options[:include] && options[:include].include?('collection')
         links[:collection] = collection_data
       end
@@ -49,7 +60,6 @@ class ItemJson < Draper::Decorator
       if options && options[:include] && options[:include].include?('tiled_image')
         links[:tiled_image] = tiled_image_data
       end
-      #links[:tiled_image] = tiled_image_data
       links
     end
 end

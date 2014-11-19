@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe SaveTiledImage do
   subject { described_class.call(item) }
 
-  let(:jsonresponse) { {image: { width: 1200, height: 1600, type: "jpeg", path: "path", uri: "url" } } }
+  let(:jsonresponse) { {image: { width: 1200, height: 1600, type: "jpeg", path: "path", host: "localhost" } } }
 
   let(:connection) do
     Faraday.new do |builder|
@@ -50,8 +50,12 @@ RSpec.describe SaveTiledImage do
       expect(subject).to be_kind_of(TiledImage)
     end
 
-    it "sets a uri tiled image object" do
-      expect(subject.uri).to eq("url")
+    it "sets a host in the tiled image object" do
+      expect(subject.host).to eq("localhost")
+    end
+
+    it "sets a path in the tiled image object" do
+      expect(subject.path).to eq("path")
     end
 
     it "sets a width in the tiled image object" do

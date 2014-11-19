@@ -16,7 +16,7 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = collection.items.find(params[:id])
+    @item = ItemDecorator.new(collection.items.find(params[:id]))
 
     respond_to do | format |
       format.json { render json: GenerateItemJson.new(@item, params) }
@@ -52,7 +52,7 @@ class ItemsController < ApplicationController
       if SaveItem.call(@item, save_params)
         flash[:notice] = t(:default_update_success_message)
 
-        format.html { redirect_to collection_items_path(@item.collection) }
+        format.html { redirect_to collection_item_path(@item.collection, @item) }
         format.json { render json: @item }
       else
         format.html { render action: "edit" }

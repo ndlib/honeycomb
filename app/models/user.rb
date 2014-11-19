@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 
-  has_many :collections_users
-  has_many :collections, :through => :collections_users
+  has_many :collection_users
+  has_many :collections, :through => :collection_users
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -21,10 +21,6 @@ class User < ActiveRecord::Base
 
   def username
     self[:username].to_s.downcase.strip
-  end
-
-  def admin?
-    self.admin
   end
 
   protected

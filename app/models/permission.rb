@@ -14,4 +14,7 @@ class Permission
     m.masquerading? && UserIsAdminPolicy.new(m.original_user).is_admin?
   end
 
+  def current_user_can_edit_collection?
+    UserCanEditPolicy.new(@current_user, @current_collection).can_edit?
+  end
 end
