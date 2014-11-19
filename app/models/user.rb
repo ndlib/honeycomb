@@ -23,10 +23,6 @@ class User < ActiveRecord::Base
     self[:username].to_s.downcase.strip
   end
 
-  def admin?
-    self.admin
-  end
-
   protected
   def map_user
     MapUserToApi.call(self)
