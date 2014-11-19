@@ -14,8 +14,8 @@
 ActiveRecord::Schema.define(version: 20141119153251) do
 
   create_table "collection_users", force: true do |t|
-    t.integer  "user_id",       default: 0, null: false
-    t.integer  "collection_id", default: 0, null: false
+    t.integer  "user_id",       null: false
+    t.integer  "collection_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -23,17 +23,11 @@ ActiveRecord::Schema.define(version: 20141119153251) do
   add_index "collection_users", ["collection_id"], name: "index_collection_users_on_collection_id", using: :btree
   add_index "collection_users", ["user_id"], name: "index_collection_users_on_user_id", using: :btree
 
-
   create_table "collections", force: true do |t|
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "deleted",    default: false
-  end
-
-  create_table "collections_users", id: false, force: true do |t|
-    t.integer "user_id"
-    t.integer "collection_id"
   end
 
   create_table "items", force: true do |t|
