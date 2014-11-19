@@ -18,7 +18,9 @@ Rails.application.routes.draw do
 
   resources :collections do
     put :soft_delete
-    resources :items
+    resources :items do
+      resources :children, controller: 'item_children'
+    end
   end
 
   scope '/admin' do

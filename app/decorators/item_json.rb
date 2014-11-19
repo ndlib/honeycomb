@@ -40,9 +40,19 @@ class ItemJson < Draper::Decorator
       }
     end
 
+    def parent_data
+      object.parent_id
+    end
+
+    def children_data
+      object.child_ids
+    end
+
 
     def add_links(options ={})
       links = {}
+      links[:parent] = parent_data
+      links[:children] = children_data
       if options && options[:include] && options[:include].include?('collection')
         links[:collection] = collection_data
       end
@@ -50,7 +60,6 @@ class ItemJson < Draper::Decorator
       if options && options[:include] && options[:include].include?('tiled_image')
         links[:tiled_image] = tiled_image_data
       end
-      #links[:tiled_image] = tiled_image_data
       links
     end
 end

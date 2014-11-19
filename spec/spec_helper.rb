@@ -55,5 +55,16 @@ RSpec.configure do |config|
     # `true` in RSpec 4.
     # mocks.verify_partial_doubles = true
   end
+
+  config.before(:suite) do
+    # Preload the fields for ActiveRecord objects to allow use of instance_double
+    [Collection, Item, TiledImage].each do |database_model|
+      instance = database_model.new
+      # The first attribute is id, which does not cause the methods to be built on the class
+      field = instance.attributes.keys[1]
+      # Trigger method missing on the instance which dynamically adds the methods to the class
+      instance.send(field)
+    end
+  end
 end
 
