@@ -1,6 +1,11 @@
 require "rails_helper"
 
 RSpec.describe User do
+
+  before(:each) do
+    MapUserToApi.stub(:call).and_return(true)
+  end
+
   @f = [:first_name, :last_name, :display_name, :email]
   @f.each do | field |
     it "has field, #{field}" do
@@ -14,4 +19,10 @@ RSpec.describe User do
       expect(subject).to have(1).error_on(field)
     end
   end
+
+  it "uses MapUserToApi when user saved" do
+    expect(MapUserToApi).to receive(:call)
+    User.new.save
+  end
+
 end

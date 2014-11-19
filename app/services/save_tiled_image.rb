@@ -57,11 +57,6 @@ class SaveTiledImage
     end
 
     def api_url
-      case Rails.env
-      when 'development', 'test'
-        'http://localhost:4567'
-      else
-        raise "set a url for the tile server api for the current environment"
-      end
+      Rails.configuration.honeypot_url
     end
 end

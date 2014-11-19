@@ -1,5 +1,8 @@
 <%- model_class = User -%>
   <div class="page-header">
+      <div class="pull-right">
+    <%= link_to 'Add User', new_user_path, class: "btn btn-primary" %>
+  </div>
     <h1 class="title">Users</h1>
   </div>
   <table class="table table-striped">
@@ -39,7 +42,3 @@
     <% end %>
   </tbody>
 </table>
-<%= link_to 'Add Admin', new_user_path, class: "btn btn-primary" %>
-<% if masquerade.masquerading? %>
-<%= link_to "Cancel Masquerade", cancel_masquerades_path(), :class => 'btn btn-default' %>
-<% end %>

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :errors
 
   resources :collections do
+    put :soft_delete
     resources :items
     resources :items_uploads
   end

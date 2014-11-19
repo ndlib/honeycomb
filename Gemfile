@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.6'
+gem 'rails', '4.1.7'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
@@ -37,7 +37,7 @@ gem 'paperclip'
 
 
 gem "hesburgh_infrastructure", git: 'git@git.library.nd.edu:hesburgh_infrastructure'
-gem "hesburgh_api", path: '/Users/rfox2/Development/hesburgh_api'
+gem "hesburgh_api", path: '../hesburgh_api'
 # gem "hesburgh_api", git: 'git@git.library.nd.edu:hesburgh_api'
 
 gem 'simple_form', '~> 3.1.0rc1'

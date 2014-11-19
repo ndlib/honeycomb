@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141103200853) do
+ActiveRecord::Schema.define(version: 20141113153124) do
 
   create_table "collections", force: true do |t|
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "deleted",    default: false
   end
 
   create_table "collections_users", id: false, force: true do |t|
