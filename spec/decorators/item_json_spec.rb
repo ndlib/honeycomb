@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe ItemJson do
-  let(:item) { double(Item, title: "title", description: "description", updated_at: "2014-11-06 11:45:52 -0500", id: 1, collection: collection, tiled_image: tiled_image)}
-  let(:collection) { double(Collection, id: 2, title: 'title')}
-  let(:tiled_image) { double(TiledImage, id: 3, host: "localhost", path: "path", width: '1000', height: '1000')}
+  let(:item) { instance_double(Item, title: "title", description: "description", updated_at: "2014-11-06 11:45:52 -0500", id: 1, collection: collection, tiled_image: tiled_image)}
+  let(:collection) { instance_double(Collection, id: 2, title: 'title')}
+  let(:tiled_image) { instance_double(TiledImage, id: 3, host: "localhost", path: "path", width: '1000', height: '1000')}
 
   let(:options) { {} }
   subject { described_class.new(item).to_hash(options) }
