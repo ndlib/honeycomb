@@ -15,7 +15,10 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'mysql2'
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails'
+gem 'jquery-rails', '3.1.2'
+gem 'jquery-ui-rails', '5.0.2'
+gem 'jquery-datatables-rails', '~> 2.2.3'
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -31,11 +34,10 @@ gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 
 gem 'paperclip'
-gem 'jquery-datatables-rails', '~> 2.2.3'
 
 
 gem "hesburgh_infrastructure", git: 'git@git.library.nd.edu:hesburgh_infrastructure'
-gem "hesburgh_api", git: 'git@git.library.nd.edu:hesburgh_api'
+gem "hesburgh_api", git: 'git@git.library.nd.edu:hesburgh_api', branch: "person_search"
 
 gem 'simple_form', '~> 3.1.0rc1'
 
