@@ -22,7 +22,18 @@
 en:
   hello: "Hello world"
   items:
-    collection_title: "Items"
+    show:
+      title: "Item"
+      children:
+        title: "Additional Resources"
+        manage_link: "Manage Additional Resources"
+    index:
+      title: "Items"
   item_children:
-    collection_title: "Additional Items"
-    add_link: "Add Additional Items"
+    index: 
+      title: "Additional Resources"
+      add_link: "Add Additional Resources"
+    new:
+      title: "Upload Additional Resources"
+      upload_button: "Upload Images"
+      back_link: "Back to %{title}"

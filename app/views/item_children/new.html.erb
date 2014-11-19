@@ -1,12 +1,12 @@
 <div class="page-header">
-  <h1><%=t '.title', :default => "Upload New Items" %></h1>
+  <h1><%=t '.title' %></h1>
 </div>
 <div class="container">
 
   <%= simple_form_for [@item.collection, @item.parent, @item], url: collection_item_children_path(@item.collection, @item.parent), :html => { class: 'new-item-dropzone', :multipart => true, :id => "fileupload"  } do |f| %>
     <div class="row">
-      <%= f.button :submit, "Upload Images", class: 'btn btn-primary' %>
-      <%= link_to 'Back to Parent', collection_item_children_path(@item.collection, @item.parent), class: 'btn btn-large' %>
+      <%= f.button :submit, t('.upload_button'), class: 'btn btn-primary' %>
+      <%= link_to t('.back_link', title: @item.parent.title), collection_item_children_path(@item.collection, @item.parent), class: 'btn btn-large' %>
     </div>
     <div class="row">
       <div class="dropzone">

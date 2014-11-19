@@ -1,6 +1,5 @@
-<%- model_class = Item -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %> <%= @item.title %></h1>
+  <h1><%=t '.title' %> <%= @item.title %></h1>
 </div>
 
 <div class="row">
@@ -25,9 +24,9 @@
 </div>
 
 <% if @item.parent? %>
-  <h2>Children</h2>
+  <h2><%= t '.children.title' %></h2>
   <% if @item.recent_children.count > 0 %>
     <%= render partial: 'list_small', locals: { items: @item.recent_children } %>
   <% end %>
-  <%= link_to "Manage Children", collection_item_children_path(collection, @item), class: 'btn btn-default' %>
+  <%= link_to t('.children.manage_link'), collection_item_children_path(collection, @item), class: 'btn btn-default' %>
 <% end %>
