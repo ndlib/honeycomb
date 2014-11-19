@@ -1,13 +1,7 @@
 GIT
-  remote: git@git.library.nd.edu:hesburgh_infrastructure
-  revision: be6d6aea79dfc32d343b072d847a87b26e617963
-  specs:
-    hesburgh_infrastructure (0.2.4)
-      capistrano (~> 2.15.0)
-      rails
-
-PATH
-  remote: /Users/dwolfe2/Sites/hesburgh_api
+  remote: git@git.library.nd.edu:hesburgh_api
+  revision: cdb77faa8f098b8e984c9d4297d2d9638f89d6c2
+  branch: person_search
   specs:
     hesburgh_api (0.0.3)
       excon
@@ -16,6 +10,14 @@ PATH
       multi_xml
       rails (~> 4.0)
       typhoeus
+
+GIT
+  remote: git@git.library.nd.edu:hesburgh_infrastructure
+  revision: be6d6aea79dfc32d343b072d847a87b26e617963
+  specs:
+    hesburgh_infrastructure (0.2.4)
+      capistrano (~> 2.15.0)
+      rails
 
 GEM
   remote: https://rubygems.org/
