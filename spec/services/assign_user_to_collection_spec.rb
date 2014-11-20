@@ -15,10 +15,10 @@ describe AssignUserToCollection do
     expect(subject).to be(false)
   end
 
-#  it "to set the collection id" do
-#    expect_any_instance_of(CollectionUser).to receive(:collection_id=).with(collection.id)
-#    subject
-#  end
+  it "to set the collection id" do
+    expect_any_instance_of(CollectionUser).to receive(:collection_id=).with(collection.id)
+    subject
+  end
 
   it "to set the user id" do
     expect_any_instance_of(CollectionUser).to receive(:user_id=).with(user.id)
