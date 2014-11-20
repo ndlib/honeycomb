@@ -66,9 +66,9 @@ class UsersController < ApplicationController
 
   def user_search
     check_admin_or_admin_masquerading_permission!
-    response = UserSearch.search(params[:term])
+    response_list = format_userlist(UserSearch.search(params[:term]))
     respond_to do |format|
-      format.any { render json: response.to_json, content_type: "application/json" }
+      format.any { render json: response_list.to_json, content_type: "application/json" }
     end
   end
 
@@ -80,6 +80,26 @@ class UsersController < ApplicationController
 
   def save_params
     {username: params[:user][:username]}
+  end
+
+  private
+
+  def format_userlist(results)
+    if !results.blank?
+      results.map do |result|
+        {
+          label: result['full_name'],
+          value: result['uid']
+        }
+      end
+    else
+      [
+        {
+          label: 'User not found',
+          value: 'not found'
+        }
+      ]
+    end
   end
 
 end
