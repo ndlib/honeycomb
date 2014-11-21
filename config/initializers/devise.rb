@@ -3,8 +3,6 @@
 Devise.setup do |config|
 
   config.cas_base_url = Rails.configuration.honeycomb_cas_base
-  config.cas_validate_url = Rails.configuration.honeycomb_cas_validate
-  config.cas_logout_url = Rails.configuration.honeycomb_cas_logout
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,

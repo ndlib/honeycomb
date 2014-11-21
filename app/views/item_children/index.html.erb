@@ -1,0 +1,11 @@
+<div class="page-header">
+  <div class="pull-right">
+    <%= link_to t('.add_link'),
+            new_collection_item_child_path(collection, parent),
+            :class => 'btn btn-primary' %>
+  </div>
+  <h1><%= collection.title.titleize %> » <%= parent.title.titleize %> » 
+    <%=t '.title' %></h1>
+</div>
+
+<%= render partial: "items/list", locals: { items: @items } %>

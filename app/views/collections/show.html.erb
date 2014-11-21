@@ -8,6 +8,12 @@
   <dd><%= @collection.title %></dd>
 </dl>
 
+<div id="selected_user">
+  <label for="user_search">Add Curator:</label>
+  <input id="user_search">
+  <div id="user_selected"></div>
+</div><br/><br/>
+
 <%= link_to t('.back', :default => t("helpers.links.back")),
               collections_path, :class => 'btn btn-default'  %>
 <%= link_to t('.edit', :default => t("helpers.links.edit")),

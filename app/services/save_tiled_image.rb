@@ -29,7 +29,9 @@ class SaveTiledImage
       body = request.body.with_indifferent_access
       tiled_image.width = body[:image][:width]
       tiled_image.height = body[:image][:height]
-      tiled_image.uri = body[:image][:uri]
+      tiled_image.host = body[:image][:host]
+      tiled_image.path = body[:image][:path]
+
 
       tiled_image.save
     end
@@ -57,11 +59,6 @@ class SaveTiledImage
     end
 
     def api_url
-      case Rails.env
-      when 'development', 'test'
-        'http://localhost:4567'
-      else
-        raise "set a url for the tile server api for the current environment"
-      end
+      Rails.configuration.honeypot_url
     end
 end

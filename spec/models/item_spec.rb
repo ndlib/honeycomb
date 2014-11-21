@@ -30,5 +30,14 @@ RSpec.describe Item do
   it "keeps spaces in the original filename" do
     subject.image = image_with_spaces
     expect(subject.image.original_filename).to eq("test copy.jpg")
+
+  it "has a parent" do
+    expect(subject).to respond_to(:parent)
+    expect(subject.parent).to be_nil
+  end
+
+  it "has children" do
+    expect(subject).to respond_to(:children)
+    expect(subject.children).to eq([])
   end
 end

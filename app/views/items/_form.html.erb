@@ -30,4 +30,4 @@
 </div>
 <%= f.button :submit, "Save", class: 'btn btn-primary'%>
 <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
-        collection_items_path(@item.collection), :class => 'btn btn-default' %>
+        collection_item_path(@item.collection, @item), :class => 'btn btn-default' %>

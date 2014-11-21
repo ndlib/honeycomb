@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
   root :to => 'collections#index'
 
+  # person search
+  get 'user_search', to: 'users#user_search'
+
   get '404', to: 'errors#catch_404'
   get '500', to: 'errors#catch_500'
 
@@ -14,8 +17,10 @@ Rails.application.routes.draw do
   resources :errors
 
   resources :collections do
-    resources :items
-    resources :items_uploads
+    put :soft_delete
+    resources :items do
+      resources :children, controller: 'item_children'
+    end
   end
 
   scope '/admin' do

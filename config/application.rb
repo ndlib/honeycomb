@@ -13,14 +13,10 @@ module ItemAdmin
       Rails.root.join('lib'),
       Rails.root.join('app', 'queries'),
       Rails.root.join('app', 'decorators'),
+      Rails.root.join('app', 'policy'),
       Rails.root.join('app', 'services'),
       ]
-    additional_autoload_directories.each do |directory|
-      config.autoload_paths += %W(#{config.root}/extras)
-      config.autoload_paths += Dir[Rails.root.join('lib', '{**}')]
-      config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
-      config.autoload_paths += Dir[Rails.root.join('app', 'controllers', '{**}')]
-    end
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

@@ -11,17 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141103200853) do
+ActiveRecord::Schema.define(version: 20141119153251) do
+
+  create_table "collection_users", force: true do |t|
+    t.integer  "user_id",       null: false
+    t.integer  "collection_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "collection_users", ["collection_id"], name: "index_collection_users_on_collection_id", using: :btree
+  add_index "collection_users", ["user_id"], name: "index_collection_users_on_user_id", using: :btree
 
   create_table "collections", force: true do |t|
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "collections_users", id: false, force: true do |t|
-    t.integer "user_id"
-    t.integer "collection_id"
+    t.boolean  "deleted",    default: false
   end
 
   create_table "items", force: true do |t|
@@ -35,15 +41,20 @@ ActiveRecord::Schema.define(version: 20141103200853) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
     t.text     "sortable_title"
+    t.integer  "parent_id"
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
+  add_index "items", ["parent_id"], name: "index_items_on_parent_id", using: :btree
 
   create_table "tiled_images", force: true do |t|
-    t.integer "item_id"
-    t.string  "uri"
-    t.integer "width"
-    t.integer "height"
+    t.integer  "item_id"
+    t.integer  "width"
+    t.integer  "height"
+    t.string   "host"
+    t.string   "path"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|
