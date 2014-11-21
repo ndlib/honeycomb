@@ -64,6 +64,22 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
+  def set_curator
+    check_admin_or_admin_masquerading_permission!
+    @user =  FindOrCreateUser.call(params[:curator_id])
+    @collection =   Collection.find(params[:collection_id])
+    if !@user.blank?
+      result = AssignUserToCollection.call(@collection, @user)
+    end
+    if result
+      flash[:notice] = "Granted curator status to " + @user.username
+      redirect_to collection_path(@collection)
+    else
+      flash[:error] = "Could not grant curator status to " + params[:curator_id]
+      redirect_to collection_path(@collection)
+    end
+  end
+
   def user_search
     check_admin_or_admin_masquerading_permission!
     response_list = format_userlist(UserSearch.search(params[:term]))
@@ -88,8 +104,9 @@ class UsersController < ApplicationController
     if !results.blank?
       results.map do |result|
         {
+          id: result['uid'],
           label: result['full_name'],
-          value: result['uid']
+          value: result['full_name']
         }
       end
     else
