@@ -14,7 +14,7 @@
   <table class="table table-striped">
     <% @collection.users.each do |curator| %>
       <tr>
-        <td><%= curator.name %></td>
+        <td><%= curator.name %> <button class="btn btn-danger" id="remove_curator" style="margin-left: 5px;">Remove</button></td>
       </tr> 
     <% end %>
   </table>
