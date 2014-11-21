@@ -9,10 +9,27 @@
   <dd><%= @collection.title %></dd>
 </dl>
 
+<div>
+  <h3>Curators</h3>
+  <table class="table table-striped">
+    <% @collection.users.each do |curator| %>
+      <tr>
+        <td><%= curator.name %></td>
+      </tr> 
+    <% end %>
+  </table>
+</div>
+
+<form action="<%= set_curator_path %>" method="post" id="set_curator_form">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>"/>
+  <input type="hidden" name="curator_id" id="curator_id" value=""/>
+  <input type="hidden" name="collection_id" value="<%= @collection.id %>"/>
+</form>
+
 <div id="selected_user">
   <label for="user_search">Add Curator:</label>
   <input id="user_search">
-  <div id="user_selected"></div>
+  <button class="btn btn-primary" id="add_curator">Add</button>
 </div><br/><br/>
 
 <%= link_to t('.back', :default => t("helpers.links.back")),
