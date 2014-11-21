@@ -5,7 +5,7 @@ module ApplicationHelper
     if defined?(collection)
       res << link_to(collection.title, collection_items_path(collection))
     end
-    if permission.current_user_is_administrator? || permission.current_user_is_admin_in_masquerade?
+    if permission.user_is_administrator? || permission.user_is_admin_in_masquerade?
       res << link_to("Users", users_path)
     end
     if masquerade.masquerading?
@@ -38,7 +38,8 @@ module ApplicationHelper
   def masquerade
     @masquerade ||= Masquerade.new(self)
   end
+
   def permission
-    @permission ||= Permission.new(current_user, self)
+    @permission ||= SitePermission.new(current_user, self)
   end
 end
