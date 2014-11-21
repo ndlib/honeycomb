@@ -19,18 +19,18 @@ class ApplicationController < ActionController::Base
   protected
 
     def permission
-      @permission ||= Permission.new(current_user, self)
+      @permission ||= SitePermission.new(current_user, self)
     end
 
     def check_admin_permission!
-      if !permission.current_user_is_administrator?
+      if !permission.user_is_administrator?
         raise_404("User not an admin")
       end
     end
 
 
     def check_admin_or_admin_masquerading_permission!
-      if !(permission.current_user_is_admin_in_masquerade? || permission.current_user_is_administrator?)
+      if !(permission.user_is_admin_in_masquerade? || permission.user_is_administrator?)
         raise_404("User not a admin or an admin in masquerade")
       end
     end
