@@ -38,37 +38,70 @@
   </head>
   <body>
 
-    <div class="navbar navbar-default navbar-static-top">
+<header id="banner" role="banner" class="home">
+  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="brand-bar">
       <div class="container">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <%= link_to "Honeycomb", collections_path(), class: 'navbar-brand' %>
-        <div class="navbar-collapse collapse navbar-responsive-collapse">
-          <ul class="nav navbar-nav">
-            <% top_nav_links.each do | link | %>
-              <li><%= link %></li>
-            <% end %>
-          </ul>
+        <div class="row">
+          <div class="col-sm-6">
+            <a href="http://www.nd.edu">University <i>of</i> Notre Dame</a>
+          </div>
+          <div class="col-sm-6">
+            <a class="pull-right" href="http://library.nd.edu">Hesburgh Libraries</a>
+          </div>
         </div>
       </div>
     </div>
-
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <%= display_notices %>
-          <%= yield %>
+    <div class="title-bar">
+      <div class="container">
+        <div class="row">
+          <div class="navbar-header">
+             <a class="navbar-brand" href="/">Exhibits</a>
+          </div>
+          <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="">Collections</a></li>
+              <li><a href="#about">Exhibits</a></li>
+              <li><a href="#contact">Users</a></li>
+            </ul>
+          </div>
         </div>
-      </div><!--/row-->
+      </div>
+    </div>
+  </nav>
+</header>
 
-      <footer>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <%= display_notices %>
+      <%= yield %>
+    </div>
+  </div><!--/row-->
 
-      </footer>
+</div> <!-- /container -->
 
-    </div> <!-- /container -->
+<footer id="footer" class="container">
+  <div class="row">
+    <div class="col-sm-8 pull-left">
+      <p>
+        Exhibits is a service of the <a href="http://library.nd.edu">Hesburgh Libraries of Notre Dame</a>.
+      </p>
+      <p>
+        For Technical Support call <a href="tel:5746316258">(574) 631-6258</a>  or email <a href="mailto:rfox2@nd.edu?subject=Support%20Request">rfox2@nd.edu</a>.
+      </p>
+      <p>
+        <a href="http://www.nd.edu/copyright/">Copyright</a> 2014 <a href="http://www.nd.edu">University of Notre Dame</a>
+      </p>
+
+    </div>
+
+    <div class="col-sm-4 pull-right">
+      <a href="http://library.nd.edu">
+        <%= image_tag('full-color-mark.png', class: "hesburgh-logo", alt: "University of Notre Dame Hesburgh Libraries") %>
+    </div>
+  </div>
+</footer>
 
   </body>
 </html>
