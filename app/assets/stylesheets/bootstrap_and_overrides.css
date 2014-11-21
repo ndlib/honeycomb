@@ -6,6 +6,10 @@ div.dataTables_filter label {
   float: none;
 }
 
+div#selected_user label {
+  margin-right: 5px;
+}
+
 
 form.edit-item-dropzone div.dropzone {
   min-height: 252px;
