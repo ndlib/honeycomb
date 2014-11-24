@@ -1,1 +1,26 @@
-Show which collections user can edit? Show admin?
+<%- model_class = User -%>
+<div class="page-header">
+  <div class="pull-right">
+    <% if permission.user_is_administrator? %>
+      <%= link_to "Edit", edit_user_path(@user), :class => 'btn btn-default'  %>
+      <% unless masquerade.masquerading? %>
+        <%= link_to "Masquerade",
+                  new_masquerades_path(:username => @user.username),
+                  :class => 'btn btn-default' %>
+      <% end %>
+      <%= @user.admin? ? (link_to t('.revoke_admin', :default => t("Revoke Admin")),
+                user_revoke_admin_path(@user),
+                :method => :put,
+                :class => 'btn btn-default') :
+                (link_to t('.set_admin', :default => t("Add Admin")),
+                user_set_admin_path(@user),
+                :method => :put,
+                :class => 'btn btn-default') %>
+      <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                user_path(@user),
+                :method => :delete,
+                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure you wish delete this user?')) },
+                :class => 'btn btn-danger' %>
+    <% end %>
+  </div><h1><%= @user.display_name %></h1>
+</div>
