@@ -48,6 +48,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    addressable (2.3.6)
     arel (5.0.1.20140414130214)
     autoprefixer-rails (3.1.2.20141016)
       execjs
@@ -299,6 +300,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  addressable
   autoprefixer-rails
   bootstrap-sass (~> 3.2.0)
   capybara

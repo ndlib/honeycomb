@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141119153251) do
+ActiveRecord::Schema.define(version: 20141124155337) do
 
   create_table "collection_users", force: true do |t|
     t.integer  "user_id",       null: false
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20141119153251) do
     t.datetime "image_updated_at"
     t.text     "sortable_title"
     t.integer  "parent_id"
+    t.string   "manuscript_url"
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
