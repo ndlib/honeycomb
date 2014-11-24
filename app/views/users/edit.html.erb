@@ -1,6 +1,4 @@
-<% content_for(:content_title) do %>
-  <div class="page-header"><h1>Edit <%= @user.display_name %></h1></div>
-<% end %>
+<div class="page-header"><h1>Edit <%= @user.display_name %></h1></div>
 
 <%= simple_form_for @user do | f | %>
 <%= f.error_notification %>

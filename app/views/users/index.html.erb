@@ -9,35 +9,12 @@
       <thead>
       <tr>
       <th>User</th>
-      <th>Admin Rights</th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @users.each do | user | %>
     <tr>
-      <td><%= link_to user.display_name, edit_user_path(user) %></td>
-      <td><%= user.admin? ? "Yes" : "No" %></td>
-      <td>
-        <%= link_to t('.set_admin', :default => t("Add Admin")),
-                  user_set_admin_path(user),
-                  :method => :put,
-                  :class => 'btn btn-xs btn-default' %>
-        <%= link_to t('.revoke_admin', :default => t("Revoke Admin")),
-                  user_revoke_admin_path(user),
-                  :method => :put,
-                  :class => 'btn btn-xs btn-default' %>
-        <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                  user_path(user),
-                  :method => :delete,
-                  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure you wish delete this user?')) },
-                  :class => 'btn btn-xs btn-danger' %>
-        <% unless masquerade.masquerading? %>
-        <%= link_to "Masquerade",
-                  new_masquerades_path(:username => user.username),
-                  :class => 'btn btn-xs btn-default' %>
-        <% end %>
-      </td>
+      <td><%= link_to user.display_name, user_path(user) %></td>
     </tr>
     <% end %>
   </tbody>
