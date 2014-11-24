@@ -23,6 +23,22 @@ RSpec.describe Item do
     expect(subject).to have(1).error_on(:image)
   end
 
+  describe '#manuscript_url' do
+    it "is not required" do
+      expect(subject).to have(0).errors_on(:manuscript_url)
+    end
+
+    it "is valid with a url" do
+      subject.manuscript_url = "http://example.com/manuscript"
+      expect(subject).to have(0).errors_on(:manuscript_url)
+    end
+
+    it "is invalid with a non url value" do
+      subject.manuscript_url = "manuscript"
+      expect(subject).to have(1).error_on(:manuscript_url)
+    end
+  end
+
   it "has versioning " do
     expect(subject).to respond_to(:versions)
   end

@@ -30,10 +30,13 @@ en:
     index:
       title: "Items"
   item_children:
-    index: 
+    index:
       title: "Additional Resources"
       add_link: "Add Additional Resources"
     new:
       title: "Upload Additional Resources"
       upload_button: "Upload Images"
       back_link: "Back to %{title}"
+  errors:
+    messages:
+      invalid_url: "must be a valid URL"

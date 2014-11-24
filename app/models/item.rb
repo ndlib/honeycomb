@@ -12,5 +12,15 @@ class Item < ActiveRecord::Base
   validates :title, :collection, presence: true
   validates :image, attachment_presence: true
 
+  validate :manuscript_url_is_valid_uri
+
   validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+
+  private
+
+  def manuscript_url_is_valid_uri
+    if manuscript_url.present? && !URIParser.valid?(manuscript_url)
+      errors.add(:manuscript_url, :invalid_url)
+    end
+  end
 end
