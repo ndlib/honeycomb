@@ -19,6 +19,7 @@ class ItemJson < Draper::Decorator
         title: object.title,
         description: object.description,
         updated_at: object.updated_at,
+        manuscript_url: object.manuscript_url,
       }
     end
 

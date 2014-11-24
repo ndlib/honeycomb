@@ -40,3 +40,7 @@ en:
   errors:
     messages:
       invalid_url: "must be a valid URL"
+  activerecord:
+    attributes:
+      item:
+        manuscript_url: "Digitized Manuscript URL"

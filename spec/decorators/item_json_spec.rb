@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ItemJson do
-  let(:item) { instance_double(Item, title: "title", description: "description", updated_at: "2014-11-06 11:45:52 -0500", id: 1, collection: collection, tiled_image: tiled_image, parent_id: nil, child_ids: [])}
+  let(:item) { instance_double(Item, title: "title", description: "description", manuscript_url: "http://example.com/manuscript", updated_at: "2014-11-06 11:45:52 -0500", id: 1, collection: collection, tiled_image: tiled_image, parent_id: nil, child_ids: [])}
   let(:collection) { instance_double(Collection, id: 2, title: 'title')}
   let(:tiled_image) { instance_double(TiledImage, id: 3, host: "localhost", path: "path", width: '1000', height: '1000')}
 
@@ -9,7 +9,7 @@ RSpec.describe ItemJson do
   subject { described_class.new(item).to_hash(options) }
 
   context "no options" do
-    [:title, :description, :updated_at, :id].each do | field |
+    [:title, :description, :updated_at, :id, :manuscript_url].each do | field |
       it "includes the field, #{field}, from item" do
         expect(item).to receive(field).and_return(field)
         subject

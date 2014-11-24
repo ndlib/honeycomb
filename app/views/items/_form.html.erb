@@ -1,12 +1,12 @@
 
-<% if @item.errors.any? %>
+<% if f.object.errors.any? %>
   <div id="error_expl" class="panel panel-danger">
     <div class="panel-heading">
-      <h3 class="panel-title"><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h3>
+      <h3 class="panel-title"><%= pluralize(f.object.errors.count, "error") %> prohibited this item from being saved:</h3>
     </div>
     <div class="panel-body">
       <ul>
-      <% @item.errors.full_messages.each do |msg| %>
+      <% f.object.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -19,6 +19,8 @@
 <%= f.input :description, as: :text do %>
   <%= f.text_area :description, class: 'text optional form-control', rows: '3' %>
 <% end %>
+
+<%= f.input :manuscript_url, as: :string %>
 
 <div class="form-group">
   <label>Replace Image</label>
