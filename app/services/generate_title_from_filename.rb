@@ -1,19 +1,31 @@
 class GenerateTitleFromFilename
+  DEFAULT_OPTIONS = {
+    remove_extension: true,
+    add_spaces: false,
+    titleize: false
+  }
   attr_reader :filename
 
-  def self.call(filename)
-    new(filename).generate
+  def self.call(filename, options = {})
+    new(filename).generate(options)
   end
 
   def initialize(filename)
     @filename = filename
   end
 
-  def generate
+  def generate(options = {})
+    options = DEFAULT_OPTIONS.merge(options)
     ensure_string
-    remove_extension
-    add_spaces
-    titleize
+    if options[:remove_extension]
+      remove_extension
+    end
+    if options[:add_spaces]
+      add_spaces
+    end
+    if options[:titleize]
+      titleize
+    end
 
     filename
   end
