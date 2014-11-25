@@ -23,6 +23,6 @@ feature "Collection creation" do
       fill_in 'Title', with: 'Test Collection'
     end
     click_button 'Create Collection'
-    expect(page).to have_content 'Title: Test Collection'
+    expect(page).to have_content 'Test Collection'
   end
 end
