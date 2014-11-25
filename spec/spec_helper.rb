@@ -56,6 +56,11 @@ RSpec.configure do |config|
     # mocks.verify_partial_doubles = true
   end
 
+  config.include GlobalStubs
+  config.before(:each) do
+    add_global_stubs
+  end
+
   config.before(:suite) do
     # Preload the fields for ActiveRecord objects to allow use of instance_double
     [Collection, Item, TiledImage].each do |database_model|
