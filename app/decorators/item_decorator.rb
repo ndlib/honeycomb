@@ -6,7 +6,7 @@ class ItemDecorator < Draper::Decorator
   end
 
   def recent_children
-    object.children.order(created_at: :desc).limit(5)
+    ItemsDecorator.new(object.children.order(created_at: :desc).limit(5))
   end
 
   def image_tag(width)
@@ -19,5 +19,13 @@ class ItemDecorator < Draper::Decorator
     else
       h.collection_item_children_path(object.collection_id, object.parent_id)
     end
+  end
+
+  def edit_path
+    h.edit_collection_item_path(object.collection_id, object.id)
+  end
+
+  def show_path
+    h.collection_item_path(object.collection_id, object.id)
   end
 end

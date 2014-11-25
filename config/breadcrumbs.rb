@@ -52,12 +52,12 @@ crumb :new_collection_item_child do |parent_item|
 end
 
 crumb :collection_item_child do |child_item|
-  link child_item.title, collection_item_child_path(child_item.collection, child_item.parent, child_item)
+  link child_item.title, collection_item_path(child_item.collection, child_item)
   parent :collection_item_children, child_item.parent
 end
 
 crumb :edit_collection_item_child do |child_item|
-  link t('item_children.index.edit', :default => t("helpers.links.edit")), edit_collection_item_child_path(child_item.collection, child_item.parent, child_item)
+  link t('item_children.index.edit', :default => t("helpers.links.edit")), edit_collection_item_path(child_item.collection, child_item)
   parent :collection_item_child, child_item
 end
 

@@ -13,7 +13,7 @@
     <% items.each do |item| %>
       <tr>
         <td>
-          <%= link_to raw(image_tag(item.image.url, height: 64)), collection_item_path(item.collection, item), class: "pull-left" %></a>
+          <%= link_to raw(image_tag(item.image.url, height: 64)), item.show_path, class: "pull-left" %></a>
         </td>
         <td>
           <h4 class="media-heading"><%= h item.title %></h4>
@@ -27,9 +27,9 @@
         </td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                      edit_collection_item_path(item.collection, item), :class => 'btn btn-default btn-xs' %>
+                      item.edit_path, :class => 'btn btn-default btn-xs' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                      collection_item_path(item.collection, item),
+                      item.show_path,
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm")) },
                       :class => 'btn btn-xs btn-danger' %>
