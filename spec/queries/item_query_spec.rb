@@ -42,5 +42,12 @@ describe ItemQuery do
         subject.recent(7)
       end
     end
+
+    describe '#exclude_children' do
+      it 'searches for items with no parent_id' do
+        expect(subject).to receive(:where).with(parent_id: nil).and_call_original
+        subject.exclude_children
+      end
+    end
   end
 end

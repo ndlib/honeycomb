@@ -3,7 +3,7 @@ class ItemsController < ApplicationController
   helper_method :collection
 
   def index
-    @items = ItemsDecorator.new(collection.items)
+    @items = ItemsDecorator.new(ItemQuery.new(collection.items).search.exclude_children)
 
     respond_to do | format |
       format.json { render json: GenerateItemJson.new(@items, params) }

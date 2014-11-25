@@ -12,6 +12,10 @@ class ItemQuery
     def recent(limit = 5)
       order(updated_at: :desc).limit(limit)
     end
+
+    def exclude_children
+      where(parent_id: nil)
+    end
   end
 
   private

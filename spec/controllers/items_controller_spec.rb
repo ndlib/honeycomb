@@ -1,16 +1,12 @@
 require "rails_helper"
 
 RSpec.describe ItemsController, :type => :controller do
-  let(:item) { double(Item) }
-  let(:collection) { double(Collection) }
+  let(:item) { instance_double(Item, id: 1, title: 'title', collection: collection) }
+  let(:items) { [item] }
+  let(:collection) { instance_double(Collection, id: 1, title: 'title') }
 
   before(:each) do
-    allow(collection).to receive(:id).and_return(1)
-    allow(collection).to receive(:title).and_return('title')
-    allow(collection).to receive(:items).and_return([ item ])
-    allow(item).to receive(:id).and_return(1)
-    allow(item).to receive(:title).and_return('title')
-    allow(item).to receive(:collection).and_return(collection)
+    allow(collection).to receive(:items).and_return(items)
     allow(Collection).to receive(:find).and_return(collection)
 
     @user = User.new(username: 'jhartzle')
@@ -22,6 +18,7 @@ RSpec.describe ItemsController, :type => :controller do
   describe "GET #index" do
 
     it "returns a 200" do
+      expect(collection).to receive(:items).and_return(Item.all)
       get :index, collection_id: collection.id
 
       expect(response).to be_success
@@ -30,7 +27,7 @@ RSpec.describe ItemsController, :type => :controller do
     end
 
     it "gets all the items to pass to the view" do
-      expect(collection).to receive(:items)
+      expect(collection).to receive(:items).and_return(Item.all)
       get :index, collection_id: collection.id
     end
   end
