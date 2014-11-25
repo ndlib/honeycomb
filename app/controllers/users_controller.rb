@@ -68,15 +68,31 @@ class UsersController < ApplicationController
   def set_curator
     check_admin_or_admin_masquerading_permission!
     @user =  FindOrCreateUser.call(params[:curator_id])
-    @collection =   Collection.find(params[:collection_id])
+    @collection =  Collection.find(params[:collection_id])
     if !@user.blank?
       result = AssignUserToCollection.call(@collection, @user)
     end
     if result
-      flash[:notice] = "Granted curator status to " + @user.username
+      flash[:notice] = "Granted curator status to " + @user.name
       redirect_to collection_path(@collection)
     else
-      flash[:error] = "Could not grant curator status to " + params[:curator_id]
+      flash[:error] = "Could not grant curator status to specified user"
+      redirect_to collection_path(@collection)
+    end
+  end
+
+  def remove_curator
+    check_admin_or_admin_masquerading_permission!
+    @user =  User.find(params[:curator_id])
+    @collection =  Collection.find(params[:collection_id])
+    if !@user.blank?
+      result = RemoveUserFromCollection.call(@collection, @user)
+    end
+    if result
+      flash[:notice] = "Removed curator " + @user.name
+      redirect_to collection_path(@collection)
+    else
+      flash[:error] = "Could not remove specified curator" 
       redirect_to collection_path(@collection)
     end
   end
