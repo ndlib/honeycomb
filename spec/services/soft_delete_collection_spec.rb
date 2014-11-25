@@ -1,4 +1,4 @@
-require "rails"
+require "rails_helper"
 
 describe SoftDeleteCollection do
 
