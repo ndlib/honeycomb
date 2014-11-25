@@ -13,9 +13,19 @@ RSpec.describe ItemDecorator do
     end
   end
 
-  describe '#recent_children' do 
+  describe '#recent_children' do
+    it "returns a decorated collection" do
+      children = ["item"]
+      expect(subject).to receive(:children_query_recent).and_return(children)
+      expect(ItemsDecorator).to receive(:new).with(children).and_call_original
+      expect(subject.recent_children).to be_a_kind_of(ItemsDecorator)
+    end
+  end
+
+  describe '#recent_children_objects' do
     it 'queries items' do
-      expect(item).to receive(:children).and_return(Item)
+      expect_any_instance_of(ItemQuery).to receive(:recent).and_return([])
+      expect(item).to receive(:children).and_return(Item.all)
       expect(subject.recent_children).to eq([])
     end
   end

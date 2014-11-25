@@ -4,7 +4,7 @@ class ItemChildrenController < ApplicationController
   helper_method :parent
 
   def index
-    @items = parent.children
+    @items = ItemsDecorator.new(parent.children)
 
     respond_to do | format |
       format.json { render json: GenerateItemJson.new(@items, params) }

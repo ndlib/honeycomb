@@ -1,35 +1,24 @@
+<%
+if @item.is_parent?
+  breadcrumb :collection_item, @item
+else
+  breadcrumb :collection_item_child, @item
+end
+%>
 <div class="page-header">
   <h1><%=t '.title' %> <%= @item.title %></h1>
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+            @item.back_path, :class => 'btn btn-default'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                edit_collection_item_path(collection, @item), :class => 'btn btn-default' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                collection_item_path(collection, @item),
+                :method => 'delete',
+                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                :class => 'btn btn-danger' %>
 </div>
 
-<div class="row">
-  <div class="col-md-8">
-    <div class="well">
-      <h2>Metadata</h2>
-      <dl>
-        <% [:title, :description, :manuscript_url].each do |field| %>
-          <% if @item.send(field).present? %>
-            <dt><%= @item.class.human_attribute_name(field) %></dt>
-            <dd><%= simple_format(@item.send(field)) %></dd>
-          <% end %>
-        <% end %>
-      </dl>
-    </div>
-
-    <%= link_to t('.back', :default => t("helpers.links.back")),
-              @item.back_path, :class => 'btn btn-default'  %>
-    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                  edit_collection_item_path(collection, @item), :class => 'btn btn-default' %>
-    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                  collection_item_path(collection, @item),
-                  :method => 'delete',
-                  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                  :class => 'btn btn-danger' %>
-  </div>
-  <div class="col-md-4">
-    <%= image_tag(@item.image.to_s, width: '90%') %>
-  </div>
-</div>
+<%= render partial: "show", locals: { item: @item } %>
 
 <% if @item.is_parent? %>
   <h2><%= t '.children.title' %></h2>

@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="well">
+      <h2>Metadata</h2>
+      <dl>
+        <% [:title, :description, :manuscript_url].each do |field| %>
+          <% if item.send(field).present? %>
+            <dt><%= item.class.human_attribute_name(field) %></dt>
+            <dd><%= simple_format(item.send(field)) %></dd>
+          <% end %>
+        <% end %>
+      </dl>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <%= image_tag(item.image.to_s, width: '90%') %>
+  </div>
+</div>
