@@ -82,6 +82,8 @@ group :development, :test do
   gem "growl"
   gem "growl_notify"
   gem "growl-rspec"
+
+  gem 'simplecov', :require => false
 end
 
 

@@ -21,3 +21,4 @@
 /vendor/bundle
 /ssi/*
 /public/assets
+/coverage
