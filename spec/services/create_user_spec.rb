@@ -1,12 +1,13 @@
-require "rails"
+require "rails_helper"
 
 describe CreateUser do
 
   subject { CreateUser.call(user, params)}
   let(:user) { double(User, username: 'username', 'first_name=' => true, 'last_name=' => true, 'display_name=' => true, 'email=' => true) }
-  let(:params) { { 'first_name=' => 'first_name' } }
-  it "has attributes set from params" do
+  let(:params) { { 'first_name=' => 'first_name', 'last_name=' => 'last_name', 'display_name=' => 'display_name', 'email=' => 'email' } }
 
+ it "responds to first_name with the first_name from params" do
+    expect(user).to respond_to("first_name=")
   end
 
   it "assign attributes and saves the user" do

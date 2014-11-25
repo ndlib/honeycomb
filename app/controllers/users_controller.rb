@@ -34,10 +34,11 @@ class UsersController < ApplicationController
 
   def edit
     check_admin_or_admin_masquerading_permission!
-
     @user = User.find(params[:id])
   end
-
+  def show
+    @user = User.find(params[:id])
+  end
 
   def update
     check_admin_or_admin_masquerading_permission!

@@ -1,4 +1,4 @@
-require 'rails'
+require 'rails_helper'
 
 describe AssignUserToCollection do
   subject { described_class.call(collection, user) }
