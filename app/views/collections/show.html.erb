@@ -1,43 +1,73 @@
 <% breadcrumb :collection, @collection %>
 <%- model_class = Collection -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+  <h1 class="ui-header"><%= @collection.title %></h1>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+    edit_collection_path(@collection), :class => 'btn btn-default' %>
 </div>
 
-<dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
-  <dd><%= @collection.title %></dd>
-</dl>
+<div class="row">
+  <div class="col-md-8">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae lectus ac augue porta rhoncus. Fusce sed ipsum aliquam, dignissim elit nec, sodales nibh. Ut ac fermentum sapien. Proin mollis lacinia placerat. Nunc sagittis consectetur metus quis cursus. Nulla est mauris, pulvinar sit amet mattis non, convallis a est. Sed egestas varius enim ut dictum. Morbi fermentum augue id consectetur elementum. </p>
+    <div id="other_collection_info">
+      <div id="collection_items" class="collection_info">
+        <h4>Associated Items</h4>
+        <div>This collection has <a href="#">25 items</a> associated with it.</div>
+      </div>
+      <div id="collection_showcases" class="collection_info">
+        <h4>Associated Showcases</h4>
+        <table class="table table-striped">
+          <tr><td><a href="#">Showcase 1</a></td></tr>
+          <tr><td><a href="#">Showcase 2</a></td></tr>
+          <tr><td><a href="#">Showcase 3</a></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
 
-<div>
-  <h3>Curators</h3>
-  <table class="table table-striped">
-    <% @collection.users.each do |curator| %>
-      <tr>
-        <td><%= curator.name %> <button class="btn btn-danger" id="remove_curator" style="margin-left: 5px;">Remove</button></td>
-      </tr> 
-    <% end %>
-  </table>
+  <div class="col-md-4">
+
+    <h3>Curator List</h3>
+
+    <!-- User search tool -->
+    <div id="user_search_tool">
+      <form action="<%= set_curator_path %>" method="post" id="set_curator_form">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>"/>
+        <input type="hidden" name="curator_id" id="curator_id" value=""/>
+        <input type="hidden" name="collection_id" value="<%= @collection.id %>"/>
+      </form>
+
+      <div id="selected_user">
+        <label for="user_search">Add Curator:</label>
+        <input id="user_search">
+        <button class="btn btn-primary btn-sm" id="add_curator">Add</button>
+      </div>
+    </div>
+    <!-- End User search tool -->
+
+    <div>
+      <form action="<%= remove_curator_path %>" method="post" id="remove_curator_form">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>"/>
+        <input type="hidden" name="curator_id" id="remove_curator_id" value=""/>
+        <input type="hidden" name="collection_id" value="<%= @collection.id %>"/>
+      </form>
+      <table class="table table-striped">
+        <% @collection.users.each do |curator| %>
+          <tr>
+            <td>
+              <%= curator.name %> 
+              <button class="btn btn-danger btn-xs remove_curator" curator_id="<%= curator.id %>" style="margin-left: 5px;">x</button>
+            </td>
+          </tr> 
+        <% end %>
+      </table>
+    </div>
+  </div>
+
 </div>
 
-<form action="<%= set_curator_path %>" method="post" id="set_curator_form">
-  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>"/>
-  <input type="hidden" name="curator_id" id="curator_id" value=""/>
-  <input type="hidden" name="collection_id" value="<%= @collection.id %>"/>
-</form>
-
-<div id="selected_user">
-  <label for="user_search">Add Curator:</label>
-  <input id="user_search">
-  <button class="btn btn-primary" id="add_curator">Add</button>
-</div><br/><br/>
-
-<%= link_to t('.back', :default => t("helpers.links.back")),
-              collections_path, :class => 'btn btn-default'  %>
-<%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_collection_path(@collection), :class => 'btn btn-default' %>
 <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              collection_path(@collection),
-              :method => 'delete',
-              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-              :class => 'btn btn-danger' %>
+  collection_path(@collection),
+  :method => 'delete',
+  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+  :class => 'btn btn-danger' %>
