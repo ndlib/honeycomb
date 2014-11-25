@@ -1,15 +1,43 @@
-/*
 
+/*
+ * UI Admin
 */
 
-div.dataTables_filter label {
-  float: none;
+h1.ui-header {
+  display: inline;
+  vertical-align: middle;
+  margin-right: 15px;
+}
+
+#user_search_tool {
+  margin: 20px;
 }
 
 div#selected_user label {
   margin-right: 5px;
+  vertical-align: middle;
 }
 
+#add_curator {
+  margin-left: 5px;
+}
+
+.remove_curator {
+  float: right;
+  margin-right: 20px;
+}
+
+div#other_collection_info {
+  margin-top: 20px;
+}
+
+div.collection_info {
+  padding: 20px;
+}
+
+div.dataTables_filter label {
+  float: none;
+}
 
 form.edit-item-dropzone div.dropzone {
   min-height: 252px;
