@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 describe AssignUserToCollection do
-  subject { described_class.call(collection, user) }
   let(:collection) { double(Collection, id: 1) }
-  let(:user) { double(User, id: 1) }
+  let(:user) { double(User, id: 1, username: 'test', first_name: 'Test', last_name: 'Test', display_name: 'Test Test') }
+  subject { described_class.call(collection, user) }
 
   it "to return a CollectionUser when save is true" do
     expect_any_instance_of(CollectionUser).to receive("save").and_return(true)
@@ -16,13 +16,13 @@ describe AssignUserToCollection do
   end
 
   it "to set the collection id" do
-    expect_any_instance_of(CollectionUser).to receive(:collection_id=).with(collection.id)
-    subject
+    result = described_class.call(collection, user)
+    expect(result.collection_id).to eq collection.id
   end
 
   it "to set the user id" do
-    expect_any_instance_of(CollectionUser).to receive(:user_id=).with(user.id)
-    described_class.call(collection, user)
+    result = described_class.call(collection, user)
+    expect(result.user_id).to eq user.id 
   end
 
 end
