@@ -21,6 +21,10 @@
 
 en:
   hello: "Hello world"
+  collections:
+    index:
+      title: "Collections"
+      new: "New Collection"
   items:
     show:
       title: "Item"
@@ -29,10 +33,11 @@ en:
         manage_link: "Manage Additional Resources"
     index:
       title: "Items"
+      new: "Add Items"
   item_children:
     index:
       title: "Additional Resources"
-      add_link: "Add Additional Resources"
+      new: "Add Additional Resources"
     new:
       title: "Upload Additional Resources"
       upload_button: "Upload Images"

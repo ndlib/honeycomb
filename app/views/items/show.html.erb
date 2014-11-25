@@ -1,3 +1,10 @@
+<%
+if @item.is_parent?
+  breadcrumb :collection_item, @item
+else
+  breadcrumb :collection_item_child, @item
+end
+%>
 <div class="page-header">
   <h1><%=t '.title' %> <%= @item.title %></h1>
 </div>

@@ -1,3 +1,10 @@
+<%
+if @item.parent_id.nil?
+  breadcrumb :edit_collection_item, @item
+else
+  breadcrumb :edit_collection_item_child, @item
+end
+%>
 <%- model_class = Item -%>
 <div class="page-header">
   <h1><%=t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize %></h1>

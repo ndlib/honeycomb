@@ -1,10 +1,11 @@
+<% breadcrumb :collection_item_children, @parent %>
 <div class="page-header">
   <div class="pull-right">
-    <%= link_to t('.add_link'),
+    <%= link_to t('.new'),
             new_collection_item_child_path(collection, parent),
             :class => 'btn btn-primary' %>
   </div>
-  <h1><%= collection.title.titleize %> » <%= parent.title.titleize %> » 
+  <h1><%= collection.title.titleize %> » <%= parent.title.titleize %> »
     <%=t '.title' %></h1>
 </div>
 
