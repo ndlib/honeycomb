@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
   scope '/admin' do
     post :set_curator, to: 'users#set_curator'
+    post :remove_curator, to: 'users#remove_curator'
     resources :users do
       put :set_admin
       put :revoke_admin
