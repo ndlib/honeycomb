@@ -1,8 +1,8 @@
 require "rails_helper"
 
 describe FindOrCreateUser do
-  subject { described_class.call(username)}
   let(:username) { 'username' }
+  subject { described_class.call(username)}
 
 
   it "returns a user when a user is found" do
@@ -16,8 +16,8 @@ describe FindOrCreateUser do
     expect(subject).to be_kind_of(User)
   end
 
+  subject { described_class.call(nil)}
   it "returns a false when a user cannot be found or created" do
-    User.stub(:nil).and_return(true)
     expect(subject).to be(false)
   end
 
