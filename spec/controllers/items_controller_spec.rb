@@ -4,6 +4,7 @@ RSpec.describe ItemsController, :type => :controller do
   let(:item) { instance_double(Item, id: 1, title: 'title', collection: collection) }
   let(:items) { [item] }
   let(:collection) { instance_double(Collection, id: 1, title: 'title') }
+  let(:relation) { Item.all }
 
   before(:each) do
     allow(collection).to receive(:items).and_return(items)
@@ -29,6 +30,19 @@ RSpec.describe ItemsController, :type => :controller do
     it "gets all the items to pass to the view" do
       expect(collection).to receive(:items).and_return(Item.all)
       get :index, collection_id: collection.id
+    end
+  end
+
+  describe "GET #all" do
+
+    it "returns json" do
+      expect(collection).to receive(:items).and_return(relation)
+      get :all, collection_id: collection.id, format: :json
+
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+      body = JSON.parse(response.body)
+      expect(body).to include('items')
     end
   end
 

@@ -3,11 +3,22 @@ class ItemsController < ApplicationController
   helper_method :collection
 
   def index
-    @items = ItemsDecorator.new(ItemQuery.new(collection.items).search.exclude_children)
+    @items = ItemQuery.new(collection.items).search.exclude_children
 
     respond_to do | format |
       format.json { render json: GenerateItemJson.new(@items, params) }
-      format.any { render action: 'index' }
+      format.any do
+        @items = ItemsDecorator.new(@items)
+        render action: 'index'
+      end
+    end
+  end
+
+  def all
+    @items = collection.items
+
+    respond_to do | format |
+      format.json { render json: GenerateItemJson.new(@items, params) }
     end
   end
 
