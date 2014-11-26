@@ -19,6 +19,9 @@ Rails.application.routes.draw do
   resources :collections do
     put :soft_delete
     resources :items do
+      collection do
+        get :all, defaults: {format: :json}
+      end
       resources :children, controller: 'item_children', only: [:index, :new, :create]
     end
   end
