@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
 
   validates :username, :email, :uniqueness => true
-  validates_presence_of :email, :username, :first_name, :last_name, :display_name
+  validates_presence_of :username
 
   scope :username, lambda { | username |  where(username: username) }
 

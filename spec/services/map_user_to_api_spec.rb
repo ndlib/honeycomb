@@ -7,6 +7,7 @@ describe MapUserToApi do
   let(:api_data) { {  'first_name' => 'first_name', 'contact_information' => { 'email' => 'email'} } }
 
   before(:each) do
+    remove_user_api_stub
     HesburghAPI::PersonSearch.stub(:find).and_return(api_data)
   end
 
