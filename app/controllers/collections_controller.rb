@@ -44,4 +44,11 @@ class CollectionsController < ApplicationController
     @collection = CollectionDecorator.new(Collection.find(params[:id]))
   end
 
+  def update
+    check_admin_or_admin_masquerading_permission!
+    @collection = Collection.find(params[:id])
+    @collection.save
+    redirect_to collection_path
+  end
+
 end
