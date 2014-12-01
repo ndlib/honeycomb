@@ -2,8 +2,6 @@
 <%- model_class = Item -%>
 <div class="page-header">
   <div class="pull-right">
-    <%= link_to t('.edit', :default => t("Edit Collection")),
-            edit_collection_path(collection), :class => 'btn btn-default' %>
     <%= link_to t('.new'),
             new_collection_item_path(collection),
             :class => 'btn btn-primary' %>

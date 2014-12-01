@@ -12,7 +12,7 @@
     <div id="other_collection_info">
       <div id="collection_items" class="collection_info">
         <h4>Associated Items</h4>
-        <div>This collection has <a href="#">25 items</a> associated with it.</div>
+        <div>This collection has <%= link_to("#{@collection.item_count} items",collection_items_path(@collection)) %> associated with it.</div>
       </div>
       <div id="collection_showcases" class="collection_info">
         <h4>Associated Showcases</h4>
@@ -55,10 +55,10 @@
         <% @collection.users.each do |curator| %>
           <tr>
             <td>
-              <%= curator.name %> 
+              <%= curator.name %>
               <button class="btn btn-danger btn-xs remove_curator" curator_id="<%= curator.id %>" style="margin-left: 5px;">x</button>
             </td>
-          </tr> 
+          </tr>
         <% end %>
       </table>
     </div>
