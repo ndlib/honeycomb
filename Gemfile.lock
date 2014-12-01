@@ -341,6 +341,7 @@ DEPENDENCIES
   paperclip
   pry
   rails (= 4.1.7)
+  rake
   rb-readline
   rspec-collection_matchers
   rspec-rails

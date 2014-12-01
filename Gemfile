@@ -72,6 +72,7 @@ group :development, :test do
   gem "faker"
   gem 'spring'
   gem "spring-commands-rspec"
+  gem "rake"
 
   gem "guard"
   gem "guard-bundler"
