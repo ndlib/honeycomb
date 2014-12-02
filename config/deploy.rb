@@ -12,7 +12,7 @@ require 'hesburgh/prompt_branch'
 set :application, 'honeycomb'
 set :repository, "https://github.com/ndlib/honeycomb.git"
 
-set :application_symlinks, ['config/secrets.yml']
+set :application_symlinks, ['config/secrets.yml', 'config/hesburgh_api.yml']
 
 desc "Setup for the Pre-Production environment"
 task :pre_production do
