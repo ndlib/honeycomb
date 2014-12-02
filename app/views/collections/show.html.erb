@@ -12,7 +12,7 @@
     <div id="other_collection_info">
       <div id="collection_items" class="collection_info">
         <h4>Associated Items</h4>
-        <div>This collection has <%= link_to("#{@collection.item_count} items",collection_items_path(@collection)) %> associated with it.</div>
+        <div>This collection has <%= link_to "#{@collection.items.count} #{'item'.pluralize(@collection.items.count)}", collection_items_path(@collection) %> associated with it.</div>
       </div>
       <div id="collection_showcases" class="collection_info">
         <h4>Associated Showcases</h4>
