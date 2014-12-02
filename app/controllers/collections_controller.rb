@@ -31,7 +31,7 @@ class CollectionsController < ApplicationController
     redirect_to collections_path
   end
 
-    def restore
+  def restore
     check_admin_or_admin_masquerading_permission!
 
     @collection = Collection.find(params[:collection_id])
@@ -46,9 +46,21 @@ class CollectionsController < ApplicationController
 
   def update
     check_admin_or_admin_masquerading_permission!
-    @collection = Collection.find(params[:id])
-    @collection.save
-    redirect_to collection_path
+    if SaveCollection.call(collection, save_params)
+      flash[:notice] = t(:default_update_success_message)
+      redirect_to collection_path
+    else
+      false
+    end
+  end
+
+  protected
+  def save_params
+    params.require(:collection).permit(:title, :id)
+  end
+
+  def collection
+    @collection ||= Collection.find(params[:id])
   end
 
 end
