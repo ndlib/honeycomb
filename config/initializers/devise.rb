@@ -2,7 +2,7 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
 
-  config.cas_base_url = Rails.configuration.honeycomb_cas_base
+  config.cas_base_url = Rails.configuration.settings.cas_base
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
@@ -128,7 +128,7 @@ Devise.setup do |config|
   # The time you want to timeout the user session without activity. After this
   # time the user will be asked for credentials again. Default is 30 minutes.
   # config.timeout_in = 30.minutes
-  
+
   # If true, expires auth token on session timeout.
   # config.expire_auth_token_on_timeout = false
 

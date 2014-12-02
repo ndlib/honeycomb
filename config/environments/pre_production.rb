@@ -75,8 +75,4 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-
-  config.honeycomb_cas_base = 'https://login.nd.edu/cas'
-  config.honeypot_url = 'http://honeypotpprd.library.nd.edu'
-  config.beehive_url = 'http://beehivepprd.library.nd.edu'
 end

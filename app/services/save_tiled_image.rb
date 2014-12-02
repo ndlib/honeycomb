@@ -59,6 +59,6 @@ class SaveTiledImage
     end
 
     def api_url
-      Rails.configuration.honeypot_url
+      Rails.configuration.settings.honeypot_url
     end
 end
