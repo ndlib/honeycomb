@@ -33,10 +33,11 @@ Rails.application.configure do
   config.assets.raise_runtime_errors = true
   
   # Custom configuration
-  config.ldap_lookup_flag                 = true
+  config.ldap_lookup_flag                  = true
   config.honeycomb_upload_path             = '/shared/data/honeycomb_files'
   config.honeycomb_cas_base                = 'https://cas.library.nd.edu/cas'
-  config.honeypot_url = 'http://localhost:4567'
+  config.honeypot_url                      = 'http://localhost:4567'
+  config.beehive_url                       = 'http://localhost:3018'
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true

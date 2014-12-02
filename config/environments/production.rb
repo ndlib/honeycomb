@@ -78,4 +78,5 @@ Rails.application.configure do
 
   config.honeycomb_cas_base = 'https://login.nd.edu/cas'
   config.honeypot_url = 'http://honeypot.library.nd.edu'
+  config.beehive_url  = 'http://beehive.library.nd.edu'
 end
