@@ -17,4 +17,13 @@ class UserIsCurator
     end
   end
 
+  private
+
+  def collection
+     @collection ||= Collection.where(collection.id)
+  end
+
+  def user
+    @user || User.where(user.id)
+  end
 end
