@@ -36,8 +36,8 @@ gem 'autoprefixer-rails'
 gem 'paperclip'
 
 
-gem "hesburgh_infrastructure", git: 'git@git.library.nd.edu:hesburgh_infrastructure'
-gem "hesburgh_api", git: 'git@git.library.nd.edu:hesburgh_api', branch: "person_search"
+gem "hesburgh_infrastructure", git: 'https://github.com/ndlib/hesburgh_infrastructure.git'
+gem "hesburgh_api", git: 'https://github.com/ndlib/hesburgh_api.git'
 
 gem 'simple_form', '~> 3.1.0rc1'
 
