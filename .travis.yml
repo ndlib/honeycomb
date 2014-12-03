@@ -1,10 +1,8 @@
 language: ruby
 rvm:
-- "2.1.4"
-
-script: 'bundle exec rake spec:travis'
-
-bundler_args: --without development debug doc
-
-before_install:
-- gem install bundler
+  - 2.1.4
+script:
+  - RAILS_ENV=test bundle exec rake --trace db:migrate test
+  - bundle exec rspec spec
+before_script:
+  - mysql -e 'create database item_admin_test'
