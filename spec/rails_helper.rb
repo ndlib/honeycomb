@@ -6,6 +6,8 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'simplecov'
 
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+
 SimpleCov.start 'rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -53,4 +55,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.include Devise::TestHelpers, type: :controller
+  config.include Devise::TestHelpers, :type => :controller
+  config.include ControllerHelpers, :type => :controller
+
 end

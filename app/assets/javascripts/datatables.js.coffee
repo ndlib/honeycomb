@@ -3,9 +3,8 @@ ItemDataTablesIndexes =
   title: 1
   updatedAt: 2
   updatedAtTimestamps: 3
-  editFields: 4
-  sortableTitle: 5
-  originalFilename: 6
+  sortableTitle: 4
+  originalFilename: 5
 
 class ItemDataTable
   constructor: (@tableElement) ->
