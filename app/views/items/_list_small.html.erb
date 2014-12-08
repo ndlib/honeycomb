@@ -13,7 +13,7 @@
           <%= link_to raw(image_tag(item.image.url, height: 64)), item.show_path, class: "pull-left" %></a>
         </td>
         <td>
-          <h4 class="media-heading"><%= h item.title %></h4>
+          <h4 class="media-heading"><%= h link_to item.title, item.show_path %></h4>
           <%= h item.description %>
         </td>
         <td>

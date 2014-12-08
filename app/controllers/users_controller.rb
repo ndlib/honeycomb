@@ -14,20 +14,24 @@ class UsersController < ApplicationController
 
   def create
     check_admin_or_admin_masquerading_permission!
-    @user = User.new
-    if CreateUser.call(@user, save_params)
+    user = User.new
+    if CreateUser.call(user, save_params)
       flash[:notice] = "New user created successfully."
       redirect_to action: "index"
     else
-      flash[:notice] = "User could not be created. Check that you entered a valid username and that the user does not already exist."
-      redirect_to action: "index"
+      flash[:error] = "User could not be created. Check that you entered a valid username and that the user does not already exist."
+      redirect_to action: create
     end
   end
 
   def destroy
     check_admin_or_admin_masquerading_permission!
     @user = User.find(params[:id])
-    @user.delete()
+    if @user.destroy
+      flash[:notice] = t(:default_destroy_success_message)
+    else
+      flash[:error] = t(:default_destroy_failure_message)
+    end
 
     redirect_to users_path
   end
@@ -42,11 +46,9 @@ class UsersController < ApplicationController
 
   def update
     check_admin_or_admin_masquerading_permission!
-
     @user = User.find(params[:id])
-    @user.admin = true
     @user.save
-    redirect_to users_path
+    redirect_to user_path
   end
 
   def revoke_admin
@@ -69,10 +71,8 @@ class UsersController < ApplicationController
     check_admin_or_admin_masquerading_permission!
     @user =  FindOrCreateUser.call(params[:curator_id])
     @collection =  Collection.find(params[:collection_id])
-    if !@user.blank?
-      result = AssignUserToCollection.call(@collection, @user)
-    end
-    if result
+    unless @user.blank?
+      AssignUserToCollection.call(@collection, @user)
       flash[:notice] = "Granted curator status to " + @user.name
       redirect_to collection_path(@collection)
     else
@@ -85,16 +85,16 @@ class UsersController < ApplicationController
     check_admin_or_admin_masquerading_permission!
     @user =  User.find(params[:curator_id])
     @collection =  Collection.find(params[:collection_id])
-    if !@user.blank?
-      result = RemoveUserFromCollection.call(@collection, @user)
+    unless @user.blank?
+      if RemoveUserFromCollection.call(@collection, @user)
+        flash[:notice] = "Removed curator " + @user.name
+        redirect_to collection_path(@collection)
+      else
+        flash[:error] = "Could not remove specified curator"
+        redirect_to collection_path(@collection)
+      end
     end
-    if result
-      flash[:notice] = "Removed curator " + @user.name
-      redirect_to collection_path(@collection)
-    else
-      flash[:error] = "Could not remove specified curator" 
-      redirect_to collection_path(@collection)
-    end
+
   end
 
   def user_search
