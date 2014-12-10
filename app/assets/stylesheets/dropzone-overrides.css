@@ -1,0 +1,33 @@
+form.edit-item-dropzone div.dropzone {
+  min-height: 252px;
+}
+
+.dz-started .dz-message {
+  display: none;
+}
+
+
+.dz-error-mark:before {
+  content: "\e090";
+}
+
+.dz-error-mark {
+  position: relative;
+  top: 1px;
+  padding-top: 5px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.dropzone-previews .dz-preview .dz-error-mark {
+  background-image: none;
+}
+
+.dz-success a.dz-remove {
+  display: none;
+}
