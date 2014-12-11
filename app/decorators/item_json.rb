@@ -49,7 +49,7 @@ class ItemJson < Draper::Decorator
       if object.honeypot_image.present?
         object.honeypot_image.image_json
       else
-        {}
+        nil
       end
     end
 

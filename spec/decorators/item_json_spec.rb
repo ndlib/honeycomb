@@ -46,6 +46,11 @@ RSpec.describe ItemJson do
       expect(honeypot_image).to receive(:image_json).and_return({image: "image"})
       expect(subject.send(:image_data)).to eq({image: "image"})
     end
+
+    it "is nil if there is no image" do
+      expect(item).to receive(:honeypot_image).and_return(nil)
+      expect(subject.send(:image_data)).to be_nil
+    end
   end
 
   describe '#include?' do
@@ -66,6 +71,13 @@ RSpec.describe ItemJson do
       expect(subject.send(:include?, options, 'test')).to be_truthy
       expect(subject.send(:include?, options, 'include')).to be_truthy
       expect(subject.send(:include?, options, 'exclude')).to be_falsy
+    end
+  end
+
+  describe '#to_json' do
+    it 'calls to_json on the result of to_hash' do
+      expect(subject).to receive(:to_hash).and_return({test: 'json'})
+      expect(subject.to_json).to eq("{\"test\":\"json\"}")
     end
   end
 
