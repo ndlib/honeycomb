@@ -15,6 +15,17 @@ RSpec.describe HoneypotImage, :type => :model do
     end
   end
 
+  describe '#image_json' do
+    it "is the image value from the json" do
+      subject.json_response = honeypot_json
+      expect(subject.image_json).to eq(honeypot_json["image"])
+    end
+
+    it "is an empty hash if the json_response is not present" do
+      expect(subject.image_json).to eq({})
+    end
+  end
+
   describe '#styles_data' do
     it "returns the styles hash from the json_response" do
       subject.json_response = honeypot_json

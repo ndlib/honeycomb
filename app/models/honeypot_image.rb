@@ -20,14 +20,15 @@ class HoneypotImage < ActiveRecord::Base
     set_values_from_json_response
   end
 
-  private
-    def image_json
-      if json_response.present?
-        json_response["image"]
-      else
-        {}
-      end
+  def image_json
+    if json_response.present?
+      json_response["image"]
+    else
+      {}
     end
+  end
+
+  private
 
     def get_key(key)
       image_json[key]

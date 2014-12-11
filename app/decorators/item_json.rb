@@ -30,15 +30,12 @@ class ItemJson < Draper::Decorator
       }
     end
 
-    def tiled_image_data
-      return {} if object.tiled_image.nil?
-      {
-        id: object.tiled_image.id,
-        host: object.tiled_image.host,
-        path: object.tiled_image.path,
-        width: object.tiled_image.width,
-        height: object.tiled_image.height,
-      }
+    def image_data
+      if object.honeypot_image.present?
+        object.honeypot_image.image_json
+      else
+        {}
+      end
     end
 
     def parent_data
@@ -58,8 +55,8 @@ class ItemJson < Draper::Decorator
         links[:collection] = collection_data
       end
 
-      if options && options[:include] && options[:include].include?('tiled_image')
-        links[:tiled_image] = tiled_image_data
+      if options && options[:include] && options[:include].include?('image')
+        links[:image] = image_data
       end
       links
     end
