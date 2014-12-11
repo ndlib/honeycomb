@@ -4,7 +4,6 @@ class Item < ActiveRecord::Base
   belongs_to :collection
   belongs_to :parent, class_name: 'Item', foreign_key: :parent_id
   has_many :children, class_name: 'Item', foreign_key: :parent_id
-  has_one :tiled_image
   has_one :honeypot_image
 
   has_attached_file :image, :restricted_characters => /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/

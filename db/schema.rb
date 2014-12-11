@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141211160828) do
+ActiveRecord::Schema.define(version: 20141211191353) do
 
   create_table "collection_users", force: true do |t|
     t.integer  "user_id",       null: false
@@ -58,16 +58,6 @@ ActiveRecord::Schema.define(version: 20141211160828) do
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
   add_index "items", ["parent_id"], name: "index_items_on_parent_id", using: :btree
-
-  create_table "tiled_images", force: true do |t|
-    t.integer  "item_id"
-    t.integer  "width"
-    t.integer  "height"
-    t.string   "host"
-    t.string   "path"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "users", force: true do |t|
     t.string   "first_name"
