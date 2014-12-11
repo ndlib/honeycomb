@@ -48,6 +48,27 @@ RSpec.describe ItemJson do
     end
   end
 
+  describe '#include?' do
+    it "returns false if an option isn't present" do
+      options[:include] = ""
+      expect(subject.send(:include?, options, 'test')).to be_falsy
+    end
+
+    it "returns true for each present option, and false for others" do
+      options[:include] = "test,include"
+      expect(subject.send(:include?, options, 'test')).to be_truthy
+      expect(subject.send(:include?, options, 'include')).to be_truthy
+      expect(subject.send(:include?, options, 'exclude')).to be_falsy
+    end
+
+    it "works with an array" do
+      options[:include] = ['test', 'include']
+      expect(subject.send(:include?, options, 'test')).to be_truthy
+      expect(subject.send(:include?, options, 'include')).to be_truthy
+      expect(subject.send(:include?, options, 'exclude')).to be_falsy
+    end
+  end
+
   context "no options" do
     it "includes the #item_data" do
       expect(subject).to receive(:item_data).and_return({item_data: 'item_data'})
@@ -85,7 +106,7 @@ RSpec.describe ItemJson do
     end
   end
 
-  context "includes tiled_image" do
+  context "includes image data" do
     let(:options) { { include: 'image' } }
 
     it "includes the #image_data" do
@@ -96,7 +117,7 @@ RSpec.describe ItemJson do
 
 
   context "includes both" do
-    let(:options) { { include: 'tiled_image, collection' } }
+    let(:options) { { include: 'image, collection' } }
 
     it "includes the #collection_data" do
       expect(subject).to receive(:collection_data).and_return({id: 1, title: 'title'})
