@@ -33,7 +33,7 @@ RSpec.describe HoneypotImage, :type => :model do
     end
 
     it "returns an empty hash if the json_response is not present" do
-      expect(subject.json_response).to eq({})
+      subject.json_response = nil
       expect(subject.send(:styles_data)).to eq({})
     end
   end

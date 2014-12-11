@@ -93,4 +93,18 @@ RSpec.describe SaveHoneypotImage do
       end
     end
   end
+
+  describe '#connection' do
+    it 'is a Faraday connection' do
+      connection = subject.send(:connection)
+      expect(connection).to be_kind_of(Faraday::Connection)
+      expect(connection.url_prefix.to_s).to eq("http://localhost:3019/")
+    end
+  end
+
+  describe '#api_url' do
+    it "returns a url to the honeypot application" do
+      expect(subject.send(:api_url)).to eq("http://localhost:3019")
+    end
+  end
 end
