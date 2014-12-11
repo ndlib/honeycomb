@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124155337) do
+ActiveRecord::Schema.define(version: 20141211160828) do
 
   create_table "collection_users", force: true do |t|
     t.integer  "user_id",       null: false
@@ -29,6 +29,19 @@ ActiveRecord::Schema.define(version: 20141124155337) do
     t.datetime "updated_at"
     t.boolean  "deleted",    default: false
   end
+
+  create_table "honeypot_images", force: true do |t|
+    t.integer  "item_id"
+    t.string   "title"
+    t.string   "host"
+    t.integer  "width"
+    t.integer  "height"
+    t.text     "json_response"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "honeypot_images", ["item_id"], name: "index_honeypot_images_on_item_id", using: :btree
 
   create_table "items", force: true do |t|
     t.text     "title"
