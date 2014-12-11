@@ -34,8 +34,6 @@ ActiveRecord::Schema.define(version: 20141211160828) do
     t.integer  "item_id"
     t.string   "title"
     t.string   "host"
-    t.integer  "width"
-    t.integer  "height"
     t.text     "json_response"
     t.datetime "created_at"
     t.datetime "updated_at"

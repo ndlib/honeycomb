@@ -4,8 +4,6 @@ class CreateHoneypotImages < ActiveRecord::Migration
       t.integer :item_id
       t.string :title
       t.string :host
-      t.integer :width
-      t.integer :height
       t.text :json_response
       t.timestamps
     end

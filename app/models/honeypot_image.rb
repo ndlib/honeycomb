@@ -3,7 +3,9 @@ class HoneypotImage < ActiveRecord::Base
 
   belongs_to :item
 
-  validates :title, :width, :height, :host, :json_response, presence: true
+  validates :title, :host, :json_response, presence: true
+
+  before_validation :set_values_from_json_response
 
   def style(style_name)
     styles[style_name]
@@ -11,6 +13,11 @@ class HoneypotImage < ActiveRecord::Base
 
   def styles
     @styles ||= build_styles
+  end
+
+  def json_response=(*args)
+    super(*args)
+    set_values_from_json_response
   end
 
   private
@@ -36,5 +43,10 @@ class HoneypotImage < ActiveRecord::Base
           hash[name.to_sym] = HoneypotImageStyle.new(data)
         end
       end
+    end
+
+    def set_values_from_json_response
+      self.title = image_json["title"]
+      self.host = image_json["host"]
     end
 end
