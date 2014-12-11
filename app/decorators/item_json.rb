@@ -12,6 +12,21 @@ class ItemJson < Draper::Decorator
   end
 
   private
+    def include_array(options = {})
+      include_options = []
+      if options && options[:include]
+        if options[:include].is_a?(String)
+          include_options = options[:include].split(',')
+        elsif options[:include].is_a?(Array)
+          include_options = options[:include]
+        end
+      end
+      include_options.collect{|s| s.to_s.strip}
+    end
+
+    def include?(options, value)
+      include_array(options).include?(value.to_s)
+    end
 
     def item_data
       {
@@ -30,15 +45,12 @@ class ItemJson < Draper::Decorator
       }
     end
 
-    def tiled_image_data
-      return {} if object.tiled_image.nil?
-      {
-        id: object.tiled_image.id,
-        host: object.tiled_image.host,
-        path: object.tiled_image.path,
-        width: object.tiled_image.width,
-        height: object.tiled_image.height,
-      }
+    def image_data
+      if object.honeypot_image.present?
+        object.honeypot_image.image_json
+      else
+        nil
+      end
     end
 
     def parent_data
@@ -54,12 +66,12 @@ class ItemJson < Draper::Decorator
       links = {}
       links[:parent] = parent_data
       links[:children] = children_data
-      if options && options[:include] && options[:include].include?('collection')
+      if include?(options, :collection)
         links[:collection] = collection_data
       end
 
-      if options && options[:include] && options[:include].include?('tiled_image')
-        links[:tiled_image] = tiled_image_data
+      if include?(options, :image)
+        links[:image] = image_data
       end
       links
     end

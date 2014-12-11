@@ -1,4 +1,4 @@
-class SaveTiledImage
+class SaveHoneypotImage
   attr_reader :item
 
   def self.call(item)
@@ -12,8 +12,8 @@ class SaveTiledImage
   def save!
     response = send_request
 
-    if response && update_tiled_server(response)
-      tiled_image
+    if response && update_image_server(response)
+      honeypot_image
     else
       false
     end
@@ -21,23 +21,19 @@ class SaveTiledImage
 
   private
 
-    def tiled_image
-      item.tiled_image || item.build_tiled_image
+    def honeypot_image
+      item.honeypot_image || item.build_honeypot_image
     end
 
-    def update_tiled_server(request)
+    def update_image_server(request)
       body = request.body.with_indifferent_access
-      tiled_image.width = body[:image][:width]
-      tiled_image.height = body[:image][:height]
-      tiled_image.host = body[:image][:host]
-      tiled_image.path = body[:image][:path]
+      honeypot_image.json_response = body
 
-
-      tiled_image.save
+      honeypot_image.save
     end
 
     def send_request
-      response = connection.post('/images', post)
+      response = connection.post('/api/images', post)
       if response.success?
         response
       else
@@ -54,8 +50,24 @@ class SaveTiledImage
       end
     end
 
+    def group_id
+      item.collection_id
+    end
+
+    def item_id
+      item.id
+    end
+
+    def item_image
+      item.image
+    end
+
+    def upload_image
+      Faraday::UploadIO.new(item_image.path, item_image.content_type)
+    end
+
     def post
-      { namespace: "honeycomb/#{item.collection.id}/#{item.id}", image: Faraday::UploadIO.new(item.image.path, item.image.content_type)  }
+      { application_id: "honeycomb", group_id: group_id, item_id: item_id, image: upload_image}
     end
 
     def api_url

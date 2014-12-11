@@ -1,13 +1,14 @@
 require "rails_helper"
 
 RSpec.describe SaveItem, type: :model do
+  let(:upload_image) { Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/test.jpg'), 'image/jpeg') }
   subject { described_class.call(item, params) }
   let(:item) { Item.new }
   let(:params) { { title: 'title' } }
 
   before(:each) do
     # stub the call to the external service
-    SaveTiledImage.stub(:call).and_return(true)
+    allow(SaveHoneypotImage).to receive(:call).and_return(true)
   end
 
   it "returns when the item save is successful" do
@@ -37,10 +38,28 @@ RSpec.describe SaveItem, type: :model do
     subject
   end
 
-  it "sends successful requests to SaveTiledImage" do
-    expect(item).to receive(:save).and_return(true)
-    expect(SaveTiledImage).to receive(:call)
-    subject
+  describe "update honeypot image" do
+    it "calls SaveHoneypotImage if the image was updated" do
+      params[:image] = upload_image
+      expect(item).to receive(:save).and_return(true)
+      expect(SaveHoneypotImage).to receive(:call).and_return(true)
+      expect(subject).to eq(item)
+    end
+
+    it "returns false if the honeypot update fails" do
+      params[:image] = upload_image
+      expect(item).to receive(:save).and_return(true)
+      expect(SaveHoneypotImage).to receive(:call).and_return(false)
+      expect(subject).to be_falsy
+    end
+
+    it "is not called if the image is not changed" do
+      params[:image] = nil
+      expect(item).to receive(:save).and_return(true)
+      expect(SaveHoneypotImage).to_not receive(:call)
+      expect(subject).to eq(item)
+    end
+
   end
 
   context "no title on a new record" do
