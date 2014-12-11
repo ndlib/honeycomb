@@ -26,4 +26,25 @@ RSpec.describe HoneypotImage, :type => :model do
       expect(subject.send(:styles_data)).to eq({})
     end
   end
+
+  describe '#styles' do
+    it "returns style objects for each style" do
+      subject.json_response = honeypot_json
+      expect(subject.styles.count).to eq(4)
+      subject.styles.each do |style_name, style_object|
+        expect(style_object).to be_a_kind_of(HoneypotImageStyle)
+      end
+    end
+  end
+
+  describe '#style' do
+    it "returns a style object for the specified style" do
+      subject.json_response = honeypot_json
+      original = subject.style(:original)
+      expect(original.width).to eq(1920)
+      expect(original.height).to eq(1200)
+      expect(original.type).to eq("jpeg")
+      expect(original.path).to eq("/test/000/001/000/001/1920x1200.jpeg")
+    end
+  end
 end
