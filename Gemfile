@@ -84,7 +84,7 @@ group :development, :test do
   gem "ruby_gntp"
   gem "growl-rspec"
 
-  gem 'simplecov', :require => false
+  gem 'coveralls', require: false
 end
 
 
