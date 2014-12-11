@@ -16,7 +16,7 @@ class SaveItem
     item.attributes = params
     pre_process_title
 
-    if item.save && update_titled_image
+    if item.save && update_honeypot_image
       item
     else
       false
@@ -42,7 +42,11 @@ class SaveItem
       params.delete(:image) if params[:image].nil?
     end
 
-    def update_titled_image
-      SaveTiledImage.call(item)
+    def update_honeypot_image
+      if params[:image]
+        SaveHoneypotImage.call(item)
+      else
+        true
+      end
     end
 end
