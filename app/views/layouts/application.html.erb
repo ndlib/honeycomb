@@ -38,13 +38,13 @@
       <div class="container">
         <div class="row">
           <div class="navbar-header">
-             <a class="navbar-brand" href="/">Exhibits</a>
+             <a class="navbar-brand" href="/collections"><i class="glyphicon glyphicon-home"></i> honeycomb</a>
           </div>
           <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li><a href="/collections">Collections</a></li>
-              <li><a href="<%= Rails.configuration.settings.beehive_url %>">Exhibits</a></li>
-              <li><a href="/admin/users">Users</a></li>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#"><i class="glyphicon glyphicon-user"></i> <%= current_user.display_name %></a></li>
+              <li><a href="/admin/users"><i class="glyphicon glyphicon-cog"></i></a></li>
+              <li><a href="#" title="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
             </ul>
           </div>
         </div>
