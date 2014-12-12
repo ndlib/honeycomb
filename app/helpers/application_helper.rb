@@ -42,4 +42,8 @@ module ApplicationHelper
   def permission
     @permission ||= SitePermission.new(current_user, self)
   end
+
+  def collection_nav(collection, active)
+    render partial: '/collections/collection_nav', locals: { collection: collection, active: active }
+  end
 end

@@ -1,5 +1,5 @@
 <%- model_class = Collection -%>
-<%= render partial: '/collections/collection_title', locals: { collection: collection, section_title: 'Settings' } %>
+<%= render partial: '/collections/collection_title', locals: { collection: @collection, section_title: 'Settings' } %>
 
 <div class="row">
   <div class="col-md-9">
@@ -72,7 +72,7 @@
     </div>
   </div>
   <div class="col-md-3">
-    <%= render partial: '/collections/collection_nav' %>
+    <%= collection_nav(@collection, :settings) %>
   </div>
 </div>
 
