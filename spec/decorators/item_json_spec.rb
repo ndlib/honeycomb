@@ -76,8 +76,8 @@ RSpec.describe ItemJson do
 
   describe '#to_json' do
     it 'calls to_json on the result of to_hash' do
-      expect(subject).to receive(:to_hash).and_return({test: 'json'})
-      expect(subject.to_json).to eq("{\"test\":\"json\"}")
+      expect(subject).to receive(:to_hash).with({test: 'options'}).and_return({test: 'json'})
+      expect(subject.to_json({test: 'options'})).to eq("{\"test\":\"json\"}")
     end
   end
 
