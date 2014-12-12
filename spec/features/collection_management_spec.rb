@@ -10,7 +10,7 @@ feature "Collection creation" do
     @user.save!
     login_as @user
   end
-  
+
   scenario "Admin can access new collection page" do
     visit "/collections"
     click_link "New"
@@ -22,7 +22,7 @@ feature "Collection creation" do
     within("#new_collection") do
       fill_in 'Title', with: 'Test Collection'
     end
-    click_button 'Create Collection'
+    click_button 'Save'
     expect(page).to have_content 'Test Collection'
   end
 end
