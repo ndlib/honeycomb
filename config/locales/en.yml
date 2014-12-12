@@ -30,7 +30,7 @@ en:
       title: "Item"
       children:
         title: "Additional Resources"
-        manage_link: "Manage Additional Resources"
+        manage_link: "Add Additional Resources"
     index:
       title: "Items"
       new: "Add Items"

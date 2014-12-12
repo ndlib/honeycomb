@@ -1,31 +1,50 @@
-<%
-if @item.is_parent?
-  breadcrumb :collection_item, @item
-else
-  breadcrumb :collection_item_child, @item
-end
-%>
-<div class="page-header">
-  <h1 class="ui-header"><%=t '.title' %> <%= @item.title %></h1>
-  <div class="pull-right">
-    <%= link_to t('.back', :default => t("helpers.links.back")),
-              @item.back_path, :class => 'btn btn-default'  %>
-    <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                  edit_collection_item_path(collection, @item), :class => 'btn btn-default' %>
-    <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                  collection_item_path(collection, @item),
-                  :method => 'delete',
-                  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                  :class => 'btn btn-danger' %>
+
+<%= render partial: '/collections/collection_title', locals: { collection: @item.collection, section_title: 'Items' } %>
+
+
+<div class="row">
+  <div class="col-md-9">
+    <% if @item.is_parent? %>
+      <h2><%= @item.title %></h2>
+    <% else %>
+      <h2><%= @item.title %><br><small><%= link_to @item.parent.title, collection_item_path(@item.parent.collection, @item.parent) %></h2>
+    <% end %>
+
+    <%= render partial: "show", locals: { item: @item } %>
+
+    <% if @item.is_parent? %>
+      <h2><%= t '.children.title' %></h2>
+      <div class="pull-right" style="padding-top: 5px;">
+          <%= link_to raw("<i class=\"glyphicon glyphicon-plus\"></i> #{t('.children.manage_link')}"), new_collection_item_child_path(collection, @item), class: 'btn btn-primary' %>
+      </div>
+      <% if @item.recent_children.count > 0 %>
+        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+          <div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="DataTables_Table_0"></label></div>
+        </div>
+        <%= render partial: 'list_small', locals: { items: @item.recent_children } %>
+      <% end %>
+
+    <% end %>
+
+
+    <div class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title">Proceed with caution</h3>
+      </div>
+      <div class="panel-body">
+        <h4 class="">Delete this Item</h4>
+        <p class="">Procede with caution. This will remove the item and all associated data.</p>
+        <%= link_to raw("<span class=\"text-danger\">Delete this item</span>"),
+                      collection_item_path(collection, @item),
+                      :method => 'delete',
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you  sure?')) },
+                      :class => 'btn btn-small btn-default' %>
+
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <%= render partial: '/collections/collection_nav' %>
   </div>
 </div>
-
-<%= render partial: "show", locals: { item: @item } %>
-
-<% if @item.is_parent? %>
-  <h2><%= t '.children.title' %></h2>
-  <% if @item.recent_children.count > 0 %>
-    <%= render partial: 'list_small', locals: { items: @item.recent_children } %>
-  <% end %>
-  <%= link_to t('.children.manage_link'), collection_item_children_path(collection, @item), class: 'btn btn-default' %>
-<% end %>

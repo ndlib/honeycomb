@@ -1,18 +1,42 @@
 <div class="row">
   <div class="col-md-8">
-    <div class="well">
-      <h2>Metadata</h2>
-      <dl>
-        <% [:title, :description, :manuscript_url].each do |field| %>
-          <% if item.send(field).present? %>
-            <dt><%= item.class.human_attribute_name(field) %></dt>
-            <dd><%= simple_format(item.send(field)) %></dd>
-          <% end %>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <% if @item.description.present? %>
+          <div class="pull-right">
+            <%= link_to raw("<i class=\"glyphicon glyphicon-edit\"></i> #{t('.edit', :default => t("helpers.links.edit"))}"),
+              edit_collection_item_path(collection, @item), :class => 'btn btn-default btn-sm' %>
+          </div>
         <% end %>
-      </dl>
+
+        <h3 class="panel-title">Metadata</h3>
+      </div>
+      <div class="panel-body">
+        <% if @item.description.blank? %>
+          <%= simple_form_for [@item.collection, @item], html: { :class => "item edit-item-dropzone", id: 'edit-item' } do |f| %>
+            <%= render :partial => 'form', locals: { f: f } %>
+          <% end %>
+        <% else %>
+          <dl>
+            <% [:description, :manuscript_url].each do |field| %>
+              <% if item.send(field).present? %>
+                <dt><%= item.class.human_attribute_name(field) %></dt>
+                <dd><%= simple_format(item.send(field)) %></dd>
+              <% end %>
+            <% end %>
+          </dl>
+        <% end %>
+      </div>
     </div>
+
   </div>
   <div class="col-md-4">
-    <%= image_tag(item.image.to_s, width: '90%') %>
+    <div style="text-align: center; border: 1px solid gray">
+      <%= image_tag(item.image.to_s, height: '200') %>
+      <div style="width: 100%; text-align: center; background-color: gray; color: white; padding: 8px;">
+        <a href="#" style="color: white;"><i class="glyphicon glyphicon-refresh"></i> Replace</a>
+      </div>
+    </div>
   </div>
 </div>
