@@ -25,6 +25,10 @@ en:
     index:
       title: "Collections"
       new: "New Collection"
+    create:
+      success: 'Collection created'
+    update:
+      success: 'Collection updated'
   items:
     show:
       title: "Item"
@@ -34,6 +38,13 @@ en:
     index:
       title: "Items"
       new: "Add Items"
+    create:
+      success: "Item created"
+    update:
+      success: "Item updated"
+    destroy:
+      success: "Item deleted"
+      failure: "There was a problem deleting this item"
   item_children:
     index:
       title: "Additional Resources"
@@ -42,6 +53,15 @@ en:
       title: "Upload Additional Resources"
       upload_button: "Upload Images"
       back_link: "Back to %{title}"
+    create:
+      success: 'Resource created'
+  users:
+    create:
+      success: New user created successfully.
+      failure: User could not be created. Check that you entered a valid username and that the user does not already exist.
+    destroy:
+      success: User deleted
+      failure: There was a problem deleting this user
   errors:
     messages:
       invalid_url: "must be a valid URL"

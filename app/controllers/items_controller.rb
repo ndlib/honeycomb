@@ -3,23 +3,8 @@ class ItemsController < ApplicationController
   helper_method :collection
 
   def index
-    @items = ItemQuery.new(collection.items).search.exclude_children
-
-    respond_to do | format |
-      format.json { render json: GenerateItemJson.new(@items, params) }
-      format.any do
-        @items = ItemsDecorator.new(@items)
-        render action: 'index'
-      end
-    end
-  end
-
-  def all
-    @items = collection.items
-
-    respond_to do | format |
-      format.json { render json: GenerateItemJson.new(@items, params) }
-    end
+    items = ItemQuery.new(collection.items).search.exclude_children
+    @items = ItemsDecorator.new(items)
   end
 
   def new
@@ -28,27 +13,15 @@ class ItemsController < ApplicationController
 
   def show
     @item = ItemDecorator.new(collection.items.find(params[:id]))
-
-    respond_to do | format |
-      format.json { render json: GenerateItemJson.new(@item, params) }
-      format.any { render action: 'show' }
-    end
   end
 
   def create
     @item = collection.items.build
 
-    respond_to do |format|
-      if SaveItem.call(@item, save_params)
-
-        flash[:notice] = t(:default_create_success_message)
-
-        format.html { redirect_to collection_items_path(@item.collection) }
-        format.json { render json: @item }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
-      end
+    if SaveItem.call(@item, save_params)
+      item_save_success(@item)
+    else
+      item_save_failure(@item)
     end
   end
 
@@ -59,16 +32,10 @@ class ItemsController < ApplicationController
   def update
     @item = collection.items.find(params[:id])
 
-    respond_to do |format|
-      if SaveItem.call(@item, save_params)
-        flash[:notice] = t(:default_update_success_message)
-
-        format.html { redirect_to collection_item_path(@item.collection, @item) }
-        format.json { render json: @item }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @item.errors, status: :unprocessable_entity }
-      end
+    if SaveItem.call(@item, save_params)
+      item_save_success(@item)
+    else
+      item_save_failure(@item)
     end
   end
 
@@ -76,9 +43,9 @@ class ItemsController < ApplicationController
     @item = collection.items.find(params[:id])
 
     if @item.destroy
-      flash[:notice] = t(:default_destroy_success_message)
+      flash[:notice] = t('.success')
     else
-      flash[:error] = t(:default_destroy_failure_message)
+      flash[:error] = t('.failure')
     end
 
     redirect_to collection_items_path(@item.collection)
@@ -93,5 +60,36 @@ class ItemsController < ApplicationController
 
     def collection
       @collection ||= Collection.find(params[:collection_id])
+    end
+
+    def item_save_success(item)
+      respond_to do |format|
+        format.json { render json: item }
+        format.html do
+          item_save_html_success(item)
+        end
+      end
+    end
+
+    def item_save_html_success(item)
+      flash[:notice] = t('.success')
+      if params[:action] == 'create'
+        redirect_to collection_items_path(collection)
+      else
+        redirect_to collection_item_path(collection, item)
+      end
+    end
+
+    def item_save_failure(item)
+      respond_to do |format|
+        format.html do
+          if params[:action] == 'create'
+            render action: 'new'
+          else
+            render action: 'edit'
+          end
+        end
+        format.json { render json: item.errors, status: :unprocessable_entity }
+      end
     end
 end

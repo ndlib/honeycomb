@@ -33,19 +33,6 @@ RSpec.describe ItemsController, :type => :controller do
     end
   end
 
-  describe "GET #all" do
-
-    it "returns json" do
-      expect(collection).to receive(:items).and_return(relation)
-      get :all, collection_id: collection.id, format: :json
-
-      expect(response).to be_success
-      expect(response).to have_http_status(200)
-      body = JSON.parse(response.body)
-      expect(body).to include('items')
-    end
-  end
-
 
   describe "GET #new" do
 
@@ -92,6 +79,21 @@ RSpec.describe ItemsController, :type => :controller do
       expect(SaveItem).to receive(:call).and_return(true)
 
       post :create, valid_params
+    end
+  end
+
+  describe "GET #show" do
+
+    it "returns a 200" do
+      get :show, id: 1, collection_id: collection.id
+      expect(response).to be_success
+      expect(response).to have_http_status(200)
+      expect(response).to render_template("show")
+    end
+
+    it "finds an existing item " do
+      expect(collection.items).to receive(:find).with("1").and_return(item)
+      get :show, id: 1, collection_id: collection.id
     end
   end
 

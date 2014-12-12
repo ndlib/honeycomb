@@ -16,10 +16,10 @@ class UsersController < ApplicationController
     check_admin_or_admin_masquerading_permission!
     user = User.new
     if CreateUser.call(user, save_params)
-      flash[:notice] = "New user created successfully."
+      flash[:notice] = t('.success')
       redirect_to action: "index"
     else
-      flash[:error] = "User could not be created. Check that you entered a valid username and that the user does not already exist."
+      flash[:error] = t('.failure')
       redirect_to action: create
     end
   end
@@ -28,9 +28,9 @@ class UsersController < ApplicationController
     check_admin_or_admin_masquerading_permission!
     @user = User.find(params[:id])
     if @user.destroy
-      flash[:notice] = t(:default_destroy_success_message)
+      flash[:notice] = t('.success')
     else
-      flash[:error] = t(:default_destroy_failure_message)
+      flash[:error] = t('.failure')
     end
 
     redirect_to users_path
