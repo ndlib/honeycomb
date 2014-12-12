@@ -1,14 +1,9 @@
 
-<%= render partial: '/collections/collection_title', locals: { collection: @item.collection, section_title: 'Items' } %>
-
+<%= collection_title(@item.collection, 'Items') %>
 
 <div class="row">
   <div class="col-md-9">
-    <% if @item.is_parent? %>
-      <h2><%= @item.title %></h2>
-    <% else %>
-      <h2><%= @item.title %><br><small><%= link_to @item.parent.title, collection_item_path(@item.parent.collection, @item.parent) %></h2>
-    <% end %>
+    <%= @item.page_title %>
 
     <%= render partial: "show", locals: { item: @item } %>
 

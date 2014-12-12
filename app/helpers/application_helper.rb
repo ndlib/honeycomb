@@ -46,4 +46,9 @@ module ApplicationHelper
   def collection_nav(collection, active)
     render partial: '/collections/collection_nav', locals: { collection: collection, active: active }
   end
+
+  def collection_title(collection, section_title)
+    render partial: '/collections/collection_title', locals: { collection: collection, section_title: section_title }
+  end
+
 end

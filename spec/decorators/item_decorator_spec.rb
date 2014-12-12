@@ -51,6 +51,13 @@ RSpec.describe ItemDecorator do
     end
   end
 
+  context 'page_title' do
+    it "renders the item_title partial" do
+      expect(subject.h).to receive(:render).with({partial: '/items/item_title',  :locals=>{:item=>subject} } )
+      subject.page_title
+    end
+  end
+
   context 'child item' do
     let(:child_item) { instance_double(Item, title: "Child Item", description: "description", updated_at: "2014-11-06 11:45:52 -0500", id: 2, collection_id: collection.id, collection: collection, image: 'image.jpg', parent_id: 1)}
     subject { described_class.new(child_item) }
