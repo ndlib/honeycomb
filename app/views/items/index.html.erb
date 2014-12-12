@@ -1,13 +1,17 @@
-<% breadcrumb :collection_items, @collection %>
 <%- model_class = Item -%>
-<div class="page-header">
-  <div class="pull-right">
-    <%= link_to t('.new'),
-            new_collection_item_path(collection),
-            :class => 'btn btn-primary' %>
-  </div>
-  <h1><%= collection.title.titleize %> »
-    <%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
-</div>
+<%= render partial: '/collections/collection_title', locals: { collection: collection, section_title: 'Items' } %>
 
-<%= render partial: "list", locals: { items: @items } %>
+<div class="row">
+  <div class="col-md-9">
+    <div class="pull-right" style="padding-top: 5px;">
+<%= link_to raw("<i class=\"glyphicon glyphicon-plus\"></i> #{t('items.index.new')}"),
+        new_collection_item_path(collection),
+        :class => 'btn btn-primary', style: "width: 100%" %>
+    </div>
+
+    <%= render partial: "list", locals: { items: @items } %>
+  </div>
+  <div class="col-md-3">
+    <%= render partial: '/collections/collection_nav' %>
+  </div>
+</div>

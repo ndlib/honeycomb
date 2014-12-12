@@ -22,14 +22,6 @@
 
 <%= f.input :manuscript_url, as: :string %>
 
-<div class="form-group">
-  <label>Replace Image</label>
-  <div class="dropzone">
-    <div class="dropzone-previews">
-    </div>
-    <div class="dz-default dz-message"><span>Drop files here to upload</span></div>
-  </div>
-</div>
 <%= f.button :submit, "Save", class: 'btn btn-primary'%>
 <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
         collection_item_path(@item.collection, @item), :class => 'btn btn-default' %>

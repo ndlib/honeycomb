@@ -9,29 +9,6 @@
   margin-right: 15px;
 }
 
-#user_search_tool {
-  margin: 20px;
+.panel {
+  margin-bottom: 40px;
 }
-
-div#selected_user label {
-  margin-right: 5px;
-  vertical-align: middle;
-}
-
-#add_curator {
-  margin-left: 5px;
-}
-
-.remove_curator {
-  float: right;
-  margin-right: 20px;
-}
-
-div#other_collection_info {
-  margin-top: 20px;
-}
-
-div.collection_info {
-  padding: 20px;
-}
-

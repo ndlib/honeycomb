@@ -64,7 +64,7 @@ class ItemDataTable
 
   setupFilters: ->
     object = @
-    @filterContainer.addClass('well').addClass('well-small')
+    #@filterContainer.addClass('well').addClass('well-small')
 
   infoCallback: (settings, start, end, max, total, pre) ->
     if end == 0

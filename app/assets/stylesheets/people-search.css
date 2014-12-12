@@ -12,8 +12,8 @@ div#selected_user label {
 }
 
 .remove_curator {
-  float: right;
-  margin-right: 20px;
+  color: gray;
+  margin-right: 2em;
 }
 
 div#other_collection_info {
@@ -24,3 +24,7 @@ div.collection_info {
   padding: 20px;
 }
 
+table.curator-list tr td {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
