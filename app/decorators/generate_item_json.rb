@@ -6,28 +6,35 @@ class GenerateItemJson
   end
 
   def initialize(items, options)
-    @options = options
     @items = items
+    @options = options
   end
 
   def to_hash
     {
-      "items" => json_is_collection? ? collection_json : item_json_hash(items)
+      "items" => to_hash_object
     }
   end
 
   private
+    def hash_array
+      items.collect { |item| singular_hash(item) }
+    end
 
-    def json_is_collection?
+    def singular_hash(item)
+      ItemJson.new(item).to_hash(options)
+    end
+
+    def plural?
       items.respond_to?(:each)
     end
 
-    def collection_json
-      items.collect { | item | item_json_hash(item) }
-    end
-
-    def item_json_hash(item)
-      ItemJson.new(item).to_hash(options)
+    def to_hash_object
+      if plural?
+        hash_array
+      else
+        singular_hash(items)
+      end
     end
 
 end

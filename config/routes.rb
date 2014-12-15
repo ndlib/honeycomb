@@ -26,6 +26,13 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api do
+    resources :collections, only: [:index, :show], constraints: {format: /json/} do
+      resources :items, only: [:index, :show], constraints: {format: /json/} do
+      end
+    end
+  end
+
   scope '/admin' do
     post :set_curator, to: 'users#set_curator'
     post :remove_curator, to: 'users#remove_curator'

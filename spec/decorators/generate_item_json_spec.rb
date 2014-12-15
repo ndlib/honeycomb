@@ -1,39 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe GenerateItemJson do
-  let(:item) { double(Item) }
+  let(:item) { instance_double(Item) }
   let(:items) { [ item ]}
   let(:options) { { options: "options"} }
 
-  subject { GenerateItemJson.call(item, options) }
+  describe "plural" do
+    subject { described_class.call(items, options) }
 
-
-  describe "collection" do
-    subject { GenerateItemJson.call(items, options) }
-
-    it "generates json" do
-      expect_any_instance_of(ItemJson).to receive(:to_hash).and_return({ id: 1 })
+    it "generates a collection object" do
+      expect_any_instance_of(ItemJson).to receive(:to_hash).with(options).and_return({ id: 1 })
       expect(subject).to eq({"items"=>[{:id=>1}]})
-    end
-
-    it "uses ItemJson to generate the hash with the options" do
-      expect_any_instance_of(ItemJson).to receive(:to_hash).with(options)
-      subject
     end
   end
 
+  describe "singular" do
+    subject { described_class.call(item, options) }
 
-  describe "resource" do
-
-    it "generates json" do
-      expect_any_instance_of(ItemJson).to receive(:to_hash).and_return({ id: 1 })
+    it "generates a singular resource object" do
+      expect_any_instance_of(ItemJson).to receive(:to_hash).with(options).and_return({ id: 1 })
       expect(subject).to eq({"items"=>{:id=>1}})
     end
-
-    it "uses ItemJson to generate the hash with the options" do
-      expect_any_instance_of(ItemJson).to receive(:to_hash).with(options)
-      subject
-    end
-
   end
 end

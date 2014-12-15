@@ -16,6 +16,7 @@ class CollectionsController < ApplicationController
     @collection = Collection.new(params.require(:collection).permit([:title]))
 
     if @collection.save
+      flash[:notice] = t('.success')
       redirect_to @collection
     else
       render :new
@@ -47,7 +48,7 @@ class CollectionsController < ApplicationController
   def update
     check_admin_or_admin_masquerading_permission!
     if SaveCollection.call(collection, save_params)
-      flash[:notice] = t(:default_update_success_message)
+      flash[:notice] = t('.success')
       redirect_to collection_path
     else
       false
