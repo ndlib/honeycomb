@@ -88,10 +88,10 @@ class UsersController < ApplicationController
     unless @user.blank?
       if RemoveUserFromCollection.call(@collection, @user)
         flash[:notice] = "Removed curator " + @user.name
-        redirect_to collection_path(@collection)
+        redirect_to edit_collection_path(@collection)
       else
         flash[:error] = "Could not remove specified curator"
-        redirect_to collection_path(@collection)
+        redirect_to edit_collection_path(@collection)
       end
     end
 

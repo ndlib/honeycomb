@@ -17,7 +17,7 @@ class CollectionsController < ApplicationController
 
     if @collection.save
       flash[:notice] = t('.success')
-      redirect_to @collection
+      redirect_to collection_items_path(@collection)
     else
       render :new
     end
