@@ -49,7 +49,7 @@ class CollectionsController < ApplicationController
     check_admin_or_admin_masquerading_permission!
     if SaveCollection.call(collection, save_params)
       flash[:notice] = t('.success')
-      redirect_to collection_path
+      redirect_to edit_collection_path
     else
       false
     end

@@ -2,22 +2,26 @@
 <%= collection_title(@item.collection, 'Items') %>
 
 <div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 item-show">
     <%= @item.page_title %>
 
     <%= render partial: "show", locals: { item: @item } %>
 
     <% if @item.is_parent? %>
-      <h2><%= t '.children.title' %></h2>
-      <div class="pull-right" style="padding-top: 5px;">
-          <%= link_to raw("<i class=\"glyphicon glyphicon-plus\"></i> #{t('.children.manage_link')}"), new_collection_item_child_path(collection, @item), class: 'btn btn-primary' %>
-      </div>
-      <% if @item.recent_children.count > 0 %>
-        <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
-          <div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="DataTables_Table_0"></label></div>
+      <div class="item-show-children clearfix">
+        <h2><%= t '.children.title' %></h2>
+        <div class="pull-right" style="padding-top: 5px;">
+            <%= link_to raw("<i class=\"glyphicon glyphicon-plus\"></i> #{t('.children.manage_link')}"), new_collection_item_child_path(collection, @item), class: 'btn btn-primary' %>
         </div>
-        <%= render partial: 'list_small', locals: { items: @item.recent_children } %>
-      <% end %>
+        <% if @item.recent_children.count > 0 %>
+          <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+            <div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control input-sm" placeholder="" aria-controls="DataTables_Table_0"></label></div>
+          </div>
+          <%= render partial: 'list_small', locals: { items: @item.recent_children } %>
+        <% else %>
+          <p>No <%= t '.children.title' %></p>
+        <% end %>
+      </div>
 
     <% end %>
 
