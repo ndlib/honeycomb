@@ -29,6 +29,10 @@ class ItemDecorator < Draper::Decorator
     h.collection_item_path(object.collection_id, object.id)
   end
 
+  def page_title
+    h.render partial: '/items/item_title', locals: { item: self }
+  end
+
   private
 
   def children_query_recent

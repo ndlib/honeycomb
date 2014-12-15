@@ -26,7 +26,7 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    @item = collection.items.find(params[:id])
+    @item = ItemDecorator.new(collection.items.find(params[:id]))
   end
 
   def update
