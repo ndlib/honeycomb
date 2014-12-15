@@ -74,10 +74,10 @@ class UsersController < ApplicationController
     unless @user.blank?
       AssignUserToCollection.call(@collection, @user)
       flash[:notice] = "Granted curator status to " + @user.name
-      redirect_to collection_path(@collection)
+      redirect_to edit_collection_path(@collection)
     else
       flash[:error] = "Could not grant curator status to specified user"
-      redirect_to collection_path(@collection)
+      redirect_to edit_collection_path(@collection)
     end
   end
 
