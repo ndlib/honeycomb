@@ -18,6 +18,14 @@ GIT
       capistrano (~> 2.15.0)
       rails
 
+GIT
+  remote: https://github.com/ndlib/waggle.git
+  revision: d381d6915aeef8cc1352af68c0ba3e7a72bd1ab0
+  specs:
+    waggle (0.0.1)
+      draper
+      rails (~> 4.1.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -365,3 +373,4 @@ DEPENDENCIES
   therubyracer
   turbolinks
   uglifier (>= 1.3.0)
+  waggle!

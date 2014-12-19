@@ -20,71 +20,9 @@
   </head>
   <body>
 
-<header id="banner" role="banner" class="home">
-  <nav class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="brand-bar">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-6">
-            <a href="http://www.nd.edu">University <i>of</i> Notre Dame</a>
-          </div>
-          <div class="col-sm-6">
-            <a class="pull-right" href="http://library.nd.edu">Hesburgh Libraries</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="title-bar">
-      <div class="container">
-        <div class="row">
-          <div class="navbar-header">
-             <a class="navbar-brand" href="/collections"><i class="glyphicon glyphicon-home"></i> honeycomb</a>
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="#"><i class="glyphicon glyphicon-user"></i> <%= current_user.display_name %></a></li>
-              <li><a href="/admin/users"><i class="glyphicon glyphicon-cog"></i></a></li>
-              <li><a href="#" title="logout"><i class="glyphicon glyphicon-log-out"></i></a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-</header>
-
-<div class="container">
-  <%= breadcrumbs style: :bootstrap %>
-  <div class="row">
-    <div class="col-lg-12">
-      <%= display_notices %>
-      <%= yield %>
-    </div>
-  </div><!--/row-->
-
-</div> <!-- /container -->
-
-<footer id="footer" class="container">
-  <div class="row">
-    <div class="col-sm-8 pull-left">
-      <p>
-        Exhibits is a service of the <a href="http://library.nd.edu">Hesburgh Libraries of Notre Dame</a>.
-      </p>
-      <p>
-        For Technical Support call <a href="tel:5746316258">(574) 631-6258</a>  or email <a href="mailto:rfox2@nd.edu?subject=Support%20Request">rfox2@nd.edu</a>.
-      </p>
-      <p>
-        <a href="http://www.nd.edu/copyright/">Copyright</a> 2014 <a href="http://www.nd.edu">University of Notre Dame</a>
-      </p>
-
-    </div>
-
-    <div class="col-sm-4 pull-right">
-      <a href="http://library.nd.edu">
-        <%= image_tag('full-color-mark.png', class: "hesburgh-logo", alt: "University of Notre Dame Hesburgh Libraries") %>
-    </div>
-  </div>
-</footer>
+  <%= Waggle::DisplayHeader.new(controller).display %>
+  <%= yield %>
+  <%= Waggle::DisplayFooter.new(controller).display %>
 
   </body>
 </html>
