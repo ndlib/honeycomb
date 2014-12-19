@@ -38,6 +38,7 @@ gem 'paperclip'
 
 gem "hesburgh_infrastructure", git: 'https://github.com/ndlib/hesburgh_infrastructure.git'
 gem "hesburgh_api", git: 'https://github.com/ndlib/hesburgh_api.git'
+gem "waggle", git: 'https://github.com/ndlib/waggle.git'
 
 gem 'simple_form', '~> 3.1.0rc1'
 
