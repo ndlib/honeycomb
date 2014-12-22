@@ -10,18 +10,13 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require waggle
+ *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+ *= require datatables-overrides
+ *= require dropzone
+ *= require dropzone-overrides
+ *= require people-search
+ *= require jquery-ui
+ *= require items
  *= require_self
  */
-
-@import "bootstrap-sprockets"
-@import "bootstrap"
-@import "bootstrap_and_overrides"
-@import "dataTables/bootstrap/3/jquery.dataTables.bootstrap"
-@import "datatables-overrides"
-@import "dropzone"
-@import "dropzone-overrides"
-@import "nav_bar"
-@import "footer"
-@import "people-search"
-@import "jquery-ui"
-@import "items"
