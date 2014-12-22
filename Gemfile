@@ -30,11 +30,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 gem "therubyracer"
 
-gem 'bootstrap-sass', '~> 3.2.0'
-gem 'autoprefixer-rails'
-
 gem 'paperclip'
-
 
 gem "hesburgh_infrastructure", git: 'https://github.com/ndlib/hesburgh_infrastructure.git'
 gem "hesburgh_api", git: 'https://github.com/ndlib/hesburgh_api.git'
@@ -56,7 +52,6 @@ gem 'addressable'
 
 gem 'gretel'
 
-
 # Server monitoring
 gem 'newrelic_rpm'
 
@@ -64,6 +59,7 @@ gem 'paper_trail', '~> 3.0.6'
 
 gem 'faraday'
 gem 'faraday_middleware'
+
 
 group :development, :test do
   gem "pry"
