@@ -60,16 +60,11 @@
     </div>
 
 
-    <div class="panel panel-danger">
-      <div class="panel-heading">
-        <h3 class="panel-title">Proceed with caution</h3>
-      </div>
-      <div class="panel-body">
-        <h4 class="">Delete this Collection</h4>
-        <p class="">Procede with caution. This will remove all items, exhibits, and showcases.</p>
-        <button class="btn btn-small btn-default"><span class="text-danger">Delete this collection</span></button>
-      </div>
-    </div>
+    <%= Waggle::DeleteSection.new(@collection).display do | ds |
+      ds.message = "Procede with caution. This will also remove all items, exhibits, and showcases."
+    end
+    %>
+
   </div>
   <div class="col-md-3">
     <%= collection_nav(@collection, :settings) %>
