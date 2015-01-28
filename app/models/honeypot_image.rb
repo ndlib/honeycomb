@@ -3,7 +3,7 @@ class HoneypotImage < ActiveRecord::Base
 
   belongs_to :item
 
-  validates :title, :host, :json_response, presence: true
+  validates :title, :json_response, presence: true
 
   before_validation :set_values_from_json_response
 
@@ -34,20 +34,27 @@ class HoneypotImage < ActiveRecord::Base
       image_json[key]
     end
 
+    def links_data
+      get_key("links") || {}
+    end
+
+    def get_link(key)
+      links_data[key]
+    end
+
     def styles_data
-      get_key("styles") || {}
+      get_link("styles") || []
     end
 
     def build_styles
       {}.with_indifferent_access.tap do |hash|
-        styles_data.each do |name, data|
-          hash[name.to_sym] = HoneypotImageStyle.new(data)
+        styles_data.each do |data|
+          hash[data['id']] = HoneypotImageStyle.new(data)
         end
       end
     end
 
     def set_values_from_json_response
-      self.title = image_json["title"]
-      self.host = image_json["host"]
+      self.title = get_key("title")
     end
 end

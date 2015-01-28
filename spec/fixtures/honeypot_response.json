@@ -1,31 +1,37 @@
 {
   "image":{
     "title":"1920x1200.jpeg",
-    "host":"localhost",
-    "styles":{
-      "original":{
+    "href":"http://localhost:3019/api/images/test/000/001/000/001/1920x1200.jpeg",
+    "links":{
+      "styles":[
+        {
+          "id":"original",
+          "width":1920,
+          "height":1200,
+          "type":"jpeg",
+          "src":"http://localhost:3019/images/test/000/001/000/001/1920x1200.jpeg"
+        },
+        {
+          "id":"medium",
+          "width":1280,
+          "height":800,
+          "type":"jpeg",
+          "src":"http://localhost:3019/images/test/000/001/000/001/medium/1920x1200.jpeg"
+        },
+        {
+          "id":"small",
+          "width":320,
+          "height":200,
+          "type":"jpeg",
+          "src":"http://localhost:3019/images/test/000/001/000/001/small/1920x1200.jpeg"
+        }
+      ],
+      "dzi":{
+        "id":"dzi",
         "width":1920,
         "height":1200,
-        "type":"jpeg",
-        "path":"/test/000/001/000/001/1920x1200.jpeg"
-      },
-      "medium":{
-        "width":1280,
-        "height":800,
-        "type":"jpeg",
-        "path":"/test/000/001/000/001/medium/1920x1200.jpeg"
-      },
-      "pyramid":{
-        "width":1920,
-        "height":1200,
-        "type":"tiff",
-        "path":"/test/000/001/000/001/pyramid/1920x1200.tif"
-      },
-      "small":{
-        "width":320,
-        "height":200,
-        "type":"jpeg",
-        "path":"/test/000/001/000/001/small/1920x1200.jpeg"
+        "type":"dzi",
+        "src":"http://localhost:3019/images/test/000/001/000/001/pyramid/1920x1200.tif.dzi"
       }
     }
   }
