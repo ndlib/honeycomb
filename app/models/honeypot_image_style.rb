@@ -1,5 +1,5 @@
 class HoneypotImageStyle
   include ActiveModel::Model
 
-  attr_accessor :width, :height, :type, :path
+  attr_accessor :id, :width, :height, :type, :src
 end
