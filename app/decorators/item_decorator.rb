@@ -9,8 +9,8 @@ class ItemDecorator < Draper::Decorator
     ItemsDecorator.new(children_query_recent)
   end
 
-  def image_tag(width)
-    h.image_tag(object.image.to_s, width: width)
+  def image_title
+    image_decorator.title
   end
 
   def back_path
@@ -19,6 +19,14 @@ class ItemDecorator < Draper::Decorator
     else
       h.collection_item_children_path(object.collection_id, object.parent_id)
     end
+  end
+
+  def thumbnail(style_name = :small, options = {})
+    image_decorator.render(style_name, options)
+  end
+
+  def render_image_zoom(options = {})
+    image_decorator.render_image_zoom(options)
   end
 
   def edit_path
@@ -41,5 +49,9 @@ class ItemDecorator < Draper::Decorator
 
   def children_query
     @children_query ||= ItemQuery.new(object.children)
+  end
+
+  def image_decorator
+    @image_decorator ||= ItemImageDecorator.new(object.honeypot_image)
   end
 end

@@ -7,3 +7,15 @@
     max-width: 100%;
   }
 }
+
+.item-show-image-box {
+  text-align: center;
+  border: 1px solid gray;
+  position: relative;
+
+  .image-zoom-fullscreen {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+  }
+}

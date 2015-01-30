@@ -1,3 +1,5 @@
+Dropzone.autoDiscover = false
+
 class MultiNewDropzoneForm
   constructor: (@dropzoneForm) ->
     if @dropzoneForm.length > 0
@@ -57,13 +59,14 @@ class EditFormDropzone
       previewsContainer: ".dropzone-previews"
       clickable: ".dropzone"
       dictRemoveFile: "Cancel Upload"
+      maxFiles: 1
 
       # The setting up of the dropzone
       init: ->
         myDropzone = this
 
         # First change the button to actually tell Dropzone to process the queue.
-        formObject.children("input[type=submit]").get(0).addEventListener "click", (e) ->
+        formObject.find("input[type=submit]").get(0).addEventListener "click", (e) ->
 
           # Make sure that the form isn't actually being sent.
           if myDropzone.getQueuedFiles().length
@@ -75,7 +78,7 @@ class EditFormDropzone
         # Gets triggered when the form is actually being sent.
         # Hide the success button or the complete form.
         @on "success", (files, response) ->
-          window.location.replace(window.location + '/../../')
+          window.location.href = window.location + '/../../'
 
         @on "addedfile", (file) ->
           this.element.classList.add("dz-started")
@@ -85,7 +88,7 @@ class EditFormDropzone
 # Gets triggered when there was an error sending the files.
 # Maybe show form again, and notify user of error
 
-jQuery ->
+jQuery ($) ->
 
   setupEditDropzone = () ->
     dropzone = $(".edit-item-dropzone")
@@ -97,11 +100,9 @@ jQuery ->
     if dropzone.size() > 0
       new MultiNewDropzoneForm(dropzone)
 
-
   ready = ->
     setupEditDropzone()
     setupNewDropzone()
 
-  $(document).ready ->
-    ready()
+  $(document).ready(ready)
 

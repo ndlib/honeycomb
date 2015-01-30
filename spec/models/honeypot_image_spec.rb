@@ -52,10 +52,23 @@ RSpec.describe HoneypotImage, :type => :model do
     it "returns a style object for the specified style" do
       subject.json_response = honeypot_json
       original = subject.style(:original)
+      expect(original).to be_a_kind_of(HoneypotImageStyle)
       expect(original.width).to eq(1920)
       expect(original.height).to eq(1200)
       expect(original.type).to eq("jpeg")
       expect(original.src).to eq('http://localhost:3019/images/test/000/001/000/001/1920x1200.jpeg')
+    end
+  end
+
+  describe '#dzi' do
+    it "returns a style object for the dzi" do
+      subject.json_response = honeypot_json
+      dzi = subject.dzi
+      expect(dzi).to be_a_kind_of(HoneypotImageStyle)
+      expect(dzi.width).to eq(1920)
+      expect(dzi.height).to eq(1200)
+      expect(dzi.type).to eq("dzi")
+      expect(dzi.src).to eq('http://localhost:3019/images/test/000/001/000/001/pyramid/1920x1200.tif.dzi')
     end
   end
 

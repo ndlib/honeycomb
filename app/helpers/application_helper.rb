@@ -1,4 +1,30 @@
 module ApplicationHelper
+  def image_zoom(image_name, options = {})
+    @image_zoom_id ||= 0
+    @image_zoom_id += 1
+    id ||= "imageZoom#{@image_zoom_id}"
+    options = options.reverse_merge({
+      id: id,
+      class: "image-zoom image-zoom-immediate",
+      style: "width: 100%; height: 100%",
+      "data-target" => image_name,
+    }).with_indifferent_access
+    overlay = options.delete("overlay")
+    caption = options.delete("caption")
+    item = options.delete("item")
+    if overlay
+      options["data-overlay"] = overlay.to_json
+    end
+    if item
+      content = item_attribution(item)
+    else
+      content = "".html_safe
+    end
+    if caption
+      content += caption_container(caption)
+    end
+    zoom_content = content_tag(:div, content, options)
+  end
 
   def top_nav_links
     res = []

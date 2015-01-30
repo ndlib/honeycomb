@@ -8,11 +8,15 @@ class HoneypotImage < ActiveRecord::Base
   before_validation :set_values_from_json_response
 
   def style(style_name)
-    styles[style_name]
+    styles[style_name.to_s]
   end
 
   def styles
     @styles ||= build_styles
+  end
+
+  def dzi
+    @dzi ||= build_dzi
   end
 
   def json_response=(*args)
@@ -51,6 +55,14 @@ class HoneypotImage < ActiveRecord::Base
         styles_data.each do |data|
           hash[data['id']] = HoneypotImageStyle.new(data)
         end
+      end
+    end
+
+    def build_dzi
+      if data = get_link('dzi')
+        HoneypotImageStyle.new(data)
+      else
+        nil
       end
     end
 

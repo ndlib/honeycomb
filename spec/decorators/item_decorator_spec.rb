@@ -29,9 +29,51 @@ RSpec.describe ItemDecorator do
     end
   end
 
-  describe 'image_tag' do
-    it 'generates an image tag' do
-      expect(subject.image_tag('100')).to eq("<img alt=\"Image\" src=\"/images/image.jpg\" width=\"100\" />")
+  describe 'mock image_decorator' do
+    let(:image_decorator) { instance_double(ItemImageDecorator) }
+
+    before do
+      allow(subject).to receive(:image_decorator).and_return(image_decorator)
+    end
+
+    describe '#image_title' do
+      it 'calls image_decorator#title' do
+        expect(image_decorator).to receive(:title).and_return('title')
+        expect(subject.image_title()).to eq('title')
+      end
+    end
+
+    describe '#thumbnail' do
+      it 'calls image_decorator#render with default options' do
+        expect(image_decorator).to receive(:render).with(:small, {}).and_return('thumbnail')
+        expect(subject.thumbnail()).to eq('thumbnail')
+      end
+
+      it 'calls image_decorator#render with the specified options' do
+        expect(image_decorator).to receive(:render).with(:style, {test: :test}).and_return('thumbnail')
+        expect(subject.thumbnail(:style, {test: :test})).to eq('thumbnail')
+      end
+    end
+
+    describe '#render_image_zoom' do
+      it 'calls image_decorator#render_image_zoom with default options' do
+        expect(image_decorator).to receive(:render_image_zoom).with({}).and_return('zoom')
+        expect(subject.render_image_zoom()).to eq('zoom')
+      end
+
+      it 'calls image_decorator#render_image_zoom with the specified options' do
+        expect(image_decorator).to receive(:render_image_zoom).with({test: :test}).and_return('zoom')
+        expect(subject.render_image_zoom({test: :test})).to eq('zoom')
+      end
+    end
+  end
+
+  describe '#image_decorator' do
+    let(:honeypot_image) { instance_double(HoneypotImage) }
+    it 'returns a ItemImageDecorator' do
+      expect(item).to receive(:honeypot_image).and_return(honeypot_image)
+      expect(ItemImageDecorator).to receive(:new).with(honeypot_image).and_return('decorated')
+      expect(subject.send(:image_decorator)).to eq('decorated')
     end
   end
 
@@ -71,5 +113,13 @@ RSpec.describe ItemDecorator do
         expect(subject.back_path).to eq("/collections/#{collection.id}/items/#{child_item.parent_id}/children")
       end
     end
+  end
+
+  it 'returns the edit path' do
+    expect(subject.edit_path).to eq('/collections/2/items/1/edit')
+  end
+
+  it 'returns the show path' do
+    expect(subject.show_path).to eq('/collections/2/items/1')
   end
 end

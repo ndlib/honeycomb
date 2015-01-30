@@ -14,19 +14,34 @@ jQuery ($) ->
       event.preventDefault()
       container = $(button.data('target'))
       viewer = getViewer(container)
-      viewer.setFullScreen(true)
+      viewer.setFullPage(true)
+      viewer.viewport.goHome()
+      true
+    $(document).keyup (event) ->
+      if event.keyCode == 27
+        container = $(button.data('target'))
+        viewer = getViewer(container)
+        viewer.setFullPage(false)
       true
 
   initializeOpenseadragon = (container) ->
     if !container.data('zoom-initialized')
       container.data('zoom-initialized', true)
-      options = dziOptions(container)
+      options = viewerOptions(container)
       viewer = OpenSeadragon(options)
       container.data('openseadragonviewer', viewer)
     container.data('openseadragonviewer')
 
   getViewer = (container) ->
     container.data('openseadragonviewer')
+
+  viewerOptions = (container) ->
+    if /dzi/.test(container.data('target'))
+      options = dziOptions(container)
+    else
+      options = legacyOptions(container)
+    console.log(options)
+    options
 
   baseOptions = (container) ->
     {

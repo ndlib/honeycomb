@@ -14,7 +14,7 @@
       </div>
       <div class="panel-body">
         <% if @item.description.blank? %>
-          <%= simple_form_for [@item.collection, @item], html: { :class => "item edit-item-dropzone", id: 'edit-item' } do |f| %>
+          <%= simple_form_for [@item.collection, @item], html: { :class => "item", id: 'edit-item' } do |f| %>
             <%= render :partial => 'form', locals: { f: f } %>
           <% end %>
         <% else %>
@@ -32,11 +32,25 @@
 
   </div>
   <div class="col-md-4 item-show-image">
-    <div style="text-align: center; border: 1px solid gray">
-      <%= image_tag(item.image.to_s, height: '200') %>
-      <div style="width: 100%; text-align: center; background-color: gray; color: white; padding: 8px;">
-        <a href="#" style="color: white;"><i class="glyphicon glyphicon-refresh"></i> Replace</a>
-      </div>
+    <div class="item-show-image-box">
+      <button class="btn btn-default image-zoom-fullscreen" data-target="#itemZoom<%= item.id %>"><span class="glyphicon glyphicon-zoom-in"></span></button>
+      <%= item.thumbnail(:medium, height: '200') %>
+      <% simple_form_for [@item.collection, @item], html: { :class => "edit-item-dropzone", :multipart => true } do |f| %>
+        <div class="row">
+          <div class="dropzone">
+            <div class="dropzone-previews"></div>
+            <div class="dz-message"><span>Drop image here to upload.</span></div>
+          </div>
+          <div class="fallback">
+            <%= f.file_field :image %>
+          </div>
+        </div>
+        <div style="width: 100%; text-align: center; background-color: gray; color: white; padding: 8px;">
+          <%= f.button :submit, "Replace Image", class: 'btn btn-primary' %>
+          <a href="#" style="color: white;"><i class="glyphicon glyphicon-refresh"></i> Replace</a>
+        </div>
+      <% end %>
     </div>
+    <%= item.render_image_zoom(id: "itemZoom#{item.id}") %>
   </div>
 </div>
