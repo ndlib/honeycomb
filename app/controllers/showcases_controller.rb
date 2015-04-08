@@ -1,5 +1,4 @@
 class ShowcasesController < ApplicationController
-
   def index
     check_user_edits!(exhibit.collection)
     @showcases = ShowcaseQuery.new(exhibit.showcases).all
@@ -62,7 +61,7 @@ class ShowcasesController < ApplicationController
     @showcase = ShowcaseQuery.new.find(params[:id])
     check_user_edits!(@showcase.collection)
 
-    @showcase.destroy!()
+    @showcase.destroy!
 
     flash[:notice] = t('.success')
     redirect_to exhibit_path(@showcase.exhibit)
@@ -72,9 +71,7 @@ class ShowcasesController < ApplicationController
     @showcase = ShowcaseQuery.new.find(params[:id])
     check_user_edits!(@showcase.collection)
 
-    if !Publish.call(@showcase)
-      raise "Error publishing #{@showcase.title}"
-    end
+    fail "Error publishing #{@showcase.title}" unless Publish.call(@showcase)
 
     showcase_save_success(@showcase)
   end
@@ -83,55 +80,53 @@ class ShowcasesController < ApplicationController
     @showcase = ShowcaseQuery.new.find(params[:id])
     check_user_edits!(@showcase.collection)
 
-    if !Unpublish.call(@showcase)
-      raise "Error unpublishing #{@showcase.title}"
-    end
+    fail "Error unpublishing #{@showcase.title}" unless Unpublish.call(@showcase)
 
     showcase_save_success(@showcase)
   end
 
   protected
 
-    def save_params
-      params.require(:showcase).permit([:title, :description, :image])
-    end
+  def save_params
+    params.require(:showcase).permit([:title, :description, :image])
+  end
 
-    def showcase
-      @showcase ||= ShowcaseQuery.new.find(params[:id])
-    end
+  def showcase
+    @showcase ||= ShowcaseQuery.new.find(params[:id])
+  end
 
-    def exhibit
-      @exhibit ||= ExhibitQuery.new.find(params[:exhibit_id])
-    end
+  def exhibit
+    @exhibit ||= ExhibitQuery.new.find(params[:exhibit_id])
+  end
 
-    def showcase_save_success(showcase)
-      respond_to do |format|
-        format.json { render json: showcase }
-        format.html do
-          showcase_save_html_success(showcase)
+  def showcase_save_success(showcase)
+    respond_to do |format|
+      format.json { render json: showcase }
+      format.html do
+        showcase_save_html_success(showcase)
+      end
+    end
+  end
+
+  def showcase_save_html_success(showcase)
+    flash[:notice] = t('.success')
+    if params[:action] == 'create'
+      redirect_to edit_showcase_path(showcase)
+    else
+      redirect_to edit_showcase_path(showcase)
+    end
+  end
+
+  def showcase_save_failure(item)
+    respond_to do |format|
+      format.html do
+        if params[:action] == 'create'
+          render action: 'new'
+        else
+          render action: 'edit'
         end
       end
+      format.json { render json: item.errors, status: :unprocessable_entity }
     end
-
-    def showcase_save_html_success(showcase)
-      flash[:notice] = t('.success')
-      if params[:action] == 'create'
-        redirect_to edit_showcase_path(showcase)
-      else
-        redirect_to edit_showcase_path(showcase)
-      end
-    end
-
-    def showcase_save_failure(item)
-      respond_to do |format|
-        format.html do
-          if params[:action] == 'create'
-            render action: 'new'
-          else
-            render action: 'edit'
-          end
-        end
-        format.json { render json: item.errors, status: :unprocessable_entity }
-      end
-    end
+  end
 end

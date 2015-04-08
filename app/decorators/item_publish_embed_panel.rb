@@ -1,10 +1,8 @@
 require 'draper'
 
-
 class ItemPublishEmbedPanel < Draper::Decorator
-
   def self.display(item)
-    self.new(item).display
+    new(item).display
   end
 
   def display
@@ -14,7 +12,7 @@ class ItemPublishEmbedPanel < Draper::Decorator
   private
 
   def i18n_key_base
-    @base ||= "items.edit"
+    @base ||= 'items.edit'
   end
 
   def component_parameters
@@ -28,7 +26,7 @@ class ItemPublishEmbedPanel < Draper::Decorator
       embedPanelHelp: h.t("#{i18n_key_base}.embed_help"),
       published: !!object.published,
       publishPath: h.publish_item_path(object.id),
-      unpublishPath: h.unpublish_item_path(object.id),
+      unpublishPath: h.unpublish_item_path(object.id)
     }
   end
 end

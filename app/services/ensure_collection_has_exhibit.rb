@@ -10,16 +10,14 @@ class EnsureCollectionHasExhibit
   end
 
   def ensure
-    if !collection.exhibit
-      create!
-    end
+    create! unless collection.exhibit
 
     collection.exhibit
   end
 
   private
 
-    def create!
-      collection.create_exhibit(title: collection.title)
-    end
+  def create!
+    collection.create_exhibit(title: collection.title)
+  end
 end

@@ -30,8 +30,9 @@ module Admin
     end
 
     private
-      def user
-        object
-      end
+
+    def user
+      object
+    end
   end
 end

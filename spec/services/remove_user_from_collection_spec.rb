@@ -8,7 +8,7 @@ describe RemoveUserFromCollection do
   before (:each) do
     AssignUserToCollection.call(collection, user)
   end
-  it "deletes the collection_user" do
+  it 'deletes the collection_user' do
     expect_any_instance_of(CollectionUser).to receive(:destroy)
     subject.delete!
   end

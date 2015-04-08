@@ -29,7 +29,8 @@ class CollectionUserDecorator < Draper::Decorator
   end
 
   private
-    def user
-      object.user
-    end
+
+  def user
+    object.user
+  end
 end

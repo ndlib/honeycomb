@@ -24,15 +24,15 @@ class SaveSection
 
   private
 
-    def current_order
-      @current_order ||= SectionQuery.new(section.showcase.sections).all_in_showcase
-    end
+  def current_order
+    @current_order ||= SectionQuery.new(section.showcase.sections).all_in_showcase
+  end
 
-    def fix_order!
-      ReorderSections.call(current_order, section)
-    end
+  def fix_order!
+    ReorderSections.call(current_order, section)
+  end
 
-    def check_unique_id
-      CreateUniqueId.call(section)
-    end
+  def check_unique_id
+    CreateUniqueId.call(section)
+  end
 end

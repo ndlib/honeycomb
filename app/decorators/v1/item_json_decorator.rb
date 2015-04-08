@@ -45,27 +45,24 @@ module V1
       [].tap do |array|
         METADATA_MAP.each do |label, field|
           value = metadata_value(field)
-          if value
-            array << {label: label, value: value}
-          end
+          array << { label: label, value: value } if value
         end
       end
     end
 
     def display(json)
-      if self.present?
-        json.partial! '/v1/items/item', item_object: self
-      end
+      json.partial! '/v1/items/item', item_object: self if self.present?
     end
 
     private
-      def metadata_value(field)
-        value = object.send(field)
-        if value.present?
-          value
-        else
-          nil
-        end
+
+    def metadata_value(field)
+      value = object.send(field)
+      if value.present?
+        value
+      else
+        nil
       end
+    end
   end
 end

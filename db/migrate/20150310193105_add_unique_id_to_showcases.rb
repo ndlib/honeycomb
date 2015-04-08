@@ -3,7 +3,7 @@ class AddUniqueIdToShowcases < ActiveRecord::Migration
     add_column :showcases, :unique_id, :string
     add_index :showcases, :unique_id
 
-    Showcase.all.each do | s |
+    Showcase.all.each do |s|
       SaveShowcase.call(s, {})
     end
   end

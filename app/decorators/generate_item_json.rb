@@ -12,29 +12,29 @@ class GenerateItemJSON
 
   def to_hash
     {
-      "items" => to_hash_object
+      'items' => to_hash_object
     }
   end
 
   private
-    def hash_array
-      items.collect { |item| singular_hash(item) }
-    end
 
-    def singular_hash(item)
-      ItemJSON.new(item).to_hash(options)
-    end
+  def hash_array
+    items.collect { |item| singular_hash(item) }
+  end
 
-    def plural?
-      items.respond_to?(:each)
-    end
+  def singular_hash(item)
+    ItemJSON.new(item).to_hash(options)
+  end
 
-    def to_hash_object
-      if plural?
-        hash_array
-      else
-        singular_hash(items)
-      end
-    end
+  def plural?
+    items.respond_to?(:each)
+  end
 
+  def to_hash_object
+    if plural?
+      hash_array
+    else
+      singular_hash(items)
+    end
+  end
 end

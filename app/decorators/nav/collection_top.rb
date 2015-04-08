@@ -1,7 +1,6 @@
 require 'draper'
 
 class Nav::CollectionTop < Draper::Decorator
-
   def display
     h.render partial: 'shared/collection_top_nav', locals: { nav: self }
   end

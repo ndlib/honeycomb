@@ -8,15 +8,14 @@ Bundler.require(*Rails.groups)
 
 module ItemAdmin
   class Application < Rails::Application
-
     additional_autoload_directories = [
       Rails.root.join('lib'),
       Rails.root.join('app', 'queries'),
       Rails.root.join('app', 'decorators'),
       Rails.root.join('app', 'policy'),
       Rails.root.join('app', 'services'),
-      Rails.root.join('app', 'forms'),
-      ]
+      Rails.root.join('app', 'forms')
+    ]
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -30,9 +29,8 @@ module ItemAdmin
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-
     config.react.addons = true
 
-    config.assets.precompile = [ Proc.new{ |path| !File.extname(path).in?(['.js', '.css', '.map', '.gzip', ''] ) }, /(?:\/|\\|\A)application\.(css|js)$/ ]
+    config.assets.precompile = [proc { |path| !File.extname(path).in?(['.js', '.css', '.map', '.gzip', '']) }, /(?:\/|\\|\A)application\.(css|js)$/]
   end
 end

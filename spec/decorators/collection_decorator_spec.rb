@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CollectionDecorator do
-  let(:collection) { instance_double(Collection, id: 2, title: 'title', items: Item.all)}
+  let(:collection) { instance_double(Collection, id: 2, title: 'title', items: Item.all) }
 
   subject { described_class.new(collection) }
 

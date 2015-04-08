@@ -5,7 +5,7 @@ class APIController < ApplicationController
 
   private
 
-    def set_access
-      response.headers["Access-Control-Allow-Origin"] = "*"
-    end
+  def set_access
+    response.headers['Access-Control-Allow-Origin'] = '*'
+  end
 end

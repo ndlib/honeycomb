@@ -1,4 +1,4 @@
-require "addressable/uri"
+require 'addressable/uri'
 
 class URIParser
   attr_reader :uri
@@ -14,9 +14,7 @@ class URIParser
   def valid?
     valid = true
     begin
-      if parse.scheme.blank? || parse.host.blank?
-        valid = false
-      end
+      valid = false if parse.scheme.blank? || parse.host.blank?
     rescue Addressable::URI::InvalidURIError => e
       valid = false
     end

@@ -1,5 +1,4 @@
 class EditorQuery
-
   def initialize(base_relation = User.all)
     @base_relation = base_relation
   end
@@ -22,7 +21,5 @@ class EditorQuery
 
   private
 
-    def base_relation
-      @base_relation
-    end
+  attr_reader :base_relation
 end

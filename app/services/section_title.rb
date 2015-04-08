@@ -15,9 +15,7 @@ class SectionTitle
     elsif section.item && section.item.title.present?
       section.item.title
     else
-      ""
+      ''
     end
   end
-
-
 end

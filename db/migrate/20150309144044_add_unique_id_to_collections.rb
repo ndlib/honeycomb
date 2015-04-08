@@ -3,7 +3,7 @@ class AddUniqueIdToCollections < ActiveRecord::Migration
     add_column :collections, :unique_id, :string
     add_index :collections, :unique_id
 
-    Collection.all.each do | s |
+    Collection.all.each do |s|
       SaveCollection.call(s, {})
     end
   end

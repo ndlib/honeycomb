@@ -1,5 +1,4 @@
 class CollectionsController < ApplicationController
-
   def index
     @collections = CollectionQuery.new.for_editor(current_user)
   end
@@ -63,8 +62,7 @@ class CollectionsController < ApplicationController
 
   protected
 
-    def save_params
-      params.require(:collection).permit(:title, :description, :id)
-    end
-
+  def save_params
+    params.require(:collection).permit(:title, :description, :id)
+  end
 end
