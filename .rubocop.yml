@@ -1,0 +1,11 @@
+
+AllCops:
+  RunRailsCops: true
+
+Metrics/LineLength:
+  Max: 120
+
+
+Style/IfUnlessModifier:
+  MaxLineLength: 10
+
