@@ -11,15 +11,15 @@ class Publish
   end
 
   def publish!
-    @object.published=true
+    @object.published = true
     @object.save
   end
 
   private
 
-    def validate_interface!
-      if !object.respond_to?('published=')
-        raise "Object passed to publish is not valid"
-      end
+  def validate_interface!
+    unless object.respond_to?('published=')
+      fail 'Object passed to publish is not valid'
     end
+  end
 end

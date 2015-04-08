@@ -1,14 +1,14 @@
-require "rails_helper"
+require 'rails_helper'
 
-RSpec.describe SectionsController, :type => :controller do
+RSpec.describe SectionsController, type: :controller do
   let(:showcase) { double(Showcase, id: 1, title: 'title', sections: relation, exhibit: exhibit) }
   let(:exhibit) { double(Exhibit, id: 1, title: 'title', showcases: relation, collection: collection) }
   let(:collection) { instance_double(Collection, id: 1, title: 'title') }
-  let(:section) {double(Section, id: 1, destroy!: true, showcase: showcase, :order= => true, order: 1)}
+  let(:section) { double(Section, id: 1, destroy!: true, showcase: showcase, :order= => true, order: 1) }
   let(:relation) { Section.all }
-  let(:create_params) { {showcase_id: showcase.id, section: { title: 'title', order: 1 }} }
+  let(:create_params) { { showcase_id: showcase.id, section: { title: 'title', order: 1 } } }
 
-  let(:update_params) { {id: section.id, section: { title: 'title' }} }
+  let(:update_params) { { id: section.id, section: { title: 'title' } } }
 
   before(:each) do
     sign_in_admin
@@ -20,54 +20,54 @@ RSpec.describe SectionsController, :type => :controller do
     allow(SaveSection).to receive(:call).and_return(true)
   end
 
-  describe "GET #index" do
+  describe 'GET #index' do
     subject { get :index, showcase_id: showcase.id, format: :json }
 
-    it "returns a 200" do
+    it 'returns a 200' do
       subject
 
       expect(response).to be_success
-      expect(response).to render_template("index")
+      expect(response).to render_template('index')
     end
 
-    it "checks the editor permissions" do
+    it 'checks the editor permissions' do
       expect_any_instance_of(described_class).to receive(:check_user_edits!).with(collection)
       subject
     end
 
-    it "users the item query to get items" do
+    it 'users the item query to get items' do
       expect_any_instance_of(SectionQuery).to receive(:all_in_showcase)
       subject
     end
 
-    it "assigns an item decorator to items" do
+    it 'assigns an item decorator to items' do
       subject
       assigns(:sections)
       expect(assigns(:sections)).to be_a(ShowcaseList)
     end
   end
 
-  describe "GET #new" do
+  describe 'GET #new' do
     subject { get :new, showcase_id: showcase.id, section: { order: 1 } }
 
-    it "returns a 200" do
+    it 'returns a 200' do
       subject
 
       expect(response).to be_success
-      expect(response).to render_template("new")
+      expect(response).to render_template('new')
     end
 
-    it "checks the editor permissions" do
+    it 'checks the editor permissions' do
       expect_any_instance_of(described_class).to receive(:check_user_edits!).with(collection)
       subject
     end
 
-    it "uses item query " do
+    it 'uses item query ' do
       expect(SectionForm).to receive(:build_from_params).and_call_original
       subject
     end
 
-    it "assigns and item and it is an item decorator" do
+    it 'assigns and item and it is an item decorator' do
       subject
 
       assigns(:section_form)
@@ -75,69 +75,68 @@ RSpec.describe SectionsController, :type => :controller do
     end
   end
 
-
-  describe "POST #create" do
+  describe 'POST #create' do
     subject { post :create, create_params }
 
-    it "checks the editor permissions" do
+    it 'checks the editor permissions' do
       expect_any_instance_of(described_class).to receive(:check_user_edits!).with(collection)
       subject
     end
 
-    it "uses item query " do
+    it 'uses item query ' do
       expect_any_instance_of(SectionQuery).to receive(:build).and_return(section)
       subject
     end
 
-    it "redirects on success" do
+    it 'redirects on success' do
       subject
 
       expect(response).to be_redirect
       expect(flash[:notice]).to_not be_nil
     end
 
-    it "renders new on failure" do
+    it 'renders new on failure' do
       allow(SaveSection).to receive(:call).and_return(false)
 
       subject
-      expect(response).to render_template("new")
+      expect(response).to render_template('new')
     end
 
-    it "assigns and item" do
+    it 'assigns and item' do
       subject
 
       assigns(:section)
       expect(assigns(:section)).to eq(section)
     end
 
-    it "uses the save item service" do
+    it 'uses the save item service' do
       expect(SaveSection).to receive(:call).and_return(true)
 
       subject
     end
   end
 
-  describe "GET #edit" do
+  describe 'GET #edit' do
     subject { get :edit, id: 1 }
 
-    it "returns a 200" do
+    it 'returns a 200' do
       subject
 
       expect(response).to be_success
-      expect(response).to render_template("edit")
+      expect(response).to render_template('edit')
     end
 
-    it "uses item query" do
-      expect_any_instance_of(SectionQuery).to receive(:find).with("1").and_return(section)
+    it 'uses item query' do
+      expect_any_instance_of(SectionQuery).to receive(:find).with('1').and_return(section)
       subject
     end
 
-    it "checks the editor permissions" do
+    it 'checks the editor permissions' do
       expect_any_instance_of(described_class).to receive(:check_user_edits!).with(collection)
       subject
     end
 
-    it "assigns and item and it is an item decorator" do
+    it 'assigns and item and it is an item decorator' do
       subject
 
       assigns(:section_form)
@@ -145,52 +144,50 @@ RSpec.describe SectionsController, :type => :controller do
     end
   end
 
-  describe "PUT #update" do
+  describe 'PUT #update' do
     subject { put :update, update_params }
 
-
-    it "checks the editor permissions" do
+    it 'checks the editor permissions' do
       expect_any_instance_of(described_class).to receive(:check_user_edits!).with(collection)
       subject
     end
 
-    it "uses item query " do
-      expect_any_instance_of(SectionQuery).to receive(:find).with("1").and_return(section)
+    it 'uses item query ' do
+      expect_any_instance_of(SectionQuery).to receive(:find).with('1').and_return(section)
       subject
     end
 
-    it "redirects on success" do
+    it 'redirects on success' do
       subject
 
       expect(response).to be_redirect
       expect(flash[:notice]).to_not be_nil
     end
 
-    it "renders new on failure" do
+    it 'renders new on failure' do
       allow(SaveSection).to receive(:call).and_return(false)
 
       subject
-      expect(response).to render_template("edit")
+      expect(response).to render_template('edit')
     end
 
-    it "assigns and section" do
+    it 'assigns and section' do
       subject
 
       expect(assigns(:section)).to eq(section)
     end
 
-    it "uses the save item service" do
+    it 'uses the save item service' do
       expect(SaveSection).to receive(:call).and_return(true)
 
       subject
     end
   end
 
-
-  describe "DELETE #destroy" do
+  describe 'DELETE #destroy' do
     subject { delete :destroy, id: section.id }
 
-    it "calls destroy on the section on success, redirects, and flashes " do
+    it 'calls destroy on the section on success, redirects, and flashes ' do
       expect(section).to receive(:destroy!).and_return(true)
 
       subject
@@ -198,22 +195,21 @@ RSpec.describe SectionsController, :type => :controller do
       expect(flash[:notice]).to_not be_nil
     end
 
-    it "assigns and item" do
+    it 'assigns and item' do
       subject
 
       assigns(:section)
       expect(assigns(:section)).to eq(section)
     end
 
-    it "checks the editor permissions" do
+    it 'checks the editor permissions' do
       expect_any_instance_of(described_class).to receive(:check_user_edits!).with(collection)
       subject
     end
 
-    it "uses section query " do
-      expect_any_instance_of(SectionQuery).to receive(:find).with("1").and_return(section)
+    it 'uses section query ' do
+      expect_any_instance_of(SectionQuery).to receive(:find).with('1').and_return(section)
       subject
     end
   end
-
 end

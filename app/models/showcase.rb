@@ -4,8 +4,8 @@ class Showcase < ActiveRecord::Base
   has_many :sections
   has_one :honeypot_image
 
-  has_attached_file :image, :restricted_characters => /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/
-  validates_attachment_content_type :image, :content_type => /\Aimage\/.*\Z/
+  has_attached_file :image, restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/
+  validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 
   validates :title, :exhibit, presence: true
   validates :image, attachment_presence: true
@@ -16,6 +16,4 @@ class Showcase < ActiveRecord::Base
     CreateBeehiveURL.call(self)
   end
   has_paper_trail
-
 end
-

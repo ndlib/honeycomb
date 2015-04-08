@@ -9,9 +9,7 @@ class AdministratorQuery
     relation.order(:last_name, :first_name)
   end
 
-  def find(id)
-    relation.find(id)
-  end
+  delegate :find, to: :relation
 
   def build(*args)
     relation.build(*args)

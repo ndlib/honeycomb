@@ -5,7 +5,7 @@ RSpec.describe ItemsDecorator do
   let(:items) { [item] }
   subject { described_class.new(items) }
 
-  it "decorates with ItemDecorator" do
+  it 'decorates with ItemDecorator' do
     expect(subject.first).to be_a_kind_of(ItemDecorator)
     expect(subject.first.object).to eq(item)
   end

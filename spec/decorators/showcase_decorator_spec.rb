@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ShowcaseDecorator do
   let(:showcase) { instance_double(Showcase, id: 10, title: 'title', description: 'description') }
-  subject{ described_class.new(showcase)}
+  subject { described_class.new(showcase) }
 
   describe '#id' do
     it 'is the showcase id' do

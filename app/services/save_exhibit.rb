@@ -18,13 +18,11 @@ class SaveExhibit
 
   private
 
-    def update_honeypot_image
-      if params[:image]
-        SaveHoneypotImage.call(exhibit)
-      else
-        true
-      end
+  def update_honeypot_image
+    if params[:image]
+      SaveHoneypotImage.call(exhibit)
+    else
+      true
     end
-
+  end
 end
-

@@ -20,16 +20,15 @@ class CollectionUserDecorator < Draper::Decorator
     user.display_name
   end
 
-  def username
-    user.username
-  end
+  delegate :username, to: :user
 
   def destroy_path
     h.collection_editor_path(object.collection_id, object.user_id)
   end
 
   private
-    def user
-      object.user
-    end
+
+  def user
+    object.user
+  end
 end

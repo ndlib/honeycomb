@@ -1,23 +1,21 @@
 module ErrorHelper
-
-  def catch_404(exception=nil)
+  def catch_404(_exception = nil)
     @masquerading_user = determine_masquerade
 
     respond_to do |format|
-      format.html { render :template => 'errors/error_404', :status => 404 }
+      format.html { render template: 'errors/error_404', status: 404 }
     end
   end
 
-
-  def catch_500(exception=nil)
+  def catch_500(exception = nil)
     @masquerading_user = determine_masquerade
 
-    if !exception.nil?
-      #ExceptionNotifier.notify_exception(exception, { :env => request.env })
+    unless exception.nil?
+      # ExceptionNotifier.notify_exception(exception, { :env => request.env })
     end
 
     respond_to do |format|
-      format.html { render :template => 'errors/error_404', :status => 500 }
+      format.html { render template: 'errors/error_404', status: 500 }
     end
   end
 
@@ -27,7 +25,6 @@ module ErrorHelper
       return masquerade.original_user
     end
 
-    return false
+    false
   end
-
 end

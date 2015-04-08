@@ -13,9 +13,7 @@ class ItemQuery
     relation.where(parent_id: nil)
   end
 
-  def find(id)
-    relation.find(id)
-  end
+  delegate :find, to: :relation
 
   def build(args = {})
     relation.build(args)

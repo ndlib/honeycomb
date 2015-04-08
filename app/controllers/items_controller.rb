@@ -1,5 +1,4 @@
 class ItemsController < ApplicationController
-
   def index
     check_user_edits!(collection)
 
@@ -57,8 +56,8 @@ class ItemsController < ApplicationController
     @item = ItemQuery.new.find(params[:id])
     check_user_edits!(@item.collection)
 
-    if !Publish.call(@item)
-      raise "Error publishing #{@item.title}"
+    unless Publish.call(@item)
+      fail "Error publishing #{@item.title}"
     end
 
     item_save_success(@item)
@@ -68,8 +67,8 @@ class ItemsController < ApplicationController
     @item = ItemQuery.new.find(params[:id])
     check_user_edits!(@item.collection)
 
-    if !Unpublish.call(@item)
-      raise "Error unpublishing #{@item.title}"
+    unless Unpublish.call(@item)
+      fail "Error unpublishing #{@item.title}"
     end
 
     item_save_success(@item)
@@ -77,42 +76,42 @@ class ItemsController < ApplicationController
 
   protected
 
-    def save_params
-      params.require(:item).permit(:title, :description, :image, :manuscript_url, :transcription)
-    end
+  def save_params
+    params.require(:item).permit(:title, :description, :image, :manuscript_url, :transcription)
+  end
 
-    def collection
-      @collection ||= CollectionQuery.new.find(params[:collection_id])
-    end
+  def collection
+    @collection ||= CollectionQuery.new.find(params[:collection_id])
+  end
 
-    def item_save_success(item)
-      respond_to do |format|
-        format.json { render json: item }
-        format.html do
-          item_save_html_success(item)
+  def item_save_success(item)
+    respond_to do |format|
+      format.json { render json: item }
+      format.html do
+        item_save_html_success(item)
+      end
+    end
+  end
+
+  def item_save_html_success(item)
+    flash[:notice] = t('.success')
+    if item.parent.present?
+      redirect_to edit_item_path(item.parent)
+    else
+      redirect_to collection_path(item.collection)
+    end
+  end
+
+  def item_save_failure(item)
+    respond_to do |format|
+      format.html do
+        if params[:action] == 'create'
+          render action: 'new'
+        else
+          render action: 'edit'
         end
       end
+      format.json { render json: item.errors, status: :unprocessable_entity }
     end
-
-    def item_save_html_success(item)
-      flash[:notice] = t('.success')
-      if item.parent.present?
-        redirect_to edit_item_path(item.parent)
-      else
-        redirect_to collection_path(item.collection)
-      end
-    end
-
-    def item_save_failure(item)
-      respond_to do |format|
-        format.html do
-          if params[:action] == 'create'
-            render action: 'new'
-          else
-            render action: 'edit'
-          end
-        end
-        format.json { render json: item.errors, status: :unprocessable_entity }
-      end
-    end
+  end
 end

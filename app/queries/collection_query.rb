@@ -29,11 +29,7 @@ class CollectionQuery
     relation.order(updated_at: :desc).limit(limit)
   end
 
-  def find(id)
-    relation.find(id)
-  end
+  delegate :find, to: :relation
 
-  def build
-    relation.build
-  end
+  delegate :build, to: :relation
 end

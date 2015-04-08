@@ -27,32 +27,32 @@ class SaveItem
 
   private
 
-    def pre_process_title
-      if title_should_be_filename?
-        item.title = GenerateTitleFromFilename.call(item.image_file_name)
-      end
-
-      item.sortable_title = SortableTitleConverter.convert(item.title)
+  def pre_process_title
+    if title_should_be_filename?
+      item.title = GenerateTitleFromFilename.call(item.image_file_name)
     end
 
-    def title_should_be_filename?
-      item.new_record? && item.title.blank?
-    end
+    item.sortable_title = SortableTitleConverter.convert(item.title)
+  end
 
-    def fix_image_param!
-      #sometimes the form is sending an empty image value and this is causing paperclip to delete the image.
-      params.delete(:image) if params[:image].nil?
-    end
+  def title_should_be_filename?
+    item.new_record? && item.title.blank?
+  end
 
-    def update_honeypot_image
-      if params[:image]
-        SaveHoneypotImage.call(item)
-      else
-        true
-      end
-    end
+  def fix_image_param!
+    # sometimes the form is sending an empty image value and this is causing paperclip to delete the image.
+    params.delete(:image) if params[:image].nil?
+  end
 
-    def check_unique_id
-      CreateUniqueId.call(item)
+  def update_honeypot_image
+    if params[:image]
+      SaveHoneypotImage.call(item)
+    else
+      true
     end
+  end
+
+  def check_unique_id
+    CreateUniqueId.call(item)
+  end
 end

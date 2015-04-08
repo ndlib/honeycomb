@@ -18,7 +18,7 @@ class EditorsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.any { render json: { status: 'error'}, status: 500 }
+        format.any { render json: { status: 'error' }, status: 500 }
       end
     end
   end
@@ -44,7 +44,7 @@ class EditorsController < ApplicationController
 
     search_results = PersonAPISearch.call(params[:q])
     respond_to do |format|
-      format.any { render json: search_results.to_json, content_type: "application/json" }
+      format.any { render json: search_results.to_json, content_type: 'application/json' }
     end
   end
 

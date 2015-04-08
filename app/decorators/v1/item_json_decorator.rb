@@ -46,7 +46,7 @@ module V1
         METADATA_MAP.each do |label, field|
           value = metadata_value(field)
           if value
-            array << {label: label, value: value}
+            array << { label: label, value: value }
           end
         end
       end
@@ -59,13 +59,14 @@ module V1
     end
 
     private
-      def metadata_value(field)
-        value = object.send(field)
-        if value.present?
-          value
-        else
-          nil
-        end
+
+    def metadata_value(field)
+      value = object.send(field)
+      if value.present?
+        value
+      else
+        nil
       end
+    end
   end
 end

@@ -8,7 +8,6 @@ class RemoveUserFromCollection
   def initialize(collection, user)
     @collection = collection
     @user = user
-
   end
 
   def delete!
@@ -18,11 +17,10 @@ class RemoveUserFromCollection
   private
 
   def collection_user
-     @collection_user ||= CollectionUser.find_by! collection_id: collection.id, user_id: user.id
+    @collection_user ||= CollectionUser.find_by! collection_id: collection.id, user_id: user.id
     if @collection_user.nil?
-      @collection_user = CollectionUser.new()
+      @collection_user = CollectionUser.new
     end
     @collection_user
   end
-
 end

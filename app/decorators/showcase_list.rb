@@ -6,12 +6,7 @@ class ShowcaseList
     @showcase = showcase
   end
 
-  def exhibit
-    showcase.exhibit
-  end
+  delegate :exhibit, to: :showcase
 
-  def showcase
-    @showcase
-  end
-
+  attr_reader :showcase
 end

@@ -1,4 +1,4 @@
-require "addressable/uri"
+require 'addressable/uri'
 
 class URIParser
   attr_reader :uri

@@ -16,10 +16,10 @@ class CreateBeehiveURL
     else
       object_url
     end
-
   end
 
   private
+
   def collection_url(collection)
     "#{Rails.configuration.settings.beehive_url}/#{collection.unique_id}/#{CreateURLSlug.call(collection.title)}"
   end
@@ -27,5 +27,4 @@ class CreateBeehiveURL
   def object_url
     "#{collection_url(object.collection)}/#{object.class.name.pluralize.downcase}/#{object.unique_id}/#{CreateURLSlug.call(object.title)}"
   end
-
 end

@@ -14,11 +14,11 @@ class FindOrCreateUser
   end
 
   private
-  
+
   def user
-    @user ||= User.where({username: username}).first
+    @user ||= User.where(username: username).first
     if @user.nil?
-      @user = CreateUser.call(User.new(), {username: username})
+      @user = CreateUser.call(User.new, username: username)
     end
     @user
   end

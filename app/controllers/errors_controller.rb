@@ -8,7 +8,6 @@ class ErrorsController < ApplicationController
     @errors = ErrorLog.errors
   end
 
-
   def show
     check_admin_or_admin_masquerading_permission!
 
@@ -18,7 +17,6 @@ class ErrorsController < ApplicationController
       @error.save!
     end
   end
-
 
   def update
     check_admin_or_admin_masquerading_permission!
@@ -30,7 +28,6 @@ class ErrorsController < ApplicationController
       @error.save!
     end
 
-    redirect_to errors_path()
+    redirect_to errors_path
   end
-
 end

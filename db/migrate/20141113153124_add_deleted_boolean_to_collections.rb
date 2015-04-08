@@ -1,6 +1,6 @@
 class AddDeletedBooleanToCollections < ActiveRecord::Migration
   def up
-    add_column :collections, :deleted, :boolean, :default => false
+    add_column :collections, :deleted, :boolean, default: false
   end
 
   def down

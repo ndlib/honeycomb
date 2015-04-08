@@ -1,5 +1,4 @@
 class EditorQuery
-
   def initialize(base_relation = User.all)
     @base_relation = base_relation
   end
@@ -12,9 +11,7 @@ class EditorQuery
     relation.order(:last_name, :first_name)
   end
 
-  def find(id)
-    relation.find(id)
-  end
+  delegate :find, to: :relation
 
   def build(*args)
     relation.build(*args)
@@ -22,7 +19,5 @@ class EditorQuery
 
   private
 
-    def base_relation
-      @base_relation
-    end
+  attr_reader :base_relation
 end
