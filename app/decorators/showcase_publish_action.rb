@@ -1,8 +1,9 @@
 require 'draper'
 
 class ShowcasePublishAction < Draper::Decorator
+
   def self.display(item)
-    new(item).display
+    self.new(item).display
   end
 
   def display
@@ -12,7 +13,7 @@ class ShowcasePublishAction < Draper::Decorator
   private
 
   def i18n_key_base
-    @base ||= 'items.edit'
+    @base ||= "items.edit"
   end
 
   def component_parameters
@@ -20,7 +21,7 @@ class ShowcasePublishAction < Draper::Decorator
       published: !!object.published,
       publishPath: h.publish_showcase_path(object.id),
       unpublishPath: h.unpublish_showcase_path(object.id),
-      publishPanelFieldName: h.t("#{i18n_key_base}.publish_field")
+      publishPanelFieldName: h.t("#{i18n_key_base}.publish_field"),
     }
   end
 end

@@ -1,4 +1,5 @@
 class ItemChildrenController < ApplicationController
+
   def new
     check_user_edits!(parent.collection)
     @item = ItemQuery.new(parent.children).build(collection_id: parent.collection.id)
@@ -17,32 +18,32 @@ class ItemChildrenController < ApplicationController
 
   protected
 
-  def save_params
-    { title: params[:item][:title], description: params[:item][:description], image: params[:item][:image] }
-  end
+    def save_params
+      { title: params[:item][:title], description: params[:item][:description], image: params[:item][:image] }
+    end
 
-  def parent
-    @parent ||= ItemQuery.new.find(params[:item_id])
-  end
+    def parent
+      @parent ||= ItemQuery.new.find(params[:item_id])
+    end
 
-  def item_save_success(item)
-    respond_to do |format|
-      format.json { render json: item }
-      format.html do
-        item_save_html_success(item)
+    def item_save_success(item)
+      respond_to do |format|
+        format.json { render json: item }
+        format.html do
+          item_save_html_success(item)
+        end
       end
     end
-  end
 
-  def item_save_html_success(_item)
-    flash[:notice] = t('.success')
-    redirect_to edit_item_path(parent)
-  end
-
-  def item_save_failure(item)
-    respond_to do |format|
-      format.html { render action: 'new' }
-      format.json { render json: item.errors, status: :unprocessable_entity }
+    def item_save_html_success(item)
+      flash[:notice] = t('.success')
+      redirect_to edit_item_path(parent)
     end
-  end
+
+    def item_save_failure(item)
+      respond_to do |format|
+        format.html { render action: 'new'}
+        format.json { render json: item.errors, status: :unprocessable_entity }
+      end
+    end
 end

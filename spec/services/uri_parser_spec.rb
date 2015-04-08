@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe URIParser do
-  let(:valid_uri) { 'http://library.nd.edu/path' }
-  let(:invalid_uri) { 'path' }
+  let(:valid_uri) { "http://library.nd.edu/path"}
+  let(:invalid_uri) { "path" }
   subject { described_class.new(valid_uri) }
 
   it 'sets the uri' do

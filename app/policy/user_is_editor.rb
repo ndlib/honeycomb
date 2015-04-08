@@ -1,4 +1,5 @@
 class UserIsEditor
+
   def self.call(user, collection)
     new(user, collection).is_editor?
   end
@@ -19,7 +20,7 @@ class UserIsEditor
   private
 
   def collection
-    @collection ||= Collection.where(collection.id)
+     @collection ||= Collection.where(collection.id)
   end
 
   def user

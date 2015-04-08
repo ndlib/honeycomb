@@ -1,5 +1,7 @@
 module AdminHelper
   def admin_only
-    yield if UserIsAdmin.call(current_user)
+    if UserIsAdmin.call(current_user)
+      yield
+    end
   end
 end

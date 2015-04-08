@@ -1,4 +1,5 @@
 class ExhibitsController < ApplicationController
+
   def show
     redirect_to exhibit_showcases_path(params[:id])
   end
@@ -22,7 +23,7 @@ class ExhibitsController < ApplicationController
 
   private
 
-  def save_params
-    params.require(:exhibit).permit([:description, :image])
-  end
+    def save_params
+      params.require(:exhibit).permit([:description, :image])
+    end
 end

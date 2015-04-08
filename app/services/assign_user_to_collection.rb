@@ -28,7 +28,10 @@ class AssignUserToCollection
 
   def collection_user
     @collection_user ||= CollectionUser.where(collection_id: collection.id, user_id: user.id).first
-    @collection_user = CollectionUser.new if @collection_user.nil?
+    if @collection_user.nil?
+      @collection_user = CollectionUser.new()
+    end
     @collection_user
   end
+
 end

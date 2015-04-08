@@ -1,5 +1,6 @@
 module V1
   class CollectionsController < APIController
+
     def index
       @collections = CollectionQuery.new.public_collections
     end
@@ -9,3 +10,4 @@ module V1
     end
   end
 end
+

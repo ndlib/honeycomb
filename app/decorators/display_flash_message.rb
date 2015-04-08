@@ -11,8 +11,8 @@ class DisplayFlashMessage < Draper::Decorator
   delegate_all
 
   def display
-    txt = ''
-    flash_keys.each do |key|
+    txt = ""
+    flash_keys.each do | key |
       txt += display_flash_message(key)
     end
 
@@ -21,15 +21,16 @@ class DisplayFlashMessage < Draper::Decorator
 
   private
 
-  def flash_keys
-    [:notice, :alert, :success, :error]
-  end
-
-  def display_flash_message(key)
-    if object[key].present?
-      h.render 'shared/display_flash_message', content: object[key], css_class: KEY_2_CSS_CLASS[key]
-    else
-      ''
+    def flash_keys
+      [:notice, :alert, :success, :error]
     end
-  end
+
+    def display_flash_message(key)
+      if object[key].present?
+        h.render 'shared/display_flash_message', content: object[key], css_class: KEY_2_CSS_CLASS[key]
+      else
+        ""
+      end
+    end
 end
+

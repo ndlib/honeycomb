@@ -1,4 +1,5 @@
 module ApplicationHelper
+
   def display_errors(obj)
     ErrorMessages.new(obj).display_error
   end
@@ -12,7 +13,9 @@ module ApplicationHelper
   end
 
   def page_title(page_title, collection = false)
-    page_title += " - #{collection.title}" if collection
+    if collection
+      page_title += " - #{collection.title}"
+    end
 
     content_for(:page_title, page_title)
   end
@@ -24,15 +27,16 @@ module ApplicationHelper
 
   def learn_more_button(path)
     if path == '#'
-      link_to raw("<i class=\"glyphicon glyphicon-education\"></i> SUBMIT FEEDBACK"), "https://docs.google.com/a/nd.edu/forms/d/1PH99cRyKzhZ6rV-dCJjrfkzdThA2n1GvoE9PT6kCkSk/viewform?entry.1268925684=#{request.original_url}", class: 'btn btn-large btn-hollow', target: 'blank'
+      link_to raw("<i class=\"glyphicon glyphicon-education\"></i> SUBMIT FEEDBACK"), "https://docs.google.com/a/nd.edu/forms/d/1PH99cRyKzhZ6rV-dCJjrfkzdThA2n1GvoE9PT6kCkSk/viewform?entry.1268925684=#{request.original_url}", :class => 'btn btn-large btn-hollow', target: "blank"
     else
-      link_to raw("<i class=\"glyphicon glyphicon-education\"></i> #{t('buttons.help')}"), path, class: 'btn btn-large btn-hollow'
+      link_to raw("<i class=\"glyphicon glyphicon-education\"></i> #{t('buttons.help')}"), path, :class => 'btn btn-large btn-hollow'
     end
   end
 
   def back_button(path)
-    link_to(raw("<span class=\"mdi-navigation-arrow-back\"></span>"), path, class: 'btn btn-large btn-hollow')
+    link_to(raw("<span class=\"mdi-navigation-arrow-back\"></span>"), path, class: "btn btn-large btn-hollow")
   end
+
 
   def back_action_bar(back_path, learn_more_path)
     render(partial: '/shared/back_action_bar', locals: { back_path: back_path, learn_more_path: learn_more_path })
@@ -47,7 +51,9 @@ module ApplicationHelper
   end
 
   def admin_only
-    yield if permission.user_is_administrator?
+    if permission.user_is_administrator?
+      yield
+    end
   end
 
   def admin_or_admin_masquerading_only
@@ -61,4 +67,6 @@ module ApplicationHelper
       yield
     end
   end
+
+
 end

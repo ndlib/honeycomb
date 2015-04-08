@@ -10,5 +10,8 @@ class ShowcaseList
     showcase.exhibit
   end
 
-  attr_reader :showcase
+  def showcase
+    @showcase
+  end
+
 end

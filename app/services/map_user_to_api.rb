@@ -22,4 +22,5 @@ class MapUserToApi
   def api_attributes
     @api_attributes ||= HesburghAPI::PersonSearch.find(user.username)
   end
+
 end

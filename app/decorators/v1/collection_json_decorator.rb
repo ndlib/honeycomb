@@ -46,9 +46,9 @@ module V1
         nil
       end
     end
-
-    def display(json, _includes = {})
+        def display(json, includes = {})
       json.partial! '/v1/collections/collection', collection_object: self
-end
+    end
   end
 end
+

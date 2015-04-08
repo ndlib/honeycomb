@@ -12,4 +12,5 @@ class SectionType
       'text'
     end
   end
+
 end

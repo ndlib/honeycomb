@@ -1,1 +1,1 @@
-Spring.watch 'config/settings.yml'
+Spring.watch "config/settings.yml"

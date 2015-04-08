@@ -44,5 +44,7 @@ module V1
         json.partial! '/v1/sections/section', section_object: self
       end
     end
+
   end
 end
+

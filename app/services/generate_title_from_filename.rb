@@ -17,28 +17,35 @@ class GenerateTitleFromFilename
   def generate(options = {})
     options = DEFAULT_OPTIONS.merge(options)
     ensure_string
-    remove_extension if options[:remove_extension]
-    add_spaces if options[:add_spaces]
-    titleize if options[:titleize]
+    if options[:remove_extension]
+      remove_extension
+    end
+    if options[:add_spaces]
+      add_spaces
+    end
+    if options[:titleize]
+      titleize
+    end
 
     filename
   end
 
   private
 
-  def ensure_string
-    @filename = filename.to_s
-  end
+    def ensure_string
+      @filename = filename.to_s
+    end
 
-  def remove_extension
-    @filename = File.basename(filename, '.*')
-  end
+    def remove_extension
+      @filename = File.basename(filename, '.*')
+    end
 
-  def add_spaces
-    @filename = filename.gsub('_', ' ')
-  end
+    def add_spaces
+      @filename = filename.gsub('_', ' ')
+    end
 
-  def titleize
-    @filename = filename.titleize
-  end
+    def titleize
+      @filename = filename.titleize
+    end
+
 end
