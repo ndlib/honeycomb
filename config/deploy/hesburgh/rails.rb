@@ -19,8 +19,8 @@ Capistrano::Configuration.instance(:must_exist).load do
         'und:rails_setup'
 
   namespace :deploy do
-    task :start do; end
-    task :stop do; end
+    task :start { }
+    task :stop { }
     task :restart, roles: :app, except: { no_release: true } do
       run "#{try_sudo} touch #{File.join(current_path, 'tmp', 'restart.txt')}"
     end

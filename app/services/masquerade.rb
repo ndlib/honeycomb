@@ -32,11 +32,8 @@ class Masquerade
   end
 
   def masquerading_user
-    if masquerading?
-      @masquerading_user ||= @controller.current_user
-    else
-      nil
-    end
+    return nil unless masquerading?
+    @masquerading_user ||= @controller.current_user
   end
 
   def original_user

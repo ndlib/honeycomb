@@ -29,9 +29,9 @@ class ReorderSections
   private
 
   def check_and_update_order!(item, new_order)
-    if item.order != new_order
-      item.order = new_order
-      item.save!
-    end
+    return false if item.order != new_order
+
+    item.order = new_order
+    item.save!
   end
 end

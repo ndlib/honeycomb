@@ -33,16 +33,12 @@ class PersonAPISearch
   def encoded_query
     if query.present?
       URI.encode(query)
-    else
-      nil
     end
   end
 
   def query_search_string
     if encoded_query.present?
       encoded_query + '*'
-    else
-      nil
     end
   end
 

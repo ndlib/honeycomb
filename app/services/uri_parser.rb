@@ -12,15 +12,14 @@ class URIParser
   end
 
   def valid?
-    valid = true
     begin
-      if parse.scheme.blank? || parse.host.blank?
-        valid = false
-      end
-    rescue Addressable::URI::InvalidURIError => e
-      valid = false
+      return (parse.scheme.blank? || parse.host.blank?)
+
+    rescue Addressable::URI::InvalidURIError
+      return false
     end
-    valid
+
+    false
   end
 
   def self.call(uri)
