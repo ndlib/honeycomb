@@ -10,10 +10,7 @@ RSpec.describe ItemChildrenController, type: :controller do
   before(:each) do
     allow_any_instance_of(ItemQuery).to receive(:find).and_return(parent)
 
-    @user = User.new(username: 'jhartzle', admin: true)
-    @user.save!
-
-    sign_in @user
+    sign_in_admin
   end
 
   describe 'GET #new' do

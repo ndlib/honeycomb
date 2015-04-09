@@ -6,22 +6,15 @@ RSpec.describe CollectionsController, type: :controller do
   let(:create_params) { { collection: { title: 'TITLE!!' } } }
   let(:update_params) { { id: '1', collection: { title: 'TITLE!!' } } }
 
-  let(:user) do
-    u = User.new(username: 'jhartzler', admin: true)
-    u.save!
-
-    u
-  end
-
   before(:each) do
-    sign_in user
+    @user = sign_in_admin
   end
 
   describe 'index' do
     subject { get :index }
 
     it 'uses the query object' do
-      expect_any_instance_of(CollectionQuery).to receive(:for_editor).with(user)
+      expect_any_instance_of(CollectionQuery).to receive(:for_editor).with(@user)
       subject
     end
 

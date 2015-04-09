@@ -9,7 +9,7 @@ RSpec.describe UsersController, type: :controller do
   before(:each) do
     allow(User).to receive(:find).and_return(user)
 
-    sign_in(admin_user)
+    sign_in_admin
   end
 
   describe 'GET #index' do

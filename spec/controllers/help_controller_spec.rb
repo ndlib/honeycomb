@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe HelpController, type: :controller do
   before(:each) do
-    sign_in
+    sign_in_user
   end
 
   describe 'get #help' do
