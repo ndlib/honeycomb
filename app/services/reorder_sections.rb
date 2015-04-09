@@ -29,7 +29,7 @@ class ReorderSections
   private
 
   def check_and_update_order!(item, new_order)
-    return false if item.order != new_order
+    return true if item.order == new_order
 
     item.order = new_order
     item.save!

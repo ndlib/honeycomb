@@ -13,12 +13,13 @@ class URIParser
 
   def valid?
     begin
-      return (parse.scheme.blank? || parse.host.blank?)
+      return (parse.scheme.present? && parse.host.present?)
 
     rescue Addressable::URI::InvalidURIError
+      puts "rescue"
       return false
     end
-
+    puts "false?"
     false
   end
 

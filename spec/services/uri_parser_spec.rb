@@ -31,11 +31,11 @@ describe URIParser do
 
     describe '#valid?' do
       it 'is true for a valid uri' do
-        expect(subject.valid?(valid_uri)).to be_truthy
+        expect(subject.valid?(valid_uri)).to eq(true)
       end
 
       it 'is false for a invalid uri' do
-        expect(subject.valid?(invalid_uri)).to be_falsey
+        expect(subject.valid?(invalid_uri)).to eq(false)
       end
     end
   end

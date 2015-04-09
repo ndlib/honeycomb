@@ -3,6 +3,7 @@ require 'rails_helper'
 describe ReorderSections do
   subject { described_class.call(current_items_in_order, new_item) }
 
+
   let(:old_item_1) { instance_double(Section, order: 0, 'order=' => true, save!: true) }
   let(:old_item_2) { instance_double(Section, order: 1, 'order=' => true, save!: true) }
   let(:old_item_3) { instance_double(Section, order: 2, 'order=' => true, save!: true) }
