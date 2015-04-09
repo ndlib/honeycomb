@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Item do
-  let (:image_with_spaces) {  File.open(Rails.root.join('spec/fixtures', 'test copy.jpg'), 'r') }
+  let(:image_with_spaces) { File.open(Rails.root.join('spec/fixtures', 'test copy.jpg'), 'r') }
 
   [:title, :description, :transcription, :collection, :honeypot_image, :published, :unique_id].each do |field|
     it "has field, #{field}" do

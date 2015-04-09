@@ -9,7 +9,7 @@ AllCops:
   RunRailsCops: true
 
 Metrics/LineLength:
-  Max: 140
+  Max: 180
 
 Style/IfUnlessModifier:
   MaxLineLength: 10
