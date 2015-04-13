@@ -13,14 +13,11 @@ class SectionQuery
     relation.find_by!(unique_id: id)
   end
 
-  def find(id)
-    relation.find(id)
-  end
+  delegate :find, to: :relation
 
   def build(args = {})
     relation.build(args)
   end
-
 
   def next(section)
     relation.where(showcase_id: section.showcase_id).where("`#{relation.table_name}`.order > ?", section.order).order(:order).first
@@ -29,5 +26,4 @@ class SectionQuery
   def previous(section)
     relation.where(showcase_id: section.showcase_id).where("`#{relation.table_name}`.order < ?", section.order).order(order: :desc).first
   end
-
 end

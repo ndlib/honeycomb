@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   helper_method :user
 
   def index
@@ -17,7 +16,7 @@ class UsersController < ApplicationController
     user = User.new
     if CreateUser.call(user, save_params)
       flash[:notice] = t('.success')
-      redirect_to action: "index"
+      redirect_to action: 'index'
     else
       flash[:error] = t('.failure')
       redirect_to action: create
@@ -40,6 +39,7 @@ class UsersController < ApplicationController
     check_admin_or_admin_masquerading_permission!
     @user = User.find(params[:id])
   end
+
   def show
     @user = User.find(params[:id])
   end
@@ -55,7 +55,7 @@ class UsersController < ApplicationController
     check_admin_or_admin_masquerading_permission!
     @user = User.find(params[:user_id])
     RevokeAdminOnUser.call(@user)
-    flash[:notice] = "Revoked admin from " + @user.username
+    flash[:notice] = 'Revoked admin from ' + @user.username
     redirect_to users_path
   end
 
@@ -63,7 +63,7 @@ class UsersController < ApplicationController
     check_admin_or_admin_masquerading_permission!
     @user = User.find(params[:user_id])
     SetAdminOnUser.call(@user)
-    flash[:notice] = "Granted admin to " + @user.username
+    flash[:notice] = 'Granted admin to ' + @user.username
     redirect_to users_path
   end
 
@@ -74,7 +74,7 @@ class UsersController < ApplicationController
   end
 
   def save_params
-    {username: params[:user][:username]}
+    { username: params[:user][:username] }
   end
 
   private
@@ -92,5 +92,4 @@ class UsersController < ApplicationController
       []
     end
   end
-
 end

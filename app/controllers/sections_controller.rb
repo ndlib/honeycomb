@@ -1,5 +1,4 @@
 class SectionsController < ApplicationController
-
   def index
     check_user_edits!(showcase.exhibit.collection)
     @sections = ShowcaseList.new(SectionQuery.new(showcase.sections).all_in_showcase, showcase)
@@ -52,16 +51,16 @@ class SectionsController < ApplicationController
     @section.destroy!
 
     flash[:notice] = t('.success')
-    redirect_to  edit_showcase_path(@section.showcase.id)
+    redirect_to edit_showcase_path(@section.showcase.id)
   end
 
   protected
 
-    def section_params
-      params.require(:section).permit(:title, :image, :item_id, :description, :order, :caption)
-    end
+  def section_params
+    params.require(:section).permit(:title, :image, :item_id, :description, :order, :caption)
+  end
 
-    def showcase
-      @showcase ||= ShowcaseQuery.new.find(params[:showcase_id])
-    end
+  def showcase
+    @showcase ||= ShowcaseQuery.new.find(params[:showcase_id])
+  end
 end

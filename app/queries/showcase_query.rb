@@ -10,13 +10,11 @@ class ShowcaseQuery
   end
 
   def published
-    #relation.where(published: true)
+    # relation.where(published: true)
     relation.all
   end
 
-  def find(id)
-    relation.find(id)
-  end
+  delegate :find, to: :relation
 
   def build(args = {})
     relation.build(args)
@@ -25,5 +23,4 @@ class ShowcaseQuery
   def public_find(id)
     relation.find_by!(unique_id: id)
   end
-
 end

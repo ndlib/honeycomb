@@ -1,16 +1,12 @@
 class Masquerade
-
-
   def initialize(controller)
     @controller = controller
   end
 
-
   def start!(username)
-
     begin
       user = find_or_create_user(username)
-      if !user
+      unless user
         return false
       end
     rescue User::APIException
@@ -21,9 +17,8 @@ class Masquerade
     @controller.sign_in(user)
     @masquerading_user = user
 
-    return true
+    true
   end
-
 
   def cancel!
     if masquerading?
@@ -32,20 +27,14 @@ class Masquerade
     end
   end
 
-
   def masquerading?
     @controller.session[:masquerading]
   end
 
-
   def masquerading_user
-    if masquerading?
-      @masquerading_user ||= @controller.current_user
-    else
-      nil
-    end
+    return nil unless masquerading?
+    @masquerading_user ||= @controller.current_user
   end
-
 
   def original_user
     if masquerading?
@@ -55,24 +44,19 @@ class Masquerade
     end
   end
 
-
   private
 
-    def find_or_create_user(username)
-      begin
-        u = User.where(:username => username).first
+  def find_or_create_user(username)
+    u = User.where(username: username).first
 
-        if !u
-          u = User.new(:username => username)
-          u.send(:fetch_attributes_from_api)
-          u.save!
-        end
-
-        u
-      rescue ActiveRecord::RecordInvalid
-        false
-      end
+    unless u
+      u = User.new(username: username)
+      u.send(:fetch_attributes_from_api)
+      u.save!
     end
 
-
+    u
+  rescue ActiveRecord::RecordInvalid
+    false
+  end
 end

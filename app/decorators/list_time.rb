@@ -1,7 +1,6 @@
 require 'draper'
 
 class ListTime < Draper::Decorator
-
   def self.display(time)
     new(time).display
   end

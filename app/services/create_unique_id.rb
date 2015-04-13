@@ -23,13 +23,13 @@ class CreateUniqueId
 
   private
 
-    def unique_id
-      Digest::MD5.hexdigest("#{object.id}-#{object.class}")[0...10]
-    end
+  def unique_id
+    Digest::MD5.hexdigest("#{object.id}-#{object.class}")[0...10]
+  end
 
-    def validate_interface!
-      if !(object.respond_to?('unique_id=') && object.respond_to?(:unique_id) && object.respond_to?(:save))
-        raise "Object passed to CreateUniqueId is not valid"
-      end
+  def validate_interface!
+    unless object.respond_to?('unique_id=') && object.respond_to?(:unique_id) && object.respond_to?(:save)
+      fail 'Object passed to CreateUniqueId is not valid'
     end
+  end
 end

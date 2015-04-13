@@ -1,0 +1,19 @@
+
+AllCops:
+  Excludes:
+    - db/**/*
+    - vendor/**/*
+    - public/**/*
+    - config/**/*
+    - bin/**/*
+  RunRailsCops: true
+
+Metrics/LineLength:
+  Max: 180
+
+Style/IfUnlessModifier:
+  MaxLineLength: 10
+
+Documentation:
+  Enabled: false
+

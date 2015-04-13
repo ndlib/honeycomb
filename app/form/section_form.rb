@@ -20,9 +20,9 @@ class SectionForm
 
   def form_url
     if section.new_record?
-      [ section.showcase, section ]
+      [section.showcase, section]
     else
-      [ section ]
+      [section]
     end
   end
 
@@ -32,7 +32,7 @@ class SectionForm
     elsif section_type == 'text'
       'text_form'
     else
-      raise "Implment section form for type #{section.display_type}"
+      fail "Implment section form for type #{section.display_type}"
     end
   end
 
@@ -44,20 +44,17 @@ class SectionForm
     section.showcase.exhibit.collection
   end
 
-  def showcase
-    section.showcase
-  end
+  delegate :showcase, to: :section
 
   private
 
-    def section_type
-      @type ||= SectionType.new(section).type
-    end
+  def section_type
+    @type ||= SectionType.new(section).type
+  end
 
-    def validate!
-      if section.order.blank?
-        raise "Section passed to section form requires an order "
-      end
+  def validate!
+    if section.order.blank?
+      fail 'Section passed to section form requires an order '
     end
-
+  end
 end

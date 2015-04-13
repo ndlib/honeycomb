@@ -38,7 +38,5 @@ module V1
     def display(json)
       json.partial! '/v1/showcases/showcase', showcase_object: self
     end
-
   end
 end
-

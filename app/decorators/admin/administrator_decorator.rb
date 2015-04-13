@@ -9,29 +9,24 @@ module Admin
       }
     end
 
-    def to_json
-      to_hash.to_json
-    end
+    delegate :to_json, to: :to_hash
 
-    def id
-      user.id
-    end
+    delegate :id, to: :user
 
     def name
       user.display_name
     end
 
-    def username
-      user.username
-    end
+    delegate :username, to: :user
 
     def destroy_path
       h.admin_administrator_path(user.id)
     end
 
     private
-      def user
-        object
-      end
+
+    def user
+      object
+    end
   end
 end

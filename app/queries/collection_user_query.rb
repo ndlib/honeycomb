@@ -5,7 +5,5 @@ class CollectionUserQuery
     @relation = relation
   end
 
-  def all
-    relation.all
-  end
+  delegate :all, to: :relation
 end

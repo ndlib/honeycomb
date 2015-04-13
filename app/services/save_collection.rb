@@ -24,7 +24,7 @@ class SaveCollection
 
   private
 
-    def check_unique_id
-      CreateUniqueId.call(collection)
-    end
+  def check_unique_id
+    CreateUniqueId.call(collection)
+  end
 end

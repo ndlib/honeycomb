@@ -1,5 +1,4 @@
 class UserIsAdmin
-
   def self.call(user)
     new(user).is_admin?
   end

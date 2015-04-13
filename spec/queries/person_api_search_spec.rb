@@ -30,13 +30,12 @@ RSpec.describe PersonAPISearch do
     describe 'special characters' do
       let(:query) { '<test>' }
       it 'encodes the query string and adds a wildcard' do
-        expect(subject.send(:query_search_string)).to eq("%3Ctest%3E*")
+        expect(subject.send(:query_search_string)).to eq('%3Ctest%3E*')
       end
     end
   end
 
   describe '#results' do
-
     it 'calls HesburghAPI::PersonSearch with a formatted term' do
       expect(HesburghAPI::PersonSearch).to receive(:search).with('test*').and_return([])
       expect(subject.results).to eq([])
@@ -61,22 +60,22 @@ RSpec.describe PersonAPISearch do
     end
 
     describe 'multiple results' do
-      let(:person_search_results) {
+      let(:person_search_results) do
         [
           {
-              "first_name" => "Robert",
-              "full_name" => "Robert Franklin",
-              "last_name" => "Franklin",
-              "uid" => "fake1"
+            'first_name' => 'Robert',
+            'full_name' => 'Robert Franklin',
+            'last_name' => 'Franklin',
+            'uid' => 'fake1'
           },
           {
-              "first_name" => "Robert",
-              "full_name" => "Robert Austin",
-              "last_name" => "Austin",
-              "uid" => "fake2"
+            'first_name' => 'Robert',
+            'full_name' => 'Robert Austin',
+            'last_name' => 'Austin',
+            'uid' => 'fake2'
           }
         ]
-      }
+      end
 
       before do
         allow(HesburghAPI::PersonSearch).to receive(:search).and_return(person_search_results)
@@ -85,7 +84,7 @@ RSpec.describe PersonAPISearch do
       it 'returns a formatted list' do
         expect(subject.results).to be_a_kind_of(Array)
         expect(subject.results.count).to eq(2)
-        expect(subject.results.first).to eq({id: "fake1", label: "Robert Franklin", value: "Robert Franklin"})
+        expect(subject.results.first).to eq(id: 'fake1', label: 'Robert Franklin', value: 'Robert Franklin')
       end
     end
   end
@@ -94,7 +93,7 @@ RSpec.describe PersonAPISearch do
     subject { described_class }
 
     describe '#call' do
-      let(:test_results) { [{id: "fake1", label: "Robert Franklin", value: "Robert Franklin"}] }
+      let(:test_results) { [{ id: 'fake1', label: 'Robert Franklin', value: 'Robert Franklin' }] }
       it 'returns the results from a new instance' do
         expect(subject).to receive(:new).with('test').and_call_original
         expect_any_instance_of(described_class).to receive(:results).and_return(test_results)

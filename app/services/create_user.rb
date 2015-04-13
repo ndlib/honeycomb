@@ -19,6 +19,4 @@ class CreateUser
       false
     end
   end
-
-  private
 end

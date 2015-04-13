@@ -1,5 +1,4 @@
 class MasqueradesController < ApplicationController
-
   def new
     check_admin_permission!
   end
@@ -24,9 +23,7 @@ class MasqueradesController < ApplicationController
     render :new
   end
 
-
   def cancel
-
     m = Masquerade.new(self)
     if m.masquerading?
       m.cancel!
@@ -35,5 +32,4 @@ class MasqueradesController < ApplicationController
     flash[:notice] = "Stopped Masquerading and returned to #{m.original_user.name}"
     redirect_to '/'
   end
-
 end

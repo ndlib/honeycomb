@@ -5,9 +5,7 @@ class ExhibitQuery
     @relation = relation
   end
 
-  def find(id)
-    relation.find(id)
-  end
+  delegate :find, to: :relation
 
   def build(args = {})
     relation.build(args)

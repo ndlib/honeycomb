@@ -5,7 +5,7 @@ module Admin
     end
 
     def administrator_hashes
-      decorated_collection.collect{|administrator| administrator.to_hash}
+      decorated_collection.collect(&:to_hash)
     end
   end
 end

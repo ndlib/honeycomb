@@ -11,11 +11,11 @@ class ReorderSections
   end
 
   def original_list
-    @original_list ||= current_items_in_order.to_a.compact.reject{|s| s == update_item}
+    @original_list ||= current_items_in_order.to_a.compact.reject { |s| s == update_item }
   end
 
   def reorder!
-    insert_index = original_list.find_index{|section| section.order >= update_item.order}
+    insert_index = original_list.find_index { |section| section.order >= update_item.order }
     insert_index ||= original_list.count
     res = original_list.insert(insert_index, update_item).compact
 
@@ -28,11 +28,10 @@ class ReorderSections
 
   private
 
-    def check_and_update_order!(item, new_order)
-      if item.order != new_order
-        item.order = new_order
-        item.save!
-      end
-    end
+  def check_and_update_order!(item, new_order)
+    return true if item.order == new_order
 
+    item.order = new_order
+    item.save!
+  end
 end

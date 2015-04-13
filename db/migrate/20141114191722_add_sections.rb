@@ -1,6 +1,6 @@
 class AddSections < ActiveRecord::Migration
   def change
-    create_table :sections do | t |
+    create_table :sections do |t|
       t.string :title
       t.text :description
       t.string :image

@@ -32,20 +32,19 @@ class GenerateTitleFromFilename
 
   private
 
-    def ensure_string
-      @filename = filename.to_s
-    end
+  def ensure_string
+    @filename = filename.to_s
+  end
 
-    def remove_extension
-      @filename = File.basename(filename, '.*')
-    end
+  def remove_extension
+    @filename = File.basename(filename, '.*')
+  end
 
-    def add_spaces
-      @filename = filename.gsub('_', ' ')
-    end
+  def add_spaces
+    @filename = filename.gsub('_', ' ')
+  end
 
-    def titleize
-      @filename = filename.titleize
-    end
-
+  def titleize
+    @filename = filename.titleize
+  end
 end

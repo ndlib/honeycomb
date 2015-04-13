@@ -1,13 +1,13 @@
 require 'spec_helper'
 
 describe SortableTitleConverter do
-  let(:title) { "A Title"}
+  let(:title) { 'A Title' }
   subject { described_class.new(title) }
 
   describe '#original_title' do
-    let(:title) { "Original Title" }
+    let(:title) { 'Original Title' }
     it 'is the original title' do
-      expect(subject.original_title).to eq("Original Title")
+      expect(subject.original_title).to eq('Original Title')
     end
   end
 
@@ -47,7 +47,7 @@ describe SortableTitleConverter do
     end
 
     it 'handles special characters' do
-      expect(subject).to receive(:original_title).and_return("Émile Durkheim.")
+      expect(subject).to receive(:original_title).and_return('Émile Durkheim.')
       expect(subject.converted_title).to eq('emile durkheim.')
     end
   end

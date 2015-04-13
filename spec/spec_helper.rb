@@ -23,18 +23,15 @@ SimpleCov.start('rails')
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
+require File.expand_path('../../config/environment', __FILE__)
 
-
-require File.expand_path("../../config/environment", __FILE__)
-
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
-
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
@@ -59,7 +56,7 @@ RSpec.configure do |config|
 
   # rspec-mocks config goes here. You can use an alternate test double
   # library (such as bogus or mocha) by changing the `mock_with` option here.
-  config.mock_with :rspec do |mocks|
+  config.mock_with :rspec do |_mocks|
     # Prevents you from mocking or stubbing a method that does not exist on
     # a real object. This is generally recommended, and will default to
     # `true` in RSpec 4.
@@ -81,7 +78,7 @@ RSpec.configure do |config|
       User,
       CollectionUser,
       Showcase,
-      Section,
+      Section
     ].each do |database_model|
       instance = database_model.new
       # The first attribute is id, which does not cause the methods to be built on the class
@@ -91,4 +88,3 @@ RSpec.configure do |config|
     end
   end
 end
-

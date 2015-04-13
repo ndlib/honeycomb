@@ -13,7 +13,7 @@ class CreateURLSlug
     if title.present?
       title.downcase.gsub(/\s+/, '-').gsub(/[^0-9a-z-]/i, '')
     else
-      "title"
+      'title'
     end
   end
 end

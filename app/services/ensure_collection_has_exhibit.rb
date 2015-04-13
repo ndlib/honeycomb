@@ -10,7 +10,7 @@ class EnsureCollectionHasExhibit
   end
 
   def ensure
-    if !collection.exhibit
+    unless collection.exhibit
       create!
     end
 
@@ -19,7 +19,7 @@ class EnsureCollectionHasExhibit
 
   private
 
-    def create!
-      collection.create_exhibit(title: collection.title)
-    end
+  def create!
+    collection.create_exhibit(title: collection.title)
+  end
 end

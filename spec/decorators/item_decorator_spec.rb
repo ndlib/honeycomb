@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe ItemDecorator do
-  let(:item) { instance_double(Item, title: "title", description: "description", updated_at: "2014-11-06 11:45:52 -0500", id: 1, collection_id: collection.id, collection: collection, image: 'image.jpg')}
-  let(:collection) { instance_double(Collection, id: 2, title: 'title')}
+  let(:item) { instance_double(Item, title: 'title', description: 'description', updated_at: '2014-11-06 11:45:52 -0500', id: 1, collection_id: collection.id, collection: collection, image: 'image.jpg') }
+  let(:collection) { instance_double(Collection, id: 2, title: 'title') }
 
   subject { described_class.new(item) }
 
@@ -13,8 +13,8 @@ RSpec.describe ItemDecorator do
   end
 
   describe '#recent_children' do
-    it "returns a decorated collection" do
-      children = ["item"]
+    it 'returns a decorated collection' do
+      children = ['item']
       expect(subject).to receive(:children_query_recent).and_return(children)
       expect(ItemsDecorator).to receive(:new).with(children).and_call_original
       expect(subject.recent_children).to be_a_kind_of(ItemsDecorator)
@@ -53,34 +53,34 @@ RSpec.describe ItemDecorator do
       allow(item).to receive(:parent_id).and_return(nil)
     end
 
-    it "returns true for is_parent?" do
+    it 'returns true for is_parent?' do
       expect(subject.is_parent?).to be_truthy
     end
 
     describe '#back_path' do
-      it "is the collection items index" do
+      it 'is the collection items index' do
         expect(subject.back_path).to eq("/collections/#{collection.id}")
       end
     end
   end
 
   context 'page_title' do
-    it "renders the item_title partial" do
-      expect(subject.h).to receive(:render).with({partial: '/items/item_title',  :locals=>{:item=>subject} } )
+    it 'renders the item_title partial' do
+      expect(subject.h).to receive(:render).with(partial: '/items/item_title',  locals: { item: subject })
       subject.page_title
     end
   end
 
   context 'child item' do
-    let(:child_item) { instance_double(Item, title: "Child Item", description: "description", updated_at: "2014-11-06 11:45:52 -0500", id: 2, collection_id: collection.id, collection: collection, image: 'image.jpg', parent_id: 1)}
+    let(:child_item) { instance_double(Item, title: 'Child Item', description: 'description', updated_at: '2014-11-06 11:45:52 -0500', id: 2, collection_id: collection.id, collection: collection, image: 'image.jpg', parent_id: 1) }
     subject { described_class.new(child_item) }
 
-    it "returns false for is_parent?" do
+    it 'returns false for is_parent?' do
       expect(subject.is_parent?).to be_falsey
     end
 
     describe '#back_path' do
-      it "is the parent show route" do
+      it 'is the parent show route' do
         expect(subject.back_path).to eq("/items/#{child_item.parent_id}/children")
       end
     end

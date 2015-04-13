@@ -12,29 +12,29 @@ class GenerateCollectionJSON
 
   def to_hash
     {
-      "collections" => to_hash_object
+      'collections' => to_hash_object
     }
   end
 
   private
-    def hash_array
-      collections.collect { |collection| singular_hash(collection) }
-    end
 
-    def singular_hash(collection)
-      CollectionJSON.new(collection).to_hash(options)
-    end
+  def hash_array
+    collections.collect { |collection| singular_hash(collection) }
+  end
 
-    def plural?
-      collections.respond_to?(:each)
-    end
+  def singular_hash(collection)
+    CollectionJSON.new(collection).to_hash(options)
+  end
 
-    def to_hash_object
-      if plural?
-        hash_array
-      else
-        singular_hash(collections)
-      end
-    end
+  def plural?
+    collections.respond_to?(:each)
+  end
 
+  def to_hash_object
+    if plural?
+      hash_array
+    else
+      singular_hash(collections)
+    end
+  end
 end

@@ -4,6 +4,6 @@ class CollectionUserListDecorator < Draper::CollectionDecorator
   end
 
   def editor_hashes
-    decorated_collection.collect{|collection_user| collection_user.editor_hash}
+    decorated_collection.collect(&:editor_hash)
   end
 end
