@@ -17,7 +17,7 @@ jQuery ->
     save_clicked = "true"
 
   window.onbeforeunload = ->
-    msg = "You haven't saved your changes."
+    msg = "Caution - proceeding will cause you to lose any changes that are not yet saved. "
     msg  if isDirty() is true
 
 
@@ -43,7 +43,7 @@ jQuery ->
 
   $(".check-is-dirty").on "click", (event) ->
     if isDirty() is true
-      if !confirm("Replacing the image will result in the loss of any changes you have made to this page.  Press cancel and save any changes you wish to keep.  Press ok to continue replacing the image.")
+      if !confirm("Caution - proceeding will cause you to lose any changes that are not yet saved.  Please cancel if you wish to save your changes first, otherwise choose OK to continue replacing your image.")
         event.preventDefault()
         event.stopPropagation()
         false
