@@ -32,7 +32,12 @@ var SectionDescription = React.createClass({
         </div>
       );
     } else {
-      return (<div />)
+      return (
+      <div className="section-container section-container-text" style={this.style()}>
+          <h2>{this.props.section.title}</h2>
+          <div />
+        </div>
+      )
     }
   }
 });
