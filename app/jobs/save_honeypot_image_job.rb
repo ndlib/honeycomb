@@ -1,5 +1,5 @@
 class SaveHoneypotImageJob < ActiveJob::Base
-  queue_as :default
+  queue_as :honeypot_images
 
   def perform(object)
     SaveHoneypotImage.call(object)

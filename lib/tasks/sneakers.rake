@@ -13,6 +13,7 @@ namespace :sneakers do
         from_queue queue_name
       end)
     end
+    workers << HoneypotImageWorker
     r = Sneakers::Runner.new(workers)
 
     r.run
