@@ -60,14 +60,14 @@ RSpec.describe SaveItem, type: :model do
     it "calls SaveHoneypotImage if the image was updated" do
       params[:image] = upload_image
       expect(item).to receive(:save).and_return(true)
-      expect(SaveHoneypotImage).to receive(:call).and_return(true)
+      expect(SaveHoneypotImage).to receive(:queue).and_return(true)
       expect(subject).to eq(item)
     end
 
     it "returns false if the honeypot update fails" do
       params[:image] = upload_image
       expect(item).to receive(:save).and_return(true)
-      expect(SaveHoneypotImage).to receive(:call).and_return(false)
+      expect(SaveHoneypotImage).to receive(:queue).and_return(false)
       expect(subject).to be_falsy
     end
 

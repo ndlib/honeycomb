@@ -46,7 +46,7 @@ class SaveItem
 
   def update_honeypot_image
     if params[:image]
-      SaveHoneypotImage.call(item)
+      SaveHoneypotImage.queue(item)
     else
       true
     end

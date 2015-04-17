@@ -5,6 +5,10 @@ class SaveHoneypotImage
     new(object).save!
   end
 
+  def self.queue(object)
+    SaveHoneypotImageJob.perform_later(object)
+  end
+
   def initialize(object)
     @object = object
   end
