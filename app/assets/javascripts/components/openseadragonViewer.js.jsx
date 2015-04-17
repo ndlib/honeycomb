@@ -2,7 +2,7 @@
 
 var OpenseadragonViewer = React.createClass({
   propTypes: {
-    image: React.PropTypes.object,
+    image: React.PropTypes.object.isRequired,
     containerID: React.PropTypes.string.isRequired,
     fullPage: React.PropTypes.bool,
     height: React.PropTypes.number,
