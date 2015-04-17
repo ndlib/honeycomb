@@ -36,5 +36,7 @@ module ItemAdmin
     config.assets.precompile = [proc { |path| !File.extname(path).in?([".js", ".css", ".map", ".gzip", ""]) }, /(?:\/|\\|\A)application\.(css|js)$/]
 
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.active_job.queue_adapter = :sneakers
   end
 end
