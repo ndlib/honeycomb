@@ -43,6 +43,9 @@ gem "paper_trail", "~> 4.0.0.beta2"
 gem "faraday"
 gem "faraday_middleware"
 
+# Background processing
+gem 'sneakers'
+
 # For Errbit
 gem "airbrake"
 
