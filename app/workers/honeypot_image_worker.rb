@@ -9,7 +9,9 @@ class HoneypotImageWorker < ActiveJob::QueueAdapters::SneakersAdapter::JobWrappe
     heartbeat_interval: 2,
     prefetch: 1,
     ack: true,
-    :'x-dead-letter-exchange' => 'honeypot_images-retry',
+    arguments: {
+      :'x-dead-letter-exchange' => 'honeypot_images-retry',
+    },
     routing_key: ['honeypot_images']
 
   def work(*args)
