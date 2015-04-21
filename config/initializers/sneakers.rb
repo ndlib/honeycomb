@@ -10,4 +10,5 @@ Sneakers.configure({
   exchange_type: 'topic',
   routing_key: ['honeypot_images'],
   durable: true,
+  log: 'log/sneakers.log',
 })

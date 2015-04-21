@@ -8,6 +8,14 @@ namespace :sneakers do
     Rails.root.join('tmp/pids/sneakers.pid')
   end
 
+  task :start do
+    puts "Starting sneakers"
+    Process.fork do
+      Rake::Task["sneakers:run"].invoke
+    end
+    puts "Started sneakers"
+  end
+
   desc "Start work (set JOB_QUEUES=default,active_job_two,active_job_one)"
   task :run  => :environment do
     if File.exists?(pid_file)
