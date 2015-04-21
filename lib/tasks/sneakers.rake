@@ -63,4 +63,9 @@ namespace :sneakers do
       puts "Sneakers not running"
     end
   end
+
+  task :restart do
+    Rake::Task["sneakers:stop"].invoke
+    Rake::Task["sneakers:start"].invoke
+  end
 end
