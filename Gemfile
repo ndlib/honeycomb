@@ -44,7 +44,7 @@ gem "faraday"
 gem "faraday_middleware"
 
 # Background processing
-gem 'sneakers'
+gem 'sneakers', github: 'jaronkk/sneakers', branch: 'max-retry-count'
 
 # For Errbit
 gem "airbrake"
