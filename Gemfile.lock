@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/jaronkk/sneakers.git
-  revision: 11cdcbc4eac6dc106794de2ba54e515b51a346e0
+  revision: 13ff82211b05d7eb07aa0cf50a60540e156701f4
   branch: max-retry-count
   specs:
     sneakers (1.0.3)
