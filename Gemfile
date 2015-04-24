@@ -75,7 +75,7 @@ gem "autoprefixer-rails"
 group :development, :test do
   gem "rubocop", require: false
 
-  gem "i18n-debug"
+  # gem "i18n-debug"
   gem "pry"
   gem "pry-nav"
   gem "rspec-rails"

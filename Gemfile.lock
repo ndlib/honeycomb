@@ -198,8 +198,6 @@ GEM
     hike (1.2.3)
     hitimes (1.2.2)
     i18n (0.7.0)
-    i18n-debug (1.0.0)
-      i18n (~> 0.0)
     jbuilder (2.2.3)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
@@ -435,7 +433,6 @@ DEPENDENCIES
   guard-spring
   hesburgh_api!
   hesburgh_infrastructure!
-  i18n-debug
   jbuilder (~> 2.0)
   jquery-datatables-rails (~> 2.2.3)
   jquery-rails (= 3.1.2)
