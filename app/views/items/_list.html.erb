@@ -25,7 +25,9 @@
         </td>
         <td>
           <h4 class="media-heading"><%= h link_to item.name, item.edit_path %></h4>
-          <%= raw item.description %>
+          <div class="item-description">
+            <%= raw item.description %>
+          </div>
         </td>
         <td class="item-status">
           <%= item.status_text %>

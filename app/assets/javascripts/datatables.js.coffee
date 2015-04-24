@@ -47,6 +47,7 @@ class ItemDataTable
         targets: ItemDataTablesIndexes['published']
         sortable: true
         searchable: true
+        visible: false
       ,
         targets: ItemDataTablesIndexes['updatedAtTimestamps']
         sortable: false

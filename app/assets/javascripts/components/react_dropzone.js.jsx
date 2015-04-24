@@ -21,7 +21,7 @@ var ReactDropzone = React.createClass({
   },
 
   getInitialState: function() {
-    return { closed: false }
+    return { closed: false };
   },
 
   componentDidMount: function() {
