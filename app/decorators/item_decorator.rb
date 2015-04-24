@@ -17,6 +17,20 @@ class ItemDecorator < Draper::Decorator
     end
   end
 
+  def status_text
+    if object.honeypot_image
+      h.content_tag('span', class: 'text-success') do
+        h.content_tag('i', '', class: 'glyphicon glyphicon-ok') + ' ' +
+          h.t('status.complete')
+      end
+    else
+      h.content_tag('span', class: 'text-info') do
+        h.content_tag('i', '', class: 'glyphicon glyphicon-minus') + ' ' +
+          h.t('status.processing')
+      end
+    end
+  end
+
   def back_path
     if is_parent?
       h.collection_path(object.collection_id)

@@ -28,6 +28,9 @@ en:
   published:
     published: 'Published'
     unpublished: 'Not published'
+  status:
+    complete: "OK"
+    processing: "Processing"
   buttons:
     save: 'Save'
     cancel: 'Cancel'
@@ -109,6 +112,8 @@ en:
       selected_items: "%{number} Item(s) Selected"
     list:
       title: 'Items'
+      status: Status
+      publishing: Publishing
       published: Published
       updated_at: 'Last Modified At'
     edit:
