@@ -10,7 +10,9 @@ class Item < ActiveRecord::Base
   has_many :showcases, -> { distinct }, through: :sections
   has_one :honeypot_image
 
-  has_attached_file :image, restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/
+  has_attached_file :image,
+                    restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/,
+                    styles: { thumb: "300x300>" }
 
   validates :name, :collection, presence: true
   validates :image, attachment_presence: true

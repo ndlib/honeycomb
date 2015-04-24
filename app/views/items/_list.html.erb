@@ -17,8 +17,12 @@
         <td>
           <!--label><input type="checkbox" class="show-selected-menu" /></label-->
         </td>
-        <td class="image">
-          <%= link_to HoneypotThumbnail.display(item.honeypot_image), item.edit_path %>
+        <td class="image thing">
+          <% if item.image.exists? %>
+            <%= link_to item.edit_path do %>
+              <div><span class="hc-thumbnail"><span class="hc-thumbnail-helper"></span><%= image_tag(item.image.url(:thumb), class: "hc-thumbnail-image") %></span></div>
+            <% end %>
+          <% end %>
         </td>
         <td>
           <h4 class="media-heading"><%= h link_to item.name, item.edit_path %></h4>
