@@ -19,9 +19,7 @@
         </td>
         <td class="image thing">
           <% if item.image.exists? %>
-            <%= link_to item.edit_path do %>
-              <div><span class="hc-thumbnail"><span class="hc-thumbnail-helper"></span><%= image_tag(item.image.url(:thumb), class: "hc-thumbnail-image") %></span></div>
-            <% end %>
+            <%= link_to item.thumbnail, item.edit_path %>
           <% end %>
         </td>
         <td>

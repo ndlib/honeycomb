@@ -26,7 +26,7 @@ class ItemDecorator < Draper::Decorator
   end
 
   def show_image_box
-    h.react_component "ItemShowImageBox", image: image_json, itemID: object.id.to_s
+    h.react_component "ItemShowImageBox", image: image_json, thumbnailSrc: thumbnail_url, itemID: object.id.to_s
   end
 
   def item_meta_data_form
@@ -62,6 +62,18 @@ class ItemDecorator < Draper::Decorator
 
   def page_name
     h.render partial: "/items/item_name", locals: { item: self }
+  end
+
+  def thumbnail_url
+    if object.image.exists?(:thumb)
+      object.image.url(:thumb)
+    else
+      nil
+    end
+  end
+
+  def thumbnail
+    h.react_component("Thumbnail", image: image_json, thumbnailSrc: thumbnail_url)
   end
 
   private
