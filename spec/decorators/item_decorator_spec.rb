@@ -15,6 +15,7 @@ RSpec.describe ItemDecorator do
   end
   let(:item) { instance_double(Item, item_stubs) }
   let(:collection) { instance_double(Collection, id: 2, name_line_1: "name_line_1") }
+  let(:attachment) { double(Paperclip::Attachment, exists?: true, url: "image.jpg") }
 
   subject { described_class.new(item) }
 
@@ -96,6 +97,7 @@ RSpec.describe ItemDecorator do
 
     describe "#show_image_box" do
       it "renders a react component" do
+        allow(item).to receive(:image).and_return(attachment)
         expect(subject.show_image_box).to match("<div data-react-class=\"ItemShowImageBox\"")
       end
     end
