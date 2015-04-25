@@ -12,16 +12,20 @@ class Item < ActiveRecord::Base
 
   has_attached_file :image,
                     restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/,
-                    styles: lambda {|a| a.instance.image_styles(a)}
+                    styles: lambda {|a| a.instance.image_styles}
+
+  has_attached_file :uploaded_image,
+                    restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/,
 
   validates :name, :collection, presence: true
-  validates :image, attachment_presence: true
+  # validates :image, attachment_presence: true
 
   validate :manuscript_url_is_valid_uri
 
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
+  validates_attachment_content_type :uploaded_image, content_type: /\Aimage\/.*\Z/
 
-  def image_styles(attachment)
+  def image_styles
     if @image_styles.nil?
       @image_styles = {
         original: "16000000@",
