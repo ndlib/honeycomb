@@ -5,6 +5,10 @@ class ProcessItemUploadedImage
     new(item).save
   end
 
+  def self.queue(item)
+    ProcessItemImageJob.perform_later(item)
+  end
+
   def initialize(item)
     @item = item
   end
@@ -14,6 +18,7 @@ class ProcessItemUploadedImage
       process_original
       copy_processed_image
       if item.save
+        delete_processed_image
         item
       else
         false
@@ -50,13 +55,19 @@ class ProcessItemUploadedImage
   end
 
   def processed_path
-    processor_attachment.path(:processed)
+    @processed_path ||= processor_attachment.path(:processed)
   end
 
   def copy_processed_image
     file = File.open(processed_path)
     item.image = file
     file.close
-    # item.uploaded_image = nil
+    item.uploaded_image = nil
+  end
+
+  def delete_processed_image
+    if File.exists?(processed_path)
+      File.delete(processed_path)
+    end
   end
 end
