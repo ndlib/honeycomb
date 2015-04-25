@@ -12,7 +12,7 @@ class Item < ActiveRecord::Base
 
   has_attached_file :image,
                     restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/,
-                    styles: { thumb: "300x300>" }
+                    styles: lambda {|a| a.instance.image_styles(a)}
 
   validates :name, :collection, presence: true
   validates :image, attachment_presence: true
@@ -20,6 +20,22 @@ class Item < ActiveRecord::Base
   validate :manuscript_url_is_valid_uri
 
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
+
+  def image_styles(attachment)
+    if @image_styles.nil?
+      @image_styles = {
+        original: "16000000@",
+        thumb: "300x300>",
+        section: "x800>"
+      }
+      if self.image_content_type == "image/tiff"
+        @image_styles.each do |key, value|
+          @image_styles[key] = [value, :jpg]
+        end
+      end
+    end
+    @image_styles
+  end
 
   private
 
