@@ -1,5 +1,5 @@
 class AddUploadedImageToItems < ActiveRecord::Migration
   def change
-    add_attachment :exhibits, :uploaded_image
+    add_attachment :items, :uploaded_image
   end
 end

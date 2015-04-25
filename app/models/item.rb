@@ -15,7 +15,7 @@ class Item < ActiveRecord::Base
                     styles: lambda {|a| a.instance.image_styles}
 
   has_attached_file :uploaded_image,
-                    restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/,
+                    restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/
 
   validates :name, :collection, presence: true
   # validates :image, attachment_presence: true
