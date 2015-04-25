@@ -37,7 +37,7 @@ var ReactDropzone = React.createClass({
 
   options: function() {
     return {
-      paramName: "item[image]",
+      paramName: "item[uploaded_image]",
       acceptedFiles: "image/*",
       addRemoveLinks: true,
       autoProcessQueue: true,
