@@ -1,4 +1,5 @@
 class ProcessItemUploadedImage
+  MAX_PIXELS = 16000000
   attr_reader :item
 
   def self.call(item)
@@ -32,8 +33,30 @@ class ProcessItemUploadedImage
     item.uploaded_image
   end
 
+  def processing_needed?
+    exceeds_max_pixels? || tiff?
+  end
+
+  def tiff?
+    uploaded_image.content_type == "image/tiff"
+  end
+
+  def exceeds_max_pixels?
+    original_pixels > MAX_PIXELS
+  end
+
+  def original_pixels
+    if @original_pixels.nil?
+      size = FastImage.size(uploaded_image.path)
+      @original_pixels = size[0] * size[1]
+    end
+    @original_pixels
+  end
+
   def process_original
-    processor_attachment.reprocess!
+    if processing_needed?
+      processor_attachment.reprocess!
+    end
   end
 
   def processor_attachment
@@ -47,8 +70,8 @@ class ProcessItemUploadedImage
   end
 
   def processor_style
-    style = "16000000@"
-    if uploaded_image.content_type == "image/tiff"
+    style = "#{MAX_PIXELS}@"
+    if tiff?
       style = [style, :jpg]
     end
     style
@@ -58,8 +81,16 @@ class ProcessItemUploadedImage
     @processed_path ||= processor_attachment.path(:processed)
   end
 
+  def copy_path
+    if processing_needed?
+      processed_path
+    else
+      uploaded_image.path
+    end
+  end
+
   def copy_processed_image
-    file = File.open(processed_path)
+    file = File.open(copy_path)
     item.image = file
     file.close
     item.uploaded_image = nil
