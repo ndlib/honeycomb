@@ -29,7 +29,7 @@ class SaveItem
 
   def pre_process_name
     if name_should_be_filename?
-      item.name = GenerateNameFromFilename.call(item.image_file_name)
+      item.name = GenerateNameFromFilename.call(item.uploaded_image_file_name)
     end
 
     item.sortable_name = SortableNameConverter.convert(item.name)
