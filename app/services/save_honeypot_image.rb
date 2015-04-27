@@ -33,7 +33,7 @@ class SaveHoneypotImage
     body = request.body.with_indifferent_access
     honeypot_image.json_response = body
 
-    honeypot_image.save
+    honeypot_image.save && object.save
   end
 
   def send_request
