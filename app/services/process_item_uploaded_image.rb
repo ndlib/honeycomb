@@ -34,7 +34,7 @@ class ProcessItemUploadedImage
   end
 
   def processing_needed?
-    exceeds_max_pixels? || tiff?
+    tiff? || exceeds_max_pixels?
   end
 
   def tiff?
