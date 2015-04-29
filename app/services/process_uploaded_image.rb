@@ -1,25 +1,23 @@
-class ProcessItemUploadedImage
-  attr_reader :item
+class ProcessUploadedImage
+  attr_reader :object, :upload_field, :image_field
 
-  def self.call(item)
-    new(item).save
+  def self.call(*args)
+    new(*args).process
   end
 
-  def self.queue(item)
-    ProcessItemImageJob.perform_later(item)
+  def initialize(object:, upload_field: :uploaded_image, image_field: :image)
+    @object = object
+    @upload_field = upload_field
+    @image_field = image_field
   end
 
-  def initialize(item)
-    @item = item
-  end
-
-  def save
+  def process
     if uploaded_image.exists?
       processed_path = PreprocessImage.call(uploaded_image)
       copy_processed_image(processed_path)
-      if item.save
+      if object.save
         delete_processed_image(processed_path)
-        item
+        object
       else
         false
       end
@@ -29,14 +27,14 @@ class ProcessItemUploadedImage
   end
 
   def uploaded_image
-    item.uploaded_image
+    object.send(upload_field)
   end
 
   def copy_processed_image(copy_path)
     file = File.open(copy_path)
-    item.image = file
+    object.send("#{image_field}=", file)
     file.close
-    item.uploaded_image = nil
+    object.send("#{upload_field}=", nil)
   end
 
   def delete_processed_image(processed_path)
