@@ -1,16 +1,17 @@
 class SaveHoneypotImage
-  attr_reader :object
+  attr_reader :object, :image_field
 
-  def self.call(object)
-    new(object).save!
+  def self.call(*args)
+    new(*args).save!
   end
 
-  def self.queue(object)
-    SaveHoneypotImageJob.perform_later(object)
+  def self.queue(*args)
+    SaveHoneypotImageJob.perform_later(*args)
   end
 
-  def initialize(object)
+  def initialize(object:, image_field: :image)
     @object = object
+    @image_field = image_field
   end
 
   def save!
@@ -63,7 +64,7 @@ class SaveHoneypotImage
   end
 
   def object_image
-    object.image
+    object.send(image_field)
   end
 
   def upload_image

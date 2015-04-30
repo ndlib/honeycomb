@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe SaveHoneypotImage do
-  subject { described_class.new(item) }
+  subject { described_class.new(object: item) }
 
   let(:honeypot_json) { JSON.parse(File.read(File.join(Rails.root, "spec/fixtures/honeypot_response.json"))) }
 
@@ -46,7 +46,7 @@ RSpec.describe SaveHoneypotImage do
     end
 
     describe "result of #save!" do
-      let(:service) { described_class.new(item) }
+      let(:service) { described_class.new(object: item) }
       subject { service.save! }
 
       it "creates a database records when the request is successful" do
@@ -81,9 +81,9 @@ RSpec.describe SaveHoneypotImage do
 
     describe "#call" do
       it "calls save! on a new instance" do
-        expect(subject).to receive(:new).with(item).and_call_original
+        expect(subject).to receive(:new).with(object: item).and_call_original
         expect_any_instance_of(described_class).to receive(:save!).and_return("saved!")
-        expect(subject.call(item)).to eq("saved!")
+        expect(subject.call(object: item)).to eq("saved!")
       end
     end
   end

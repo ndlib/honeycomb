@@ -28,7 +28,7 @@ RSpec.describe SaveShowcase, type: :model do
 
   describe "update_honeypot_image" do
     it "calls SaveHoneypotImage when there is an image"  do
-      expect(SaveHoneypotImage).to receive(:call).with(showcase)
+      expect(SaveHoneypotImage).to receive(:call).with(object: showcase)
       params[:image] = image
 
       subject

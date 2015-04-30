@@ -60,14 +60,14 @@ RSpec.describe SaveItem, type: :model do
     it "Queues image processing if the image was updated" do
       params[:uploaded_image] = upload_image
       expect(item).to receive(:save).and_return(true)
-      expect(ProcessItemImageJob).to receive(:perform_later).and_return(true)
+      expect(ProcessImageJob).to receive(:perform_later).and_return(true)
       expect(subject).to eq(item)
     end
 
     it "is not called if the image is not changed" do
       params[:uploaded_image] = nil
       expect(item).to receive(:save).and_return(true)
-      expect(ProcessItemImageJob).to_not receive(:perform_later)
+      expect(ProcessImageJob).to_not receive(:perform_later)
       expect(subject).to eq(item)
     end
   end

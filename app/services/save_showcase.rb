@@ -29,7 +29,7 @@ class SaveShowcase
 
   def update_honeypot_image
     if params[:image]
-      SaveHoneypotImage.call(showcase)
+      SaveHoneypotImage.call(object: showcase)
     else
       true
     end

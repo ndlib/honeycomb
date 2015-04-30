@@ -20,7 +20,7 @@ class SaveExhibit
 
   def update_honeypot_image
     if params[:image]
-      SaveHoneypotImage.call(exhibit)
+      SaveHoneypotImage.call(object: exhibit)
     else
       true
     end

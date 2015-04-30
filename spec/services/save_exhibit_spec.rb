@@ -12,7 +12,7 @@ RSpec.describe SaveExhibit, type: :model do
 
   describe "update_honeypot_image" do
     it "calls SaveHoneypotImage when there is an image"  do
-      expect(SaveHoneypotImage).to receive(:call).with(exhibit)
+      expect(SaveHoneypotImage).to receive(:call).with(object: exhibit)
       params[:image] = image
 
       subject
