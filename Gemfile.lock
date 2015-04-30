@@ -1,14 +1,4 @@
 GIT
-  remote: git://github.com/jondot/sneakers.git
-  revision: a3b3893d13c87309c861a9c7be826ad6b86af8a3
-  specs:
-    sneakers (1.0.3)
-      bunny (~> 1.7.0)
-      serverengine (~> 1.5.5)
-      thor
-      thread (~> 0.1.7)
-
-GIT
   remote: git://github.com/ndlib/hesburgh_api.git
   revision: 7e65d334a0e3262ad51c02670792da44aaa98c3b
   specs:
@@ -357,6 +347,11 @@ GEM
       simplecov-html (~> 0.8.0)
     simplecov-html (0.8.0)
     slop (3.6.0)
+    sneakers (1.0.4)
+      bunny (~> 1.7.0)
+      serverengine (~> 1.5.5)
+      thor
+      thread (~> 0.1.7)
     sort_alphabetical (1.0.1)
       unicode_utils (>= 1.2.2)
     spring (1.1.3)
@@ -458,7 +453,7 @@ DEPENDENCIES
   sdoc (~> 0.4.0)
   showdown-rails
   simple_form (~> 3.1.0)
-  sneakers!
+  sneakers
   sort_alphabetical
   spring
   spring-commands-rspec

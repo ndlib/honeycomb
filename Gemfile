@@ -45,7 +45,7 @@ gem "faraday"
 gem "faraday_middleware"
 
 # Background processing
-gem "sneakers", github: "jondot/sneakers"
+gem "sneakers"
 
 # For Errbit
 gem "airbrake"
