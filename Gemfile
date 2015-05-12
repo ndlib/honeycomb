@@ -32,6 +32,7 @@ gem "rb-readline"
 
 gem "devise"
 gem "devise_cas_authenticatable"
+gem "activerecord-session_store"
 
 gem "addressable"
 
