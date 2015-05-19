@@ -22,7 +22,7 @@ RSpec.describe CreateBeehiveURL do
 
     context "Item" do
       let(:collection) { double(Collection, unique_id: "12345678", title: "A Collection") }
-      let(:object) { double(Item, unique_id: "87654321", title: "An Item", collection: collection) }
+      let(:object) { double(Item, unique_id: "87654321", name: "An Item", collection: collection) }
 
       it "returns a beehive item url" do
         expect(object).to receive(:is_a?).and_return(false)
@@ -30,10 +30,10 @@ RSpec.describe CreateBeehiveURL do
         subject.create
       end
 
-      it "calls CreateURLSlug on the collection and item titles" do
+      it "calls CreateURLSlug on the collection and item names" do
         expect(object).to receive(:is_a?).and_return(false)
         expect(CreateURLSlug).to receive(:call).with(object.collection.title).and_return("a-collection")
-        expect(CreateURLSlug).to receive(:call).with(object.title).and_return("an-item")
+        expect(CreateURLSlug).to receive(:call).with(object.name).and_return("an-item")
         subject
       end
     end
