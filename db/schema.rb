@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505171443) do
+ActiveRecord::Schema.define(version: 20150519124517) do
 
   create_table "collection_users", force: :cascade do |t|
     t.integer  "user_id",       limit: 4, null: false
@@ -46,9 +46,9 @@ ActiveRecord::Schema.define(version: 20150505171443) do
     t.integer  "image_file_size",    limit: 4
     t.datetime "image_updated_at"
     t.text     "short_description",  limit: 65535
+    t.text     "about",              limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "about",              limit: 65535
   end
 
   create_table "honeypot_images", force: :cascade do |t|
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20150505171443) do
   add_index "honeypot_images", ["item_id"], name: "index_honeypot_images_on_item_id", using: :btree
 
   create_table "items", force: :cascade do |t|
-    t.text     "title",              limit: 65535
+    t.text     "name",               limit: 65535
     t.text     "description",        limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20150505171443) do
     t.string   "image_content_type", limit: 255
     t.integer  "image_file_size",    limit: 4
     t.datetime "image_updated_at"
-    t.text     "sortable_title",     limit: 65535
+    t.text     "sortable_name",      limit: 65535
     t.integer  "parent_id",          limit: 4
     t.string   "manuscript_url",     limit: 255
     t.boolean  "published",          limit: 1

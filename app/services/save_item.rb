@@ -29,14 +29,14 @@ class SaveItem
 
   def pre_process_title
     if title_should_be_filename?
-      item.title = GenerateTitleFromFilename.call(item.image_file_name)
+      item.name = GenerateTitleFromFilename.call(item.image_file_name)
     end
 
-    item.sortable_title = SortableTitleConverter.convert(item.title)
+    item.sortable_name = SortableTitleConverter.convert(item.name)
   end
 
   def title_should_be_filename?
-    item.new_record? && item.title.blank?
+    item.new_record? && item.name.blank?
   end
 
   def fix_image_param!
