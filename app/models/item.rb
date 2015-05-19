@@ -9,6 +9,10 @@ class Item < ActiveRecord::Base
   has_attached_file :image, restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/
   # , :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
 
+  # Alias old title field to name until other service objects get changed,
+  # ex: CreateBeehiveURL is used on multiple objects and expects a title attr
+  alias_attribute :title, :name
+
   validates :name, :collection, presence: true
   validates :image, attachment_presence: true
 
