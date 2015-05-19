@@ -19,7 +19,7 @@ RSpec.describe V1::SectionJSONDecorator do
 
   describe "#title" do
     let(:section) { double(Section, title: "section_title", item: item) }
-    let(:item) { double(Item, title: "item_title") }
+    let(:item) { double(Item, name: "item_name") }
 
     it "calls SectionTitle to determine the title" do
       expect(SectionTitle).to receive(:call)

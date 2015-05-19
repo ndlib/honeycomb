@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe GenerateTitleFromFilename do
+describe GenerateNameFromFilename do
   let(:filename) { "file_name_test.jpg" }
   subject { described_class.new(filename) }
   let(:options) { {} }

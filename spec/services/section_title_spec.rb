@@ -11,7 +11,7 @@ describe SectionTitle do
       expect(subject.title).to eq("item_name")
     end
 
-    it "chooses the section title even if there is an item title" do
+    it "chooses the section title even if there is an item name" do
       expect(subject.title).to eq("section_title")
     end
 

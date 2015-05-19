@@ -64,10 +64,10 @@ RSpec.describe ItemDecorator do
     end
   end
 
-  context "page_title" do
-    it "renders the item_title partial" do
-      expect(subject.h).to receive(:render).with(partial: "/items/item_title",  locals: { item: subject })
-      subject.page_title
+  context "page_name" do
+    it "renders the item_name partial" do
+      expect(subject.h).to receive(:render).with(partial: "/items/item_name",  locals: { item: subject })
+      subject.page_name
     end
   end
 

@@ -33,8 +33,8 @@ class ItemDecorator < Draper::Decorator
     h.edit_item_path(object.id)
   end
 
-  def page_title
-    h.render partial: "/items/item_title", locals: { item: self }
+  def page_name
+    h.render partial: "/items/item_name", locals: { item: self }
   end
 
   private
