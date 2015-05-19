@@ -12,8 +12,8 @@ class SectionTitle
   def title
     if section.title.present?
       section.title
-    elsif section.item && section.item.title.present?
-      section.item.title
+    elsif section.item && section.item.name.present?
+      section.item.name
     else
       ""
     end
