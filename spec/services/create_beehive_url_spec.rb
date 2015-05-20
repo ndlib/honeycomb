@@ -22,7 +22,7 @@ RSpec.describe CreateBeehiveURL do
 
     context "Item" do
       let(:collection) { double(Collection, unique_id: "12345678", title: "A Collection") }
-      let(:object) { double(Item, unique_id: "87654321", name: "An Item", collection: collection) }
+      let(:object) { double(Item, unique_id: "87654321", name: "An Item", collection: collection, title: "An Item") }
 
       it "returns a beehive item url" do
         expect(object).to receive(:is_a?).and_return(false)
