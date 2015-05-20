@@ -3,7 +3,7 @@
 var Panel = React.createClass({
   propTypes: {
     PanelTitle: React.PropTypes.string.isRequired,
-    PanelHelp: React.PropTypes.string.isRequired,
+    PanelHelp: React.PropTypes.string,
     children: React.PropTypes.element.isRequired
   },
   handleClick: function () {

@@ -1,28 +1,14 @@
 <%= page_title(@item.title, @item.collection) %>
 <%= collection_nav(@item.collection, :items) %>
 
-<% if @item.is_parent? %>
-  <%= back_action_bar(collection_items_path(@item.collection), "#" ) %>
-<% else %>
-  <%= back_action_bar(edit_item_path(@item.parent), "#" ) %>
-<% end %>
-  <%= link_to("PREVIEW", @item.beehive_url, class: "btn btn-large btn-hollow", :target => "_blank") %>
+<%= back_action_bar(@item.back_path, "#" ) %>
+
+<%= link_to("PREVIEW", @item.beehive_url, class: "btn btn-large btn-hollow", :target => "_blank") %>
+
 <div class="row">
   <div class="col-md-8">
-    <%= simple_form_for @item, html: { :class => "item", id: "edit-item" } do |f| %>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><%= t(".metadata") %></h3>
-        </div>
-        <div class="panel-body">
-            <%= render :partial => "form", locals: { f: f } %>
-        </div>
-        <div class="panel-footer">
-          <%= f.button :submit, "Save", class: "btn btn-primary"%>
-        </div>
-      </div>
-    <% end %>
+    <%= @item.item_meta_data_form %>
 
     <% if @item.is_parent? %>
       <div class="item-show-children clearfix">

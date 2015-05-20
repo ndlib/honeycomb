@@ -29,6 +29,30 @@ RSpec.describe ItemDecorator do
     end
   end
 
+  describe "#item_meta_data_form" do
+    let(:collection) { double(Collection, id: 2 )}
+    let(:item) { double(Item, id: 1, title: "title", description: "description", transcription: "transcription", manuscript_url: "manuscript_url", collection: collection) }
+
+    it "rends the react component" do
+      allow(subject.h).to receive(:form_authenticity_token).and_return("token")
+      expect(subject.h).to receive(:react_component).with(
+        "ItemMetaDataForm",
+        authenticityToken: "token",
+        url: "/items/1",
+        returnUrl: "/collections/2/items",
+        method: "put",
+        data: {
+          title: "title",
+          description: "description",
+          transcription: "transcription",
+          manuscript_url: "manuscript_url"
+        }
+      )
+
+      subject.item_meta_data_form
+    end
+  end
+
   describe "honeypot image" do
     let(:honeypot_image) { instance_double(HoneypotImage, title: "Image Title", url: "http://example.com/image", image_json: {}) }
     before do
@@ -61,13 +85,6 @@ RSpec.describe ItemDecorator do
       it "is the collection items index" do
         expect(subject.back_path).to eq("/collections/#{collection.id}")
       end
-    end
-  end
-
-  context "page_title" do
-    it "renders the item_title partial" do
-      expect(subject.h).to receive(:render).with(partial: "/items/item_title",  locals: { item: subject })
-      subject.page_title
     end
   end
 

@@ -22,6 +22,7 @@ jQuery ->
 
 
   isDirty = () ->
+    return false
     dirty = false
     $(".form-group > input").each ->
       if $(this).data("initialValue") isnt $(this).val() and
