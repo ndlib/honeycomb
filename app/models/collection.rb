@@ -13,6 +13,14 @@ class Collection < ActiveRecord::Base
     name_line_1
   end
 
+  def name
+    if name_line_2.present?
+      "#{name_line_1} #{name_line_2}"
+    else
+      name_line_1
+    end
+  end
+
   def beehive_url
     CreateBeehiveURL.call(self)
   end

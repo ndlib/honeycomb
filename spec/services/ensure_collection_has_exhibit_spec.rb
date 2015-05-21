@@ -6,7 +6,7 @@ describe EnsureCollectionHasExhibit do
   let(:exhibit) { double(Exhibit, id: 1) }
 
   context "has exhibit" do
-    let(:collection) { double(Collection, id: 1, exhibit: exhibit, title: "title", create_exhibit: true) }
+    let(:collection) { double(Collection, id: 1, exhibit: exhibit, name_line_1: "name_line_1", create_exhibit: true) }
 
     it "does not create a new one" do
       expect(collection).to_not receive(:create_exhibit)
@@ -19,10 +19,10 @@ describe EnsureCollectionHasExhibit do
   end
 
   context "no current exhibit" do
-    let(:collection) { double(Collection, id: 1, exhibit: nil, title: "title", create_exhibit: true)  }
+    let(:collection) { double(Collection, id: 1, exhibit: nil, name_line_1: "name_line_1", create_exhibit: true)  }
 
     it "creates the exhibit" do
-      expect(collection).to receive(:create_exhibit).with(title: collection.title)
+      expect(collection).to receive(:create_exhibit).with(title: collection.name_line_1)
       subject
     end
   end

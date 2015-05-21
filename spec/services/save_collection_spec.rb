@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe SaveCollection, type: :model do
   subject { described_class.call(collection, params) }
   let(:collection) { double(Collection, id: "id", "attributes=" => true, save: true) }
-  let(:params) { { title: "title" } }
+  let(:params) { { name_line_1: "name_line_1" } }
 
   before(:each) do
     allow(CreateUniqueId).to receive(:call).and_return(true)
