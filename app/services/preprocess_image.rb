@@ -53,7 +53,7 @@ class PreprocessImage
 
   def processor_options
     new_options = uploaded_image.options.clone
-    new_options[:styles] = new_options[:styles].merge({processed: processor_style})
+    new_options[:styles] = new_options[:styles].merge(processed: processor_style)
     new_options
   end
 

@@ -19,15 +19,15 @@ class ItemDecorator < Draper::Decorator
 
   def status_text
     if object.honeypot_image
-      h.content_tag('span', class: 'text-success') do
-        h.content_tag('i', '', class: 'glyphicon glyphicon-ok') + ' ' +
-          h.t('status.complete')
-      end
+      status_text_span(className: "text-success", icon: "ok", text: h.t("status.complete"))
     else
-      h.content_tag('span', class: 'text-info') do
-        h.content_tag('i', '', class: 'glyphicon glyphicon-minus') + ' ' +
-          h.t('status.processing')
-      end
+      status_text_span(className: "text-info", icon: "minus", text: h.t("status.processing"))
+    end
+  end
+
+  def status_text_span(className:, icon:, text:)
+    h.content_tag("span", class: className) do
+      h.content_tag("i", "", class: "glyphicon glyphicon-#{icon}") + " " + text
     end
   end
 
@@ -82,7 +82,7 @@ class ItemDecorator < Draper::Decorator
     if object.image.exists?(:thumb)
       object.image.url(:thumb)
     else
-      nil
+      return nil
     end
   end
 
