@@ -1,4 +1,4 @@
-require 'sneakers/handlers/maxretry'
+require "sneakers/handlers/maxretry"
 
 Sneakers.configure(
   handler: Sneakers::Handlers::Maxretry,
@@ -6,9 +6,9 @@ Sneakers.configure(
   vhost: Rails.application.secrets.sneakers["vhost"],
   workers: 1,
   heartbeat: 5,
-  exchange: 'honeycomb',
-  exchange_type: 'topic',
-  routing_key: ['honeypot_images'],
+  exchange: "honeycomb",
+  exchange_type: "topic",
+  routing_key: ["honeypot_images"],
   durable: true,
-  log: 'log/sneakers.log',
+  log: "log/sneakers.log",
 )
