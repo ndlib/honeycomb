@@ -31,4 +31,16 @@ RSpec.describe Showcase do
       expect(subject).to respond_to(:collection)
     end
   end
+
+  describe "#beehive_url" do
+    it "is a url to the beehive server" do
+      subject.collection = Collection.new
+      expect(subject.beehive_url).to include(Rails.configuration.settings.beehive_url)
+    end
+
+    it "uses title for the slug" do
+      subject.title = "Slug"
+      expect(subject.slug).to eq(subject.title)
+    end
+  end
 end
