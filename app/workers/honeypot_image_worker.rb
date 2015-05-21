@@ -20,6 +20,9 @@ class HoneypotImageWorker < ActiveJob::QueueAdapters::SneakersAdapter::JobWrappe
       super(*args)
     rescue Exception => e
       Airbrake.notify(e, parameters: {args: args})
+      logger.error e.message
+      logger.error args
+      logger.error e.backtrace.join("\n")
       reject!
     end
   end

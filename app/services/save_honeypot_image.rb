@@ -9,7 +9,7 @@ class SaveHoneypotImage
     SaveHoneypotImageJob.perform_later(*args)
   end
 
-  def initialize(object:, image_field: :image)
+  def initialize(object:, image_field: "image")
     @object = object
     @image_field = image_field
   end

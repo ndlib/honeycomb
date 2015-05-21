@@ -2,4 +2,4 @@
 <%= f.input :short_description, input_html: { class: 'honeycomb_redactor'  } %>
 
 <%= HoneypotThumbnail.display(f.object.honeypot_image) %>
-<%= f.input :image, as: :file %>
+<%= f.input :uploaded_image, as: :file %>
