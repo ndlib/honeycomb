@@ -4,22 +4,24 @@ RSpec.describe SaveExhibit, type: :model do
   subject { described_class.call(exhibit, params) }
   let(:exhibit) { Exhibit.new }
   let(:params) { { name: "name" } }
-  let(:image) { File.new(Rails.root.join("spec/fixtures/test.jpg").to_s) }
+  let(:upload_image) { Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/test.jpg"), "image/jpeg") }
 
   before(:each) do
     allow(exhibit).to receive(:save).and_return(true)
   end
 
-  describe "update_honeypot_image" do
-    it "calls SaveHoneypotImage when there is an image"  do
-      expect(SaveHoneypotImage).to receive(:call).with(object: exhibit)
-      params[:image] = image
-
+  describe "image processing" do
+    it "Queues image processing if the image was updated" do
+      params[:uploaded_image] = upload_image
+      expect(exhibit).to receive(:save).and_return(true)
+      expect(ProcessImageJob).to receive(:perform_later).and_return(true)
       subject
     end
 
-    it "does not call SaveHoneypotImage when there is not an image " do
-      expect(SaveHoneypotImage).to_not receive(:call)
+    it "is not called if the image is not changed" do
+      params[:uploaded_image] = nil
+      expect(exhibit).to receive(:save).and_return(true)
+      expect(ProcessImageJob).to_not receive(:perform_later)
       subject
     end
   end
