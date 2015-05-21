@@ -1,6 +1,6 @@
 require 'sneakers/handlers/maxretry'
 
-Sneakers.configure({
+Sneakers.configure(
   handler: Sneakers::Handlers::Maxretry,
   amqp: Rails.application.secrets.sneakers["amqp"],
   vhost: Rails.application.secrets.sneakers["vhost"],
@@ -11,4 +11,4 @@ Sneakers.configure({
   routing_key: ['honeypot_images'],
   durable: true,
   log: 'log/sneakers.log',
-})
+)
