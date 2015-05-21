@@ -5,9 +5,13 @@ class Collection < ActiveRecord::Base
   has_many :users, through: :collection_users
   has_many :showcases, through: :exhibit
 
-  validates :title, presence: true
+  validates :name_line_1, presence: true
 
   has_paper_trail
+
+  def slug
+    name_line_1
+  end
 
   def beehive_url
     CreateBeehiveURL.call(self)

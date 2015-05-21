@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe ItemDecorator do
   let(:item) { instance_double(Item, name: "name", description: "description", updated_at: "2014-11-06 11:45:52 -0500", id: 1, collection_id: collection.id, collection: collection, image: "image.jpg") }
-  let(:collection) { instance_double(Collection, id: 2, title: "title") }
+  let(:collection) { instance_double(Collection, id: 2, name_line_1: "name_line_1") }
 
   subject { described_class.new(item) }
 

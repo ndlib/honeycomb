@@ -96,6 +96,6 @@ class CollectionsController < ApplicationController
   protected
 
   def save_params
-    params.require(:collection).permit(:title, :subtitle, :description, :id)
+    params.require(:collection).permit(:name_line_1, :subtitle, :description, :id)
   end
 end

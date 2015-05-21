@@ -5,7 +5,11 @@ RSpec.describe CreateBeehiveURL do
 
   describe "#create" do
     context "Collection" do
-      let(:object) { double(Collection, id: 1, unique_id: "12345678", title: "A Collection") }
+      let(:object) { double(Collection, id: 1, unique_id: "12345678", name_line_1: "A Collection") }
+
+      before(:each) do
+        allow(object).to receive(:slug).and_return(object.name_line_1)
+      end
 
       it "returns a beehive url for a collection" do
         expect(object).to receive(:is_a?).and_return(true)
@@ -13,16 +17,20 @@ RSpec.describe CreateBeehiveURL do
         subject.create
       end
 
-      it "calls CreateURLSlug on the collection title" do
+      it "calls CreateURLSlug on the collection name_line_1" do
         expect(object).to receive(:is_a?).and_return(true)
-        expect(CreateURLSlug).to receive(:call).with(object.title).and_return("a-collection")
+        expect(CreateURLSlug).to receive(:call).with(object.name_line_1).and_return("a-collection")
         subject
       end
     end
 
     context "Item" do
-      let(:collection) { double(Collection, unique_id: "12345678", title: "A Collection") }
-      let(:object) { double(Item, unique_id: "87654321", name: "An Item", collection: collection, title: "An Item") }
+      let(:collection) { double(Collection, unique_id: "12345678", name_line_1: "A Collection") }
+      let(:object) { double(Item, unique_id: "87654321", name: "An Item", collection: collection, slug: "An Item") }
+
+      before(:each) do
+        allow(collection).to receive(:slug).and_return(collection.name_line_1)
+      end
 
       it "returns a beehive item url" do
         expect(object).to receive(:is_a?).and_return(false)
@@ -32,7 +40,7 @@ RSpec.describe CreateBeehiveURL do
 
       it "calls CreateURLSlug on the collection and item names" do
         expect(object).to receive(:is_a?).and_return(false)
-        expect(CreateURLSlug).to receive(:call).with(object.collection.title).and_return("a-collection")
+        expect(CreateURLSlug).to receive(:call).with(object.collection.name_line_1).and_return("a-collection")
         expect(CreateURLSlug).to receive(:call).with(object.name).and_return("an-item")
         subject
       end

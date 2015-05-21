@@ -11,7 +11,7 @@ class Item < ActiveRecord::Base
 
   # Alias old title field to name until other service objects get changed,
   # ex: CreateBeehiveURL is used on multiple objects and expects a title attr
-  alias_attribute :title, :name
+  #alias_attribute :title, :name
 
   validates :name, :collection, presence: true
   validates :image, attachment_presence: true
@@ -19,6 +19,10 @@ class Item < ActiveRecord::Base
   validate :manuscript_url_is_valid_uri
 
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
+
+  def slug
+    name
+  end
 
   def beehive_url
     CreateBeehiveURL.call(self)

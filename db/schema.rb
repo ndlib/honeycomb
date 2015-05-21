@@ -24,14 +24,14 @@ ActiveRecord::Schema.define(version: 20150519124517) do
   add_index "collection_users", ["user_id"], name: "index_collection_users_on_user_id", using: :btree
 
   create_table "collections", force: :cascade do |t|
-    t.string   "title",       limit: 255
+    t.string   "name_line_1", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "deleted",     limit: 1,     default: false
     t.text     "description", limit: 65535
     t.string   "unique_id",   limit: 255
     t.boolean  "published",   limit: 1
-    t.string   "subtitle",    limit: 255
+    t.string   "name_line_2", limit: 255
   end
 
   add_index "collections", ["published"], name: "index_collections_on_published", using: :btree

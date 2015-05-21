@@ -12,7 +12,7 @@ class CollectionJSON < Draper::Decorator
   def collection_data
     {
       id: object.id,
-      title: object.title
+      name_line_1: object.name_line_1
     }
   end
 end
