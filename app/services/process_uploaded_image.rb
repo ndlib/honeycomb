@@ -5,7 +5,7 @@ class ProcessUploadedImage
     new(*args).process
   end
 
-  def initialize(object:, upload_field: :uploaded_image, image_field: :image)
+  def initialize(object:, upload_field: "uploaded_image", image_field: "image")
     @object = object
     @upload_field = upload_field
     @image_field = image_field
