@@ -13,7 +13,7 @@ module ApplicationHelper
 
   def page_title(page_title, collection = false)
     if collection
-      page_title += " - #{collection.title}"
+      page_title += " - #{collection.name_line_1}"
     end
 
     content_for(:page_title, page_title)
