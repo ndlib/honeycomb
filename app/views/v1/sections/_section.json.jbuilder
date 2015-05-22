@@ -5,7 +5,7 @@ json.set! "isPartOf/showcase", section_object.showcase_url
 json.set! "isPartOf/collection", section_object.collection_url
 json.id section_object.unique_id
 json.slug section_object.slug
-json.name section_object.title
+json.name section_object.name
 json.order section_object.order
 json.description section_object.description
 json.caption section_object.caption

@@ -50,10 +50,10 @@ describe SectionForm do
     end
   end
 
-  describe "#title" do
-    it "calls the section title service" do
-      expect(SectionTitle).to receive(:call).with(section)
-      subject.title
+  describe "#name" do
+    it "calls the section name service" do
+      expect(SectionName).to receive(:call).with(section)
+      subject.name
     end
   end
 

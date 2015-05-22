@@ -12,13 +12,13 @@ RSpec.describe V1::SectionJSONDecorator do
     end
   end
 
-  describe "#title" do
-    let(:section) { double(Section, title: "section_title", item: item) }
+  describe "#name" do
+    let(:section) { double(Section, name: "section_name", item: item) }
     let(:item) { double(Item, name: "item_name") }
 
-    it "calls SectionTitle to determine the title" do
-      expect(SectionTitle).to receive(:call)
-      subject.title
+    it "calls SectionTitle to determine the name" do
+      expect(SectionName).to receive(:call)
+      subject.name
     end
   end
 
@@ -62,11 +62,11 @@ RSpec.describe V1::SectionJSONDecorator do
   end
 
   describe "#slug" do
-    let(:section) { double(Section, title: "title") }
+    let(:section) { double(Section, slug: "slug") }
 
     it "Calls the slug generator" do
-      expect(CreateURLSlug).to receive(:call).with(section.title).and_return("slug")
-      expect(subject.slug).to eq("slug")
+      expect(CreateURLSlug).to receive(:call).with(section.slug)
+      subject.slug
     end
   end
 
