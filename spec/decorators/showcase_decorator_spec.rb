@@ -11,8 +11,8 @@ RSpec.describe ShowcaseDecorator do
     end
   end
 
-  describe "#title" do
-    it "is the showcase title" do
+  describe "#name" do
+    it "is the showcase name" do
       expect(showcase).to receive(:name_line_1).and_return("name_line_1")
       expect(subject.name_line_1).to eq("name_line_1")
     end

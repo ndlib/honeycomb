@@ -84,7 +84,7 @@ class ShowcasesController < ApplicationController
     check_user_edits!(@showcase.collection)
 
     unless Publish.call(@showcase)
-      fail "Error publishing #{@showcase.title}"
+      fail "Error publishing #{@showcase.name}"
     end
 
     showcase_save_success(@showcase)
@@ -95,7 +95,7 @@ class ShowcasesController < ApplicationController
     check_user_edits!(@showcase.collection)
 
     unless Unpublish.call(@showcase)
-      fail "Error unpublishing #{@showcase.title}"
+      fail "Error unpublishing #{@showcase.name}"
     end
 
     showcase_save_success(@showcase)

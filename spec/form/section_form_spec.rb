@@ -4,7 +4,7 @@ describe SectionForm do
   let(:collection) { double(Collection, id: 1) }
   let(:exhibit) { double(Exhibit, id: 1, collection: collection) }
   let(:showcase) { double(Showcase, id: 1, exhibit: exhibit, sections: sections) }
-  let(:section) { double(Section, id: 1, order: 1, item_id: 1, showcase: showcase, "order=" => true, title: "the section") }
+  let(:section) { double(Section, id: 1, order: 1, item_id: 1, showcase: showcase, "order=" => true, name: "the section") }
   let(:sections) { double(build: true) }
 
   subject { described_class.new(section) }
