@@ -32,6 +32,22 @@ RSpec.describe Showcase do
     end
   end
 
+  describe "#name" do
+    it "concatinates name_line_1 and name_line_2 if there is a name_line_2" do
+      expect(subject).to receive(:name_line_1).and_return("name line 1")
+      expect(subject).to receive(:name_line_2).twice.and_return("name line 2")
+
+      expect(subject.name).to eq("name line 1 name line 2")
+    end
+
+    it "does not concatintate name_line_2 if there is no name_line_2" do
+      expect(subject).to receive(:name_line_1).and_return("name line 1")
+      expect(subject).to receive(:name_line_2).and_return(nil)
+
+      expect(subject.name).to eq("name line 1")
+    end
+  end
+
   describe "#beehive_url" do
     it "is a url to the beehive server" do
       subject.collection = Collection.new

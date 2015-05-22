@@ -1,4 +1,4 @@
-<% page_title(@showcase.title, @showcase.collection) %>
+<% page_title(@showcase.name_line_1, @showcase.collection) %>
 <%= collection_nav(@showcase.collection, :showcases) %>
 
 <%= back_action_bar(edit_showcase_path(@showcase.id), '#' ) %>
@@ -6,7 +6,7 @@
 <%= simple_form_for @showcase do |f| %>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title"><%= @showcase.title %></h3>
+      <h3 class="panel-title"><%= @showcase.name_line_1 %></h3>
     </div>
     <div class="panel-body">
       <%= render partial: 'form', locals: { f: f } %>
