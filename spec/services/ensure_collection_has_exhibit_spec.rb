@@ -22,7 +22,7 @@ describe EnsureCollectionHasExhibit do
     let(:collection) { double(Collection, id: 1, exhibit: nil, name_line_1: "name_line_1", create_exhibit: true)  }
 
     it "creates the exhibit" do
-      expect(collection).to receive(:create_exhibit).with(title: collection.name_line_1)
+      expect(collection).to receive(:create_exhibit).with(name: collection.name_line_1)
       subject
     end
   end
