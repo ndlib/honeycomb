@@ -36,7 +36,7 @@ module V1
     end
 
     def slug
-      CreateURLSlug.call(object.name_line_1)
+      CreateURLSlug.call(object.slug)
     end
 
     def items
