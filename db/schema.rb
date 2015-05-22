@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20150519124517) do
   add_index "collections", ["unique_id"], name: "index_collections_on_unique_id", using: :btree
 
   create_table "exhibits", force: :cascade do |t|
-    t.text     "title",              limit: 65535
+    t.text     "name",               limit: 65535
     t.text     "description",        limit: 65535
     t.integer  "collection_id",      limit: 4
     t.string   "image_file_name",    limit: 255
@@ -46,9 +46,9 @@ ActiveRecord::Schema.define(version: 20150519124517) do
     t.integer  "image_file_size",    limit: 4
     t.datetime "image_updated_at"
     t.text     "short_description",  limit: 65535
+    t.text     "about",              limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "about",              limit: 65535
   end
 
   create_table "honeypot_images", force: :cascade do |t|

@@ -3,7 +3,7 @@ require "cache_spec_helper"
 
 RSpec.describe ShowcasesController, type: :controller do
   let(:showcase) { instance_double(Showcase, id: 1, name_line_1: "name_line_1", exhibit: exhibit, destroy!: true, collection: collection) }
-  let(:exhibit) { instance_double(Exhibit, id: 1, title: "title", showcases: relation, collection: collection) }
+  let(:exhibit) { instance_double(Exhibit, id: 1, name: "name", showcases: relation, collection: collection) }
   let(:collection) { instance_double(Collection, id: 1, name_line_1: "name_line_1") }
 
   let(:relation) { Showcase.all }
