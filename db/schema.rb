@@ -46,9 +46,9 @@ ActiveRecord::Schema.define(version: 20150519124517) do
     t.integer  "image_file_size",    limit: 4
     t.datetime "image_updated_at"
     t.text     "short_description",  limit: 65535
-    t.text     "about",              limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "about",              limit: 65535
   end
 
   create_table "honeypot_images", force: :cascade do |t|
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 20150519124517) do
   add_index "sections", ["unique_id"], name: "index_sections_on_unique_id", using: :btree
 
   create_table "showcases", force: :cascade do |t|
-    t.text     "title",              limit: 65535
+    t.text     "name_line_1",        limit: 65535
     t.text     "description",        limit: 65535
     t.integer  "exhibit_id",         limit: 4
     t.string   "image_file_name",    limit: 255
@@ -114,7 +114,7 @@ ActiveRecord::Schema.define(version: 20150519124517) do
     t.boolean  "published",          limit: 1
     t.string   "unique_id",          limit: 255
     t.integer  "order",              limit: 4
-    t.string   "subtitle",           limit: 255
+    t.string   "name_line_2",        limit: 255
   end
 
   add_index "showcases", ["order"], name: "index_showcases_on_order", using: :btree

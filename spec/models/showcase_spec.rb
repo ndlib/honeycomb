@@ -1,14 +1,14 @@
 require "rails_helper"
 
 RSpec.describe Showcase do
-  [:title, :description, :unique_id, :image, :exhibit, :sections, :published, :collection].each do |field|
+  [:name_line_1, :description, :unique_id, :image, :exhibit, :sections, :published, :collection].each do |field|
     it "has the field #{field}" do
       expect(subject).to respond_to(field)
       expect(subject).to respond_to("#{field}=")
     end
   end
 
-  [:exhibit, :title].each do |field|
+  [:exhibit, :name_line_1].each do |field|
     it "requires the field, #{field}" do
       expect(subject).to have(1).error_on(field)
     end
@@ -38,9 +38,9 @@ RSpec.describe Showcase do
       expect(subject.beehive_url).to include(Rails.configuration.settings.beehive_url)
     end
 
-    it "uses title for the slug" do
-      subject.title = "Slug"
-      expect(subject.slug).to eq(subject.title)
+    it "uses name_line_1 for the slug" do
+      subject.name_line_1 = "Slug"
+      expect(subject.slug).to eq(subject.name_line_1)
     end
   end
 end

@@ -8,13 +8,13 @@ class Showcase < ActiveRecord::Base
   has_attached_file :image, restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
 
-  validates :title, :exhibit, presence: true
+  validates :name_line_1, :exhibit, presence: true
   validates :image, attachment_presence: true
 
   has_paper_trail
 
   def slug
-    return title
+    return name_line_1
   end
 
   def beehive_url
