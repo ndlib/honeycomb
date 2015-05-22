@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20150519124517) do
 
   create_table "honeypot_images", force: :cascade do |t|
     t.integer  "item_id",       limit: 4
-    t.string   "title",         limit: 255
+    t.string   "name",          limit: 255
     t.text     "json_response", limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"

@@ -9,9 +9,9 @@ class ItemDecorator < Draper::Decorator
     ItemsDecorator.new(children_query_recent)
   end
 
-  def image_title
+  def image_name
     if object.honeypot_image
-      object.honeypot_image.title
+      object.honeypot_image.name
     else
       nil
     end

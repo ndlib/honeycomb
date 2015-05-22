@@ -8,5 +8,6 @@ class ChangeTitleToName < ActiveRecord::Migration
     rename_column :showcases, :subtitle, :name_line_2
     rename_column :exhibits, :title, :name
     rename_column :sections, :title, :name
+    rename_column :honeypot_images, :title, :name
   end
 end

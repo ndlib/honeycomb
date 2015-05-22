@@ -30,14 +30,14 @@ RSpec.describe ItemDecorator do
   end
 
   describe "honeypot image" do
-    let(:honeypot_image) { instance_double(HoneypotImage, title: "Image Title", url: "http://example.com/image", image_json: {}) }
+    let(:honeypot_image) { instance_double(HoneypotImage, name: "Image Name", url: "http://example.com/image", image_json: {}) }
     before do
       allow(item).to receive(:honeypot_image).and_return(honeypot_image)
     end
 
-    describe "#image_title" do
-      it "is the image title" do
-        expect(subject.image_title).to eq("Image Title")
+    describe "#image_name" do
+      it "is the image name" do
+        expect(subject.image_name).to eq("Image Name")
       end
     end
 

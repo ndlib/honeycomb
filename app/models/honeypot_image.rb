@@ -5,7 +5,7 @@ class HoneypotImage < ActiveRecord::Base
   belongs_to :showcase
   belongs_to :exhibit
 
-  validates :title, :json_response, presence: true
+  validates :name, :json_response, presence: true
 
   before_validation :set_values_from_json_response
 
@@ -33,6 +33,6 @@ class HoneypotImage < ActiveRecord::Base
   end
 
   def set_values_from_json_response
-    self.title = get_key("name")
+    self.name = get_key("name")
   end
 end
