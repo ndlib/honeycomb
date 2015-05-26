@@ -58,12 +58,15 @@ var ItemPublishEmbedPanel = React.createClass({
     return (
       <div>
         {/*
-        <Panel PanelTitle={this.props.publishPanelTitle} PanelHelp={this.props.publishPanelHelp} >
+        <Panel>
+         <PanelHeading>{this.props.publishPanelTitle}</PanelHeading>
+         <PanelBody>
+            <p>{this.props.publishPanelHelp}</p>
             <PublishToggle
               togglePublished={this.togglePublished}
               published={this.state.published}
               publishPanelFieldName={this.props.publishPanelFieldName} />
-
+          </PanelBody>
         </Panel>
       */}
 
