@@ -1,15 +1,20 @@
 require "rails_helper"
 
 RSpec.describe ItemJSON do
-  let(:item) { instance_double(Item, name: "name",
-                                     description: "description",
-                                     manuscript_url: "http://example.com/manuscript",
-                                     updated_at: "2014-11-06 11:45:52 -0500",
-                                     id: 1,
-                                     collection: collection,
-                                     honeypot_image: honeypot_image,
-                                     parent_id: nil,
-                                     child_ids: []) }
+  let(:item_stubs) do
+    {
+      name: "name",
+      description: "description",
+      manuscript_url: "http://example.com/manuscript",
+      updated_at: "2014-11-06 11:45:52 -0500",
+      id: 1,
+      collection: collection,
+      honeypot_image: honeypot_image,
+      parent_id: nil,
+      child_ids: []
+    }
+  end
+  let(:item) { instance_double(Item, item_stubs) }
   let(:collection) { instance_double(Collection, id: 2, name_line_1: "name_line_1") }
   let(:honeypot_image) { instance_double(HoneypotImage, image_json: { image: "image" }) }
 
