@@ -14,7 +14,7 @@ class Showcase < ActiveRecord::Base
   has_paper_trail
 
   def slug
-    return name_line_1
+    name_line_1
   end
 
   def name

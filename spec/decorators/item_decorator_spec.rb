@@ -1,7 +1,13 @@
 require "rails_helper"
 
 RSpec.describe ItemDecorator do
-  let(:item) { instance_double(Item, name: "name", description: "description", updated_at: "2014-11-06 11:45:52 -0500", id: 1, collection_id: collection.id, collection: collection, image: "image.jpg") }
+  let(:item) { instance_double(Item, name: "name",
+                                     description: "description",
+                                     updated_at: "2014-11-06 11:45:52 -0500",
+                                     id: 1,
+                                     collection_id: collection.id,
+                                     collection: collection,
+                                     image: "image.jpg") }
   let(:collection) { instance_double(Collection, id: 2, name_line_1: "name_line_1") }
 
   subject { described_class.new(item) }
@@ -66,13 +72,20 @@ RSpec.describe ItemDecorator do
 
   context "page_name" do
     it "renders the item_name partial" do
-      expect(subject.h).to receive(:render).with(partial: "/items/item_name",  locals: { item: subject })
+      expect(subject.h).to receive(:render).with(partial: "/items/item_name", locals: { item: subject })
       subject.page_name
     end
   end
 
   context "child item" do
-    let(:child_item) { instance_double(Item, name: "Child Item", description: "description", updated_at: "2014-11-06 11:45:52 -0500", id: 2, collection_id: collection.id, collection: collection, image: "image.jpg", parent_id: 1) }
+    let(:child_item) { instance_double(Item, name: "Child Item",
+                                             description: "description",
+                                             updated_at: "2014-11-06 11:45:52 -0500",
+                                             id: 2,
+                                             collection_id: collection.id,
+                                             collection: collection,
+                                             image: "image.jpg",
+                                             parent_id: 1) }
     subject { described_class.new(child_item) }
 
     it "returns false for is_parent?" do
