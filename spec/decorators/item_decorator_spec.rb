@@ -1,13 +1,18 @@
 require "rails_helper"
 
 RSpec.describe ItemDecorator do
-  let(:item) { instance_double(Item, name: "name",
-                                     description: "description",
-                                     updated_at: "2014-11-06 11:45:52 -0500",
-                                     id: 1,
-                                     collection_id: collection.id,
-                                     collection: collection,
-                                     image: "image.jpg") }
+  let(:item_stubs) do
+    {
+      name: "name",
+      description: "description",
+      updated_at: "2014-11-06 11:45:52 -0500",
+      id: 1,
+      collection_id: collection.id,
+      collection: collection,
+      image: "image.jpg"
+    }
+  end
+  let(:item) { instance_double(Item, item_stubs) }
   let(:collection) { instance_double(Collection, id: 2, name_line_1: "name_line_1") }
 
   subject { described_class.new(item) }
@@ -78,14 +83,19 @@ RSpec.describe ItemDecorator do
   end
 
   context "child item" do
-    let(:child_item) { instance_double(Item, name: "Child Item",
-                                             description: "description",
-                                             updated_at: "2014-11-06 11:45:52 -0500",
-                                             id: 2,
-                                             collection_id: collection.id,
-                                             collection: collection,
-                                             image: "image.jpg",
-                                             parent_id: 1) }
+    let(:child_stubs) do
+      {
+        name: "Child Item",
+        description: "description",
+        updated_at: "2014-11-06 11:45:52 -0500",
+        id: 2,
+        collection_id: collection.id,
+        collection: collection,
+        image: "image.jpg",
+        parent_id: 1
+      }
+    end
+    let(:child_item) { instance_double(Item, child_stubs) }
     subject { described_class.new(child_item) }
 
     it "returns false for is_parent?" do
