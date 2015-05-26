@@ -54,8 +54,8 @@ RSpec.describe SaveHoneypotImage do
         expect(subject).to be_valid
       end
 
-      it "sets a title in the image object" do
-        expect(subject.title).to eq("1920x1200.jpeg")
+      it "sets a name in the image object" do
+        expect(subject.name).to eq("1920x1200.jpeg")
       end
 
       it "returns a valid url" do

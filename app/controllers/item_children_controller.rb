@@ -18,7 +18,7 @@ class ItemChildrenController < ApplicationController
   protected
 
   def save_params
-    { title: params[:item][:title], description: params[:item][:description], image: params[:item][:image] }
+    { name: params[:item][:name], description: params[:item][:description], image: params[:item][:image] }
   end
 
   def parent

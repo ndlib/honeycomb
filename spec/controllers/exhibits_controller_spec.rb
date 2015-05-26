@@ -2,8 +2,8 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe ExhibitsController, type: :controller do
-  let(:exhibit) { double(Exhibit, id: 1, title: "title", collection: collection, save: true, "attributes=" => true) }
-  let(:collection) { instance_double(Collection, id: 1, title: "title") }
+  let(:exhibit) { double(Exhibit, id: 1, name: "name", collection: collection, save: true, "attributes=" => true) }
+  let(:collection) { instance_double(Collection, id: 1, name_line_1: "name_line_1") }
   let(:update_params) { { id: exhibit.id, exhibit: {  description: "description" } } }
 
   before(:each) do

@@ -1,4 +1,4 @@
-class GenerateTitleFromFilename
+class GenerateNameFromFilename
   DEFAULT_OPTIONS = {
     remove_extension: true,
     add_spaces: false,

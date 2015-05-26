@@ -31,7 +31,7 @@ class ItemJSON < Draper::Decorator
   def item_data
     {
       id: object.id,
-      title: object.title,
+      name: object.name,
       description: object.description,
       updated_at: object.updated_at,
       manuscript_url: object.manuscript_url
@@ -41,7 +41,7 @@ class ItemJSON < Draper::Decorator
   def collection_data
     {
       id: object.collection.id,
-      title: object.collection.title
+      name_line_1: object.collection.name_line_1
     }
   end
 

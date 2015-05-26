@@ -1,19 +1,19 @@
 class CreateURLSlug
-  attr_reader :title
+  attr_reader :name
 
-  def self.call(title)
-    new(title).create
+  def self.call(name)
+    new(name).create
   end
 
-  def initialize(title)
-    @title = title
+  def initialize(name)
+    @name = name
   end
 
   def create
-    if title.present?
-      title.downcase.gsub(/\s+/, "-").gsub(/[^0-9a-z-]/i, "")
+    if name.present?
+      name.downcase.gsub(/\s+/, "-").gsub(/[^0-9a-z-]/i, "")
     else
-      "title"
+      "name"
     end
   end
 end

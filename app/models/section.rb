@@ -4,4 +4,8 @@ class Section < ActiveRecord::Base
   has_one :collection, through: :showcase
 
   validates :showcase, presence: true
+
+  def slug
+    name
+  end
 end

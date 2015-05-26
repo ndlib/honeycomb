@@ -5,7 +5,7 @@ describe SaveSection do
 
   let(:section) { double(Section, id: "1", "attributes=" => true, save: true, showcase: showcase) }
 
-  let(:params) { { title: "title", item_id: 1, order: 1, image: "image", order: 1 } }
+  let(:params) { { name: "name", item_id: 1, order: 1, image: "image", order: 1 } }
   let(:showcase) { double(Showcase, id: 1, sections: double(order: true)) }
 
   before(:each) do

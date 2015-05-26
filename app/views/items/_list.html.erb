@@ -7,7 +7,7 @@
       <th><%= t('.status') %></th>
       <th><%= t('.updated_at') %></th>
       <th>Last Modified Timestamp</th>
-      <th>Sortable Title</th>
+      <th>Sortable Name</th>
       <th>Image Name</th>
     </tr>
   </thead>
@@ -21,7 +21,7 @@
           <%= link_to HoneypotThumbnail.display(item.honeypot_image), item.edit_path %>
         </td>
         <td>
-          <h4 class="media-heading"><%= h link_to item.title, item.edit_path %></h4>
+          <h4 class="media-heading"><%= h link_to item.name, item.edit_path %></h4>
           <%= raw item.description %>
         </td>
         <td>
@@ -34,10 +34,10 @@
           <%= item.updated_at.to_i %>
         </td>
         <td>
-          <%= item.sortable_title %>
+          <%= item.sortable_name %>
         </td>
         <td>
-          <%= item.image_title %>
+          <%= item.image_name %>
         </td>
       </tr>
     <% end %>

@@ -3,15 +3,15 @@ require "rails_helper"
 RSpec.describe Item do
   let(:image_with_spaces) { File.open(Rails.root.join("spec/fixtures", "test copy.jpg"), "r") }
 
-  [:title, :description, :transcription, :collection, :honeypot_image, :published, :unique_id].each do |field|
+  [:name, :description, :transcription, :collection, :honeypot_image, :published, :unique_id].each do |field|
     it "has field, #{field}" do
       expect(subject).to respond_to(field)
       expect(subject).to respond_to("#{field}=")
     end
   end
 
-  it "requires the title field " do
-    expect(subject).to have(1).error_on(:title)
+  it "requires the name field " do
+    expect(subject).to have(1).error_on(:name)
   end
 
   it "requires the collection field" do
@@ -68,6 +68,18 @@ RSpec.describe Item do
 
     it "responds to collection" do
       expect(subject).to respond_to(:collection)
+    end
+  end
+
+  describe "#beehive_url" do
+    it "is a url to the beehive server" do
+      subject.collection = Collection.new
+      expect(subject.beehive_url).to include(Rails.configuration.settings.beehive_url)
+    end
+
+    it "uses name for the slug" do
+      subject.name = "Slug"
+      expect(subject.slug).to eq(subject.name)
     end
   end
 end

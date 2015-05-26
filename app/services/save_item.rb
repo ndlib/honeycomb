@@ -14,7 +14,7 @@ class SaveItem
     fix_image_param!
 
     item.attributes = params
-    pre_process_title
+    pre_process_name
 
     if item.save && update_honeypot_image
       check_unique_id
@@ -27,16 +27,16 @@ class SaveItem
 
   private
 
-  def pre_process_title
-    if title_should_be_filename?
-      item.title = GenerateTitleFromFilename.call(item.image_file_name)
+  def pre_process_name
+    if name_should_be_filename?
+      item.name = GenerateNameFromFilename.call(item.image_file_name)
     end
 
-    item.sortable_title = SortableTitleConverter.convert(item.title)
+    item.sortable_name = SortableNameConverter.convert(item.name)
   end
 
-  def title_should_be_filename?
-    item.new_record? && item.title.blank?
+  def name_should_be_filename?
+    item.new_record? && item.name.blank?
   end
 
   def fix_image_param!

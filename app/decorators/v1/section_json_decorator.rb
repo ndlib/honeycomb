@@ -7,8 +7,8 @@ module V1
       new(section).display(json)
     end
 
-    def title
-      SectionTitle.call(object)
+    def name
+      SectionName.call(object)
     end
 
     def at_id
@@ -28,7 +28,7 @@ module V1
     end
 
     def slug
-      CreateURLSlug.call(object.title)
+      CreateURLSlug.call(object.slug)
     end
 
     def next

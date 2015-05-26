@@ -1,5 +1,5 @@
 class ShowcaseDecorator < Draper::Decorator
-  delegate :id, :title, :description, to: :object
+  delegate :id, :name_line_1, :description, to: :object
 
   def sections
     SectionQuery.new(object.sections).ordered

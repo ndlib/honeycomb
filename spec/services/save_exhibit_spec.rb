@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe SaveExhibit, type: :model do
   subject { described_class.call(exhibit, params) }
   let(:exhibit) { Exhibit.new }
-  let(:params) { { title: "title" } }
+  let(:params) { { name: "name" } }
   let(:image) { File.new(Rails.root.join("spec/fixtures/test.jpg").to_s) }
 
   before(:each) do

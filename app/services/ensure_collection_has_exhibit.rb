@@ -20,6 +20,6 @@ class EnsureCollectionHasExhibit
   private
 
   def create!
-    collection.create_exhibit(title: collection.title)
+    collection.create_exhibit(name: collection.name_line_1)
   end
 end

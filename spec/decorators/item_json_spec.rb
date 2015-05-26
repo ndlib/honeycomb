@@ -1,8 +1,21 @@
 require "rails_helper"
 
 RSpec.describe ItemJSON do
-  let(:item) { instance_double(Item, title: "title", description: "description", manuscript_url: "http://example.com/manuscript", updated_at: "2014-11-06 11:45:52 -0500", id: 1, collection: collection, honeypot_image: honeypot_image, parent_id: nil, child_ids: []) }
-  let(:collection) { instance_double(Collection, id: 2, title: "title") }
+  let(:item_stubs) do
+    {
+      name: "name",
+      description: "description",
+      manuscript_url: "http://example.com/manuscript",
+      updated_at: "2014-11-06 11:45:52 -0500",
+      id: 1,
+      collection: collection,
+      honeypot_image: honeypot_image,
+      parent_id: nil,
+      child_ids: []
+    }
+  end
+  let(:item) { instance_double(Item, item_stubs) }
+  let(:collection) { instance_double(Collection, id: 2, name_line_1: "name_line_1") }
   let(:honeypot_image) { instance_double(HoneypotImage, image_json: { image: "image" }) }
 
   let(:options) { {} }
@@ -10,7 +23,7 @@ RSpec.describe ItemJSON do
   let(:result_hash) { subject.to_hash(options) }
 
   describe "#item_data" do
-    [:title, :description, :updated_at, :id, :manuscript_url].each do |field|
+    [:name, :description, :updated_at, :id, :manuscript_url].each do |field|
       it "includes the field, #{field}, from the item" do
         expect(item).to receive(field).and_return(field)
         expect(subject.send(:item_data)[field]).to eq(field)
@@ -33,7 +46,7 @@ RSpec.describe ItemJSON do
   end
 
   describe "#collection_data" do
-    [:id, :title].each do |field|
+    [:id, :name_line_1].each do |field|
       it "includes the field, #{field}, from the collection " do
         expect(collection).to receive(field).and_return(field)
         expect(subject.send(:collection_data)[field]).to eq(field)
@@ -112,8 +125,8 @@ RSpec.describe ItemJSON do
     let(:options) { { include: "collection" } }
 
     it "includes the #collection_data" do
-      expect(subject).to receive(:collection_data).and_return(id: 1, title: "title")
-      expect(result_hash[:links][:collection]).to eq(id: 1, title: "title")
+      expect(subject).to receive(:collection_data).and_return(id: 1, name_line_1: "name_line_1")
+      expect(result_hash[:links][:collection]).to eq(id: 1, name_line_1: "name_line_1")
     end
   end
 
@@ -130,8 +143,8 @@ RSpec.describe ItemJSON do
     let(:options) { { include: "image, collection" } }
 
     it "includes the #collection_data" do
-      expect(subject).to receive(:collection_data).and_return(id: 1, title: "title")
-      expect(result_hash[:links][:collection]).to eq(id: 1, title: "title")
+      expect(subject).to receive(:collection_data).and_return(id: 1, name_line_1: "name_line_1")
+      expect(result_hash[:links][:collection]).to eq(id: 1, name_line_1: "name_line_1")
     end
 
     it "includes the #image_data" do

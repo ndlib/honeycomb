@@ -19,14 +19,14 @@ describe ShowcaseQuery do
 
   describe "public_api_list" do
     it "orders the result" do
-      expect(relation).to receive(:order).with(:order, :title).and_return(relation)
+      expect(relation).to receive(:order).with(:order, :name_line_1).and_return(relation)
       subject.public_api_list
     end
   end
 
   describe "admin_list" do
     it "orders the result" do
-      expect(relation).to receive(:order).with(:order, :title).and_return(relation)
+      expect(relation).to receive(:order).with(:order, :name_line_1).and_return(relation)
       subject.admin_list
     end
   end

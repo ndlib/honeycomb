@@ -90,7 +90,7 @@ RSpec.describe ItemsController, type: :controller do
 
   describe "POST #create" do
     let(:collection) { double(Collection, id: 1, items: relation) }
-    let(:create_params) { { collection_id: collection.id, item: { title: "title" } } }
+    let(:create_params) { { collection_id: collection.id, item: { name: "name" } } }
     let(:item) { double(Item, id: 1, parent: nil, collection: collection) }
 
     before(:each) do
@@ -189,7 +189,7 @@ RSpec.describe ItemsController, type: :controller do
   describe "PUT #update" do
     let(:collection) { double(Collection, id: "1") }
     let(:item) { double(Item, id: 1, parent: nil, collection: collection) }
-    let(:update_params) { { id: item.id, item: { title: "title" } } }
+    let(:update_params) { { id: item.id, item: { name: "name" } } }
 
     subject { put :update, update_params }
 

@@ -16,46 +16,6 @@ RSpec.describe V1::CollectionJSONDecorator do
     end
   end
 
-  describe "#title" do
-    it "concatinates title_line_1 and title_line_2 if there is a title_line_2" do
-      expect(subject).to receive(:title_line_1).and_return("title line 1")
-      expect(subject).to receive(:title_line_2).twice.and_return("title line 2")
-
-      expect(subject.title).to eq("title line 1 title line 2")
-    end
-
-    it "does not concatintate title_line_2 if there is no title_line_2" do
-      expect(subject).to receive(:title_line_1).and_return("title line 1")
-      expect(subject).to receive(:title_line_2).and_return(nil)
-
-      expect(subject.title).to eq("title line 1")
-    end
-  end
-
-  describe "#title_line_1" do
-    it "maps to title" do
-      expect(collection).to receive(:title).and_return("super-title")
-      expect(subject.title_line_1).to eq("super-title")
-    end
-
-    it "returns empty string if title is nil " do
-      allow(collection).to receive(:title).and_return(nil)
-      expect(subject.title_line_1).to eq("")
-    end
-  end
-
-  describe "#title_line_2" do
-    it "maps to subtitle" do
-      expect(collection).to receive(:subtitle).and_return("super-title")
-      expect(subject.title_line_2).to eq("super-title")
-    end
-
-    it "returns empty string if subtitle is nil " do
-      expect(collection).to receive(:subtitle).and_return(nil)
-      expect(subject.title_line_2).to eq("")
-    end
-  end
-
   describe "#description" do
     let(:collection) { double(Collection, description: nil) }
 
@@ -128,12 +88,11 @@ RSpec.describe V1::CollectionJSONDecorator do
   end
 
   describe "#slug" do
-    let(:collection) { double(Collection, title: "title") }
+    let(:collection) { double(Collection, slug: "sluggish") }
 
     it "calls the slug generator" do
-      expect(CreateURLSlug).to receive(:call).with(collection.title).and_return("slug")
-
-      expect(subject.slug).to eq("slug")
+      expect(CreateURLSlug).to receive(:call).with(collection.slug)
+      subject.slug
     end
   end
 

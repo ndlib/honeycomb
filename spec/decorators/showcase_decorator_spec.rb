@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ShowcaseDecorator do
-  let(:showcase) { instance_double(Showcase, id: 10, title: "title", description: "description") }
+  let(:showcase) { instance_double(Showcase, id: 10, name_line_1: "name_line_1", description: "description") }
   subject { described_class.new(showcase) }
 
   describe "#id" do
@@ -11,10 +11,10 @@ RSpec.describe ShowcaseDecorator do
     end
   end
 
-  describe "#title" do
-    it "is the showcase title" do
-      expect(showcase).to receive(:title).and_return("Title")
-      expect(subject.title).to eq("Title")
+  describe "#name" do
+    it "is the showcase name" do
+      expect(showcase).to receive(:name_line_1).and_return("name_line_1")
+      expect(subject.name_line_1).to eq("name_line_1")
     end
   end
 
