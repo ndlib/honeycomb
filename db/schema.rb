@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150519124517) do
+ActiveRecord::Schema.define(version: 20150527193045) do
 
   create_table "collection_users", force: :cascade do |t|
     t.integer  "user_id",       limit: 4, null: false
@@ -46,9 +46,10 @@ ActiveRecord::Schema.define(version: 20150519124517) do
     t.integer  "image_file_size",    limit: 4
     t.datetime "image_updated_at"
     t.text     "short_description",  limit: 65535
+    t.text     "about",              limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "about",              limit: 65535
+    t.text     "copyright",          limit: 65535
   end
 
   create_table "honeypot_images", force: :cascade do |t|

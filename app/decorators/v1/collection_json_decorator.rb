@@ -35,6 +35,10 @@ module V1
       object.exhibit.about.to_s
     end
 
+    def copyright
+      object.exhibit.copyright.to_s
+    end
+
     def slug
       CreateURLSlug.call(object.slug)
     end
