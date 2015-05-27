@@ -3,7 +3,7 @@ module CacheKeys
     # Generator for v1/showcases_controller
     class V1Showcases
       def index(collection:)
-        CacheKeys::ActiveRecord.new.generate(record: [collection, collection.showcases])
+        CacheKeys::ActiveRecord.new.generate(record: [collection, collection.exhibit, collection.showcases])
       end
 
       def show(showcase:)
