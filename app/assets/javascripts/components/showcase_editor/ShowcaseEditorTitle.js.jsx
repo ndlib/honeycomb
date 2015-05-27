@@ -73,7 +73,7 @@ var ShowcaseEditorTitle = React.createClass({
     }
     return (
       <div className="showcase-title-page" style={this.style()} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-        <h2 style={this.titleStyle()}>{this.props.showcase.name} <small>{description}</small></h2>
+        <h2 style={this.titleStyle()}>{this.props.showcase.name_line_1} <small>{this.props.showcase.name_line_2}</small></h2>
         <div>
           <h4>Background Image</h4>
           <img src={this.props.showcase.image } style={ this.imageStyle() } />
