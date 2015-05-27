@@ -11,7 +11,8 @@ module CacheKeys
     end
 
     def generate
-      key = Rails.application.config.cache_key_header + generator.send(action, **args).to_s
+      Rails.application.config.cache_key_header + generator.send(action, **args).to_s
+      # key = Rails.application.config.cache_key_header + generator.send(action, **args).to_s
       # print generator.class.name + "." + action + "='" + key + "'\n"
       # key
     end
