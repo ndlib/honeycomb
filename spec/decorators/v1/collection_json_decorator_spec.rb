@@ -48,8 +48,8 @@ RSpec.describe V1::CollectionJSONDecorator do
     let(:collection) { double(Collection, exhibit: exhibit) }
     let(:default) do
       "<p><a href=\"http://www.nd.edu/copyright/\">Copyright</a> " +
-      Date.today.year.to_s +
-      " <a href=\"http://www.nd.edu\">University of Notre Dame</a></p>"
+        Date.today.year.to_s +
+        " <a href=\"http://www.nd.edu\">University of Notre Dame</a></p>"
     end
 
     it "converts null to default string" do
