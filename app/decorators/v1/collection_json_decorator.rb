@@ -36,7 +36,11 @@ module V1
     end
 
     def copyright
-      object.exhibit.copyright.to_s
+      if(!object.exhibit.copyright.to_s.empty?)
+        object.exhibit.copyright.to_s
+      else
+        "<p><a href=\"http://www.nd.edu/copyright/\">Copyright</a> #{Date.today.year} <a href=\"http://www.nd.edu\">University of Notre Dame</a></p>"
+      end
     end
 
     def slug
