@@ -32,7 +32,10 @@ describe EnsureCollectionHasExhibit do
     end
 
     it "uses the correct copyright as a default" do
-      expect(collection).to receive(:create_exhibit).with(hash_including(copyright: "<p><a href=\"http://www.nd.edu/copyright/\">Copyright</a> #{Date.today.year} <a href=\"http://www.nd.edu\">University of Notre Dame</a></p>"))
+      default_copyright = "<p><a href=\"http://www.nd.edu/copyright/\">Copyright</a> " +
+                          Date.today.year.to_s +
+                          " <a href=\"http://www.nd.edu\">University of Notre Dame</a></p>"
+      expect(collection).to receive(:create_exhibit).with(hash_including(copyright: default_copyright))
       subject
     end
   end
