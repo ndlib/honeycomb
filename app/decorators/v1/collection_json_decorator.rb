@@ -36,8 +36,9 @@ module V1
     end
 
     def copyright
-      if(!object.exhibit.copyright.to_s.empty?)
-        object.exhibit.copyright.to_s
+      val = object.exhibit.copyright.to_s
+      if(!val.empty?)
+        val
       else
         "<p><a href=\"http://www.nd.edu/copyright/\">Copyright</a> #{Date.today.year} <a href=\"http://www.nd.edu\">University of Notre Dame</a></p>"
       end

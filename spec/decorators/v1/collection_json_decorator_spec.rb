@@ -43,6 +43,26 @@ RSpec.describe V1::CollectionJSONDecorator do
     end
   end
 
+  describe "#copyright" do
+    let(:exhibit) { double(Exhibit) }
+    let(:collection) { double(Collection, exhibit: exhibit) }
+
+    it "converts null to default string" do
+      expect(exhibit).to receive(:copyright).and_return(nil)
+      expect(subject.copyright).to eq("<p><a href=\"http://www.nd.edu/copyright/\">Copyright</a> #{Date.today.year} <a href=\"http://www.nd.edu\">University of Notre Dame</a></p>")
+    end
+
+    it "converts empty string to default string" do
+      expect(exhibit).to receive(:copyright).and_return("")
+      expect(subject.copyright).to eq("<p><a href=\"http://www.nd.edu/copyright/\">Copyright</a> #{Date.today.year} <a href=\"http://www.nd.edu\">University of Notre Dame</a></p>")
+    end
+
+    it "gets the value from the exhibit" do
+      expect(exhibit).to receive(:copyright).and_return("copyright")
+      expect(subject.copyright).to eq("copyright")
+    end
+  end
+
   describe "#site_intro" do
     let(:exhibit) { double(Exhibit, description: nil) }
     let(:collection) { double(Collection, exhibit: exhibit) }
