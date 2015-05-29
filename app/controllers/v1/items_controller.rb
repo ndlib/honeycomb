@@ -35,7 +35,7 @@ module V1
     protected
 
     def save_params
-      params.require(:item).permit(:title, :description, :image, :manuscript_url, :transcription)
+      params.require(:item).permit(:name, :description, :image, :manuscript_url, :transcription)
     end
   end
 end

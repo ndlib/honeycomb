@@ -145,10 +145,10 @@ var ItemMetaDataForm = React.createClass({
     return (
       <Form id="meta_data_form" url={this.props.url} authenticityToken={this.props.authenticityToken} method={this.props.method} >
         <Panel>
-          <PanelHeading>{this.state.formValues['title']} Meta Data</PanelHeading>
+          <PanelHeading>{this.state.formValues['name']} Meta Data</PanelHeading>
           <PanelBody>
               {this.formMsg()}
-              <StringField objectType={this.props.objectType} name="title" required={true} title="Title" value={this.state.formValues["title"]} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError('title')} />
+              <StringField objectType={this.props.objectType} name="name" required={true} title="Name" value={this.state.formValues["name"]} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError('title')} />
 
               <TextField objectType={this.props.objectType} name="description" title="Description" value={this.state.formValues["description"]} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError('description')} placeholder="Example: &quot;Also known as 'La Giaconda' in Italian, this half-length portrait is one of the most famous paintings in the world. It is thought to depict Lisa Gherardini, the wife of Francesco del Giocondo.&quot;" />
 

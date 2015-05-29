@@ -47,7 +47,7 @@ RSpec.describe ItemDecorator do
         Item,
         id: 1,
         unique_id: "unique_id",
-        title: "title",
+        name: "name",
         description: "description",
         transcription: "transcription",
         manuscript_url: "manuscript_url",
@@ -62,7 +62,7 @@ RSpec.describe ItemDecorator do
         url: "/v1/items/unique_id",
         method: "put",
         data: {
-          title: "title",
+          name: "name",
           description: "description",
           transcription: "transcription",
           manuscript_url: "manuscript_url"
