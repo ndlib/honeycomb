@@ -9,12 +9,16 @@ class Item < ActiveRecord::Base
   has_attached_file :image, restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/
   # , :styles => { :medium => "300x300>", :thumb => "100x100>" }, :default_url => "/images/:style/missing.png"
 
-  validates :title, :collection, presence: true
+  validates :name, :collection, presence: true
   validates :image, attachment_presence: true
 
   validate :manuscript_url_is_valid_uri
 
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
+
+  def slug
+    name
+  end
 
   def beehive_url
     CreateBeehiveURL.call(self)

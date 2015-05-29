@@ -24,21 +24,21 @@ ActiveRecord::Schema.define(version: 20150527193045) do
   add_index "collection_users", ["user_id"], name: "index_collection_users_on_user_id", using: :btree
 
   create_table "collections", force: :cascade do |t|
-    t.string   "title",       limit: 255
+    t.string   "name_line_1", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "deleted",     limit: 1,     default: false
     t.text     "description", limit: 65535
     t.string   "unique_id",   limit: 255
     t.boolean  "published",   limit: 1
-    t.string   "subtitle",    limit: 255
+    t.string   "name_line_2", limit: 255
   end
 
   add_index "collections", ["published"], name: "index_collections_on_published", using: :btree
   add_index "collections", ["unique_id"], name: "index_collections_on_unique_id", using: :btree
 
   create_table "exhibits", force: :cascade do |t|
-    t.text     "title",              limit: 65535
+    t.text     "name",               limit: 65535
     t.text     "description",        limit: 65535
     t.integer  "collection_id",      limit: 4
     t.string   "image_file_name",    limit: 255
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 20150527193045) do
 
   create_table "honeypot_images", force: :cascade do |t|
     t.integer  "item_id",       limit: 4
-    t.string   "title",         limit: 255
+    t.string   "name",          limit: 255
     t.text     "json_response", limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 20150527193045) do
   add_index "honeypot_images", ["item_id"], name: "index_honeypot_images_on_item_id", using: :btree
 
   create_table "items", force: :cascade do |t|
-    t.text     "title",              limit: 65535
+    t.text     "name",               limit: 65535
     t.text     "description",        limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 20150527193045) do
     t.string   "image_content_type", limit: 255
     t.integer  "image_file_size",    limit: 4
     t.datetime "image_updated_at"
-    t.text     "sortable_title",     limit: 65535
+    t.text     "sortable_name",      limit: 65535
     t.integer  "parent_id",          limit: 4
     t.string   "manuscript_url",     limit: 255
     t.boolean  "published",          limit: 1
@@ -88,7 +88,7 @@ ActiveRecord::Schema.define(version: 20150527193045) do
   add_index "items", ["unique_id"], name: "index_items_on_unique_id", using: :btree
 
   create_table "sections", force: :cascade do |t|
-    t.string   "title",       limit: 255
+    t.string   "name",        limit: 255
     t.text     "description", limit: 65535
     t.string   "image",       limit: 255
     t.integer  "item_id",     limit: 4
@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 20150527193045) do
   add_index "sections", ["unique_id"], name: "index_sections_on_unique_id", using: :btree
 
   create_table "showcases", force: :cascade do |t|
-    t.text     "title",              limit: 65535
+    t.text     "name_line_1",        limit: 65535
     t.text     "description",        limit: 65535
     t.integer  "exhibit_id",         limit: 4
     t.string   "image_file_name",    limit: 255
@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(version: 20150527193045) do
     t.boolean  "published",          limit: 1
     t.string   "unique_id",          limit: 255
     t.integer  "order",              limit: 4
-    t.string   "subtitle",           limit: 255
+    t.string   "name_line_2",        limit: 255
   end
 
   add_index "showcases", ["order"], name: "index_showcases_on_order", using: :btree

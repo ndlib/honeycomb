@@ -6,7 +6,7 @@ RSpec.describe ItemChildrenController, type: :controller do
 
   let(:collection) { instance_double(Collection, id: 1) }
   let(:relation) { Item.all }
-  let(:create_params) { { collection_id: collection.id, item_id: parent.id, item: { title: "title" } } }
+  let(:create_params) { { collection_id: collection.id, item_id: parent.id, item: { name: "name" } } }
 
   before(:each) do
     allow_any_instance_of(ItemQuery).to receive(:find).and_return(parent)

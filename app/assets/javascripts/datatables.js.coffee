@@ -1,11 +1,11 @@
 ItemDataTablesIndexes =
   checkbox: 0
   image: 1
-  title: 2
+  name: 2
   published: 3
   updatedAt: 4
   updatedAtTimestamps: 5
-  sortableTitle: 6
+  sortableName: 6
   originalFilename: 7
 
 class ItemDataTable
@@ -52,10 +52,10 @@ class ItemDataTable
         sortable: false
         searchable: false
       ,
-        targets: ItemDataTablesIndexes['title']
-        orderData: [ItemDataTablesIndexes['sortableTitle']]
+        targets: ItemDataTablesIndexes['name']
+        orderData: [ItemDataTablesIndexes['sortableName']]
       ,
-        targets: ItemDataTablesIndexes['sortableTitle']
+        targets: ItemDataTablesIndexes['sortableName']
         visible: false
       ,
         targets: ItemDataTablesIndexes['image']

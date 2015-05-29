@@ -5,9 +5,9 @@ json.set! "hasPart/items", collection_object.items_url
 json.set! "hasPart/showcases", collection_object.showcases_url
 json.id collection_object.unique_id
 json.slug collection_object.slug
-json.name collection_object.title
-json.name_line_1 collection_object.title_line_1
-json.name_line_2 collection_object.title_line_2
+json.name collection_object.name
+json.name_line_1 collection_object.name_line_1
+json.name_line_2 collection_object.name_line_2
 json.short_description collection_object.short_intro
 json.description collection_object.site_intro
 json.about collection_object.about

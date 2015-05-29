@@ -20,5 +20,22 @@ module V1
                                            item: @item)
       fresh_when(etag: cache_key.generate)
     end
+
+    def update
+      @item = ItemQuery.new.public_find(params[:id])
+      # check_user_edits!(@item.collection)
+
+      if SaveItem.call(@item, save_params)
+        render :update
+      else
+        render :errors, status: :unprocessable_entity
+      end
+    end
+
+    protected
+
+    def save_params
+      params.require(:item).permit(:name, :description, :image, :manuscript_url, :transcription)
+    end
   end
 end

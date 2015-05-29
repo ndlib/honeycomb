@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe GenerateTitleFromFilename do
+describe GenerateNameFromFilename do
   let(:filename) { "file_name_test.jpg" }
   subject { described_class.new(filename) }
   let(:options) { {} }
@@ -19,7 +19,7 @@ describe GenerateTitleFromFilename do
         end
 
         it "does not titleize the string" do
-          expect(subject.call("title")).to eq("title")
+          expect(subject.call("name")).to eq("name")
         end
       end
 
@@ -33,7 +33,7 @@ describe GenerateTitleFromFilename do
       describe "titleize true" do
         let(:options) { { titleize: true } }
         it "titleizes the string" do
-          expect(subject.call("title", options)).to eq("Title")
+          expect(subject.call("name", options)).to eq("Name")
         end
       end
 

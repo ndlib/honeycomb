@@ -1,5 +1,5 @@
-json.title @showcase.title
-json.subtitle @showcase.subtitle
+json.name_line_1 @showcase.name_line_1
+json.name_line_2 @showcase.name_line_2
 json.description @showcase.description
 json.editUrl title_showcase_path(@showcase.id)
 json.image @showcase.honeypot_image_url

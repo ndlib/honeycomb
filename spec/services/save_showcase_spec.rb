@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe SaveShowcase, type: :model do
   subject { described_class.call(showcase, params) }
   let(:showcase) { Showcase.new }
-  let(:params) { { title: "title" } }
+  let(:params) { { name_line_1: "name_line_1" } }
   let(:image) { File.new(Rails.root.join("spec/fixtures/test.jpg").to_s) }
 
   before(:each) do

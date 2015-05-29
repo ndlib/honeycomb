@@ -18,9 +18,13 @@ var EmbedCode = React.createClass({
     var embedUrl = this.props.embedBaseUrl + "/embed/items/" + this.props.item.unique_id;
     var embedString = '<iframe src="' + embedUrl + '" width="' + width + '" height="' + height + '" seamless="seamless" style="overflow: hidden;" scrolling="no">Your browser or security settings does not allow iFrames.</iframe>';
     return (
-      <p>
-        <textarea defaultValue={embedString} style={this.style()} rows="5" />
-      </p>
+      <Panel>
+        <PanelHeading>Embed This Item</PanelHeading>
+        <PanelBody>
+          <p>Copy and Paste this code into any site you want this item to be viewable.</p>
+          <textarea value={embedString} style={this.style()} rows="5" />
+        </PanelBody>
+      </Panel>
     )
   }
 });

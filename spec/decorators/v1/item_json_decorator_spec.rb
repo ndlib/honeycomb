@@ -7,7 +7,7 @@ RSpec.describe V1::ItemJSONDecorator do
   let(:json) { double }
 
   describe "generic fields" do
-    [:id, :title, :collection, :unique_id, :description, :updated_at].each do |field|
+    [:id, :name, :collection, :unique_id, :description, :updated_at].each do |field|
       it "responds to #{field}" do
         expect(subject).to respond_to(field)
       end
@@ -60,11 +60,11 @@ RSpec.describe V1::ItemJSONDecorator do
   end
 
   describe "#slug" do
-    let(:item) { double(Item, title: "title") }
+    let(:item) { double(Item, slug: "sluggish") }
 
     it "Calls the slug generator" do
-      expect(CreateURLSlug).to receive(:call).with(item.title).and_return("slug")
-      expect(subject.slug).to eq("slug")
+      expect(CreateURLSlug).to receive(:call).with(item.slug)
+      subject.slug
     end
   end
 
@@ -92,11 +92,11 @@ RSpec.describe V1::ItemJSONDecorator do
   end
 
   describe "#metadata" do
-    let(:item) { double(Item, title: "title", description: "desc", manuscript_url: "url", transcription: "trans") }
+    let(:item) { double(Item, name: "name", description: "desc", manuscript_url: "url", transcription: "trans") }
 
     it "creates a metadata hash of all metadata" do
       results = [
-        { label: "Name", value: "title" },
+        { label: "Name", value: "name" },
         { label: "Description", value: "desc" },
         { label: "Manuscript", value: "url" },
         { label: "Transcription", value: "trans" }

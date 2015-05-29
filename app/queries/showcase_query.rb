@@ -10,11 +10,11 @@ class ShowcaseQuery
   end
 
   def admin_list
-    relation.order(:order, :title)
+    relation.order(:order, :name_line_1)
   end
 
   def public_api_list
-    relation.order(:order, :title)
+    relation.order(:order, :name_line_1)
   end
 
   delegate :find, to: :relation

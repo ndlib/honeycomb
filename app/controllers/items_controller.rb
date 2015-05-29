@@ -67,7 +67,7 @@ class ItemsController < ApplicationController
     check_user_edits!(@item.collection)
 
     unless Publish.call(@item)
-      fail "Error publishing #{@item.title}"
+      fail "Error publishing #{@item.name}"
     end
 
     item_save_success(@item)
@@ -78,7 +78,7 @@ class ItemsController < ApplicationController
     check_user_edits!(@item.collection)
 
     unless Unpublish.call(@item)
-      fail "Error unpublishing #{@item.title}"
+      fail "Error unpublishing #{@item.name}"
     end
 
     item_save_success(@item)
@@ -87,7 +87,7 @@ class ItemsController < ApplicationController
   protected
 
   def save_params
-    params.require(:item).permit(:title, :description, :image, :manuscript_url, :transcription)
+    params.require(:item).permit(:name, :description, :image, :manuscript_url, :transcription)
   end
 
   def collection

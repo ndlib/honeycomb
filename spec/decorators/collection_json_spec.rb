@@ -1,14 +1,14 @@
 require "rails_helper"
 
 RSpec.describe CollectionJSON do
-  let(:collection) { instance_double(Collection, id: 2, title: "title") }
+  let(:collection) { instance_double(Collection, id: 2, name_line_1: "name_line_1") }
 
   let(:options) { {} }
   subject { described_class.new(collection) }
   let(:result_hash) { subject.to_hash(options) }
 
   describe "#collection_data" do
-    [:title, :id].each do |field|
+    [:name_line_1, :id].each do |field|
       it "includes the field, #{field}, from the collection" do
         expect(collection).to receive(field).and_return(field)
         expect(subject.send(:collection_data)[field]).to eq(field)
@@ -16,7 +16,7 @@ RSpec.describe CollectionJSON do
     end
 
     it "is the expected format" do
-      expect(subject.send(:collection_data)).to eq(id: 2, title: "title")
+      expect(subject.send(:collection_data)).to eq(id: 2, name_line_1: "name_line_1")
     end
   end
 

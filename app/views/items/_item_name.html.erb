@@ -1,0 +1,5 @@
+<% if item.is_parent? %>
+  <h2><%= link_to item.name, item.show_path %></h2>
+<% else %>
+  <h2><%= link_to item.parent.name, collection_item_path(@item.parent.collection, @item.parent) %> / <%= link_to item.name, item.show_path %></h2>
+<% end %>

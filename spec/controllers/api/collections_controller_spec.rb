@@ -2,7 +2,7 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe API::CollectionsController, type: :controller do
-  let(:collection) { instance_double(Collection, id: 1, title: "title") }
+  let(:collection) { instance_double(Collection, id: 1, name_line_1: "name_line_1") }
   let(:collections) { [collection] }
 
   describe "GET #index" do

@@ -1,9 +1,9 @@
 module V1
   class ItemJSONDecorator < Draper::Decorator
-    delegate :id, :title, :children, :parent, :collection, :unique_id, :updated_at
+    delegate :id, :name, :children, :parent, :collection, :unique_id, :updated_at
 
     METADATA_MAP = [
-      ["Name", :title],
+      ["Name", :name],
       ["Description", :description],
       ["Manuscript", :manuscript_url],
       ["Transcription", :transcription]
@@ -30,7 +30,7 @@ module V1
     end
 
     def slug
-      CreateURLSlug.call(object.title)
+      CreateURLSlug.call(object.slug)
     end
 
     def image
