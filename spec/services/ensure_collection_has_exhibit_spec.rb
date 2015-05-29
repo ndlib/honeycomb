@@ -27,7 +27,7 @@ describe EnsureCollectionHasExhibit do
     end
 
     it "uses the collection name" do
-      expect(collection).to receive(:create_exhibit).with(hash_including(name: collection.name))
+      expect(collection).to receive(:create_exhibit).with(hash_including(name: collection.name_line_1))
       subject
     end
 
