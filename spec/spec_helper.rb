@@ -38,7 +38,14 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = :random
 
-  # config.formatter = 'Growl::RSpec::Formatter'
+  # Warden helpers
+  config.include Warden::Test::Helpers
+
+  config.formatter = 'Growl::RSpec::Formatter'
+
+  config.after do
+    Warden.test_reset!
+  end
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -87,4 +94,5 @@ RSpec.configure do |config|
       instance.send(field)
     end
   end
+
 end
