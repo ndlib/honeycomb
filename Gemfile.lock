@@ -81,6 +81,7 @@ GEM
     autoprefixer-rails (5.1.11)
       execjs
       json
+    awesome_print (1.6.1)
     bcrypt (3.1.10)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
@@ -159,6 +160,12 @@ GEM
     formatador (0.2.5)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
+    growl (1.0.3)
+    growl-rspec (3.0.0)
+      growl
+      rspec (~> 3.0)
+    growl_notify (0.0.3)
+      rb-appscript
     guard (2.6.1)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -275,6 +282,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.0.0)
     rake (10.4.2)
+    rb-appscript (0.6.1)
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
@@ -318,6 +326,7 @@ GEM
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.4)
     ruby-progressbar (1.7.5)
+    ruby_gntp (0.3.4)
     rubycas-client (2.3.9)
       activesupport
     sass (3.2.19)
@@ -395,6 +404,7 @@ DEPENDENCIES
   addressable
   airbrake
   autoprefixer-rails
+  awesome_print
   bootstrap-material-design
   bootstrap-sass (~> 3.3.1)
   capybara
@@ -408,6 +418,9 @@ DEPENDENCIES
   faker
   faraday
   faraday_middleware
+  growl
+  growl-rspec
+  growl_notify
   guard
   guard-bundler
   guard-coffeescript
@@ -436,6 +449,7 @@ DEPENDENCIES
   rspec-collection_matchers
   rspec-rails
   rubocop
+  ruby_gntp
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   showdown-rails

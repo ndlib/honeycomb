@@ -73,6 +73,7 @@ gem "autoprefixer-rails"
 group :development, :test do
   gem "rubocop", require: false
 
+  gem "awesome_print"
   gem "i18n-debug"
   gem "pry"
   gem "pry-nav"
@@ -90,9 +91,10 @@ group :development, :test do
   gem "guard-rails"
   gem "guard-rspec"
   gem "guard-spring"
-  #  gem "growl"
-  #  gem "ruby_gntp"
-  #  gem "growl-rspec"
+  gem "growl"
+  gem "ruby_gntp"
+  gem "growl-rspec"
+  gem "growl_notify"
 
   gem "coveralls", require: false
 
