@@ -94,7 +94,6 @@ group :development, :test do
   gem "growl"
   gem "ruby_gntp"
   gem "growl-rspec"
-  gem "growl_notify"
 
   gem "coveralls", require: false
 
