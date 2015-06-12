@@ -20,11 +20,11 @@ RSpec.describe ProcessImageJob, type: :job do
     end
 
     it "calls ProcessUploadedImage with set values" do
-      expect(ProcessUploadedImage).to receive(:call).with({
+      expect(ProcessUploadedImage).to receive(:call).with(
         object: object,
         upload_field: "other_uploaded_image",
         image_field: "other_image"
-      })
+      )
       subject.perform_now(object: object, upload_field: "other_uploaded_image", image_field: "other_image")
     end
 
