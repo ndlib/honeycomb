@@ -17,7 +17,7 @@ class RetryWorker < ActiveJob::QueueAdapters::SneakersAdapter::JobWrapper
   end
 
   def self.number_of_workers
-    WORKERS
+    self::WORKERS
   end
 
   def work(*args)
