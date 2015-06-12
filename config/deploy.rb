@@ -36,7 +36,7 @@ namespace :sneakers do
   end
 end
 
-after "deploy:update_code", "sneakers:restart"
+after "deploy:restart", "sneakers:restart"
 
 # Notify New Relic of deployments.
 # This goes out even if the deploy fails, sadly.

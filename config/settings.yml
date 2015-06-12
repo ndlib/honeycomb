@@ -7,17 +7,17 @@ local: &local
   <<: *defaults
   honeypot_url: 'http://localhost:3019'
   beehive_url: 'http://localhost:3018'
-  background_processing: false
 
 vm: &vm
   <<: *defaults
 
 development:
   <<: *local
-  background_processing: true
+  background_processing: false
 
 test:
   <<: *local
+  background_processing: false
 
 pre_production:
   <<: *vm
