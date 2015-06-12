@@ -6,6 +6,16 @@ class QueueJob
   end
 
   def queue(*args)
-    job_class.perform_later(*args)
+    if process_in_background?
+      job_class.perform_later(*args)
+    else
+      job_class.perform_now(*args)
+    end
+  end
+
+  private
+
+  def process_in_background?
+    Rails.configuration.settings.background_processing
   end
 end
