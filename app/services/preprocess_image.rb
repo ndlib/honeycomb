@@ -37,12 +37,12 @@ class PreprocessImage
     original_pixels > MAX_PIXELS
   end
 
+  def original_dimensions
+    @original_dimensions ||= FastImage.size(uploaded_image.path)
+  end
+
   def original_pixels
-    if @original_pixels.nil?
-      size = FastImage.size(uploaded_image.path)
-      @original_pixels = size[0] * size[1]
-    end
-    @original_pixels
+    original_dimensions.inject(:*)
   end
 
   def processor_attachment
