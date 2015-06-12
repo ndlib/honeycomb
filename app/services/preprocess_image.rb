@@ -12,9 +12,13 @@ class PreprocessImage
 
   def process
     if processing_needed?
-      processor_attachment.reprocess!
+      preprocess_attachment
     end
-    final_path
+    attachment_path
+  end
+
+  def preprocess_attachment
+    processor_attachment.reprocess!
   end
 
   def uploaded_image
@@ -63,7 +67,7 @@ class PreprocessImage
     @processed_path ||= processor_attachment.path(:processed)
   end
 
-  def final_path
+  def attachment_path
     if processing_needed?
       processed_path
     else
