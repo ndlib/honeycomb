@@ -46,7 +46,7 @@ class SaveItem
 
   def process_uploaded_image
     if params[:uploaded_image]
-      ProcessImageJob.perform_later(object: item)
+      QueueJob.new(ProcessImageJob).queue(object: item)
     else
       true
     end

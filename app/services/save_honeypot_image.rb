@@ -6,7 +6,7 @@ class SaveHoneypotImage
   end
 
   def self.queue(*args)
-    SaveHoneypotImageJob.perform_later(*args)
+    QueueJob.new(SaveHoneypotImageJob).queue(*args)
   end
 
   def initialize(object:, image_field: "image")

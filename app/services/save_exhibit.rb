@@ -26,7 +26,7 @@ class SaveExhibit
 
   def process_uploaded_image
     if params[:uploaded_image]
-      ProcessImageJob.perform_later(object: exhibit)
+      QueueJob.new(ProcessImageJob).queue(object: exhibit)
     else
       true
     end

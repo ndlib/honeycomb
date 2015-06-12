@@ -36,7 +36,7 @@ class SaveShowcase
 
   def process_uploaded_image
     if params[:uploaded_image]
-      ProcessImageJob.perform_later(object: showcase)
+      QueueJob.new(ProcessImageJob).queue(object: showcase)
     else
       true
     end
