@@ -35,7 +35,6 @@ RSpec.describe ProcessUploadedImage do
   end
 
   describe "#process_uploaded_image" do
-
     before do
       allow(PreprocessImage).to receive(:call).and_return(path)
       allow(subject).to receive(:copy_processed_image)

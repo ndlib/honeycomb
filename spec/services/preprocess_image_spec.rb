@@ -131,13 +131,13 @@ RSpec.describe PreprocessImage do
     end
 
     it "returns a new instance of a paperclip attachment" do
-      expect(Paperclip::Attachment).to receive(:new).with(:uploaded_image, object, {test: "test"})
+      expect(Paperclip::Attachment).to receive(:new).with(:uploaded_image, object, test: "test")
       subject.processor_attachment
     end
   end
 
   describe "#processor_options" do
-    let(:original_styles) { {test: "test"} }
+    let(:original_styles) { { test: "test" } }
     let(:style) { "style" }
 
     before do
