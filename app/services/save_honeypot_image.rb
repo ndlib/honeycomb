@@ -5,10 +5,6 @@ class SaveHoneypotImage
     new(*args).save!
   end
 
-  def self.queue(*args)
-    QueueJob.new(SaveHoneypotImageJob).queue(*args)
-  end
-
   def initialize(object:, image_field: "image")
     @object = object
     @image_field = image_field
