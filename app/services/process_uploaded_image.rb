@@ -12,18 +12,35 @@ class ProcessUploadedImage
   end
 
   def process
-    if uploaded_image.exists?
-      processed_path = PreprocessImage.call(uploaded_image)
-      copy_processed_image(processed_path)
-      if object.save
-        delete_processed_image(processed_path)
-        object
-      else
-        false
-      end
+    if uploaded_image_exists?
+      process_uploaded_image
     else
       true
     end
+  end
+
+  private
+
+  def process_uploaded_image
+    processed_path = PreprocessImage.call(uploaded_image)
+    copy_processed_image(processed_path)
+    begin
+      save_object
+    ensure
+      delete_processed_image(processed_path)
+    end
+  end
+
+  def save_object
+    if object.save
+      object
+    else
+      false
+    end
+  end
+
+  def uploaded_image_exists?
+    uploaded_image.exists?
   end
 
   def uploaded_image
