@@ -30,7 +30,16 @@ namespace :sneakers do
           from_queue queue_name
         end)
       end
-      workers << HoneypotImageWorker
+      default_worker_classes = [
+        HoneypotImageWorker,
+        UploadedImageWorker,
+      ]
+      default_worker_classes.each do |worker_class|
+        worker_class.number_of_workers.times do
+          workers << worker_class
+        end
+      end
+
       r = Sneakers::Runner.new(workers)
 
       r.run
@@ -45,7 +54,7 @@ namespace :sneakers do
       puts "Stopping sneakers..."
       Process.kill("INT", pid)
       stopped = false
-      10.times do
+      60.times do
         begin
           Process.kill(0, pid)
         rescue Errno::ESRCH
