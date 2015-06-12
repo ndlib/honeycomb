@@ -104,7 +104,13 @@ class ShowcasesController < ApplicationController
   protected
 
   def save_params
-    params.require(:showcase).permit([:name_line_1, :name_line_2, :description, :image, :order])
+    params.require(:showcase).permit([
+      :name_line_1,
+      :name_line_2,
+      :description,
+      :uploaded_image,
+      :order
+    ])
   end
 
   def showcase

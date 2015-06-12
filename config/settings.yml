@@ -1,6 +1,7 @@
 # Store non-sensitive configuration settings here.  Acessible from Rails.configuration.settings
 defaults: &defaults
   cas_base: 'https://cas.library.nd.edu/cas'
+  background_processing: true
 
 local: &local
   <<: *defaults
@@ -12,9 +13,11 @@ vm: &vm
 
 development:
   <<: *local
+  background_processing: false
 
 test:
   <<: *local
+  background_processing: false
 
 pre_production:
   <<: *vm

@@ -11,9 +11,11 @@ class SaveShowcase
   end
 
   def save
+    fix_image_param!
+
     showcase.attributes = params
 
-    if showcase.save && update_honeypot_image
+    if showcase.save && process_uploaded_image
       check_unique_id
       true
     else
@@ -27,9 +29,14 @@ class SaveShowcase
     CreateUniqueId.call(showcase)
   end
 
-  def update_honeypot_image
-    if params[:image]
-      SaveHoneypotImage.call(showcase)
+  def fix_image_param!
+    # sometimes the form is sending an empty image value and this is causing paperclip to delete the image.
+    params.delete(:uploaded_image) if params[:uploaded_image].nil?
+  end
+
+  def process_uploaded_image
+    if params[:uploaded_image]
+      QueueJob.call(ProcessImageJob, object: showcase)
     else
       true
     end

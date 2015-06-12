@@ -1,12 +1,13 @@
 class SaveHoneypotImage
-  attr_reader :object
+  attr_reader :object, :image_field
 
-  def self.call(object)
-    new(object).save!
+  def self.call(*args)
+    new(*args).save!
   end
 
-  def initialize(object)
+  def initialize(object:, image_field: "image")
     @object = object
+    @image_field = image_field
   end
 
   def save!
@@ -29,7 +30,7 @@ class SaveHoneypotImage
     body = request.body.with_indifferent_access
     honeypot_image.json_response = body
 
-    honeypot_image.save
+    honeypot_image.save && object.save
   end
 
   def send_request
@@ -59,7 +60,7 @@ class SaveHoneypotImage
   end
 
   def object_image
-    object.image
+    object.send(image_field)
   end
 
   def upload_image

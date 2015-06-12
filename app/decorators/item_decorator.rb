@@ -17,6 +17,20 @@ class ItemDecorator < Draper::Decorator
     end
   end
 
+  def status_text
+    if object.honeypot_image
+      status_text_span(className: "text-success", icon: "ok", text: h.t("status.complete"))
+    else
+      status_text_span(className: "text-info", icon: "minus", text: h.t("status.processing"))
+    end
+  end
+
+  def status_text_span(className:, icon:, text:)
+    h.content_tag("span", class: className) do
+      h.content_tag("i", "", class: "glyphicon glyphicon-#{icon}") + " " + text
+    end
+  end
+
   def back_path
     if is_parent?
       h.collection_path(object.collection_id)
@@ -26,7 +40,7 @@ class ItemDecorator < Draper::Decorator
   end
 
   def show_image_box
-    h.react_component "ItemShowImageBox", image: image_json, itemID: object.id.to_s
+    h.react_component "ItemShowImageBox", image: image_json, thumbnailSrc: thumbnail_url, itemID: object.id.to_s
   end
 
   def item_meta_data_form
@@ -62,6 +76,18 @@ class ItemDecorator < Draper::Decorator
 
   def page_name
     h.render partial: "/items/item_name", locals: { item: self }
+  end
+
+  def thumbnail_url
+    if object.image.exists?(:thumb)
+      object.image.url(:thumb)
+    else
+      return nil
+    end
+  end
+
+  def thumbnail
+    h.react_component("Thumbnail", image: image_json, thumbnailSrc: thumbnail_url)
   end
 
   private

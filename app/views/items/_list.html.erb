@@ -5,6 +5,7 @@
       <th><%= t('.title') %></th>
       <th></th>
       <th><%= t('.status') %></th>
+      <th><%= t('.publishing') %></th>
       <th><%= t('.updated_at') %></th>
       <th>Last Modified Timestamp</th>
       <th>Sortable Name</th>
@@ -17,14 +18,21 @@
         <td>
           <!--label><input type="checkbox" class="show-selected-menu" /></label-->
         </td>
-        <td class="image">
-          <%= link_to HoneypotThumbnail.display(item.honeypot_image), item.edit_path %>
+        <td class="image thing">
+          <% if item.image.exists? %>
+            <%= link_to item.thumbnail, item.edit_path %>
+          <% end %>
         </td>
         <td>
           <h4 class="media-heading"><%= h link_to item.name, item.edit_path %></h4>
-          <%= raw item.description %>
+          <div class="item-description">
+            <%= raw item.description %>
+          </div>
         </td>
-        <td>
+        <td class="item-status">
+          <%= item.status_text %>
+        </td>
+        <td class="item-publishing">
           <%= PublishedText.display(item) %>
         </td>
         <td>

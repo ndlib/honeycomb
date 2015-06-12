@@ -27,9 +27,9 @@ RSpec.describe SaveItem, type: :model do
     subject
   end
 
-  it "removes the image from the params if the image param is nil" do
-    params[:image] = nil
-    expect(params).to receive(:delete).with(:image)
+  it "removes the uploaded image from the params if the param is nil" do
+    params[:uploaded_image] = nil
+    expect(params).to receive(:delete).with(:uploaded_image)
 
     subject
   end
@@ -56,25 +56,18 @@ RSpec.describe SaveItem, type: :model do
     end
   end
 
-  describe "update honeypot image" do
-    it "calls SaveHoneypotImage if the image was updated" do
-      params[:image] = upload_image
+  describe "image processing" do
+    it "Queues image processing if the image was updated" do
+      params[:uploaded_image] = upload_image
       expect(item).to receive(:save).and_return(true)
-      expect(SaveHoneypotImage).to receive(:call).and_return(true)
+      expect(QueueJob).to receive(:call).with(ProcessImageJob, object: item).and_return(true)
       expect(subject).to eq(item)
     end
 
-    it "returns false if the honeypot update fails" do
-      params[:image] = upload_image
-      expect(item).to receive(:save).and_return(true)
-      expect(SaveHoneypotImage).to receive(:call).and_return(false)
-      expect(subject).to be_falsy
-    end
-
     it "is not called if the image is not changed" do
-      params[:image] = nil
+      params[:uploaded_image] = nil
       expect(item).to receive(:save).and_return(true)
-      expect(SaveHoneypotImage).to_not receive(:call)
+      expect(QueueJob).to_not receive(:call)
       expect(subject).to eq(item)
     end
   end

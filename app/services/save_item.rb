@@ -16,7 +16,7 @@ class SaveItem
     item.attributes = params
     pre_process_name
 
-    if item.save && update_honeypot_image
+    if item.save && process_uploaded_image
       check_unique_id
 
       item
@@ -29,7 +29,7 @@ class SaveItem
 
   def pre_process_name
     if name_should_be_filename?
-      item.name = GenerateNameFromFilename.call(item.image_file_name)
+      item.name = GenerateNameFromFilename.call(item.uploaded_image_file_name)
     end
 
     item.sortable_name = SortableNameConverter.convert(item.name)
@@ -41,12 +41,12 @@ class SaveItem
 
   def fix_image_param!
     # sometimes the form is sending an empty image value and this is causing paperclip to delete the image.
-    params.delete(:image) if params[:image].nil?
+    params.delete(:uploaded_image) if params[:uploaded_image].nil?
   end
 
-  def update_honeypot_image
-    if params[:image]
-      SaveHoneypotImage.call(item)
+  def process_uploaded_image
+    if params[:uploaded_image]
+      QueueJob.call(ProcessImageJob, object: item)
     else
       true
     end

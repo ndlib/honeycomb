@@ -29,7 +29,12 @@ describe ItemQuery do
 
   describe "#only_top_level" do
     it "returns only the items that are parents" do
-      expect(relation).to receive(:where).with(parent_id: nil)
+      expect(relation).to receive(:where).with(parent_id: nil).and_call_original
+      subject.only_top_level
+    end
+
+    it "includes the image" do
+      expect(relation).to receive(:includes).with(:honeypot_image).and_call_original
       subject.only_top_level
     end
   end

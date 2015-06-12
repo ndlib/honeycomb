@@ -4,7 +4,7 @@ RSpec.describe SaveShowcase, type: :model do
   subject { described_class.call(showcase, params) }
   let(:showcase) { Showcase.new }
   let(:params) { { name_line_1: "name_line_1" } }
-  let(:image) { File.new(Rails.root.join("spec/fixtures/test.jpg").to_s) }
+  let(:upload_image) { Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/test.jpg"), "image/jpeg") }
 
   before(:each) do
     allow(CreateUniqueId).to receive(:call).and_return(true)
@@ -26,16 +26,18 @@ RSpec.describe SaveShowcase, type: :model do
     subject
   end
 
-  describe "update_honeypot_image" do
-    it "calls SaveHoneypotImage when there is an image"  do
-      expect(SaveHoneypotImage).to receive(:call).with(showcase)
-      params[:image] = image
-
+  describe "image processing" do
+    it "Queues image processing if the image was updated" do
+      params[:uploaded_image] = upload_image
+      expect(showcase).to receive(:save).and_return(true)
+      expect(QueueJob).to receive(:call).with(ProcessImageJob, object: showcase).and_return(true)
       subject
     end
 
-    it "does not call SaveHoneypotImage when there is not an image " do
-      expect(SaveHoneypotImage).to_not receive(:call)
+    it "is not called if the image is not changed" do
+      params[:uploaded_image] = nil
+      expect(showcase).to receive(:save).and_return(true)
+      expect(QueueJob).to_not receive(:call)
       subject
     end
   end

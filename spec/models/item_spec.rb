@@ -31,10 +31,6 @@ RSpec.describe Item do
     expect(subject).to have(1).error_on(:collection)
   end
 
-  it "requires that the item have an image" do
-    expect(subject).to have(1).error_on(:image)
-  end
-
   describe "#manuscript_url" do
     it "is not required" do
       expect(subject).to have(0).errors_on(:manuscript_url)

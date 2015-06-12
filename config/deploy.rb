@@ -30,7 +30,14 @@ task :production do
   role :app, "honeycombprod-vm.library.nd.edu"
 end
 
+namespace :sneakers do
+  task :restart do
+    run "#{rake} sneakers:restart"
+  end
+end
+
+after "deploy:restart", "sneakers:restart"
+
 # Notify New Relic of deployments.
 # This goes out even if the deploy fails, sadly.
 after "deploy",            "newrelic:notice_deployment"
-
