@@ -69,22 +69,26 @@ ActiveRecord::Schema.define(version: 20150604150434) do
   add_index "honeypot_images", ["item_id"], name: "index_honeypot_images_on_item_id", using: :btree
 
   create_table "items", force: :cascade do |t|
-    t.text     "name",               limit: 65535
-    t.text     "description",        limit: 65535
+    t.text     "name",                        limit: 65535
+    t.text     "description",                 limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "collection_id",      limit: 4
-    t.string   "image_file_name",    limit: 255
-    t.string   "image_content_type", limit: 255
-    t.integer  "image_file_size",    limit: 4
+    t.integer  "collection_id",               limit: 4
+    t.string   "image_file_name",             limit: 255
+    t.string   "image_content_type",          limit: 255
+    t.integer  "image_file_size",             limit: 4
     t.datetime "image_updated_at"
-    t.text     "sortable_name",      limit: 65535
-    t.integer  "parent_id",          limit: 4
-    t.string   "manuscript_url",     limit: 255
-    t.boolean  "published",          limit: 1
-    t.string   "unique_id",          limit: 255
-    t.text     "transcription",      limit: 65535
-    t.text     "metadata",           limit: 4294967295
+    t.text     "sortable_name",               limit: 65535
+    t.integer  "parent_id",                   limit: 4
+    t.string   "manuscript_url",              limit: 255
+    t.boolean  "published",                   limit: 1
+    t.string   "unique_id",                   limit: 255
+    t.text     "transcription",               limit: 65535
+    t.text     "metadata",                    limit: 4294967295
+    t.string   "uploaded_image_file_name",    limit: 255
+    t.string   "uploaded_image_content_type", limit: 255
+    t.integer  "uploaded_image_file_size",    limit: 4
+    t.datetime "uploaded_image_updated_at"
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
@@ -108,19 +112,23 @@ ActiveRecord::Schema.define(version: 20150604150434) do
   add_index "sections", ["unique_id"], name: "index_sections_on_unique_id", using: :btree
 
   create_table "showcases", force: :cascade do |t|
-    t.text     "name_line_1",        limit: 65535
-    t.text     "description",        limit: 65535
-    t.integer  "exhibit_id",         limit: 4
-    t.string   "image_file_name",    limit: 255
-    t.string   "image_content_type", limit: 255
-    t.integer  "image_file_size",    limit: 4
+    t.text     "name_line_1",                 limit: 65535
+    t.text     "description",                 limit: 65535
+    t.integer  "exhibit_id",                  limit: 4
+    t.string   "image_file_name",             limit: 255
+    t.string   "image_content_type",          limit: 255
+    t.integer  "image_file_size",             limit: 4
     t.datetime "image_updated_at"
     t.datetime "updated_at"
     t.datetime "created_at"
-    t.boolean  "published",          limit: 1
-    t.string   "unique_id",          limit: 255
-    t.integer  "order",              limit: 4
-    t.string   "name_line_2",        limit: 255
+    t.boolean  "published",                   limit: 1
+    t.string   "unique_id",                   limit: 255
+    t.integer  "order",                       limit: 4
+    t.string   "name_line_2",                 limit: 255
+    t.string   "uploaded_image_file_name",    limit: 255
+    t.string   "uploaded_image_content_type", limit: 255
+    t.integer  "uploaded_image_file_size",    limit: 4
+    t.datetime "uploaded_image_updated_at"
   end
 
   add_index "showcases", ["order"], name: "index_showcases_on_order", using: :btree
