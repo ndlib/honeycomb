@@ -41,12 +41,6 @@ class PreprocessImage
     @original_pixels
   end
 
-  def process_image
-    if processing_needed?
-      processor_attachment.reprocess!
-    end
-  end
-
   def processor_attachment
     @processor_attachment ||= Paperclip::Attachment.new(:uploaded_image, uploaded_image.instance, processor_options)
   end
