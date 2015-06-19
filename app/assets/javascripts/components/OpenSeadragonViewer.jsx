@@ -123,4 +123,8 @@ var OpenSeadragonViewer = React.createClass({
 });
 
 // each file will export exactly one component
+<<<<<<< HEAD:app/assets/javascripts/components/OpenSeadragonViewer.jsx
 module.exports = OpenSeadragonViewer;
+=======
+module.exports = OpenseadragonViewer;
+>>>>>>> First pass at Browserification.:app/assets/javascripts/components/openseadragonViewer.js.jsx

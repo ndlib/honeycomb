@@ -1,5 +1,6 @@
 {
   "name": "honeycomb",
+<<<<<<< HEAD
   "description": "Dependencies for the Honeycomb application",
   "repository": "git@github.com:ndlib/honeycomb.git",
   "dependencies": {
@@ -19,6 +20,23 @@
     "jest-cli": "^0.4.12",
     "react-tools": "^0.12.2"
   },
+=======
+  "repository": "git@github.com:ndlib/honeycomb.git",
+  "devDependencies": {
+    "browserify": "^6.3.4",
+    "browserify-incremental": "^1.5.0",
+    "coveralls": "^2.11.2",
+    "gulp": "^3.9.0",
+    "gulp-watch": "^4.2.4",
+    "jest-cli": "^0.4.12",
+    "jquery": "^2.1.4",
+    "node-localstorage": "^0.5.1",
+    "react": "^0.13.3",
+    "react-scroll": "^0.18.0",
+    "react-tools": "^0.12.2",
+    "reactify": "^0.17.1"
+  },
+>>>>>>> First pass at Browserification.
   "engines": {
     "node": ">=0.10.0"
   },
@@ -44,5 +62,11 @@
     "testPathIgnorePatterns": [
       "preprocessor.js"
     ]
+<<<<<<< HEAD
+=======
+  },
+  "dependencies": {
+    "coveralls": "^2.11.2"
+>>>>>>> First pass at Browserification.
   }
 }
