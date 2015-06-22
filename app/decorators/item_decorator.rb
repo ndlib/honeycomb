@@ -58,6 +58,7 @@ class ItemDecorator < Draper::Decorator
         alternate_name: object.alternate_name,
         rights: object.rights,
         original_language: object.original_language,
+        published_date: Time.now
       })
   end
 

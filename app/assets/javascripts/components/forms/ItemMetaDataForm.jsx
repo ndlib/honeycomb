@@ -200,6 +200,8 @@ var ItemMetaDataForm = React.createClass({
 
               {this.additionalFields()}
 
+              <DateField objectType={this.props.objectType} name="published_date" title="Date Published" value={this.state.formValues["published_date"]} handleFieldChange={this.handleFieldChange} placeholder="" help="Published Date!" errorMsg={this.fieldError('published_date')}  />
+
               <select onChange={this.changeAddField}>
                 {this.addFieldsSelectOptions()}
               </select>
