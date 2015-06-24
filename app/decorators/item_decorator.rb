@@ -58,7 +58,7 @@ class ItemDecorator < Draper::Decorator
         alternate_name: object.alternate_name,
         rights: object.rights,
         original_language: object.original_language,
-        published_date: { value: '-2015-12-13', displayText: 'displa' }
+        date_created: object.date_created,
       })
   end
 

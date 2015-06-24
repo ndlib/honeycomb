@@ -26,6 +26,7 @@ var ItemMetaDataForm = React.createClass({
   },
 
   getInitialState: function() {
+    console.log(this.props);
     return {
       formValues: this.props.data,
       formState: "new",
@@ -87,7 +88,7 @@ var ItemMetaDataForm = React.createClass({
       utf8: "✓",
       _method: this.props.method,
       authenticity_token: this.props.authenticityToken,
-      item: this.props.data
+      item: this.state.formValues
     });
   },
 
@@ -194,13 +195,13 @@ var ItemMetaDataForm = React.createClass({
 
               <TextField objectType={this.props.objectType} name="description" title="Description" value={this.state.formValues["description"]} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError('description')} placeholder="Example: &quot;Also known as 'La Giaconda' in Italian, this half-length portrait is one of the most famous paintings in the world. It is thought to depict Lisa Gherardini, the wife of Francesco del Giocondo.&quot;" />
 
+              <DateField objectType={this.props.objectType} name="date_created" title="Date Created" value={this.state.formValues["date_created"]} handleFieldChange={this.handleFieldChange} placeholder="" errorMsg={this.fieldError('date_created')} />
+
               <TextField objectType={this.props.objectType} name="transcription" title="Transcription" value={this.state.formValues["transcription"]} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError('transcription')}  />
 
               <StringField objectType={this.props.objectType} name="manuscript_url" title="Digitized Manuscript URL" value={this.state.formValues["manuscript_url"]} handleFieldChange={this.handleFieldChange} placeholder="http://" help="Link to externally hosted manuscript viewer." errorMsg={this.fieldError('manuscript_url')}  />
 
               {this.additionalFields()}
-
-              <DateField objectType={this.props.objectType} name="published_date" title="Date Published" value={this.state.formValues["published_date"]} handleFieldChange={this.handleFieldChange} placeholder="" help="Published Date!" errorMsg={this.fieldError('published_date')} />
 
               <select onChange={this.changeAddField}>
                 {this.addFieldsSelectOptions()}

@@ -7,7 +7,7 @@ var DateField = React.createClass({
     name: React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired,
     handleFieldChange: React.PropTypes.func.isRequired,
-    value: React.PropTypes.object,
+    value: React.PropTypes.any,
     required: React.PropTypes.bool,
     placeholder: React.PropTypes.string,
     help: React.PropTypes.string,
@@ -33,6 +33,10 @@ var DateField = React.createClass({
   },
 
   componentDidMount: function () {
+    if (!this.props.value) {
+      return;
+    }
+
     var date = this.splitDate();
 
     this.setState({
@@ -40,8 +44,8 @@ var DateField = React.createClass({
       month: date[3],
       day: date[4],
       bc: (date[1] === '-'),
-      displayText: this.props.value.displayText,
-      chooseDisplayText: (this.props.value.displayText ? true : false)
+      displayText: this.props.value.display_text,
+      chooseDisplayText: (this.props.value.display_text ? true : false)
     });
   },
 
@@ -81,7 +85,7 @@ var DateField = React.createClass({
 
     var newValue = {
       value: date,
-      displayText: displayText,
+      display_text: displayText,
     }
 
     this.props.handleFieldChange(this.props.name, newValue);
@@ -109,7 +113,7 @@ var DateField = React.createClass({
   },
 
   splitDate: function () {
-    var re = /^([-]?)(\d{4})[-](\d{1,2})[-](\d{1,2})/;
+    var re = /^([-]?)(\d{4})[-]?(\d{1,2})?[-]?(\d{1,2})?/;
     var m;
     if ((m = re.exec(this.props.value.value)) !== null) {
       if (m.index === re.lastIndex) {
@@ -117,6 +121,7 @@ var DateField = React.createClass({
       }
       return m;
     }
+
   },
 
   render: function () {

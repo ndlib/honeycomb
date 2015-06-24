@@ -15,7 +15,8 @@ RSpec.describe Item do
     :publisher,
     :alternate_name,
     :rights,
-    :original_language
+    :original_language,
+    :date_created
   ].each do |field|
     it "has field, #{field}" do
       expect(subject).to respond_to(field)

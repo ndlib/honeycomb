@@ -54,9 +54,10 @@ module V1
         :transcription,
         :creator,
         :publisher,
-        :alternateName,
+        :alternate_name,
         :rights,
-        :originalLanguage
+        :original_language,
+        date_created: [:value, :display_text ]
       )
     end
   end
