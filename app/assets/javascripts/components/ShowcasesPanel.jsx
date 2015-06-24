@@ -21,7 +21,7 @@ var ShowcasesPanel = React.createClass({
 
   showcaseNodes: function () {
     if(this.props.showcases.length <= 0)
-      return <div>No showcases found.</div>;
+      return <p>This item is not in any showcases.</p>;
 
     return this.props.showcases.map(function(showcase, index) {
       key = "showcase-" + showcase.id;
