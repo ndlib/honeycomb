@@ -16,11 +16,13 @@ var ItemMetaDataForm = React.createClass({
       method: "post",
       objectType: "item",
       additionalFieldConfiguration: {
-        "creator": {"title": "Creator", "placeholder": 'Example "Leonardo da Vinci"'},
-        "alternate_name": {"title": "Alternate Name", "placeholder": "An additional name this work is known as."},
-        "rights": {"title": "Rights", "placeholder": 'Example "Copyright held by Hesburgh Libraries"'},
-        "publisher": {"title": "Publisher", "placeholder": 'Example "Ballantine Books"'},
-        "original_language": {"title": "Original Language", "placeholder": 'Example: "French"'},
+        "creator": {"title": "Creator", "placeholder": 'Example "Leonardo da Vinci"', "type": "string"},
+        "alternate_name": {"title": "Alternate Name", "placeholder": "An additional name this work is known as.", "type": "string"},
+        "rights": {"title": "Rights", "placeholder": 'Example "Copyright held by Hesburgh Libraries"', "type": "string"},
+        "publisher": {"title": "Publisher", "placeholder": 'Example "Ballantine Books"', "type": "string"},
+        "original_language": {"title": "Original Language", "placeholder": 'Example: "French"', "type": "string"},
+        "date_published": {"title": "Date Published", "placeholder": '', "type": "date"},
+        "date_modified": {"title": "Date Modified", "placeholder": '', "type": "date"},
       }
     };
   },
@@ -152,7 +154,11 @@ var ItemMetaDataForm = React.createClass({
   additionalFields: function() {
     var map_function = function(fieldConfig, field) {
       if (this.state.displayedFields[field]){
-        return (<StringField key={field} objectType={this.props.objectType} name={field} title={fieldConfig["title"]} value={this.state.formValues[field]} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError(field)} placeholder={fieldConfig["placeholder"]} />);
+        if (fieldConfig['type'] == 'string') {
+          return (<StringField key={field} objectType={this.props.objectType} name={field} title={fieldConfig["title"]} value={this.state.formValues[field]} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError(field)} placeholder={fieldConfig["placeholder"]} />);
+        } else if (fieldConfig['type'] == 'date') {
+          return (<DateField key={field} objectType={this.props.objectType} name={field} title={fieldConfig["title"]} value={this.state.formValues[field]} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError(field)} placeholder={fieldConfig["placeholder"]} /> );
+        }
       }
       return "";
     };

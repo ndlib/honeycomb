@@ -57,7 +57,9 @@ module V1
         :alternate_name,
         :rights,
         :original_language,
-        date_created: [:value, :display_text ]
+        date_created: [:value, :display_text ],
+        date_modified: [:value, :display_text ],
+        date_published: [:value, :display_text ],
       )
     end
   end
