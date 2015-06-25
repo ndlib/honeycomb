@@ -28,7 +28,6 @@ var ItemMetaDataForm = React.createClass({
   },
 
   getInitialState: function() {
-    console.log(this.props);
     return {
       formValues: this.props.data,
       formState: "new",

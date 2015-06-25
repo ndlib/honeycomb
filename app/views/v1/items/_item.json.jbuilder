@@ -8,9 +8,4 @@ json.name item_object.name
 json.description item_object.description.to_s
 json.image item_object.image
 json.metadata item_object.metadata
-json.creator item_object.creator
-json.publisher item_object.publisher
-json.alternateName item_object.alternate_name
-json.rights item_object.rights
-json.originalLanguage item_object.original_language
 json.last_updated item_object.updated_at

@@ -7,7 +7,7 @@ RSpec.describe V1::ItemJSONDecorator do
   let(:json) { double }
 
   describe "generic fields" do
-    [:id, :name, :collection, :unique_id, :description, :updated_at, :creator, :alternate_name, :publisher, :rights, :original_language].each do |field|
+    [:id, :name, :collection, :unique_id, :description, :updated_at].each do |field|
       it "responds to #{field}" do
         expect(subject).to respond_to(field)
       end
@@ -28,34 +28,6 @@ RSpec.describe V1::ItemJSONDecorator do
 
     it "returns the path to the items" do
       expect(subject.collection_url).to eq("http://test.host/v1/collections/colasdf")
-    end
-  end
-
-  describe "#description" do
-    let(:item) { double(Item, description: "description") }
-
-    it "converts null to empty string" do
-      allow(item).to receive(:description).and_return(nil)
-      expect(subject.description).to eq("")
-    end
-
-    it "uses the item description" do
-      expect(item).to receive(:description).and_return("description")
-      expect(subject.description).to eq("description")
-    end
-  end
-
-  describe "#transcription" do
-    let(:item) { double(Item, transcription: "transcription") }
-
-    it "converts null to empty string" do
-      allow(item).to receive(:transcription).and_return(nil)
-      expect(subject.transcription).to eq("")
-    end
-
-    it "uses the item transcription" do
-      expect(item).to receive(:transcription).and_return("transcription")
-      expect(subject.transcription).to eq("transcription")
     end
   end
 
@@ -92,17 +64,10 @@ RSpec.describe V1::ItemJSONDecorator do
   end
 
   describe "#metadata" do
-    let(:item) { double(Item, name: "name", description: "desc", manuscript_url: "url", transcription: "trans") }
 
-    it "creates a metadata hash of all metadata" do
-      results = [
-        { label: "Name", value: "name" },
-        { label: "Description", value: "desc" },
-        { label: "Manuscript", value: "url" },
-        { label: "Transcription", value: "trans" }
-      ]
-
-      expect(subject.metadata).to eq(results)
+    it "users the metadataJSON object to get metadata" do
+      expect(V1::MetadataJSON).to receive(:metadata).with(item).and_return("metadata")
+      expect(subject.metadata).to eq("metadata")
     end
   end
 end
