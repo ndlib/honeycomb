@@ -125,19 +125,27 @@ var DateField = React.createClass({
   },
 
   render: function () {
-
     return (
         <FormRow id={this.formId()} type="string" required={this.props.required} title={this.props.title} help={this.props.help} errorMsg={this.props.errorMsg} >
-          <div className="row">
-            <input type="number" max="2100" min="0" step="1" onChange={this.handleChange} placeholder="YYYY" className="form-control" ref="year" style={{display: 'inline', width: '6em' }} value={this.state.year} />
-
-            <input onChange={this.handleChange} type="number" max="12" min="1" step="1"  name="text-2" placeholder="MM" className="form-control" style={{display: 'inline', width: '6em' }} ref="month" value={this.state.month} />
-
-            <input onChange={this.handleChange} type="number" max="31" min="1" step="1" name="text-3" placeholder="DD" className="form-control" ref="day" style={{display: 'inline', width: '6em' }} value={this.state.day} />
-            <label>
-              BC
-              <input type="checkbox" ref="bc" checked={this.state.bc} onChange={this.handleChange} />
-            </label>
+          <div className="row form-inline">
+            <div className="form-group">
+              <label className="sr-only" for={"year" + this.props.name}>Year</label>
+              <input id={"year" + this.props.name} type="number" max="2100" min="0" step="1" onChange={this.handleChange} placeholder="YYYY" className="form-control" ref="year" style={{display: 'inline', width: '6em' }} value={this.state.year} />
+            </div>
+            <div className="form-group">
+              <label className="sr-only" for={"month" + this.props.name}>Month</label>
+              <input id={"month" + this.props.name} onChange={this.handleChange} type="number" max="12" min="1" step="1" placeholder="MM" className="form-control" style={{display: 'inline', width: '6em' }} ref="month" value={this.state.month} />
+            </div>
+            <div className="form-group">
+              <label className="sr-only" for={"day" + this.props.name}>Day</label>
+              <input id={"day" + this.props.name} onChange={this.handleChange} type="number" max="31" min="1" step="1" placeholder="DD" className="form-control" ref="day" style={{display: 'inline', width: '6em' }} value={this.state.day} />
+            </div>
+            <div className="form-group">
+              <label className="control-label">
+                BC
+                <input type="checkbox" ref="bc" checked={this.state.bc} onChange={this.handleChange} />
+              </label>
+            </div>
           </div>
           <div className="row">
             <label className="help-block">
