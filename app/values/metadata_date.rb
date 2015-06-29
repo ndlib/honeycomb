@@ -52,26 +52,49 @@ class MetadataDate
   end
 
   class FormatDisplayText
-    attr_reader :date
+    attr_reader :metadata_date
 
-    def self.format(date)
-      new(date).format
+    def self.format(metadata_date)
+      new(metadata_date).format
     end
 
-    def initialize(date)
-      @date = date
+    def initialize(metadata_date)
+      @metadata_date = metadata_date
     end
 
     def format
-      if date.display_text
-        date.display_text
+      if metadata_date.display_text
+        metadata_date.display_text
       else
-        date.to_s + "BC"
+        format_date
       end
     end
 
     private
 
-    
+    def date_format
+      if metadata_date.day
+        :year_month_day
+      elsif metadata_date.month
+        :year_month
+      else
+        :year_only
+      end
+    end
+
+    def format_date
+      date = I18n.localize(metadata_date.date, format: date_format)
+      date = fix_bc_date(date)
+
+      date
+    end
+
+    def fix_bc_date(date)
+      if metadata_date.bc?
+        date += " BC"
+        date.gsub!(metadata_date.year.to_s, metadata_date.year.abs.to_s)
+      end
+      date
+    end
   end
 end
