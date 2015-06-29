@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe MetadataDate do
-  
+
   describe :date_parsing do
     {
       '2012-12-12' => [2012, 12, 12],
@@ -43,10 +43,13 @@ RSpec.describe MetadataDate do
         expect{ MetadataDate.new({ value: date })}.to raise_error
       end
     end
+
+    it "raises an error if there is no date" do
+      expect { MetadataDate.new( { value: nil }) }.to raise_error(MetadataDate::ParseError)
+    end
   end
 
   describe :bc? do
-
     it "is true when the date is BC" do
       date = MetadataDate.new({ value: '-2322' })
       expect(date.bc?).to be_truthy
@@ -58,14 +61,25 @@ RSpec.describe MetadataDate do
     end
   end
 
-  describe :display_text do
-
+  describe :human_readable do
     it "uses FormatDisplayText to determine how to format display text" do
       date = MetadataDate.new({ value: '2322', display_text: 'display-text' })
       expect(MetadataDate::FormatDisplayText).to receive(:format).with(date)
-      date.display_text
+      date.human_readable
     end
 
+  end
+
+  describe :display_text do
+    it "returns the passed in display_text" do
+      date = MetadataDate.new({  value: '2122', display_text: 'display-text' })
+      expect(date.display_text).to eq("display-text")
+    end
+
+    it "returns nil if there is nothing passed in for display-text" do
+      date = MetadataDate.new({ value: '2122' })
+      expect(date.display_text).to eq(nil)
+    end
   end
 
 end

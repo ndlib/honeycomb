@@ -5,6 +5,10 @@ class MetadataDate
   end
 
   def initialize(data)
+    if !data[:value]
+      raise ParseError.new("Metadata Data requires a { value: 'date' }")
+    end
+    
     @date_data = data
     parse_date
     setup_date
@@ -14,8 +18,12 @@ class MetadataDate
     (year < 0)
   end
 
+  def human_readable
+    @human_readable ||= FormatDisplayText.format(self)
+  end
+
   def display_text
-    @display_text ||= FormatDisplayText.format(self)
+    @date_data[:display_text]
   end
 
   def year

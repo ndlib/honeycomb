@@ -56,7 +56,7 @@ RSpec.describe V1::MetadataJSON do
 
       it "uses the MetadataDate#display_text field" do
         item.stub(field).and_return({ value: '2010-12-12'})
-        expect_any_instance_of(MetadataDate).to receive(:display_text).and_return("date")
+        expect_any_instance_of(MetadataDate).to receive(:human_readable).and_return("date")
         expect(subject.send(field)).to eq("date")
       end
     end

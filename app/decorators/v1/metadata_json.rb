@@ -42,23 +42,24 @@ module V1
 
     def date_created
       return nil if !object.date_created
-      MetadataDate.new(object.date_created).display_text
+      MetadataDate.new(object.date_created).human_readable
     end
 
     def date_modified
       return nil if !object.date_modified
-      MetadataDate.new(object.date_modified).display_text
+      MetadataDate.new(object.date_modified).human_readable
     end
 
     def date_published
       return nil if !object.date_published
-      MetadataDate.new(object.date_published).display_text
+      MetadataDate.new(object.date_published).human_readable
     end
 
     private
 
     def metadata_value(field)
       value = self.send(field)
+
       if value.present?
         value
       else
