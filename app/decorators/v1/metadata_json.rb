@@ -42,17 +42,17 @@ module V1
 
     def date_created
       return nil if !object.date_created
-      object.date_created[:value]
+      MetadataDate.new(object.date_created).display_text
     end
 
     def date_modified
       return nil if !object.date_modified
-      object.date_modified[:value]
+      MetadataDate.new(object.date_modified).display_text
     end
 
     def date_published
       return nil if !object.date_published
-      object.date_published[:value]
+      MetadataDate.new(object.date_published).display_text
     end
 
     private

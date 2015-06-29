@@ -41,4 +41,24 @@ RSpec.describe V1::MetadataJSON do
       expect(subject.transcription).to eq("transcription")
     end
   end
+
+  # do the dates as a loop since they are all the same
+  [
+    :date_created,
+    :date_published,
+    :date_modified,
+  ].each do | field |
+    describe "##{field}" do
+      it "returns nil if there is no #{field}" do
+        item.stub(field).and_return(nil)
+        expect(subject.send(field)).to eq(nil)
+      end
+
+      it "uses the MetadataDate#display_text field" do
+        item.stub(field).and_return({ value: '2010-12-12'})
+        expect_any_instance_of(MetadataDate).to receive(:display_text).and_return("date")
+        expect(subject.send(field)).to eq("date")
+      end
+    end
+  end
 end
