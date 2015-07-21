@@ -24,6 +24,11 @@ en:
     formats:
       list_date: "%b %d %Y"
       list_time: "%l:%M %p"
+  date:
+    formats:
+      year_only: '%Y'
+      year_month: "%B, %Y"
+      year_month_day: "%B %d, %Y"
   hello: "Hello world"
   published:
     published: 'Published'

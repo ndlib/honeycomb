@@ -57,7 +57,10 @@ RSpec.describe ItemDecorator do
         alternate_name: "alternate_name",
         rights: "rights",
         original_language: "original_language",
-        collection: collection)
+        collection: collection,
+        date_created: "date_created",
+        date_modified: "date_modified",
+        date_published: "date_published")
     end
 
     it "renders the react component" do
@@ -76,6 +79,9 @@ RSpec.describe ItemDecorator do
           alternate_name: "alternate_name",
           rights: "rights",
           original_language: "original_language",
+          date_created: "date_created",
+          date_modified: "date_modified",
+          date_published: "date_published",          
         }
       )
 

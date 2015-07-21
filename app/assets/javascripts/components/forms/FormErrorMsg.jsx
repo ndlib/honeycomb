@@ -2,32 +2,14 @@
 var React = require('react');
 var FormErrorMsg = React.createClass({
   propTypes: {
-    message: React.PropTypes.string.isRequired,
-    type: React.PropTypes.string.isRequired,
-  },
-
-  getClassName: function() {
-    switch(this.props.type)
-    {
-      case "warning":
-        return "alert alert-warning";
-        break;
-      case "error":
-        return "alert alert-danger";
-        break;
-      case "success":
-        return "alert alert-success";
-        break;
-      default:
-        return "alert alert-warning";
-        break;
-    }
+    message: React.PropTypes.string,
   },
 
   render: function () {
+    var message = this.props.message || "An unspecified error has occurred.";
     return (
-      <div className={this.getClassName()} role="alert">
-        {this.props.message}
+      <div className="alert alert-warning" role="alert">
+        {message}
       </div>
     );
   }

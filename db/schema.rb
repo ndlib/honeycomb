@@ -51,11 +51,11 @@ ActiveRecord::Schema.define(version: 20150616185505) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "about",                       limit: 65535
+    t.text     "copyright",                   limit: 65535
     t.string   "uploaded_image_file_name",    limit: 255
     t.string   "uploaded_image_content_type", limit: 255
     t.integer  "uploaded_image_file_size",    limit: 4
     t.datetime "uploaded_image_updated_at"
-    t.text     "copyright",                   limit: 65535
   end
 
   create_table "honeypot_images", force: :cascade do |t|
@@ -86,11 +86,11 @@ ActiveRecord::Schema.define(version: 20150616185505) do
     t.boolean  "published",                   limit: 1
     t.string   "unique_id",                   limit: 255
     t.text     "transcription",               limit: 65535
+    t.text     "metadata",                    limit: 4294967295
     t.string   "uploaded_image_file_name",    limit: 255
     t.string   "uploaded_image_content_type", limit: 255
     t.integer  "uploaded_image_file_size",    limit: 4
     t.datetime "uploaded_image_updated_at"
-    t.text     "metadata",                    limit: 4294967295
   end
 
   add_index "items", ["collection_id"], name: "index_items_on_collection_id", using: :btree
@@ -112,6 +112,16 @@ ActiveRecord::Schema.define(version: 20150616185505) do
   end
 
   add_index "sections", ["unique_id"], name: "index_sections_on_unique_id", using: :btree
+
+  create_table "sessions", force: :cascade do |t|
+    t.string   "session_id", limit: 255,   null: false
+    t.text     "data",       limit: 65535
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "showcases", force: :cascade do |t|
     t.text     "name_line_1",                 limit: 65535

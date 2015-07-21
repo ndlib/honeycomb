@@ -16,11 +16,13 @@ var ItemMetaDataForm = React.createClass({
       method: "post",
       objectType: "item",
       additionalFieldConfiguration: {
-        "creator": {"title": "Creator", "placeholder": 'Example "Leonardo da Vinci"'},
-        "alternate_name": {"title": "Alternate Name", "placeholder": "An additional name this work is known as."},
-        "rights": {"title": "Rights", "placeholder": 'Example "Copyright held by Hesburgh Libraries"'},
-        "publisher": {"title": "Publisher", "placeholder": 'Example "Ballantine Books"'},
-        "original_language": {"title": "Original Language", "placeholder": 'Example: "French"'},
+        "creator": {"title": "Creator", "placeholder": 'Example "Leonardo da Vinci"', "type": "string"},
+        "alternate_name": {"title": "Alternate Name", "placeholder": "An additional name this work is known as.", "type": "string"},
+        "rights": {"title": "Rights", "placeholder": 'Example "Copyright held by Hesburgh Libraries"', "type": "string"},
+        "publisher": {"title": "Publisher", "placeholder": 'Example "Ballantine Books"', "type": "string"},
+        "original_language": {"title": "Original Language", "placeholder": 'Example: "French"', "type": "string"},
+        "date_published": {"title": "Date Published", "placeholder": '', "type": "date"},
+        "date_modified": {"title": "Date Modified", "placeholder": '', "type": "date"},
       }
     };
   },
@@ -87,7 +89,7 @@ var ItemMetaDataForm = React.createClass({
       utf8: "✓",
       _method: this.props.method,
       authenticity_token: this.props.authenticityToken,
-      item: this.props.data
+      item: this.state.formValues
     });
   },
 
@@ -151,7 +153,11 @@ var ItemMetaDataForm = React.createClass({
   additionalFields: function() {
     var map_function = function(fieldConfig, field) {
       if (this.state.displayedFields[field]){
-        return (<StringField key={field} objectType={this.props.objectType} name={field} title={fieldConfig["title"]} value={this.state.formValues[field]} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError(field)} placeholder={fieldConfig["placeholder"]} />);
+        if (fieldConfig['type'] == 'string') {
+          return (<StringField key={field} objectType={this.props.objectType} name={field} title={fieldConfig["title"]} value={this.state.formValues[field]} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError(field)} placeholder={fieldConfig["placeholder"]} />);
+        } else if (fieldConfig['type'] == 'date') {
+          return (<DateField key={field} objectType={this.props.objectType} name={field} title={fieldConfig["title"]} value={this.state.formValues[field]} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError(field)} placeholder={fieldConfig["placeholder"]} />);
+        }
       }
       return "";
     };
@@ -193,6 +199,8 @@ var ItemMetaDataForm = React.createClass({
               <StringField objectType={this.props.objectType} name="name" required={true} title="Name" value={this.state.formValues["name"]} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError('name')} />
 
               <TextField objectType={this.props.objectType} name="description" title="Description" value={this.state.formValues["description"]} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError('description')} placeholder="Example: &quot;Also known as 'La Giaconda' in Italian, this half-length portrait is one of the most famous paintings in the world. It is thought to depict Lisa Gherardini, the wife of Francesco del Giocondo.&quot;" />
+
+              <DateField objectType={this.props.objectType} name="date_created" title="Date Created" value={this.state.formValues["date_created"]} handleFieldChange={this.handleFieldChange} placeholder="" errorMsg={this.fieldError('date_created')} />
 
               <TextField objectType={this.props.objectType} name="transcription" title="Transcription" value={this.state.formValues["transcription"]} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError('transcription')}  />
 

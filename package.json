@@ -44,5 +44,5 @@
     "testPathIgnorePatterns": [
       "preprocessor.js"
     ]
-  }
+ }
 }

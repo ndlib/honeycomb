@@ -1,5 +1,5 @@
 class Item < ActiveRecord::Base
-  store :metadata, accessors: [:creator, :publisher, :alternate_name, :rights, :original_language], coder: JSON
+  store :metadata, accessors: [:creator, :publisher, :alternate_name, :rights, :original_language, :date_created, :date_published, :date_modified], coder: JSON
 
   has_paper_trail
 
@@ -21,6 +21,7 @@ class Item < ActiveRecord::Base
                     restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/
 
   validates :name, :collection, presence: true
+  validates :date_created, :date_modified, :date_published, date: true
   # validates :image, attachment_presence: true
 
   validate :manuscript_url_is_valid_uri

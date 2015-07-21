@@ -15,7 +15,10 @@ RSpec.describe Item do
     :publisher,
     :alternate_name,
     :rights,
-    :original_language
+    :original_language,
+    :date_created,
+    :date_modified,
+    :date_published,
   ].each do |field|
     it "has field, #{field}" do
       expect(subject).to respond_to(field)
@@ -44,6 +47,23 @@ RSpec.describe Item do
     it "is invalid with a non url value" do
       subject.manuscript_url = "manuscript"
       expect(subject).to have(1).error_on(:manuscript_url)
+    end
+  end
+
+  describe "date metadata" do
+    it "validates date created" do
+      subject.date_created = "+-01-13"
+      expect(subject).to have(1).error_on(:date_created)
+    end
+
+    it "validates date modified" do
+      subject.date_modified = "+-01-13"
+      expect(subject).to have(1).error_on(:date_modified)
+    end
+
+    it "validates date published" do
+      subject.date_published = "+-01-13"
+      expect(subject).to have(1).error_on(:date_published)
     end
   end
 

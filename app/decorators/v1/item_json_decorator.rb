@@ -1,13 +1,6 @@
 module V1
   class ItemJSONDecorator < Draper::Decorator
-    delegate :id, :name, :children, :parent, :collection, :unique_id, :updated_at, :creator, :alternate_name, :publisher, :rights, :original_language
-
-    METADATA_MAP = [
-      ["Name", :name],
-      ["Description", :description],
-      ["Manuscript", :manuscript_url],
-      ["Transcription", :transcription]
-    ]
+    delegate :id, :name, :children, :parent, :collection, :unique_id, :updated_at
 
     def self.display(item, json)
       new(item).display(json)
@@ -42,14 +35,7 @@ module V1
     end
 
     def metadata
-      [].tap do |array|
-        METADATA_MAP.each do |label, field|
-          value = metadata_value(field)
-          if value
-            array << { label: label, value: value }
-          end
-        end
-      end
+      V1::MetadataJSON.metadata(object)
     end
 
     def display(json)
@@ -58,15 +44,5 @@ module V1
       end
     end
 
-    private
-
-    def metadata_value(field)
-      value = object.send(field)
-      if value.present?
-        value
-      else
-        nil
-      end
-    end
   end
 end

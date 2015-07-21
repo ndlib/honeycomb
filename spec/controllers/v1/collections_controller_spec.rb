@@ -117,8 +117,14 @@ RSpec.describe V1::CollectionsController, type: :controller do
   describe "#preview_mode" do
     let(:collection_to_preview) { Collection.new(id: 1, preview_mode: false) }
     let(:collection_not_to_preview) { Collection.new(id: 2, preview_mode: true) }
-    let(:set_preview_mode_true) { put :preview_mode, collection_id: collection_to_preview.id, value: true, format: :json }
-    let(:set_preview_mode_false) { put :preview_mode, collection_id: collection_not_to_preview.id, value: false, format: :json }
+    let(:set_preview_mode_true) { put :preview_mode, 
+                  collection_id: collection_to_preview.id,
+                  value: true,
+                  format: :json }
+    let(:set_preview_mode_false) { put :preview_mode, 
+                  collection_id: collection_not_to_preview.id,
+                  value: false,
+                  format: :json }
 
     it "calls CollectionQuery" do
       expect_any_instance_of(CollectionQuery).to receive(:any_find).with("1").and_return(collection_to_preview)

@@ -1,9 +1,8 @@
-//app/assets/javascripts/components/OpenSeadragonViewer.jsx
-var React = require("react");
-var OpenSeadragon = require("../openseadragon.js");
-var OpenSeadragonViewer = React.createClass({
+//app/assets/javascripts/components/OpenseadragonViewer.jsx
+var React = require('react');
+var OpenseadragonViewer = React.createClass({
   propTypes: {
-    image: React.PropTypes.object.isRequired,
+    image: React.PropTypes.object,
     containerID: React.PropTypes.string.isRequired,
     fullPage: React.PropTypes.bool,
     height: React.PropTypes.number,
@@ -51,7 +50,7 @@ var OpenSeadragonViewer = React.createClass({
     } else {
       options = this.dziOptions(image);
     }
-    var viewer = window.OpenSeadragon(options);
+    var viewer = OpenSeadragon(options);
     var escapeHandler = function(event) {
       if (event.keyCode === 27) {
         this.fullPageOff();
@@ -123,4 +122,4 @@ var OpenSeadragonViewer = React.createClass({
 });
 
 // each file will export exactly one component
-module.exports = OpenSeadragonViewer;
+module.exports = OpenseadragonViewer;
