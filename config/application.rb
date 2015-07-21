@@ -16,6 +16,7 @@ module ItemAdmin
       Rails.root.join("app", "services"),
       Rails.root.join("app", "forms"),
       Rails.root.join("app", "values"),
+      Rails.root.join("app", "validators"),
       Rails.root.join("app", "presenters")
     ]
 

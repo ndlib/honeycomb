@@ -50,6 +50,23 @@ RSpec.describe Item do
     end
   end
 
+  describe "date metadata" do
+    it "validates date created" do
+      subject.date_created = "+-01-13"
+      expect(subject).to have(1).error_on(:date_created)
+    end
+
+    it "validates date modified" do
+      subject.date_modified = "+-01-13"
+      expect(subject).to have(1).error_on(:date_modified)
+    end
+
+    it "validates date published" do
+      subject.date_published = "+-01-13"
+      expect(subject).to have(1).error_on(:date_published)
+    end
+  end
+
   it "has versioning " do
     expect(subject).to respond_to(:versions)
   end

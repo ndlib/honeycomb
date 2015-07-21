@@ -21,6 +21,7 @@ class Item < ActiveRecord::Base
                     restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/
 
   validates :name, :collection, presence: true
+  validates :date_created, :date_modified, :date_published, date: true
   # validates :image, attachment_presence: true
 
   validate :manuscript_url_is_valid_uri

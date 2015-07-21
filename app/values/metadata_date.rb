@@ -6,9 +6,9 @@ class MetadataDate
 
   def initialize(data)
     if !data[:value]
-      raise ParseError.new("Metadata Data requires a { value: 'date' }")
+      raise ParseError.new("No date value submitted")
     end
-    
+
     @date_data = data
     parse_date
     setup_date
@@ -41,21 +41,20 @@ class MetadataDate
   private
 
   def parse_date
-    if !@parsed_date ||= date_data[:value].scan(/^([-]?\d{1,4})[-]?(\d{1,2})?[-]?(\d{1,2})?/).first
-      raise ParseError.new("unable to parse date")
-      return
+    if !@parsed_date ||= date_data[:value].scan(/^([-]?\d{1,4})[-]?(\d{1,2})?[-]?(\d{1,2})?$/).first
+      raise ParseError.new("Unable to parse date")
     end
   end
 
   def setup_date
-    if (day)
+    if day
       @date = Date.new(year, month, day)
-    elsif (month)
+    elsif month
       @date = Date.new(year, month)
-    elsif (year)
+    elsif year
       @date = Date.new(year)
     else
-      raise ParseError.new("unable to setup date from parsed data")
+      raise ParseError.new("Unable to setup date from parsed data")
     end
   end
 
