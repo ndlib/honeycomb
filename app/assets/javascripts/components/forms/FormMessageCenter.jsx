@@ -1,7 +1,7 @@
 var React = require("react");
 var mediator = require("../../mediator");
 var mui = require("material-ui");
-var Dialog = mui.Dialog;
+var Snackbar = mui.Snackbar;
 
 var FormMessageCenter = React.createClass({
   mixins: [MuiThemeMixin, DialogMixin],
@@ -30,13 +30,12 @@ var FormMessageCenter = React.createClass({
 
   render: function () {
     return (
-      <Dialog
+      <Snackbar
         ref = "errorDialog"
-        title = {this.state.messageType}
-        actions = {this.okDismiss()}
+        message={this.state.messageText}
       >
-        {this.state.messageText}
-      </Dialog>
+
+      </Snackbar>
     );
   }
 });

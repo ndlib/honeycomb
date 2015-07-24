@@ -3,7 +3,7 @@ class DateValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     return if !value
 
-    date = MetadataDate.new(value)
+    date = MetadataDate.new(value.symbolize_keys)
     if !date.valid?
       date.errors.full_messages.each do |msg|
         record.errors[attribute] << msg

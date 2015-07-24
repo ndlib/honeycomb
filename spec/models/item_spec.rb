@@ -52,17 +52,17 @@ RSpec.describe Item do
 
   describe "date metadata" do
     it "validates date created" do
-      subject.date_created = { value: "+-01-13", display_text: nil }
+      subject.date_created = { year: nil }
       expect(subject).to have(1).error_on(:date_created)
     end
 
     it "validates date modified" do
-      subject.date_modified = { value: "+-01-13", display_text: nil }
+      subject.date_modified = { year: nil }
       expect(subject).to have(1).error_on(:date_modified)
     end
 
     it "validates date published" do
-      subject.date_published = { value: "+-01-13", display_text: nil }
+      subject.date_published = { year: nil }
       expect(subject).to have(1).error_on(:date_published)
     end
   end

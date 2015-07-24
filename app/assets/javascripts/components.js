@@ -46,6 +46,7 @@ StringField = require("./components/forms/StringField");
 SubmitButton = require("./components/forms/SubmitButton");
 TextField = require("./components/forms/TextField");
 DateField = require("./components/forms/DateField");
+HtmlField = require("./components/forms/HtmlField");
 
 // panel
 Panel = require("./components/panel/Panel");

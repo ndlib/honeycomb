@@ -122,6 +122,11 @@ RSpec.describe MetadataDate do
         date = MetadataDate.new(month: "13")
         expect(date).to have(1).errors_on(:month)
       end
+
+      it "does not allow a blank month when day is present" do
+        date = MetadataDate.new(month: nil, day: "1")
+        expect(date).to have(1).errors_on(:month)
+      end
     end
 
     describe :day do
