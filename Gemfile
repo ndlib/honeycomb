@@ -86,6 +86,8 @@ gem "bootstrap-sass", "~> 3.3.1"
 gem "bootstrap-material-design"
 gem "autoprefixer-rails"
 
+gem "google_drive"
+
 group :development, :test do
   gem "rubocop", require: false
 

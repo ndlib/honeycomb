@@ -17,9 +17,15 @@ Rails.application.routes.draw do
             only: [:index, :show, :new, :create, :edit, :update, :destroy] do
     get :exhibit
 
+    collection do
+      get :import_google_sheet_callback
+    end
+
     member do
       put :publish
       put :unpublish
+      get :import_google_sheet
+      post :get_authorization_uri
     end
 
     resources :items, only: [:index, :new, :create]
