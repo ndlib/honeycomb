@@ -1,0 +1,6 @@
+<%= form_tag do %>
+  <%= text_field_tag(:filename) %>
+  <%= link_to "Authorize this application",
+    @authorization_uri,
+    :class => 'btn btn-primary btn-large' %>
+<% end %>

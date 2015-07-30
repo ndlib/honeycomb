@@ -40,6 +40,25 @@ class CollectionsController < ApplicationController
     fresh_when(etag: cache_key.generate)
   end
 
+  def import_google_sheet
+    @collection = CollectionQuery.new.find(params[:id])
+    session = GoogleSession.call(collection: @collection)
+    @authorization_uri = session.auth.authorization_uri.to_s
+  end
+
+  def oauth2callback
+    state_json = JSON.parse(Base64::decode64(params[:state]))
+    auth_code = params[:code]
+    @collection = CollectionQuery.new.find(state_json["collection"])
+    session = GoogleSession.call(collection: @collection).create_sesssion(auth_code: auth_code)
+
+    # First worksheet of
+    # https://docs.google.com/spreadsheet/ccc?key=pz7XtlQC-PYx-jrVMJErTcg
+    ws = session.spreadsheet_by_url(state_json["filename"]).worksheets[0]
+
+    render plain: ws.rows
+  end
+
   def update
     @collection = CollectionQuery.new.find(params[:id])
     check_user_edits!(@collection)

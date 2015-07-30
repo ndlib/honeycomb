@@ -74,6 +74,10 @@ GEM
     ast (2.0.0)
     astrolabe (1.3.1)
       parser (~> 2.2)
+    autoparse (0.3.3)
+      addressable (>= 2.3.1)
+      extlib (>= 0.9.15)
+      multi_json (>= 1.0.0)
     autoprefixer-rails (5.1.11)
       execjs
       json
@@ -157,6 +161,7 @@ GEM
       ffi (>= 1.3.0)
     excon (0.45.3)
     execjs (2.5.2)
+    extlib (0.9.16)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.2.1)
@@ -174,6 +179,22 @@ GEM
     formatador (0.2.5)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
+    google-api-client (0.7.1)
+      addressable (>= 2.3.2)
+      autoparse (>= 0.3.3)
+      extlib (>= 0.9.15)
+      faraday (>= 0.9.0)
+      jwt (>= 0.1.5)
+      launchy (>= 2.1.1)
+      multi_json (>= 1.0.0)
+      retriable (>= 1.4)
+      signet (>= 0.5.0)
+      uuidtools (>= 2.1.0)
+    google_drive (1.0.1)
+      google-api-client (>= 0.7.0)
+      nokogiri (>= 1.4.4, != 1.5.2, != 1.5.1)
+      oauth (>= 0.3.6)
+      oauth2 (>= 0.5.0)
     guard (2.6.1)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -213,6 +234,9 @@ GEM
     jquery-ui-rails (5.0.2)
       railties (>= 3.2.16)
     json (1.8.3)
+    jwt (1.5.1)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     libv8 (3.16.14.7)
     listen (2.7.11)
       celluloid (>= 0.15.2)
@@ -238,6 +262,13 @@ GEM
     newrelic_rpm (3.9.6.257)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
+    oauth (0.4.7)
+    oauth2 (1.0.0)
+      faraday (>= 0.8, < 0.10)
+      jwt (~> 1.0)
+      multi_json (~> 1.3)
+      multi_xml (~> 0.5)
+      rack (~> 1.2)
     orm_adapter (0.5.0)
     paper_trail (4.0.0.beta2)
       activerecord (>= 3.0, < 6.0)
@@ -307,6 +338,7 @@ GEM
     rest-client (1.7.2)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
+    retriable (2.0.2)
     rsolr (1.0.12)
       builder (>= 2.1.2)
     rspec (3.1.0)
@@ -356,6 +388,12 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
     sigdump (0.2.2)
+    signet (0.6.1)
+      addressable (~> 2.3)
+      extlib (~> 0.9)
+      faraday (~> 0.9)
+      jwt (~> 1.5)
+      multi_json (~> 1.10)
     simple_form (3.1.0)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
@@ -417,6 +455,7 @@ GEM
       json (>= 1.8.0)
     underscore-rails (1.8.2)
     unicode_utils (1.4.0)
+    uuidtools (2.1.5)
     warden (1.2.3)
       rack (>= 1.0)
     web-console (2.0.0)
@@ -453,6 +492,7 @@ DEPENDENCIES
   faraday
   faraday_middleware
   fastimage
+  google_drive
   guard
   guard-bundler
   guard-coffeescript
@@ -498,3 +538,6 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   underscore-rails
   web-console (~> 2.0)
+
+BUNDLED WITH
+   1.10.5
