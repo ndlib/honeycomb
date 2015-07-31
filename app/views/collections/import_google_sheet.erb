@@ -1,6 +1,5 @@
-<%= form_tag do %>
-  <%= text_field_tag(:filename) %>
-  <%= link_to "Authorize this application",
-    @authorization_uri,
-    :class => 'btn btn-primary btn-large' %>
+<%= simple_form_for :file_auth, url: import_authorize_collection_path do |f| %>
+  <%= f.input :file_name, as: :string %>
+  <%= f.input :sheet_name, as: :string %>
+  <%= f.button :submit, value: "Authorize Import", :class => 'btn-primary' %>
 <% end %>

@@ -41,22 +41,34 @@ class CollectionsController < ApplicationController
   end
 
   def import_google_sheet
-    @collection = CollectionQuery.new.find(params[:id])
-    session = GoogleSession.call(collection: @collection)
-    @authorization_uri = session.auth.authorization_uri.to_s
   end
 
-  def oauth2callback
-    state_json = JSON.parse(Base64::decode64(params[:state]))
-    auth_code = params[:code]
-    @collection = CollectionQuery.new.find(state_json["collection"])
-    session = GoogleSession.call(collection: @collection).create_sesssion(auth_code: auth_code)
+  # Constructs and redirects to an auth request to google. Packs the collection id, file, and sheet
+  # into state data so that this data persists the round trip.
+  def import_authorize
+    file_auth_params = params[:file_auth]
+    session = GoogleSession.new
+    authorization_uri = session.auth_request_uri(
+      callback_uri: import_google_sheet_callback_collections_url,
+      state_hash: {
+        collection_id: params[:id],
+        file: file_auth_params[:file_name],
+        sheet: file_auth_params[:sheet_name] }
+    )
+    redirect_to authorization_uri
+  end
 
-    # First worksheet of
-    # https://docs.google.com/spreadsheet/ccc?key=pz7XtlQC-PYx-jrVMJErTcg
-    ws = session.spreadsheet_by_url(state_json["filename"]).worksheets[0]
+  # This should get called whenever google redirects after a successful authorization request.
+  # We'll get an authorization code in the params and use this to make the connection
+  # to google to read the sheet data
+  def import_google_sheet_callback
+    state_hash = JSON.parse(Base64::decode64(params[:state]))
+    session = GoogleSession.new
+    session.connect(auth_code: params[:code], callback_uri: import_google_sheet_callback_collections_url)
+    work_sheet = session.get_worksheet(file: state_hash["file"], sheet: state_hash["sheet"])
 
-    render plain: ws.rows
+    # Just as a PoC, print the worksheet data
+    render plain: work_sheet.rows
   end
 
   def update
