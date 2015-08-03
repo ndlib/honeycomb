@@ -6,6 +6,12 @@ module V1
       new(item).display(json)
     end
 
+    def self.to_json(item)
+      json = Jbuilder.new
+      new(item).to_builder(json)
+      json.target!
+    end
+
     def at_id
       h.v1_item_url(object.unique_id)
     end
@@ -42,6 +48,20 @@ module V1
       if self.present?
         json.partial! "/v1/items/item", item_object: self
       end
+    end
+
+    def to_builder(json)
+      json.set! "@context", "http://schema.org"
+      json.set! "@type", "CreativeWork"
+      json.set! "@id", at_id
+      json.set! "isPartOf/collection", collection_url
+      json.id unique_id
+      json.slug slug
+      json.name name
+      json.description description.to_s
+      json.image image
+      json.metadata metadata
+      json.last_updated updated_at
     end
 
   end

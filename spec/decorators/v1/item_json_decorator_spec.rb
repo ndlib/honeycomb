@@ -70,4 +70,14 @@ RSpec.describe V1::ItemJSONDecorator do
       expect(subject.metadata).to eq("metadata")
     end
   end
+
+  describe "#to_json" do
+    let(:collection) { FactoryGirl.create(:collection, unique_id: "test-collection") }
+    let(:item) { FactoryGirl.create(:item, collection: collection, unique_id: "test-item", name: "Test Item") }
+    it "creates JSON output" do
+      json = described_class.to_json(item)
+      parsed = JSON.parse(json)
+      expect(parsed.fetch("name")).to eq("Test Item")
+    end
+  end
 end
