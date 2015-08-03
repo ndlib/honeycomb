@@ -7,9 +7,7 @@ module V1
     end
 
     def self.to_json(item)
-      json = Jbuilder.new
-      new(item).to_builder(json)
-      json.target!
+      new(item).to_json
     end
 
     def at_id
@@ -45,24 +43,29 @@ module V1
     end
 
     def display(json)
-      if self.present?
-        json.partial! "/v1/items/item", item_object: self
+      if object.present?
+        json.set! "@context", "http://schema.org"
+        json.set! "@type", "CreativeWork"
+        json.set! "@id", at_id
+        json.set! "isPartOf/collection", collection_url
+        json.id unique_id
+        json.slug slug
+        json.name name
+        json.description description.to_s
+        json.image image
+        json.metadata metadata
+        json.last_updated updated_at
       end
     end
 
-    def to_builder(json)
-      json.set! "@context", "http://schema.org"
-      json.set! "@type", "CreativeWork"
-      json.set! "@id", at_id
-      json.set! "isPartOf/collection", collection_url
-      json.id unique_id
-      json.slug slug
-      json.name name
-      json.description description.to_s
-      json.image image
-      json.metadata metadata
-      json.last_updated updated_at
+    def to_builder
+      Jbuilder.new do |json|
+        display(json)
+      end
     end
 
+    def to_json
+      to_builder.target!
+    end
   end
 end

@@ -50,34 +50,43 @@ RSpec.describe V1::ItemJSONDecorator do
     end
   end
 
-  describe "#display" do
-    let(:item) { double(Item) }
+  context "valid objects" do
+    let(:collection) { Collection.new(unique_id: "test-collection") }
+    let(:item) { Item.new(unique_id: "test-item", collection: collection) }
+    let(:json) { Jbuilder.new }
 
-    it "calls the partial for the display" do
-      expect(json).to receive(:partial!).with("/v1/items/item", item_object: item)
-      subject.display(json)
+    describe "#display" do
+      it "doesn't error" do
+        subject.display(json)
+      end
+
+      ["@context", "@type", "@id", "isPartOf/collection", "id", "slug", "name", "description", "image", "metadata", "last_updated"].each do |key|
+        it "sets #{key}" do
+          subject.display(json)
+          hash = JSON.parse(json.target!)
+          expect(hash.keys).to include(key)
+        end
+      end
+
+      it "returns nil if the item is nil " do
+        expect(described_class.new(nil).display(json)).to be_nil
+      end
     end
 
-    it "returns nil if the item is nil " do
-      expect(described_class.new(nil).display(json)).to be_nil
+    describe "#to_json" do
+      it "creates JSON output" do
+        item.name = "Test Item"
+        json = subject.to_json
+        parsed = JSON.parse(json)
+        expect(parsed.fetch("name")).to eq("Test Item")
+      end
     end
   end
 
   describe "#metadata" do
-
     it "users the metadataJSON object to get metadata" do
       expect(V1::MetadataJSON).to receive(:metadata).with(item).and_return("metadata")
       expect(subject.metadata).to eq("metadata")
-    end
-  end
-
-  describe "#to_json" do
-    let(:collection) { FactoryGirl.create(:collection, unique_id: "test-collection") }
-    let(:item) { FactoryGirl.create(:item, collection: collection, unique_id: "test-item", name: "Test Item") }
-    it "creates JSON output" do
-      json = described_class.to_json(item)
-      parsed = JSON.parse(json)
-      expect(parsed.fetch("name")).to eq("Test Item")
     end
   end
 end
