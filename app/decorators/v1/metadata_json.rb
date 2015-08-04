@@ -66,10 +66,11 @@ module V1
     end
 
     def ensure_value_is_array(value)
-      if !value.is_a?(Array)
-        return [value]
+      if value.is_a?(Array)
+        value
+      else
+        [value]
       end
-      value
     end
   end
 end
