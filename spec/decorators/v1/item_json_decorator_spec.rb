@@ -14,6 +14,16 @@ RSpec.describe V1::ItemJSONDecorator do
     end
   end
 
+  describe "self.display" do
+    subject { described_class.display(item, json) }
+
+    it "calls display on a new instance" do
+      expect(described_class).to receive(:new).with(item).and_call_original
+      expect_any_instance_of(described_class).to receive(:display).with(json).and_return("display called")
+      expect(subject).to eq("display called")
+    end
+  end
+
   describe "#at_id" do
     let(:item) { double(Item, unique_id: "adsf") }
 
