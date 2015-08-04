@@ -40,6 +40,37 @@ class CollectionsController < ApplicationController
     fresh_when(etag: cache_key.generate)
   end
 
+  def import_google_sheet
+  end
+
+  # Constructs and redirects to an auth request to google. Packs the collection id, file, and sheet
+  # into state data so that this data persists the round trip.
+  def import_authorize
+    file_auth_params = params[:file_auth]
+    session = GoogleSession.new
+    authorization_uri = session.auth_request_uri(
+      callback_uri: import_google_sheet_callback_collections_url,
+      state_hash: {
+        collection_id: params[:id],
+        file: file_auth_params[:file_name],
+        sheet: file_auth_params[:sheet_name] }
+    )
+    redirect_to authorization_uri
+  end
+
+  # This should get called whenever google redirects after a successful authorization request.
+  # We'll get an authorization code in the params and use this to make the connection
+  # to google to read the sheet data
+  def import_google_sheet_callback
+    state_hash = JSON.parse(Base64::decode64(params[:state]))
+    session = GoogleSession.new
+    session.connect(auth_code: params[:code], callback_uri: import_google_sheet_callback_collections_url)
+    work_sheet = session.get_worksheet(file: state_hash["file"], sheet: state_hash["sheet"])
+
+    # Just as a PoC, print the worksheet data
+    render plain: work_sheet.rows
+  end
+
   def update
     @collection = CollectionQuery.new.find(params[:id])
     check_user_edits!(@collection)
