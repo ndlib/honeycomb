@@ -36,4 +36,13 @@ RSpec.describe Waggle do
       end
     end
   end
+
+  describe "commit" do
+    subject { described_class.commit }
+
+    it "call commit on the adapter" do
+      expect(described_class.adapter).to receive(:commit)
+      subject
+    end
+  end
 end

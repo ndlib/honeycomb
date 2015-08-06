@@ -17,6 +17,10 @@ module Waggle
         ::Sunspot.index!(*objects)
       end
 
+      def self.commit(*args)
+        ::Sunspot.commit(*args)
+      end
+
       def self.register_sunspot_adapters
         ::Sunspot::Adapters::InstanceAdapter.register(
           self::Adapters::InstanceAdapter,

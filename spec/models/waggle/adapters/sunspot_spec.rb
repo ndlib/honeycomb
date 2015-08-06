@@ -38,22 +38,33 @@ RSpec.describe Waggle::Adapters::Sunspot do
     end
   end
 
-  describe "index" do
+  context "indexing" do
     let(:instances) { [instance_double(Waggle::Item), instance_double(Waggle::Item)] }
-    subject { described_class.index(instances) }
 
-    it "calls index on Sunspot" do
-      expect(::Sunspot).to receive(:index).with(instances)
-      subject
+    describe "index" do
+      subject { described_class.index(instances) }
+
+      it "calls index on Sunspot" do
+        expect(::Sunspot).to receive(:index).with(instances)
+        subject
+      end
+    end
+
+    describe "index!" do
+      subject { described_class.index!(instances) }
+
+      it "calls index! on Sunspot" do
+        expect(::Sunspot).to receive(:index!).with(instances)
+        subject
+      end
     end
   end
 
-  describe "index!" do
-    let(:instances) { [instance_double(Waggle::Item), instance_double(Waggle::Item)] }
-    subject { described_class.index!(instances) }
+  describe "commit" do
+    subject { described_class.commit }
 
-    it "calls index! on Sunspot" do
-      expect(::Sunspot).to receive(:index!).with(instances)
+    it "calls commit on Sunspot" do
+      expect(::Sunspot).to receive(:commit)
       subject
     end
   end

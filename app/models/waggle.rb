@@ -14,4 +14,8 @@ module Waggle
   def self.index!(*args)
     adapter.index!(*args)
   end
+
+  def self.commit(*args)
+    adapter.commit(*args)
+  end
 end
