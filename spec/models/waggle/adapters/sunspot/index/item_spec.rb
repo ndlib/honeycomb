@@ -4,7 +4,7 @@ RSpec.describe Waggle::Adapters::Sunspot::Index::Item do
   let(:item_id) { "pig-in-mud" }
   let(:raw_data) { File.read(Rails.root.join("spec/fixtures/v1/items/#{item_id}.json")) }
   let(:data) { JSON.parse(raw_data).fetch("items") }
-  let(:index_class) { Waggle::Item }
+  let(:index_class) { described_class.index_class }
   let(:instance) { index_class.new(data) }
   let(:other_instance) do
     data = instance.data.clone
@@ -19,6 +19,13 @@ RSpec.describe Waggle::Adapters::Sunspot::Index::Item do
 
   after :all do
     stub_solr
+  end
+
+  describe "self.index_class" do
+    it "is Waggle::Item" do
+      expect(described_class.index_class).to eq(Waggle::Item)
+      expect(index_class).to eq(described_class.index_class)
+    end
   end
 
   describe "self.setup" do

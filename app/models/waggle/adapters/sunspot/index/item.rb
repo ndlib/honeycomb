@@ -3,9 +3,15 @@ module Waggle
     module Sunspot
       module Index
         module Item
+          include Waggle::Adapters::Sunspot::Index::Indexer
+
+          def self.index_class
+            Waggle::Item
+          end
+
           def self.setup(configuration = default_configuration) # rubocop:disable Metrics/AbcSize
             reset!
-            ::Sunspot.setup(Waggle::Item) do
+            setup_index do
               configuration.fields.each do |field|
                 if field.type == :date
                   time field.name, multiple: true
@@ -21,10 +27,6 @@ module Waggle
               time :last_updated, stored: true
               text :name, stored: true
             end
-          end
-
-          def self.reset!
-            ::Sunspot::Setup.send(:setups)[Waggle::Item.name.to_sym] = nil
           end
 
           def self.default_configuration
