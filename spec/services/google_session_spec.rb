@@ -55,7 +55,12 @@ RSpec.describe GoogleSession do
 
   describe "get_worksheet" do
     let(:session) { instance_double(GoogleDrive::Session, file_by_url: file) }
-    let(:file) { instance_double(GoogleDrive::Spreadsheet, present?: false, worksheet_by_title: "worksheet_by_title", worksheets: ["worksheet0", "worksheet1"])}
+    let(:file) do
+      instance_double(GoogleDrive::Spreadsheet,
+                      present?: false,
+                      worksheet_by_title: "worksheet_by_title",
+                      worksheets: ["worksheet0", "worksheet1"])
+    end
 
     before(:each) do
       allow(subject).to receive(:session).and_return(session)
