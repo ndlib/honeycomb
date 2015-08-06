@@ -79,6 +79,11 @@ RSpec.describe Waggle::Adapters::Sunspot::Index::Item do
             it_behaves_like "a field indexer", field.name, :text
           end
         end
+
+        it "raises an error with an unexpected type" do
+          allow(Metadata::Configuration.item_configuration.fields.first).to receive(:type).and_return(:fake_type)
+          expect { subject }.to raise_error("unknown type fake_type")
+        end
       end
     end
   end
