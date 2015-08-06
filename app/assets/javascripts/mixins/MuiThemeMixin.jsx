@@ -9,6 +9,8 @@ var MuiThemeMixin = {
     muiTheme: React.PropTypes.object
   },
 
+  muiTheme: ThemeManager.getCurrentTheme(),
+
   getChildContext() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
