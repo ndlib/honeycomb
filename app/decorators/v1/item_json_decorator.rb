@@ -11,7 +11,13 @@ module V1
     end
 
     def collection_url
-      h.v1_collection_url(object.collection.unique_id)
+      if collection_id
+        h.v1_collection_url(collection_id)
+      end
+    end
+
+    def collection_id
+      object.collection.try(:unique_id)
     end
 
     def description
@@ -60,6 +66,7 @@ module V1
 
     def set_attribute_keys(json)
       json.id unique_id
+      json.collection_id collection_id
       json.slug slug
       json.name name
       json.description description.to_s

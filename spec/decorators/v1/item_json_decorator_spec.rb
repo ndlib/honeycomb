@@ -32,12 +32,36 @@ RSpec.describe V1::ItemJSONDecorator do
     end
   end
 
-  describe "#collection_url" do
+  context "collection" do
     let(:item) { double(Item, collection: collection) }
     let(:collection) { double(Collection, unique_id: "colasdf") }
 
-    it "returns the path to the items" do
-      expect(subject.collection_url).to eq("http://test.host/v1/collections/colasdf")
+    describe "#collection_id" do
+      it "is the collection id" do
+        expect(subject.collection_id).to eq("colasdf")
+      end
+    end
+
+    describe "#collection_url" do
+      it "returns the path to the items" do
+        expect(subject.collection_url).to eq("http://test.host/v1/collections/colasdf")
+      end
+    end
+  end
+
+  context "nil collection" do
+    let(:item) { instance_double(Item, collection: nil) }
+
+    describe "#collection_id" do
+      it "is nil" do
+        expect(subject.collection_id).to be_nil
+      end
+    end
+
+    describe "#collection_url" do
+      it "returns nil" do
+        expect(subject.collection_url).to be_nil
+      end
     end
   end
 
@@ -70,12 +94,33 @@ RSpec.describe V1::ItemJSONDecorator do
         subject.display(json)
       end
 
-      ["@context", "@type", "@id", "isPartOf/collection", "id", "slug", "name", "description", "image", "metadata", "last_updated"].each do |key|
+      expected_keys = [
+        "@context",
+        "@type",
+        "@id",
+        "isPartOf/collection",
+        "id",
+        "slug",
+        "name",
+        "description",
+        "image",
+        "metadata",
+        "last_updated",
+        "collection_id"
+      ]
+
+      expected_keys.each do |key|
         it "sets #{key}" do
           subject.display(json)
-          hash = JSON.parse(json.target!)
-          expect(hash.keys).to include(key)
+          keys = JSON.parse(json.target!).keys
+          expect(keys).to include(key)
         end
+      end
+
+      it "doesn't include extra keys" do
+        subject.display(json)
+        keys = JSON.parse(json.target!).keys
+        expect(keys - expected_keys).to eq([])
       end
 
       it "returns nil if the item is nil " do
