@@ -6,4 +6,12 @@ module Waggle
   def self.adapter
     self::Adapters::Sunspot
   end
+
+  def self.index(*args)
+    adapter.index(*args)
+  end
+
+  def self.index!(*args)
+    adapter.index!(*args)
+  end
 end

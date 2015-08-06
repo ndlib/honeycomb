@@ -9,6 +9,14 @@ module Waggle
         end
       end
 
+      def self.index(*objects)
+        ::Sunspot.index(*objects)
+      end
+
+      def self.index!(*objects)
+        ::Sunspot.index!(*objects)
+      end
+
       def self.register_sunspot_adapters
         ::Sunspot::Adapters::InstanceAdapter.register(
           self::Adapters::InstanceAdapter,

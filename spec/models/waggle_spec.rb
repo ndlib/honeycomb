@@ -14,4 +14,26 @@ RSpec.describe Waggle do
       subject
     end
   end
+
+  context "indexing" do
+    let(:instances) { [instance_double(Waggle::Item), instance_double(Waggle::Item)] }
+
+    describe "index" do
+      subject { described_class.index(instances) }
+
+      it "calls index on the adapter" do
+        expect(described_class.adapter).to receive(:index).with(instances)
+        subject
+      end
+    end
+
+    describe "index!" do
+      subject { described_class.index!(instances) }
+
+      it "call index! on the adapter" do
+        expect(described_class.adapter).to receive(:index!).with(instances)
+        subject
+      end
+    end
+  end
 end
