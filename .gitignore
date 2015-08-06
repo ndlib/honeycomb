@@ -24,7 +24,7 @@ config/database.yml
 
 # Ignore everything related to solr except for the conf
 /solr/*
-!/solr/conf
+!/solr/conf/*
 !/solr/solr.xml
 
 # Ignore all logfiles and tempfiles.
