@@ -101,55 +101,51 @@ RSpec.describe Waggle::Index::Item do
     end
 
     shared_examples_for "a searchable field" do |field_name, field_type|
-      before do
-        allow(instance.metadata).to receive(:value).and_call_original
-      end
-
       if field_type == :time
-        it "searches #{field_name} as #{field_type}" do
-          timestamp = Time.now - 1.day
-          expect(instance.metadata).to receive(:value).with(field_name).and_return([timestamp])
-          Sunspot.index(instance)
-          Sunspot.commit
-
-          search = Sunspot.search index_class do
-            with(field_name).equal_to timestamp
-          end
-
-          expect(search.total).to eq(1)
-
-          search = Sunspot.search index_class do
-            with(field_name).greater_than timestamp
-          end
-
-          expect(search.total).to eq(0)
-        end
+        let(:q) { Time.now - 1.day }
       elsif field_type == :text
-        it "searches #{field_name} as #{field_type}" do
-          q = field_name
-
-          expect(instance.metadata).to receive(:value).with(field_name).and_return([q])
-          Sunspot.index(instance)
-          Sunspot.commit
-
-          search = Sunspot.search index_class do
-            fulltext q
-          end
-
-          expect(search.total).to eq(1)
-
-          expect(instance.metadata).to receive(:value).with(field_name).and_return(nil)
-          Sunspot.index(instance)
-          Sunspot.commit
-
-          search = Sunspot.search index_class do
-            fulltext q
-          end
-
-          expect(search.total).to eq(0)
-        end
+        let(:q) { field_name }
       else
         raise "unknown type #{field_type}"
+      end
+
+      let(:expected_value) { [q] }
+
+      before do
+        allow(instance.metadata).to receive(:value).and_call_original
+        expect(instance.metadata).to receive(:value).with(field_name).and_return(expected_value)
+        Sunspot.index(instance)
+        Sunspot.commit
+      end
+
+      it "searches #{field_name} as #{field_type}" do
+        search = Sunspot.search index_class do
+          if field_type == :time
+            with(field_name).equal_to q
+          elsif field_type == :text
+            fulltext q do
+              fields(field_name)
+            end
+          end
+        end
+        expect(search.total).to eq(1)
+      end
+
+      context "nil value" do
+        let(:expected_value) { nil }
+
+        it "does not find a result for #{field_name} as #{field_type}" do
+          search = Sunspot.search index_class do
+            if field_type == :time
+              with(field_name).equal_to q
+            elsif field_type == :text
+              fulltext q do
+                fields(field_name)
+              end
+            end
+          end
+          expect(search.total).to eq(0)
+        end
       end
     end
 
