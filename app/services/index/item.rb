@@ -3,6 +3,8 @@ module Index
     def self.index!(item)
       index_item = item_to_waggle_item(item)
       Waggle.index!(index_item)
+    rescue StandardError => exception
+      NotifyError.call(exception: exception, parameters: { item: item }, component: to_s, action: "index!")
     end
 
     def self.api_data(item)

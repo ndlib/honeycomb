@@ -12,6 +12,17 @@ RSpec.describe Index::Item do
       expect(Waggle).to receive(:index!).with(waggle_item).and_return("index!")
       expect(subject).to eq("index!")
     end
+
+    it "rescues from and notifies about errors" do
+      expect(Waggle).to receive(:index!).and_raise(Errno::ECONNREFUSED)
+      expect(NotifyError).to receive(:call).with(
+        exception: kind_of(Errno::ECONNREFUSED),
+        parameters: { item: item },
+        component: described_class.to_s,
+        action: "index!"
+      )
+      expect(subject).to be_nil
+    end
   end
 
   describe "api_data" do
