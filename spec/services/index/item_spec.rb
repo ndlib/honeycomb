@@ -25,6 +25,30 @@ RSpec.describe Index::Item do
     end
   end
 
+  describe "remove!" do
+    let(:waggle_item) { instance_double(Waggle::Item) }
+    subject { described_class.remove!(item) }
+    before do
+      allow(described_class).to receive(:item_to_waggle_item).and_return(waggle_item)
+    end
+
+    it "calls Waggle.index!" do
+      expect(Waggle).to receive(:remove!).with(waggle_item).and_return("remove!")
+      expect(subject).to eq("remove!")
+    end
+
+    it "rescues from and notifies about errors" do
+      expect(Waggle).to receive(:remove!).and_raise(Errno::ECONNREFUSED)
+      expect(NotifyError).to receive(:call).with(
+        exception: kind_of(Errno::ECONNREFUSED),
+        parameters: { item: item },
+        component: described_class.to_s,
+        action: "remove!"
+      )
+      expect(subject).to be_nil
+    end
+  end
+
   describe "api_data" do
     let(:decorator) { instance_double(V1::ItemJSONDecorator, to_hash: { test: "test" }) }
     subject { described_class.api_data(item) }

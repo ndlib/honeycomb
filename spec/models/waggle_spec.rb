@@ -35,6 +35,24 @@ RSpec.describe Waggle do
         subject
       end
     end
+
+    describe "remove" do
+      subject { described_class.remove(instances) }
+
+      it "calls remove on the adapter" do
+        expect(described_class.adapter).to receive(:remove).with(instances)
+        subject
+      end
+    end
+
+    describe "remove!" do
+      subject { described_class.remove!(instances) }
+
+      it "call remove! on the adapter" do
+        expect(described_class.adapter).to receive(:remove!).with(instances)
+        subject
+      end
+    end
   end
 
   describe "commit" do

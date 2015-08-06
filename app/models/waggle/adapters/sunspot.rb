@@ -17,8 +17,16 @@ module Waggle
         ::Sunspot.index!(*objects)
       end
 
-      def self.commit(*args)
-        ::Sunspot.commit(*args)
+      def self.remove(*objects)
+        ::Sunspot.remove(*objects)
+      end
+
+      def self.remove!(*objects)
+        ::Sunspot.remove!(*objects)
+      end
+
+      def self.commit
+        ::Sunspot.commit
       end
 
       def self.register_sunspot_adapters

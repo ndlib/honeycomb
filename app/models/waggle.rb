@@ -7,15 +7,23 @@ module Waggle
     self::Adapters::Sunspot
   end
 
-  def self.index(*args)
-    adapter.index(*args)
+  def self.index(*objects)
+    adapter.index(*objects)
   end
 
-  def self.index!(*args)
-    adapter.index!(*args)
+  def self.index!(*objects)
+    adapter.index!(*objects)
   end
 
-  def self.commit(*args)
-    adapter.commit(*args)
+  def self.remove(*objects)
+    adapter.remove(*objects)
+  end
+
+  def self.remove!(*objects)
+    adapter.remove!(*objects)
+  end
+
+  def self.commit
+    adapter.commit
   end
 end

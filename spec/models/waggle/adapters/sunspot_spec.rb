@@ -58,6 +58,24 @@ RSpec.describe Waggle::Adapters::Sunspot do
         subject
       end
     end
+
+    describe "remove" do
+      subject { described_class.remove(instances) }
+
+      it "calls remove on Sunspot" do
+        expect(::Sunspot).to receive(:remove).with(instances)
+        subject
+      end
+    end
+
+    describe "remove!" do
+      subject { described_class.remove!(instances) }
+
+      it "calls remove! on Sunspot" do
+        expect(::Sunspot).to receive(:remove!).with(instances)
+        subject
+      end
+    end
   end
 
   describe "commit" do
