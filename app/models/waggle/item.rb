@@ -11,6 +11,10 @@ module Waggle
       data.fetch("id")
     end
 
+    def collection_id
+      data.fetch("collection_id")
+    end
+
     def type
       TYPE
     end

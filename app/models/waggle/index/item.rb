@@ -1,7 +1,7 @@
 module Waggle
   module Index
     module Item
-      def self.setup(configuration = default_configuration)
+      def self.setup(configuration = default_configuration) # rubocop:disable Metrics/AbcSize
         reset!
         ::Sunspot.setup(Waggle::Item) do
           configuration.fields.each do |field|
@@ -13,6 +13,7 @@ module Waggle
               raise "unknown type #{field.type}"
             end
           end
+          string :collection_id, stored: true
           string :type, stored: true
           string :thumbnail_url, stored: true
           time :last_updated, stored: true

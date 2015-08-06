@@ -56,6 +56,8 @@ RSpec.describe Waggle::Index::Item do
 
       it_behaves_like "a field indexer", :name, :text, stored: true
 
+      it_behaves_like "a field indexer", :collection_id, :string, stored: true
+
       it_behaves_like "a field indexer", :type, :string, stored: true
 
       it_behaves_like "a field indexer", :thumbnail_url, :string, stored: true
