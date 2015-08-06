@@ -1,10 +1,11 @@
 require "rails_helper"
 
 RSpec.describe V1::ItemJSONDecorator do
-  subject { described_class.new(item) }
-
-  let(:item) { double(Item) }
+  let(:item) { instance_double(Item) }
   let(:json) { double }
+  let(:instance) { described_class.new(item) }
+
+  subject { instance }
 
   describe "generic fields" do
     [:id, :name, :collection, :unique_id, :description, :updated_at].each do |field|
@@ -134,6 +135,17 @@ RSpec.describe V1::ItemJSONDecorator do
         json = subject.to_json
         parsed = JSON.parse(json)
         expect(parsed.fetch("name")).to eq("Test Item")
+      end
+    end
+
+    describe "#to_hash" do
+      subject { instance.to_hash }
+
+      it "is the hash of the JSON" do
+        item.name = "Test Item"
+        json = instance.to_json
+        expect(subject).to eq(JSON.parse(json))
+        expect(subject.fetch("name")).to eq("Test Item")
       end
     end
   end

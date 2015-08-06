@@ -54,6 +54,10 @@ module V1
       to_builder.target!
     end
 
+    def to_hash
+      JSON.parse(to_json)
+    end
+
     private
 
     def set_json_keys(json) # rubocop:disable Metrics/AbcSize
