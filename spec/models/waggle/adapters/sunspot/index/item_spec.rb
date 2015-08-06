@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Waggle::Sunspot::Index::Item do
+RSpec.describe Waggle::Adapters::Sunspot::Index::Item do
   let(:item_id) { "pig-in-mud" }
   let(:raw_data) { File.read(Rails.root.join("spec/fixtures/v1/items/#{item_id}.json")) }
   let(:data) { JSON.parse(raw_data).fetch("items") }

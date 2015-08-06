@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Waggle::Sunspot::Adapters::ItemDataAccessor do
+RSpec.describe Waggle::Adapters::Sunspot::Adapters::ItemDataAccessor do
   let(:clazz) { class_double(Waggle::Item) }
   subject { described_class.new(clazz) }
 
