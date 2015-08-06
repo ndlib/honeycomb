@@ -40,8 +40,7 @@ module V1
 
     def display(json)
       if object.present?
-        set_header_keys(json)
-        set_attribute_keys(json)
+        set_json_keys(json)
       end
     end
 
@@ -57,14 +56,11 @@ module V1
 
     private
 
-    def set_header_keys(json)
+    def set_json_keys(json) # rubocop:disable Metrics/AbcSize
       json.set! "@context", "http://schema.org"
       json.set! "@type", "CreativeWork"
       json.set! "@id", at_id
       json.set! "isPartOf/collection", collection_url
-    end
-
-    def set_attribute_keys(json)
       json.id unique_id
       json.collection_id collection_id
       json.slug slug
