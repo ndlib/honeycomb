@@ -231,7 +231,7 @@ var ItemMetaDataForm = React.createClass({
     };
     var dropDownIconStyle = {
       top: 5,
-      right: Spacing.desktopGutterLess,
+      right: this.muiTheme.spacing.desktopGutterLess,
     };
     var underlineStyle = {
       borderTop: "solid 2px rgb(44, 88, 130)",
