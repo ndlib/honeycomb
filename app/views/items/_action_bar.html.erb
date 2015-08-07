@@ -16,6 +16,7 @@
         developerKey: Rails.application.secrets.google["developer_key"],
         clientId: Rails.application.secrets.google["client_id"],
         appId: Rails.application.secrets.google["app_id"],
+        authUri: get_google_authorization_uri_collection_path(@collection)
       }) %>
     </div>
   </div>

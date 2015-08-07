@@ -7,6 +7,7 @@ var GooglePickerMixin = {
     developerKey: React.PropTypes.string.isRequired,
     clientId: React.PropTypes.string.isRequired,
     appId: React.PropTypes.string.isRequired,
+    authUri: React.PropTypes.string.isRequired,
   },
 
   getInitialState: function() {
@@ -70,7 +71,7 @@ var GooglePickerMixin = {
       var fileId = data.docs[0].url;
 
       $.ajax({
-        url: "get_authorization_uri",
+        url: this.props.authUri,
         dataType: "json",
         data: {
           file_name: fileId,
