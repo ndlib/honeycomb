@@ -37,7 +37,7 @@ RSpec.describe NotifyError do
 
       it "logs the original exception in parameters" do
         expect(Airbrake).to receive(:notify).
-          with(kind_of(exception.class), hash_including(parameters: { test: "test", original_exception: exception }))
+          with(kind_of(described_class::FallbackError), hash_including(parameters: { test: "test", original_exception: exception }))
         subject
       end
     end
@@ -60,8 +60,8 @@ RSpec.describe NotifyError do
     end
   end
 
-  describe "clean_exception" do
-    subject { described_class.clean_exception(exception) }
+  describe "fallback_exception" do
+    subject { described_class.fallback_exception(exception) }
 
     it "returns the original exception if the message is a normal length" do
       expect(subject).to eq(exception)
@@ -72,6 +72,11 @@ RSpec.describe NotifyError do
 
       it "returns a new exception" do
         expect(subject).to_not eq(exception)
+        expect(subject).to be_kind_of(described_class::FallbackError)
+      end
+
+      it "includes the original message" do
+        expect(subject.message[0, 100]).to eq("#{exception.class}: #{exception.message}"[0, 100])
       end
 
       it "limits the message length" do

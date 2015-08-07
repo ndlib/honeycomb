@@ -1,6 +1,9 @@
 module NotifyError
+  MAX_MESSAGE_LENGTH = 1000
+  class FallbackError < StandardError
+  end
   def self.call(exception:, parameters: {}, component: nil, action: nil)
-    notify_exception = clean_exception(exception)
+    notify_exception = fallback_exception(exception)
     if notify_exception != exception
       parameters[:original_exception] = exception
     end
@@ -15,10 +18,11 @@ module NotifyError
 
   # Errbit indexes the message, but the value can't be indexed if it's larger than 1024 bytes.
   # This creates a new exception that limits the length of the message.
-  def self.clean_exception(exception)
-    maximum_message_length = 1000 - "#{exception.class}: ".length
-    if exception.message.length > maximum_message_length
-      new_exception = exception.exception(exception.message[0, maximum_message_length])
+  def self.fallback_exception(exception)
+    full_message = "#{exception.class}: #{exception.message}"
+    if full_message.length > MAX_MESSAGE_LENGTH
+      fallback_message = full_message[0, MAX_MESSAGE_LENGTH - "#{FallbackError}: ".length]
+      new_exception = FallbackError.exception(fallback_message)
       new_exception.set_backtrace(exception.backtrace)
       new_exception
     else
