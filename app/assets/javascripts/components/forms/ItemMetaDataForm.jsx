@@ -42,6 +42,7 @@ var ItemMetaDataForm = React.createClass({
         "date_published": {"title": "Date Published", "placeholder": '', "type": "date", "help": ""},
         "date_modified": {"title": "Date Modified", "placeholder": '', "type": "date", "help": ""},
         "manuscript_url": {"title": "Digitized Manuscript URL", "placeholder": 'http://', "type": "string", "help": "Link to externally hosted manuscript viewer." },
+        "transcription": {"title": "Transcription", "placeholder": '', "type": "html", "help": "" },
       }
     };
   },
@@ -216,8 +217,6 @@ var ItemMetaDataForm = React.createClass({
               <HtmlField objectType={this.props.objectType} name="description" title="Description" value={this.state.formValues.description} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError('description')} placeholder="Example: &quot;Also known as 'La Giaconda' in Italian, this half-length portrait is one of the most famous paintings in the world. It is thought to depict Lisa Gherardini, the wife of Francesco del Giocondo.&quot;" />
 
               <DateField objectType={this.props.objectType} name="date_created" title="Date Created" value={this.state.formValues.date_created} handleFieldChange={this.handleFieldChange} placeholder="" errorMsg={this.fieldError('date_created')} />
-
-              <HtmlField objectType={this.props.objectType} name="transcription" title="Transcription" value={this.state.formValues.transcription} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError('transcription')}  />
 
               {this.additionalFields()}
 
