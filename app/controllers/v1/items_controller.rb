@@ -57,6 +57,7 @@ module V1
         :provenance,
         :original_language,
         :uploaded_image,
+        :call_number,
         date_created: [:value, :year, :month, :day, :bc, :display_text],
         date_modified: [:value, :year, :month, :day, :bc, :display_text],
         date_published: [:value, :year, :month, :day, :bc, :display_text],

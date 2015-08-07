@@ -1,7 +1,5 @@
 //app/assets/javascripts/components/forms/ItemMetaDataForm.jsx
 var React = require('react');
-var mui = require("material-ui");
-var DropDownMenu = mui.DropDownMenu;
 var EventEmitter = require('../../EventEmitter');
 var StringField = require('./StringField');
 var DateField = require('./DateField');
@@ -18,33 +16,33 @@ var fieldTypeMap = {
 };
 
 var ItemMetaDataForm = React.createClass({
-  mixins: [MuiThemeMixin, APIResponseMixin],
+  mixins: [APIResponseMixin],
   propTypes: {
     authenticityToken: React.PropTypes.string.isRequired,
     method: React.PropTypes.string.isRequired,
     data: React.PropTypes.object.isRequired,
     url: React.PropTypes.string.isRequired,
     objectType: React.PropTypes.string,
-    menuIndex: React.PropTypes.number,
   },
 
   getDefaultProps: function() {
     return {
       method: "post",
       objectType: "item",
-      menuIndex: 0,
       additionalFieldConfiguration: {
         "creator": {"title": "Creator", "placeholder": 'Example "Leonardo da Vinci"', "type": "multiple", "help": ""},
         "contributor": {"title": "Contributor", "placeholder": '', "type": "multiple", "help": ""},
         "alternate_name": {"title": "Alternate Name", "placeholder": "An additional name this work is known as.", "type": "multiple", "help": ""},
         "rights": {"title": "Rights", "placeholder": 'Example "Copyright held by Hesburgh Libraries"', "type": "string", "help": ""},
         "provenance": {"title": "Provenance", "placeholder": 'Example: "Received as a gift from John Doe"', "type": "string", "help": ""},
+        "call_number": {"title": "Call Number", "placeholder": '', "type": "string", "help": ""},
         "publisher": {"title": "Publisher", "placeholder": 'Example "Ballantine Books"', "type": "multiple", "help": ""},
         "subject": {"title": "Subject Keywords", "placeholder": '', "type": "string", "help": ""},
         "original_language": {"title": "Original Language", "placeholder": 'Example: "French"', "type": "string", "help": ""},
         "date_published": {"title": "Date Published", "placeholder": '', "type": "date", "help": ""},
         "date_modified": {"title": "Date Modified", "placeholder": '', "type": "date", "help": ""},
         "manuscript_url": {"title": "Digitized Manuscript URL", "placeholder": 'http://', "type": "string", "help": "Link to externally hosted manuscript viewer." },
+        "transcription": {"title": "Transcription", "placeholder": '', "type": "html", "help": "" },
       }
     };
   },
@@ -185,43 +183,30 @@ var ItemMetaDataForm = React.createClass({
     return _.map(this.props.additionalFieldConfiguration, map_function);
   },
 
-
   addFieldsSelectOptions: function () {
     var map_function = function (data, field) {
       if (!this.state.displayedFields[field]) {
-        var h = {};
-        h['payload'] = {field};
-        h['text'] = this.props.additionalFieldConfiguration[field].title;
-        return (h);
+        return (<option key={field} value={field}>{this.props.additionalFieldConfiguration[field].title}</option>);
       }
+      return;
     };
     map_function = _.bind(map_function, this);
-    var all_vals = _.map(this.props.additionalFieldConfiguration, map_function);
 
-    var hDefault = {};
-    hDefault['payload'] = '';
-    hDefault['text'] = 'Add a New Field';
-    return [hDefault].concat(_.reject(all_vals, function(val){ return _.isUndefined(val)}));
+    return [<option key="add-option">Add a New Field</option>].concat(_.map(this.props.additionalFieldConfiguration, map_function));
   },
 
-  changeAddField: function(event, selectedIndex, menuItem) {
-    if (!menuItem.payload.field) {
+  changeAddField: function(event) {
+    if (!event.target.value) {
       return;
     }
 
-    this.state.displayedFields[menuItem.payload.field] = true;
+    this.state.displayedFields[event.target.value] = true;
     this.setState({
       displayedFields: this.state.displayedFields,
     });
   },
 
   render: function () {
-    var dropDownIconStyle = {
-      right: this.muiTheme.spacing.desktopGutterLess,
-    };
-    var underlineStyle = {
-      borderTop: "solid 2px rgb(44, 88, 130)",
-    };
     return (
       <Form id="meta_data_form" url={this.props.url} authenticityToken={this.props.authenticityToken} method={this.props.method} >
         <Panel>
@@ -233,12 +218,11 @@ var ItemMetaDataForm = React.createClass({
 
               <DateField objectType={this.props.objectType} name="date_created" title="Date Created" value={this.state.formValues.date_created} handleFieldChange={this.handleFieldChange} placeholder="" errorMsg={this.fieldError('date_created')} />
 
-              <HtmlField objectType={this.props.objectType} name="transcription" title="Transcription" value={this.state.formValues.transcription} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError('transcription')}  />
-
               {this.additionalFields()}
 
-              <DropDownMenu menuItems={this.addFieldsSelectOptions()} iconStyle={dropDownIconStyle} underlineStyle={underlineStyle} selectedIndex={this.props.menuIndex} onChange={this.changeAddField} />
-
+              <select onChange={this.changeAddField}>
+                {this.addFieldsSelectOptions()}
+              </select>
           </PanelBody>
           <PanelFooter>
             <SubmitButton disabled={this.formDisabled()} handleClick={this.handleSave} />
