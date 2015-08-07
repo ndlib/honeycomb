@@ -11,7 +11,8 @@ class Item < ActiveRecord::Base
           :original_language,
           :date_created,
           :date_published,
-          :date_modified
+          :date_modified,
+          :call_number,
         ], coder: JSON
 
   has_paper_trail
