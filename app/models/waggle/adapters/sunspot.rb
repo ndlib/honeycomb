@@ -39,10 +39,12 @@ module Waggle
           Waggle::Item
         )
       end
+      private_class_method :register_sunspot_adapters
 
       def self.setup_indexers
         self::Index::Item.setup
       end
+      private_class_method :setup_indexers
     end
   end
 end

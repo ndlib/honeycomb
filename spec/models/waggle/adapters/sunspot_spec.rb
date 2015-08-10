@@ -18,7 +18,7 @@ RSpec.describe Waggle::Adapters::Sunspot do
   end
 
   describe "setup_indexers" do
-    subject { described_class.setup_indexers }
+    subject { described_class.send(:setup_indexers) }
 
     it "sets up the item indexer" do
       expect(described_class::Index::Item).to receive(:setup)
@@ -27,7 +27,7 @@ RSpec.describe Waggle::Adapters::Sunspot do
   end
 
   describe "register_sunspot_adapters" do
-    subject { described_class.register_sunspot_adapters }
+    subject { described_class.send(:register_sunspot_adapters) }
 
     it "registers the adapters with sunspot" do
       expect(::Sunspot::Adapters::InstanceAdapter).to receive(:register).
