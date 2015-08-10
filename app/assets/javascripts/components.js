@@ -12,6 +12,7 @@ HoneypotImageMixin = require("./mixins/HoneypotImageMixin");
 HorizontalScrollMixin = require("./mixins/HorizontalScrollMixin");
 MuiThemeMixin = require("./mixins/MuiThemeMixin");
 TitleConcatMixin = require("./mixins/TitleConcatMixin");
+GooglePickerMixin = require("./mixins/GooglePickerMixin");
 
 // Page
 PageMessage = require("./components/PageMessage");
@@ -34,6 +35,7 @@ OpenSeadragonViewer = require("./components/OpenSeadragonViewer");
 ReactDropzone = require("./components/ReactDropzone");
 ShowcasesPanel = require("./components/ShowcasesPanel");
 Thumbnail = require("./components/Thumbnail");
+GoogleImportButton = require("./components/GoogleImportButton");
 
 // embed
 EmbedCode = require("./components/embed/EmbedCode");
