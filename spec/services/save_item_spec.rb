@@ -10,6 +10,7 @@ RSpec.describe SaveItem, type: :model do
     # stub the call to the external service
     allow(SaveHoneypotImage).to receive(:call).and_return(true)
     allow(CreateUniqueId).to receive(:call).and_return(true)
+    allow(Index::Item).to receive(:index!).and_return(true)
   end
 
   it "returns when the item save is successful" do
@@ -52,6 +53,19 @@ RSpec.describe SaveItem, type: :model do
     it "does not call create unique_id if the item does not save" do
       allow(item).to receive(:save).and_return(false)
       expect(CreateUniqueId).to_not receive(:call).with(item)
+      subject
+    end
+  end
+
+  describe "index_item" do
+    let(:item) { Item.new(unique_id: "12345") }
+
+    before do
+      allow(item).to receive(:save).and_return(true)
+    end
+
+    it "indexes" do
+      expect(Index::Item).to receive(:index!).and_call_original
       subject
     end
   end

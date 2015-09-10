@@ -18,7 +18,7 @@ class SaveItem
 
     if item.save && process_uploaded_image
       check_unique_id
-
+      index_item
       item
     else
       false
@@ -55,5 +55,9 @@ class SaveItem
 
   def check_unique_id
     CreateUniqueId.call(item)
+  end
+
+  def index_item
+    Index::Item.index!(item)
   end
 end

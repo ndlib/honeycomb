@@ -195,6 +195,7 @@ RSpec.describe ItemsController, type: :controller do
 
     before(:each) do
       allow_any_instance_of(ItemQuery).to receive(:find).and_return(item)
+      allow(Index::Item).to receive(:remove!).with(item)
     end
 
     it "on success, redirects, and flashes " do

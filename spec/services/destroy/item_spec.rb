@@ -8,14 +8,23 @@ describe Destroy::Item do
   let(:destroy_section) { instance_double(Destroy::Section, cascade!: nil) }
   let(:subject) { Destroy::Item.new(destroy_section: destroy_section) }
 
-  describe "#destroy" do
+  before do
+    allow(Index::Item).to receive(:remove!)
+  end
+
+  describe "#destroy!" do
     it "destroys the Item" do
       expect(item).to receive(:destroy!)
-      subject.cascade!(item: item)
+      subject.destroy!(item: item)
+    end
+
+    it "removes the item from the search index" do
+      expect(Index::Item).to receive(:remove!).with(item)
+      subject.destroy!(item: item)
     end
   end
 
-  describe "#cascade" do
+  describe "#cascade!" do
     it "calls DestroySection on all associated sections" do
       expect(destroy_section).to receive(:cascade!).with(section: section).twice
       subject.cascade!(item: item)
@@ -37,8 +46,13 @@ describe Destroy::Item do
       subject.cascade!(item: item)
     end
 
-    it "destroys the Exhibit" do
+    it "destroys the Item" do
       expect(item).to receive(:destroy!)
+      subject.cascade!(item: item)
+    end
+
+    it "removes the item from the search index" do
+      expect(Index::Item).to receive(:remove!).with(item)
       subject.cascade!(item: item)
     end
   end
@@ -92,6 +106,13 @@ describe Destroy::Item do
     it "rolls back if an error occurs with Item.destroy!" do
       allow(item).to receive(:destroy!).and_raise("error")
       expect { subject.cascade!(item: item) }.to raise_error("error")
+      data_still_exists!
+    end
+
+    it "does not remove the item from the index if an error occurs" do
+      expect(item).to receive(:destroy!).and_raise(RuntimeError)
+      expect(Index::Item).to_not receive(:remove!).with(item)
+      expect { subject.cascade!(item: item) }.to raise_error(RuntimeError)
       data_still_exists!
     end
   end

@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Waggle::Sunspot::Adapters::InstanceAdapter do
+RSpec.describe Waggle::Adapters::Sunspot::Adapters::InstanceAdapter do
   let(:instance) { instance_double(Waggle::Item) }
   subject { described_class.new(instance) }
 

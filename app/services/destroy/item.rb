@@ -10,10 +10,11 @@ module Destroy
     # Destroy the object only
     def destroy!(item:)
       item.destroy!
+      remove_from_index(item: item)
     end
 
     # Destroys this object and all associated objects.
-    def cascade!(item: item)
+    def cascade!(item:)
       ActiveRecord::Base.transaction do
         item.sections.each do |child|
           @destroy_section.cascade!(section: child)
@@ -21,8 +22,14 @@ module Destroy
         item.children.each do |child|
           cascade!(item: child)
         end
-        item.destroy!
+        destroy!(item: item)
       end
+    end
+
+    private
+
+    def remove_from_index(item:)
+      Index::Item.remove!(item)
     end
   end
 end
