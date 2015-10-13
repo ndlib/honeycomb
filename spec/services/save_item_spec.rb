@@ -11,6 +11,7 @@ RSpec.describe SaveItem, type: :model do
     allow(SaveHoneypotImage).to receive(:call).and_return(true)
     allow(CreateUniqueId).to receive(:call).and_return(true)
     allow(Index::Item).to receive(:index!).and_return(true)
+    allow(item).to receive(:no_image!).and_return(nil)
   end
 
   it "returns when the item save is successful" do
@@ -117,6 +118,15 @@ RSpec.describe SaveItem, type: :model do
       params[:uploaded_image] = nil
       allow(item).to receive(:save).and_return(true)
       expect(subject).to eq(item)
+    end
+
+    it "sets the state to no image if there is no uploaded image and the item is in the error state" do
+      # error state currently because it is the deault state. at some point it should be changed to no image.
+      params[:uploaded_image] = nil
+      allow(item).to receive(:image_invalid?).and_return(true)
+      allow(item).to receive(:save).and_return(true)
+      expect(item).to receive(:no_image!)
+      subject
     end
   end
 

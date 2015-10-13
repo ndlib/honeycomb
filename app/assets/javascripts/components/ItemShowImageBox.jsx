@@ -7,11 +7,6 @@ var ItemShowImageBox = React.createClass({
   mixins: [MuiThemeMixin],
 
   propTypes: {
-    image: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.object,
-    ]),
-    itemID: React.PropTypes.string.isRequired,
     item: React.PropTypes.object,         // Item object from ItemDecorator
     itemPath: React.PropTypes.string,     // The path to the API to retrieve item's image details
     maxRetries: React.PropTypes.number,   // Max number of times it should retry to get the image
@@ -27,35 +22,10 @@ var ItemShowImageBox = React.createClass({
 
   getInitialState: function() {
     return {
-      imageReady: false,
-      requestTimer: 0,
       requestCount: 0,
-      image: this.props.image,
-      awaitingResponse: false
+      awaitingResponse: false,
+      item: this.props.item,
     };
-  },
-
-  checkImageState: function(image) {
-    switch(image["items"]["image_status"])
-    {
-      case "image_ready":
-        this.setState({
-          imageReady: true,
-          image: image["items"]["image"],
-        });
-        clearInterval(this.state.requestTimer);
-        break;
-      case "image_processing":
-        if(this.state.requestCount >= this.props.maxRetries) {
-          EventEmitter.emit("MessageCenterDisplay", "error", "Media is still being processed. Please try again later.");
-          clearInterval(this.state.requestTimer);
-        }
-        break;
-      default:
-        EventEmitter.emit("MessageCenterDisplay", "error", "There was a problem loading the media. Try replacing or contacting support.");
-        clearInterval(this.state.requestTimer);
-        break;
-    }
   },
 
   pingItem: function() {
@@ -67,60 +37,78 @@ var ItemShowImageBox = React.createClass({
       requestCount: this.state.requestCount + 1
     });
 
+    console.log(this.props.itemPath);
+
     $.ajax({
       url: this.props.itemPath,
       dataType: "json",
       method: "GET",
       success: (function(data) {
-        this.checkImageState(data);
-        this.setState({ awaitingResponse: false });
+        this.setState({ item: data.items, awaitingResponse: false }, this.testImageStatus);
       }).bind(this),
       error: (function(xhr) {
-        EventEmitter.emit("MessageCenterDisplay", "error", "There was a problem loading the media. Please contact support.");
+        this.setState({ awaitingResponse: false }, this.testImageStatus);
         console.log(xhr);
-        clearInterval(this.state.requestTimer);
-        this.setState({ awaitingResponse: false });
       }).bind(this),
     });
   },
 
   componentWillMount: function() {
-    if(this.props.item.image_status == "image_ready") {
-      this.setState({
-        imageReady: true,
-      });
-    } else if(this.props.item.image_status == "image_invalid") {
+    this.testImageStatus();
+  },
+
+  testImageStatus: function () {
+    if (this.state.item.image_status == "image_invalid") {
       EventEmitter.emit("MessageCenterDisplay", "error", "There was a problem loading the media. Try replacing or contacting support.");
-    } else {
-      this.setState({
-        requestTimer: setInterval(this.pingItem, this.props.retryInterval),
-        imageReady: false,
-      });
+    } else if (this.state.item.image_status == "image_processing") {
+      setTimeout(this.pingItem, this.props.retryInterval)
     }
   },
 
-  componentWillUnmount: function() {
-    // just in case
-    if(this.state.requestTimer != 0) {
-      clearInterval(this.state.requestTimer);
+  renderMedia: function() {
+    switch(this.state.item.image_status)
+    {
+      case "image_ready":
+        return this.itemReadyHtml();
+      case "image_processing":
+        return this.itemProcessingHtml();
+      case "no_image":
+        return this.itemNoImageHtml();
+      case "image_invalid":
+        return this.itemImageInvalidHtml();
+      default:
+        EventEmitter.emit("MessageCenterDisplay", "error", "Unknown Image Status");
+        break;
     }
+  },
+
+  itemReadyHtml: function () {
+    return (
+      <div className="hc-item-show-image-box">
+        <ItemImageZoomButton image={this.state.item.image} itemID={this.state.item.id} />
+        <Thumbnail image={this.state.item.image} />
+      </div>
+    );
+  },
+
+  itemProcessingHtml: function () {
+    return (
+      <div>
+        <CircularProgress mode="indeterminate" size={0.5} />
+      </div>
+    );
+  },
+
+  itemNoImageHtml: function () {
+    return (<p>No Image</p>);
+  },
+
+  itemImageInvalidHtml: function () {
+    return (<p className="text-danger">Image Processing Error</p>);
   },
 
   render: function() {
-    if(this.state.imageReady) {
-      return (
-        <div className="hc-item-show-image-box">
-          <ItemImageZoomButton image={this.state.image} itemID={this.props.itemID} />
-          <Thumbnail image={this.state.image} />
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <CircularProgress mode="indeterminate" size={0.5} />
-        </div>
-      );
-    }
+    return this.renderMedia();
   }
 });
 module.exports = ItemShowImageBox;

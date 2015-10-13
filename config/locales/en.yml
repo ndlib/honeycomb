@@ -37,6 +37,7 @@ en:
     complete: "OK"
     processing: "Processing"
     error: "Error"
+    no_image: "No Image"
   buttons:
     save: 'Save'
     cancel: 'Cancel'

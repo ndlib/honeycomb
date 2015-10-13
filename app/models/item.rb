@@ -41,7 +41,7 @@ class Item < ActiveRecord::Base
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
   validates_attachment_content_type :uploaded_image, content_type: /\Aimage\/.*\Z/
 
-  enum image_status: { image_invalid: 0, image_processing: 1, image_ready: 2 }
+  enum image_status: { image_invalid: 0, image_processing: 1, image_ready: 2, no_image: 3 }
 
   private
 

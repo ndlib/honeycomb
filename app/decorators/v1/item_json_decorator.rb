@@ -68,6 +68,7 @@ module V1
       json.slug slug
       json.name name
       json.description description.to_s
+      json.image_status object.image_status
       json.image image
       json.metadata metadata
       json.last_updated updated_at

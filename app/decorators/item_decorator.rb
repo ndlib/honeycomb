@@ -22,8 +22,12 @@ class ItemDecorator < Draper::Decorator
       status_text_span(className: "text-success", icon: "ok", text: h.t("status.complete"))
     elsif object.image_processing?
       status_text_span(className: "text-info", icon: "minus", text: h.t("status.processing"))
-    else
+    elsif object.no_image?
+      status_text_span(className: "text-success", icon: "ok", text: h.t("status.no_image"))
+    elsif object.image_invalid?
       status_text_span(className: "text-danger", icon: "minus", text: h.t("status.error"))
+    else
+      raise "Unaccounted for status in status_text"
     end
   end
 
@@ -42,10 +46,9 @@ class ItemDecorator < Draper::Decorator
   end
 
   def show_image_box
+    json = V1::ItemJSONDecorator.new(object)
     h.react_component "ItemShowImageBox",
-                      image: image_json,
-                      itemID: object.id.to_s,
-                      item: object,
+                      item: json.to_hash,
                       itemPath: Rails.application.routes.url_helpers.v1_item_path(object.unique_id)
   end
 

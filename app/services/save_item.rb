@@ -57,6 +57,9 @@ class SaveItem
     if params[:uploaded_image]
       item.image_processing!
       QueueJob.call(ProcessImageJob, object: item)
+    elsif item.image_invalid?
+      set_no_image
+      true
     else
       true
     end
@@ -68,5 +71,9 @@ class SaveItem
 
   def index_item
     Index::Item.index!(item)
+  end
+
+  def set_no_image
+    item.no_image!
   end
 end
