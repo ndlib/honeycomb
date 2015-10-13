@@ -40,7 +40,7 @@ module V1
     end
 
     def enable_browse
-      !!object.exhibit.enable_browse
+      !!object.enable_browse
     end
 
     def site_intro

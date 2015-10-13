@@ -11,8 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151001004812) do
 
+ActiveRecord::Schema.define(version: 20151012201503) do
 
   create_table "collection_users", force: :cascade do |t|
     t.integer  "user_id",       limit: 4, null: false
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20151001004812) do
     t.boolean  "published"
     t.string   "name_line_2",  limit: 255
     t.boolean  "preview_mode"
+    t.boolean  "enable_browse"
   end
 
   add_index "collections", ["preview_mode"], name: "index_collections_on_preview_mode", using: :btree
