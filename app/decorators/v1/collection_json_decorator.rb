@@ -56,11 +56,11 @@ module V1
     end
 
     def copyright
-      exhibit_copyright = object.exhibit.copyright.to_s
-      if exhibit_copyright.empty?
+      collection_copyright = object.copyright.to_s
+      if collection_copyright.empty?
         "<p><a href=\"http://www.nd.edu/copyright/\">Copyright</a> #{Date.today.year} <a href=\"http://www.nd.edu\">University of Notre Dame</a></p>"
       else
-        exhibit_copyright
+        collection_copyright
       end
     end
 

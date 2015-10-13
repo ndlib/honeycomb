@@ -15,6 +15,7 @@ class Exhibition
     :description,
     :published,
     :preview_mode,
+    :copyright,
     :updated_at
   ]
   exhibit_methods = [
@@ -24,7 +25,6 @@ class Exhibition
     :uploaded_image,
     :showcases,
     :about,
-    :copyright,
     :hide_title_on_home_page,
     :short_description,
     :url
