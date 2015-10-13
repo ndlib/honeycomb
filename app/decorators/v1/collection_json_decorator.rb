@@ -44,11 +44,11 @@ module V1
     end
 
     def site_intro
-      object.exhibit.description.to_s
+      object.site_intro.to_s
     end
 
     def short_intro
-      object.exhibit.short_description.to_s
+      object.short_intro.to_s
     end
 
     def about

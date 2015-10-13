@@ -18,7 +18,8 @@ RSpec.describe Exhibition do
     :about,
     :copyright,
     :hide_title_on_home_page,
-    :short_description,
+    :short_intro,
+    :site_intro,
     :url
   ].each do |field|
     it "has field, #{field}" do

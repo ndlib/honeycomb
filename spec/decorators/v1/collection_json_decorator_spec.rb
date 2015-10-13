@@ -114,29 +114,27 @@ RSpec.describe V1::CollectionJSONDecorator do
   end
 
   describe "#site_intro" do
-    let(:exhibit) { double(Exhibit, description: nil) }
-    let(:collection) { double(Collection, exhibit: exhibit) }
+    let(:collection) { double(Collection, site_intro: nil) }
 
     it "converts null to empty string" do
       expect(subject.site_intro).to eq("")
     end
 
-    it "gets the value from the exhibit" do
-      expect(exhibit).to receive(:description).and_return("intro")
+    it "gets the value from #site_intro" do
+      expect(subject).to receive(:site_intro).and_return("intro")
       expect(subject.site_intro).to eq("intro")
     end
   end
 
   describe "#short_intro" do
-    let(:exhibit) { double(Exhibit, short_description: nil) }
-    let(:collection) { double(Collection, exhibit: exhibit) }
+    let(:collection) { double(Collection, short_intro: nil) }
 
     it "converts null to empty string" do
       expect(subject.short_intro).to eq("")
     end
 
-    it "gets the value from the exhibit" do
-      expect(exhibit).to receive(:short_description).and_return("intro")
+    it "gets the value from #short_intro" do
+      expect(subject).to receive(:short_intro).and_return("intro")
       expect(subject.short_intro).to eq("intro")
     end
   end
