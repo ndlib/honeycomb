@@ -52,7 +52,7 @@ module V1
     end
 
     def about
-      object.exhibit.about.to_s
+      object.about.to_s
     end
 
     def copyright

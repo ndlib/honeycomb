@@ -13,6 +13,7 @@ class Exhibition
     :unique_id,
     :exhibit,
     :description,
+    :about,
     :published,
     :preview_mode,
     :updated_at
@@ -23,7 +24,6 @@ class Exhibition
     :honeypot_image,
     :uploaded_image,
     :showcases,
-    :about,
     :copyright,
     :hide_title_on_home_page,
     :short_description,

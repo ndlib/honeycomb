@@ -30,15 +30,14 @@ RSpec.describe V1::CollectionJSONDecorator do
   end
 
   describe "#about" do
-    let(:exhibit) { double(Exhibit, about: nil) }
-    let(:collection) { double(Collection, exhibit: exhibit) }
+    let(:collection) { double(Collection, about: nil) }
 
     it "converts null to empty string" do
       expect(subject.about).to eq("")
     end
 
-    it "gets the value from the exhibit" do
-      expect(exhibit).to receive(:about).and_return("about")
+    it "gets the value from the collection" do
+      allow(collection).to receive(:about).and_return("about")
       expect(subject.about).to eq("about")
     end
   end
