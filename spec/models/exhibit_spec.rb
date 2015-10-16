@@ -8,47 +8,36 @@ RSpec.describe Exhibit do
     end
   end
 
-  describe "#items_json_url" do
-    it "is a url to the honeycomb server" do
-      subject.collection_id = 100
-      expect(subject.items_json_url).to eq("/api/collections/100/items.json?include=image")
-    end
-  end
-
-  describe "#item_json_url" do
-    it "is a url to the honeycomb server" do
-      subject.collection_id = 100
-      expect(subject.item_json_url(5)).to eq("/api/collections/100/items/5.json?include=image")
-    end
-  end
-
-  describe "#has honeypot image interface" do
-    it "responds to image" do
-      expect(subject).to respond_to(:image)
-    end
-
-    it "responds to honeypot_image" do
-      expect(subject).to respond_to(:honeypot_image)
-    end
-
-    it "responds to collection" do
-      expect(subject).to respond_to(:collection)
-    end
-  end
-
-  it "has a papertrail" do
-    expect(subject).to respond_to(:paper_trail_enabled_for_model?)
-    expect(subject.paper_trail_enabled_for_model?).to be(true)
-  end
-
-  context "foreign key constraints" do
-    describe "#destroy" do
-      it "fails if a Showcase references it" do
-        FactoryGirl.create(:collection)
-        subject = FactoryGirl.create(:exhibit)
-        FactoryGirl.create(:showcase)
-        expect { subject.destroy }.to raise_error
-      end
-    end
-  end
+  # describe "#items_json_url" do
+  #   it "is a url to the honeycomb server" do
+  #     subject.collection_id = 100
+  #     expect(subject.items_json_url).to eq("/api/collections/100/items.json?include=image")
+  #   end
+  # end
+  #
+  # describe "#item_json_url" do
+  #   it "is a url to the honeycomb server" do
+  #     subject.collection_id = 100
+  #     expect(subject.item_json_url(5)).to eq("/api/collections/100/items/5.json?include=image")
+  #   end
+  # end
+  #
+  # describe "#has honeypot image interface" do
+  #   it "responds to image" do
+  #     expect(subject).to respond_to(:image)
+  #   end
+  #
+  #   it "responds to honeypot_image" do
+  #     expect(subject).to respond_to(:honeypot_image)
+  #   end
+  #
+  #   it "responds to collection" do
+  #     expect(subject).to respond_to(:collection)
+  #   end
+  # end
+  #
+  # it "has a papertrail" do
+  #   expect(subject).to respond_to(:paper_trail_enabled_for_model?)
+  #   expect(subject.paper_trail_enabled_for_model?).to be(true)
+  # end
 end

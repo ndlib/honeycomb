@@ -1,14 +1,14 @@
 require "rails_helper"
 
 RSpec.describe Showcase do
-  [:name_line_1, :description, :unique_id, :image, :exhibit, :sections, :published, :collection].each do |field|
+  [:name_line_1, :description, :unique_id, :image, :collection, :sections, :published, :collection].each do |field|
     it "has the field #{field}" do
       expect(subject).to respond_to(field)
       expect(subject).to respond_to("#{field}=")
     end
   end
 
-  [:exhibit, :name_line_1].each do |field|
+  [:collection, :name_line_1].each do |field|
     it "requires the field, #{field}" do
       expect(subject).to have(1).error_on(field)
     end

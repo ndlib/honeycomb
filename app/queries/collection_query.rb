@@ -12,9 +12,9 @@ class CollectionQuery
   # where collection != external collection
   def for_editor(user)
     if UserIsAdmin.call(user)
-      relation.all.joins(:exhibit).where(exhibits: { url: nil }) if relation.all
+      relation.all.where(url: nil) if relation.all
     else
-      user.collections.joins(:exhibit).where(exhibits: { url: nil }) if user.collections
+      user.collections.where(url: nil) if user.collections
     end
   end
 
@@ -35,6 +35,10 @@ class CollectionQuery
 
   def recent(limit = 5)
     relation.order(updated_at: :desc).limit(limit)
+  end
+
+  def all_external
+    relation.where.not(url: nil)
   end
 
   delegate :find, to: :relation

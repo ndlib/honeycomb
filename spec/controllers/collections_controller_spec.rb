@@ -2,7 +2,7 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe CollectionsController, type: :controller do
-  let(:collection) { instance_double(Collection, id: 1, name_line_1: "COLLECTION", destroy!: true, collection_users: [], exhibit: nil, items: []) }
+  let(:collection) { instance_double(Collection, id: 1, name_line_1: "COLLECTION", destroy!: true, collection_users: [], showcases: [], items: []) }
 
   let(:create_params) { { collection: { name_line_1: "TITLE!!" } } }
   let(:update_params) { { id: "1", published: true, collection: { name_line_1: "TITLE!!" } } }
@@ -211,28 +211,6 @@ RSpec.describe CollectionsController, type: :controller do
     it_behaves_like "a private content-based etag cacher" do
       subject { delete :destroy, id: "1" }
     end
-  end
-
-  describe "exhibit" do
-    subject { get :exhibit, collection_id: collection.id }
-    let(:exhibit) { instance_double(Exhibit, id: 1) }
-
-    before(:each) do
-      allow(collection).to receive(:exhibit).and_return(exhibit)
-      allow_any_instance_of(CollectionQuery).to receive(:find).and_return(collection)
-    end
-
-    it "uses collection query" do
-      expect_any_instance_of(CollectionQuery).to receive(:find).with("1").and_return(collection)
-      subject
-    end
-
-    it "ensures the collection has an exhibit" do
-      expect(EnsureCollectionHasExhibit).to receive(:call).with(collection).and_return(exhibit)
-      subject
-    end
-
-    it_behaves_like "a private content-based etag cacher"
   end
 
   describe "publish" do

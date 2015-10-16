@@ -106,4 +106,12 @@ describe CollectionQuery do
       subject.build
     end
   end
+
+  describe "all_external" do
+    it "returns all external exhibits" do
+      Collection.new(name_line_1: "test", unique_id: "abc123", url: "http://test").save!
+      Collection.new(name_line_1: "test", unique_id: "abc123", url: nil).save!
+      expect(subject.all_external).to have(1).item
+    end
+  end
 end

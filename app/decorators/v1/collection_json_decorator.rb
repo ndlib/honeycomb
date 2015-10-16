@@ -24,11 +24,11 @@ module V1
     end
 
     def external_url
-      object.exhibit.url ? object.exhibit.url : ""
+      object.url ? object.url : ""
     end
 
     def additional_type
-      object.exhibit.url ? "https://github.com/ndlib/honeycomb/wiki/ExternalCollection" : "https://github.com/ndlib/honeycomb/wiki/DecCollection"
+      object.url ? "https://github.com/ndlib/honeycomb/wiki/ExternalCollection" : "https://github.com/ndlib/honeycomb/wiki/DecCollection"
     end
 
     def description
@@ -36,36 +36,36 @@ module V1
     end
 
     def enable_search
-      !!object.exhibit.enable_search
+      !!object.enable_search
     end
 
     def enable_browse
-      !!object.exhibit.enable_browse
+      !!object.enable_browse
     end
 
     def site_intro
-      object.exhibit.description.to_s
+      object.site_intro.to_s
     end
 
     def short_intro
-      object.exhibit.short_description.to_s
+      object.short_intro.to_s
     end
 
     def about
-      object.exhibit.about.to_s
+      object.about.to_s
     end
 
     def copyright
-      exhibit_copyright = object.exhibit.copyright.to_s
-      if exhibit_copyright.empty?
+      collection_copyright = object.copyright.to_s
+      if collection_copyright.empty?
         "<p><a href=\"http://www.nd.edu/copyright/\">Copyright</a> #{Date.today.year} <a href=\"http://www.nd.edu\">University of Notre Dame</a></p>"
       else
-        exhibit_copyright
+        collection_copyright
       end
     end
 
     def display_page_title
-      !object.exhibit.hide_title_on_home_page?
+      !object.hide_title_on_home_page?
     end
 
     def slug
@@ -81,10 +81,8 @@ module V1
     end
 
     def image
-      if object.exhibit.honeypot_image
-        object.exhibit.honeypot_image.json_response
-      else
-        nil
+      if object.honeypot_image
+        object.honeypot_image.json_response
       end
     end
 

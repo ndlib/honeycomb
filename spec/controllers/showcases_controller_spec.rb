@@ -2,25 +2,24 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe ShowcasesController, type: :controller do
-  let(:showcase) { instance_double(Showcase, id: 1, name_line_1: "name_line_1", exhibit: exhibit, collection: collection, sections: [], destroy!: true) }
-  let(:exhibit) { instance_double(Exhibit, id: 1, name: "name", showcases: relation, collection: collection) }
-  let(:collection) { instance_double(Collection, id: 1, name_line_1: "name_line_1") }
+  let(:showcase) { instance_double(Showcase, id: 1, name_line_1: "name_line_1", collection: collection, sections: [], destroy!: true) }
+  let(:collection) { instance_double(Collection, id: 1, name_line_1: "name_line_1", showcases: relation) }
 
   let(:relation) { Showcase.all }
-  let(:create_params) { { exhibit_id: exhibit.id, showcase: { name_line_1: "name_line_1", description: "description" } } }
+  let(:create_params) { { collection_id: collection.id, showcase: { name_line_1: "name_line_1", description: "description" } } }
   let(:update_params) { { id: showcase.id, showcase: { name_line_1: "name_line_1", description: "description" } } }
 
   before(:each) do
     sign_in_admin
 
-    allow_any_instance_of(ExhibitQuery).to receive(:find).and_return(exhibit)
+    allow_any_instance_of(CollectionQuery).to receive(:find).and_return(collection)
     allow_any_instance_of(ShowcaseQuery).to receive(:find).and_return(showcase)
     allow_any_instance_of(ShowcaseQuery).to receive(:build).and_return(showcase)
     allow(SaveShowcase).to receive(:call).and_return(true)
   end
 
   describe "GET #index" do
-    subject { get :index, exhibit_id: exhibit.id }
+    subject { get :index, collection_id: collection.id }
 
     it "returns a 200" do
       subject
@@ -54,7 +53,7 @@ RSpec.describe ShowcasesController, type: :controller do
   end
 
   describe "GET #new" do
-    subject { get :new, exhibit_id: exhibit.id }
+    subject { get :new, collection_id: collection.id }
 
     it "returns a 200" do
       subject

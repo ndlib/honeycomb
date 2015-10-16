@@ -1,21 +1,21 @@
 class ShowcasesController < ApplicationController
   def index
-    check_user_edits!(exhibit.collection)
-    @showcases = ShowcaseQuery.new(exhibit.showcases).admin_list
+    check_user_edits!(collection)
+    @showcases = ShowcaseQuery.new(collection.showcases).admin_list
     cache_key = CacheKeys::Generator.new(key_generator: CacheKeys::Custom::Showcases,
                                          action: "index",
-                                         exhibit: exhibit)
+                                         collection: collection)
     fresh_when(etag: cache_key.generate)
   end
 
   def new
-    check_user_edits!(exhibit.collection)
-    @showcase = ShowcaseQuery.new(exhibit.showcases).build
+    check_user_edits!(collection)
+    @showcase = ShowcaseQuery.new(collection.showcases).build
   end
 
   def create
-    check_user_edits!(exhibit.collection)
-    @showcase = ShowcaseQuery.new(exhibit.showcases).build(save_params)
+    check_user_edits!(collection)
+    @showcase = ShowcaseQuery.new(collection.showcases).build(save_params)
 
     if SaveShowcase.call(@showcase, save_params)
       flash[:notice] = t(".success")
@@ -75,7 +75,7 @@ class ShowcasesController < ApplicationController
     Destroy::Showcase.new.cascade!(showcase: @showcase)
 
     flash[:notice] = t(".success")
-    redirect_to exhibit_path(@showcase.exhibit)
+    redirect_to collection_path(@showcase.collection)
   end
 
   def publish
@@ -116,8 +116,8 @@ class ShowcasesController < ApplicationController
     @showcase ||= ShowcaseQuery.new.find(params[:id])
   end
 
-  def exhibit
-    @exhibit ||= ExhibitQuery.new.find(params[:exhibit_id])
+  def collection
+    @collection ||= CollectionQuery.new.find(params[:collection_id])
   end
 
   def showcase_save_success(showcase)

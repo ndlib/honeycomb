@@ -1,7 +1,7 @@
 module Admin
   class ExternalCollectionsController < ApplicationController
     def index
-      @external_collections = Exhibition.all
+      @external_collections = CollectionQuery.new.all_external
     end
 
     def new

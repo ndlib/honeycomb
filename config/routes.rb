@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     end
 
     resources :items, only: [:index, :new, :create]
+    resources :showcases, only: [:index, :new, :create]
 
     resources :editors, only: [:index, :create, :destroy] do
       collection do

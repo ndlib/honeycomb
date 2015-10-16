@@ -2,7 +2,7 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe ExportController, type: :controller do
-  let(:collection) { instance_double(Collection, id: 1, name_line_1: "COLLECTION", destroy!: true, collection_users: [], exhibit: nil, items: []) }
+  let(:collection) { instance_double(Collection, id: 1, name_line_1: "COLLECTION", destroy!: true, collection_users: [], items: []) }
 
   before(:each) do
     @user = sign_in_admin
