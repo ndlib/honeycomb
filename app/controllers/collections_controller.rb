@@ -30,25 +30,25 @@ class CollectionsController < ApplicationController
     end
   end
 
-  def edit
+  def settings
     @collection = CollectionQuery.new.find(params[:id])
     check_user_edits!(@collection)
 
     cache_key = CacheKeys::Generator.new(key_generator: CacheKeys::Custom::Collections,
-                                         action: "edit",
+                                         action: "settings",
                                          collection: @collection)
     fresh_when(etag: cache_key.generate)
   end
 
-  def update
+  def settings_update
     @collection = CollectionQuery.new.find(params[:id])
     check_user_edits!(@collection)
 
     if SaveCollection.call(@collection, save_params)
       flash[:notice] = t(".success")
-      redirect_to edit_collection_path(@collection)
+      redirect_to settings_form_collection_path(@collection, form: params[:form])
     else
-      render :edit
+      render :settings
     end
   end
 

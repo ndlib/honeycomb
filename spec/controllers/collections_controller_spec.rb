@@ -112,37 +112,40 @@ RSpec.describe CollectionsController, type: :controller do
     end
   end
 
-  describe "edit" do
+  describe "settings" do
     before(:each) do
       allow_any_instance_of(CollectionQuery).to receive(:find).and_return(collection)
     end
 
     it "checks the editor permissions" do
       expect_any_instance_of(described_class).to receive(:check_user_edits!).with(collection)
-      get :edit, id: 1
+      get :settings, id: 1
     end
 
     it "uses collection query to get the colletion" do
       expect_any_instance_of(CollectionQuery).to receive(:find).with("1").and_return(collection)
-      get :edit, id: 1
+      get :settings, id: 1
     end
 
     it "is a success" do
-      get :edit, id: 1
+      get :settings, id: 1
       expect(response).to be_success
     end
 
     it_behaves_like "a private basic custom etag cacher" do
-      subject { get :edit, id: 1 }
+      subject { get :settings, id: 1 }
     end
 
-    it "uses the Collections#edit to generate the cache key" do
-      expect_any_instance_of(CacheKeys::Custom::Collections).to receive(:edit)
-      get :edit, id: 1
+    it "uses the Collections#settings to generate the cache key" do
+      expect_any_instance_of(CacheKeys::Custom::Collections).to receive(:settings)
+      get :settings, id: 1
     end
   end
 
-  describe "update" do
+  describe "settings_update" do
+    let(:update_params) { { id: "1", published: true, form: "general", collection: { name_line_1: "TITLE!!" } } }
+    subject { put :settings_update, update_params }
+
     before(:each) do
       allow_any_instance_of(CollectionQuery).to receive(:find).and_return(collection)
       allow(SaveCollection).to receive(:call).and_return(true)
@@ -150,36 +153,34 @@ RSpec.describe CollectionsController, type: :controller do
 
     it "checks the editor permissions" do
       expect_any_instance_of(described_class).to receive(:check_user_edits!).with(collection)
-      put :update, update_params
+      subject
     end
 
-    it "uses collection query to get the colletion" do
+    it "uses collection query to get the collection" do
       expect_any_instance_of(CollectionQuery).to receive(:find).with("1").and_return(collection)
-      put :update, update_params
+      subject
     end
 
     it "assigns a collection" do
-      put :update, update_params
+      subject
 
       assigns(:collection)
       expect(assigns(:collection)).to eq(collection)
     end
 
     it "redirects on success" do
-      put :update, update_params
+      subject
       expect(response).to be_redirect
     end
 
     it "renders new on failure" do
       allow(SaveCollection).to receive(:call).and_return(false)
 
-      put :update, update_params
-      expect(response).to render_template(:edit)
+      subject
+      expect(response).to render_template(:settings)
     end
 
-    it_behaves_like "a private content-based etag cacher" do
-      subject { put :update, update_params }
-    end
+    it_behaves_like "a private content-based etag cacher"
   end
 
   describe "destroy" do

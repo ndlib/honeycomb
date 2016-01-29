@@ -86,8 +86,10 @@ en:
       items_badge: "%{number} Items"
     new:
       title: 'New Collection'
-    edit:
+    settings:
       title: 'Settings'
+    settings_update:
+      success: 'Collection updated'
     create:
       success: 'Collection created'
     update:
