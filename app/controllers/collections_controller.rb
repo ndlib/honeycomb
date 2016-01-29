@@ -35,7 +35,7 @@ class CollectionsController < ApplicationController
     check_user_edits!(@collection)
 
     cache_key = CacheKeys::Generator.new(key_generator: CacheKeys::Custom::Collections,
-                                         action: "edit",
+                                         action: "settings",
                                          collection: @collection)
     fresh_when(etag: cache_key.generate)
   end
