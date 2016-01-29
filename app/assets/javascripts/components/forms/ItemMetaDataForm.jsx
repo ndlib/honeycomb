@@ -39,7 +39,7 @@ var ItemMetaDataForm = React.createClass({
 
   getInitialState: function() {
     return {
-      formFields: null,
+      formFields: _.sortBy(MetaDataConfigurationStore.fields, 'order'),
       formValues: this.props.data,
       formState: "new",
       dataState: "clean",
@@ -63,12 +63,13 @@ var ItemMetaDataForm = React.createClass({
   },
 
   componentWillMount: function () {
-    MetaDataConfigurationStore.getAll(this.setFormFieldsFromConfiguration);
+    MetaDataConfigurationStore.on("MetaDataConfigurationStoreChanged", this.setFormFieldsFromConfiguration);
+    MetaDataConfigurationStore.getAll();
   },
 
-  setFormFieldsFromConfiguration: function(configurationFields) {
+  setFormFieldsFromConfiguration: function() {
     this.setState({
-      formFields: _.sortBy(configurationFields, 'order'),
+      formFields: _.sortBy(MetaDataConfigurationStore.fields, 'order'),
     });
   },
 
@@ -222,7 +223,6 @@ var ItemMetaDataForm = React.createClass({
           <PanelHeading>{this.state.formValues.name} Meta Data</PanelHeading>
           <PanelBody>
             { this.dynamicFormFields() }
-          
           </PanelBody>
           <PanelFooter>
             <SubmitButton disabled={this.formDisabled()} handleClick={this.handleSave} />

@@ -1,0 +1,20 @@
+<%= page_title(t('.title')) %>
+<%= collection_nav(@collection, :settings) %>
+
+<div class="row">
+  <div class="col-md-10">
+    <%= simple_form_for @collection, method: :put, :url => settings_update_form_collection_path(@collection, form: (params[:form] ? "#{params[:form]}" : 'general')) do |f| %>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Site Setup</h3>
+        </div>
+        <div class="panel-body">
+          <%= render partial: (params[:form] ? "#{params[:form]}_settings_form" : 'general_settings_form'), locals: { f: f } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-2">
+    <%= render "settings_side_nav", collection: @collection, form: params[:form] %>
+  </div>
+</div>
