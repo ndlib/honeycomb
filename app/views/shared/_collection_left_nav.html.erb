@@ -6,7 +6,7 @@
     <li class="<%= nav.active_section_css(:website) %>"><a href="<%= site_setup_collection_path(nav.collection) %>"><i class="glyphicon mdi-av-web"></i> <%= t('collection_left_nav.website') %></a></li>
     <li role="presentation" class="divider"></li>
     <li class="<%= nav.active_section_css(:editors) %>"><a href="<%= collection_editors_path(nav.collection) %>"><i class="glyphicon glyphicon-user"></i> <%= t('collection_left_nav.editors') %></a></li>
-    <li class="<%= nav.active_section_css(:settings) %>"><a href="<%= edit_collection_path(nav.collection) %>"><i class="glyphicon glyphicon-list-alt"></i> <%= t('collection_left_nav.settings') %></a></li>
+    <li class="<%= nav.active_section_css(:settings) %>"><a href="<%= settings_collection_path(nav.collection) %>"><i class="glyphicon glyphicon-list-alt"></i> <%= t('collection_left_nav.settings') %></a></li>
     <li role="presentation" class="divider"></li>
 
     <li className="header" role="presentation">Publish Site</li>

@@ -6,7 +6,7 @@ module CacheKeys
         CacheKeys::ActiveRecord.new.generate(record: collections)
       end
 
-      def edit(collection:)
+      def settings(collection:)
         CacheKeys::ActiveRecord.new.generate(record: collection)
       end
 
