@@ -26,7 +26,7 @@ RSpec.describe V1::ItemJSONDecorator do
   end
 
   describe "#at_id" do
-    let(:item) { double(Item, unique_id: "adsf") }
+    let(:item) { instance_double(Item, unique_id: "adsf", name: "name") }
 
     it "returns the path to the id" do
       expect(subject.at_id).to eq("http://test.host/v1/items/adsf")
@@ -34,7 +34,7 @@ RSpec.describe V1::ItemJSONDecorator do
   end
 
   context "collection" do
-    let(:item) { double(Item, collection: collection) }
+    let(:item) { instance_double(Item, collection: collection) }
     let(:collection) { double(Collection, unique_id: "colasdf") }
 
     describe "#collection_id" do
@@ -51,7 +51,7 @@ RSpec.describe V1::ItemJSONDecorator do
   end
 
   describe "#slug" do
-    let(:item) { double(Item, name: "sluggish") }
+    let(:item) { instance_double(Item, name: "sluggish") }
 
     it "Calls the slug generator" do
       expect(CreateURLSlug).to receive(:call).with(item.name)
@@ -60,7 +60,7 @@ RSpec.describe V1::ItemJSONDecorator do
   end
 
   describe "#image" do
-    let(:item) { double(Item, honeypot_image: honeypot_image, image_ready?: true) }
+    let(:item) { instance_double(Item, honeypot_image: honeypot_image, image_ready?: true) }
     let(:honeypot_image) { double(HoneypotImage, json_response: "json_response") }
 
     it "gets the honeypot_image json_response" do
@@ -71,8 +71,26 @@ RSpec.describe V1::ItemJSONDecorator do
 
   context "valid objects" do
     let(:collection) { Collection.new(unique_id: "test-collection") }
-    let(:item) { Item.new(unique_id: "test-item", collection: collection) }
+    let(:item) do
+      instance_double(
+        Item,
+        name: "name",
+        description: "description",
+        image_ready?: true,
+        unique_id: "test-item",
+        collection: collection,
+        metadata: {},
+        image_status: 0,
+        honeypot_image: double(json_response: "json"),
+        item_metadata: double(fields: [double]),
+        updated_at: Time.now,
+      )
+    end
     let(:json) { Jbuilder.new }
+
+    before(:each) do
+      allow(subject).to receive(:metadata).and_return("JSON")
+    end
 
     describe "#display" do
       it "doesn't error" do
@@ -116,8 +134,12 @@ RSpec.describe V1::ItemJSONDecorator do
     end
 
     describe "#to_json" do
+      before(:each) do
+        allow(subject).to receive(:metadata).and_return("JSON")
+      end
+
       it "creates JSON output" do
-        item.name = "Test Item"
+        allow(item).to receive(:name).and_return("Test Item")
         json = subject.to_json
         parsed = JSON.parse(json)
         expect(parsed.fetch("name")).to eq("Test Item")
@@ -125,13 +147,15 @@ RSpec.describe V1::ItemJSONDecorator do
     end
 
     describe "#to_hash" do
-      subject { instance.to_hash }
+      before(:each) do
+        allow(subject).to receive(:metadata).and_return("JSON")
+      end
 
       it "is the hash of the JSON" do
-        item.name = "Test Item"
-        json = instance.to_json
-        expect(subject).to eq(JSON.parse(json))
-        expect(subject.fetch("name")).to eq("Test Item")
+        allow(item).to receive(:name).and_return("Test Item")
+        json = instance.to_hash.to_json
+        expect(subject.to_hash).to eq(JSON.parse(json))
+        expect(subject.to_hash.fetch("name")).to eq("Test Item")
       end
     end
   end

@@ -6,7 +6,7 @@ class CreateURLSlug
   end
 
   def initialize(name)
-    @name = name
+    @name = name.is_a?(Array) ? name.first : name
   end
 
   def create

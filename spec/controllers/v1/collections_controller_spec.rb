@@ -187,6 +187,33 @@ RSpec.describe V1::CollectionsController, type: :controller do
     end
   end
 
+  describe "metadata_configuration" do
+    let(:collection) { Collection.new(id: 1) }
+    let(:collection_configuration) { double(CollectionConfiguration) }
+    subject { get :metadata_configuration, collection_id: 1, format: :json }
+
+    before(:each) do
+      allow_any_instance_of(CollectionQuery).to receive(:any_find).and_return(collection)
+      allow_any_instance_of(CollectionConfigurationQuery).to receive(:find).and_return(collection_configuration)
+      allow_any_instance_of(V1::MetadataConfigurationJSON).to receive(:to_json).and_return("JSON")
+    end
+
+    it "calls to json on the V1::MetadataConfigurationJSON" do
+      expect_any_instance_of(V1::MetadataConfigurationJSON).to receive(:to_json)
+      subject
+    end
+
+    it "queries for the collection" do
+      expect_any_instance_of(CollectionQuery).to receive(:any_find).and_return(collection)
+      subject
+    end
+
+    it "queries for the configuration" do
+      expect_any_instance_of(CollectionConfigurationQuery).to receive(:find).and_return(collection_configuration)
+      subject
+    end
+  end
+
   describe "#site_objects_update" do
     let(:collection) { instance_double(Collection, id: 1, site_objects: nil) }
     let(:site_objects) { "site_objects" }
@@ -208,11 +235,6 @@ RSpec.describe V1::CollectionsController, type: :controller do
 
     it "sets the site_objects for collection using the string translated by SiteObjectsQuery" do
       expect(SaveCollection).to receive(:call).with(collection, site_objects: site_objects_translated).and_return(true)
-      subject
-    end
-
-    it "checks the editor permissions" do
-      expect_any_instance_of(described_class).to receive(:user_can_edit?).with(collection)
       subject
     end
   end

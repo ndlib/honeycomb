@@ -7,6 +7,10 @@ module Metadata
       @item_configuration ||= new(load_yml(:item))
     end
 
+    def self.set_item_configuration(collection)
+      @item_configuration ||= new(CollectionConfigurationQuery.new(collection).find)
+    end
+
     def initialize(data)
       @data = data
     end
@@ -87,11 +91,15 @@ module Metadata
     end
 
     def build_fields
-      data.fetch(:fields).map { |field_data| self.class::Field.new(**field_data) }
+      data.metadata.map do |field_data|
+        field_data = field_data.symbolize_keys
+        self.class::Field.new(**field_data)
+      end
     end
 
     def build_facets
-      data.fetch(:facets).map do |facet_data|
+      data.facets.map do |facet_data|
+        facet_data = facet_data.symbolize_keys
         facet_field = field(facet_data.fetch(:field_name))
         arguments = facet_data.merge(field: facet_field)
         Metadata::Configuration::Facet.new(**arguments)
@@ -99,7 +107,8 @@ module Metadata
     end
 
     def build_sorts
-      data.fetch(:sorts).map do |sort_data|
+      data.sorts.map do |sort_data|
+        sort_data = sort_data.symbolize_keys
         sort_field = field(sort_data.fetch(:field_name))
         arguments = sort_data.merge(field: sort_field)
         Metadata::Configuration::Sort.new(**arguments)
@@ -111,7 +120,7 @@ module Metadata
         fields.each do |field|
           hash[field.name] = field
         end
-      end
+      end.with_indifferent_access
     end
 
     def build_label_map
@@ -119,23 +128,23 @@ module Metadata
         fields.each do |field|
           hash[field.label] = field
         end
-      end
+      end.with_indifferent_access
     end
 
     def build_facet_map
       {}.tap do |hash|
         facets.each do |facet|
-          hash[facet.name] = facet
+          hash[facet.name.to_sym] = facet
         end
-      end
+      end.with_indifferent_access
     end
 
     def build_sort_map
       {}.tap do |hash|
         sorts.each do |sort|
-          hash[sort.name] = sort
+          hash[sort.name.to_sym] = sort
         end
-      end
+      end.with_indifferent_access
     end
   end
 end

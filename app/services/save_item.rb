@@ -13,6 +13,7 @@ class SaveItem
   def save
     fix_params
     item.attributes = params
+    pre_process_metadata
     pre_process_name
     check_unique_id
     check_user_defined_id
@@ -31,6 +32,10 @@ class SaveItem
   def fix_params
     fix_image_param!
     ParamCleaner.call(hash: params)
+  end
+
+  def pre_process_metadata
+    MetadataInputCleaner.call(item)
   end
 
   def pre_process_name

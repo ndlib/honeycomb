@@ -1,13 +1,14 @@
 RSpec.describe Waggle::Search::Result do
   let(:adapter_result) { instance_double(Waggle::Adapters::Solr::Search::Result) }
   let(:query) { instance_double(Waggle::Search::Query, configuration: configuration) }
-  let(:configuration) { instance_double(Metadata::Configuration) }
+  let(:configuration) { instance_double(Metadata::Configuration, sorts: []) }
   let(:instance) { described_class.new(query: query) }
 
   subject { instance }
 
   before do
     allow(Waggle.adapter).to receive(:search_result).and_return(adapter_result)
+    Waggle.set_configuration(configuration)
   end
 
   describe "instance" do
@@ -45,10 +46,8 @@ RSpec.describe Waggle::Search::Result do
   end
 
   describe "sorts" do
-    let(:configuration) { Metadata::Configuration.item_configuration }
-
     it "includes the relevancy sort and the configured sorts" do
-      expect(subject.sorts.count).to eq(3)
+      expect(subject.sorts.count).to eq(1)
       relevancy = subject.sorts.first
       expect(relevancy.name).to eq("Relevance")
       expect(relevancy.value).to eq("score")

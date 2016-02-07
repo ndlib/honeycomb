@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe ItemPublishEmbedPanel do
   subject { described_class.new(item) }
-  let(:item) { double(Item, published: true, id: 1) }
+  let(:item) { instance_double(Item, published: true, id: 1) }
 
   describe "display" do
     it "renders a react component" do

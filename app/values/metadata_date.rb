@@ -36,6 +36,10 @@ class MetadataDate
     @date ||= ConvertToRubyDate.new(self).convert
   end
 
+  def value
+    to_params
+  end
+
   def to_hash
     {
       "@type" => "MetadataDate",

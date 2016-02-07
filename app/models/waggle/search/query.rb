@@ -15,7 +15,7 @@ module Waggle
       end
 
       def configuration
-        ::Metadata::Configuration.item_configuration
+        Waggle.configuration
       end
 
       def facet(name)

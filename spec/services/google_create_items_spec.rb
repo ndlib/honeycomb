@@ -25,6 +25,8 @@ RSpec.describe GoogleCreateItems, helpers: :item_meta_helpers do
   let(:item_creator) { instance_double(FindOrCreateItem, using: item, save: true, new_record?: true, item: item) }
   let(:worksheet) { instance_double(GoogleDrive::Worksheet) }
   let(:param_hash) { { auth_code: "auth", callback_uri: "callback", collection_id: 1, file: "file", sheet: "sheet" } }
+  let(:configuration) { double(Metadata::Configuration, field_names: [], label?: "label", label: double(name: :name, multiple: true, type: :string)) }
+
   let(:subject) { described_class.call(param_hash) }
 
   before (:each) do
@@ -33,6 +35,7 @@ RSpec.describe GoogleCreateItems, helpers: :item_meta_helpers do
     allow_any_instance_of(GoogleSession).to receive(:worksheet_to_hash).and_return(items)
     allow(FindOrCreateItem).to receive(:new).and_return(item_creator)
     allow(SaveItem).to receive(:call).and_return true
+    allow_any_instance_of(described_class).to receive(:configuration).and_return(configuration)
   end
 
   it "throws an exception if a label is not found" do
@@ -61,9 +64,9 @@ RSpec.describe GoogleCreateItems, helpers: :item_meta_helpers do
     it "injects a RewriteItemMetadata call to properly map user data to valid item data" do
       allow_any_instance_of(GoogleSession).to receive(:worksheet_to_hash).and_return(items)
       creator = GoogleCreateItems.new(auth_code: param_hash[:auth_code], callback_uri: param_hash[:callback_uri])
-      expect(RewriteItemMetadata).to receive(:call).with(item_hash: items[0], errors: []).and_return({})
-      expect(RewriteItemMetadata).to receive(:call).with(item_hash: items[1], errors: []).and_return({})
-      expect(RewriteItemMetadata).to receive(:call).with(item_hash: items[2], errors: []).and_return({})
+      expect(RewriteItemMetadata).to receive(:call).with(item_hash: items[0], errors: [], configuration: configuration).and_return({})
+      expect(RewriteItemMetadata).to receive(:call).with(item_hash: items[1], errors: [], configuration: configuration).and_return({})
+      expect(RewriteItemMetadata).to receive(:call).with(item_hash: items[2], errors: [], configuration: configuration).and_return({})
       creator.create_from_worksheet!(collection_id: param_hash[:collection_id], file: param_hash[:file], sheet: param_hash[:sheet])
     end
 

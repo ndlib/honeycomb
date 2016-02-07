@@ -3,7 +3,7 @@ module API
     helper_method :collection
 
     def index
-      @items = ItemQuery.new(collection.items).published.order(:name)
+      @items = ItemQuery.new(collection.items).published.order("metadata->>'name'")
       respond_to do |format|
         format.json { render json: GenerateItemJSON.new(@items, params) }
       end

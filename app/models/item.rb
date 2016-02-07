@@ -1,5 +1,7 @@
 class Item < ActiveRecord::Base
   store_accessor :metadata,
+                 :name,
+                 :description,
                  :creator,
                  :contributor,
                  :publisher,
@@ -34,14 +36,21 @@ class Item < ActiveRecord::Base
   has_attached_file :uploaded_image,
                     restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/
 
-  validates :name, :collection, :unique_id, :user_defined_id, presence: true
-  validates :date_created, :date_modified, :date_published, date: true
+  validates :collection, :unique_id, :user_defined_id, presence: true
   validate :manuscript_url_is_valid_uri
 
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
   validates_attachment_content_type :uploaded_image, content_type: /\Aimage\/.*\Z/
 
   enum image_status: { no_image: 0, image_processing: 1, image_ready: 2, image_unavailable: 3 }
+
+  def name
+    item_metadata.field(:name).first.value
+  end
+
+  def item_metadata
+    @item_metadata ||= Metadata::Retrieval.new(self)
+  end
 
   private
 

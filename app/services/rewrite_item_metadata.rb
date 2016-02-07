@@ -3,13 +3,13 @@ class RewriteItemMetadata
   attr_reader :configuration, :field_map
   private :configuration, :field_map
 
-  def initialize
-    @configuration = Metadata::Configuration.item_configuration
+  def initialize(configuration)
+    @configuration = configuration
     @field_map = Hash[configuration.field_names.map { |name| [name, nil] }]
   end
 
-  def self.call(item_hash:, errors:)
-    new.rewrite(item_hash: item_hash, errors: errors)
+  def self.call(item_hash:, errors:, configuration:)
+    new(configuration).rewrite(item_hash: item_hash, errors: errors)
   end
 
   def rewrite(item_hash:, errors:)

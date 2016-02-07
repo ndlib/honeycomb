@@ -37,6 +37,9 @@ var DateField = React.createClass({
     if (!this.props.value) {
       return;
     }
+    if (this.props.value.length) {
+      this.props.value = this.props.value[0];
+    }
 
     this.setState({
       year: this.props.value.year,
@@ -80,13 +83,13 @@ var DateField = React.createClass({
     });
 
     if (year) {
-      newValue = {
+      newValue = [{
         year: year,
         month: month,
         day: day,
         bc: bc,
         display_text: displayText,
-      };
+      }];
     }
 
     this.props.handleFieldChange(this.props.name, newValue);

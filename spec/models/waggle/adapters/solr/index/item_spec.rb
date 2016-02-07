@@ -5,8 +5,26 @@ RSpec.describe Waggle::Adapters::Solr::Index::Item do
   let(:raw_data) { File.read(Rails.root.join("spec/fixtures/v1/items/#{item_id}.json")) }
   let(:data) { JSON.parse(raw_data).fetch("items") }
   let(:waggle_item) { Waggle::Item.new(data) }
-
+  let(:configuration) { double(Metadata::Configuration, fields: [], facets: [], sorts: []) }
+  let(:metadata) do
+    double(
+      as_solr: {
+        name_t: ["pig-in-mud"],
+        name_sort: "pig-in-mud",
+        creator_facet: ["Bob"],
+        creator_sort: "Bob",
+        creator_t: ["Bob"],
+        date_published_t: ["2013-03-24"],
+        description_t: ["Source"]
+      }
+    )
+  end
   subject { described_class.new(waggle_item: waggle_item) }
+
+  before(:each) do
+    Waggle.set_configuration(configuration)
+    allow(subject).to receive(:metadata).and_return(metadata)
+  end
 
   describe "id" do
     it "is the id plus type" do
@@ -19,7 +37,7 @@ RSpec.describe Waggle::Adapters::Solr::Index::Item do
       expect(subject.as_solr).to eq(
         name_t: ["pig-in-mud"],
         creator_t: ["Bob"],
-        description_t: ["Source: https://pixabay.com/en/pig-sow-animal-portrait-752555/"],
+        description_t: ["Source"],
         date_published_t: ["2013-03-24"],
         creator_facet: ["Bob"],
         name_sort: "pig-in-mud",

@@ -76,9 +76,9 @@ module V1
         [:subject, subject: []],
         [:call_number, call_number: []],
         [:provenance, provenance: []],
-        date_created: [:value, :year, :month, :day, :bc, :display_text],
-        date_modified: [:value, :year, :month, :day, :bc, :display_text],
-        date_published: [:value, :year, :month, :day, :bc, :display_text],
+        [:date_created, [:value, :year, :month, :day, :bc, :display_text]],
+        [:date_modified, [:value, :year, :month, :day, :bc, :display_text]],
+        [:date_published, [:value, :year, :month, :day, :bc, :display_text]],
       )
     end
   end

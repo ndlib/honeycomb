@@ -1,8 +1,18 @@
 require "rails_helper"
 
 RSpec.describe V1::MetadataJSON do
-  let(:item) { Item.new }
+  let(:item) { instance_double(Item, item_metadata: item_metadata) }
+  let(:collection_configuration) { double(Metadata::Configuration, field: metadata_config) }
   let(:instance) { described_class.new(item) }
+
+  let(:item_metadata) { double(Metadata::Retrieval, fields: item_metadata_fields) }
+  let(:item_metadata_fields) { { "name" => [metadata_string] } }
+  let(:metadata_string) { double(MetadataString, to_hash: "HASH") }
+  let(:metadata_config) { double(name: "Name", label: "Label", type: :string) }
+
+  before(:each) do
+    allow_any_instance_of(described_class).to receive(:configuration).and_return(collection_configuration)
+  end
 
   describe "self.metadata" do
     subject { described_class.metadata(item) }
@@ -17,38 +27,35 @@ RSpec.describe V1::MetadataJSON do
   describe "#metadata" do
     subject { instance.metadata }
 
-    it "calls the MetadataString class for string metadata" do
-      allow(item).to receive(:name).and_return("name")
-      expect_any_instance_of(MetadataString).to receive(:to_hash).and_return("hash")
-      expect(subject).to eq(name: { "@type" => "MetadataField", "name" => :name, "label" => "Name", "values" => ["hash"] })
+    it "builds a hash out of the metadata" do
+      # allow(item).to receive(:name).and_return("name")
+      # expect_any_instance_of(MetadataString).to receive(:to_hash).and_return("hash")
+      expect(subject).to eq("name" => { "@type" => "MetadataField", "name" => "Name", "label" => "Label", "values" => ["HASH"] })
     end
 
-    it "calls the MetadataHTML class for html metadata" do
-      allow(item).to receive(:description).and_return("desc")
-      expect_any_instance_of(MetadataHTML).to receive(:to_hash).and_return("hash")
-      expect(subject).to eq(description: { "@type" => "MetadataField", "name" => :description, "label" => "Description", "values" => ["hash"] })
+    it "retreives the name from config" do
+      expect(metadata_config).to receive(:name).and_return("newname")
+      expect(subject["name"]["name"]).to eq("newname")
     end
 
-    it "calls the MetadataDate class for date metadata" do
-      allow(item).to receive(:date_modified).and_return(year: "2010")
-      expect_any_instance_of(MetadataDate).to receive(:to_hash).and_return("hash")
-      expect(subject).to eq(date_modified: { "@type" => "MetadataField", "name" => :date_modified, "label" => "Date Modified", "values" => ["hash"] })
+    it "retreives the label from config" do
+      expect(metadata_config).to receive(:label).and_return("newname")
+      expect(subject["name"]["label"]).to eq("newname")
     end
 
-    it "errors on an unexpected field type" do
-      item.name = "name"
-      expect_any_instance_of(Metadata::Configuration::Field).to receive(:type).and_return("faketype")
-      expect { subject }.to raise_error("missing type")
+    it "calls to hash on the metadata field" do
+      expect(metadata_string).to receive(:to_hash)
+      subject
     end
 
-    it "returns multiple values for arrays" do
-      string1 = instance_double(MetadataString)
-      string2 = instance_double(MetadataString)
-      expect(MetadataString).to receive(:new).and_return(string1, string2)
-      expect(string1).to receive(:to_hash).and_return("hash 1")
-      expect(string2).to receive(:to_hash).and_return("hash 2")
-      allow(item).to receive(:name).and_return(["name 1", "name 2"])
-      expect(subject).to include(name: hash_including("values" => ["hash 1", "hash 2"]))
+    it "loads the field config from collection_configuration" do
+      expect(collection_configuration).to receive(:field).and_return(metadata_config)
+      subject
+    end
+
+    it "does not add the field if there is no config" do
+      allow(collection_configuration).to receive(:field).with("name").and_return(nil)
+      expect(subject).to eq({})
     end
   end
 end

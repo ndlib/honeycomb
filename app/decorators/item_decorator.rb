@@ -11,10 +11,9 @@ class ItemDecorator < Draper::Decorator
 
   def image_name
     if object.honeypot_image
-      object.honeypot_image.name
-    else
-      nil
+      return object.honeypot_image.name
     end
+    nil
   end
 
   def status_text
@@ -63,11 +62,8 @@ class ItemDecorator < Draper::Decorator
 
   def meta_data
     data = {}
-    Metadata::Configuration.item_configuration.field_names.each do |key|
-      value = object.send(key)
-      if !value.nil?
-        data[key] = value
-      end
+    Metadata::Retrieval.new(self).fields.each do |key, values|
+      data[key] = values.map(&:value)
     end
     data
   end

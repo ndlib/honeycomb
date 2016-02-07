@@ -3,28 +3,28 @@ require "rails_helper"
 RSpec.describe Metadata::Configuration do
   let(:field_data) do
     [
-      { name: :string_field, type: :string, label: "String", default_form_field: true, optional_form_field: false, order: true },
-      { name: :date_field, type: :date, label: "Date", default_form_field: true, optional_form_field: false, order: true },
+      { name: "string_field", type: "string", label: "String", default_form_field: true, optional_form_field: false, order: true },
+      { name: "date_field", type: "date", label: "Date", default_form_field: true, optional_form_field: false, order: true },
     ]
   end
   let(:facet_data) do
     [
-      { name: :string_field_facet, field_name: :string_field },
-      { name: :string_field_facet_2, field_name: :string_field, label: "Custom Label" },
+      { name: "string_field_facet", field_name: "string_field" },
+      { name: "string_field_facet_2", field_name: "string_field", label: "Custom Label" },
     ]
   end
   let(:sort_data) do
     [
-      { name: :string_field_sort, field_name: :string_field, direction: :asc },
-      { name: :string_field_sort_2, field_name: :string_field, direction: :desc, label: "Descending Label" },
+      { name: "string_field_sort", field_name: "string_field", direction: "asc" },
+      { name: "string_field_sort_2", field_name: "string_field", direction: "desc", label: "Descending Label" },
     ]
   end
   let(:data) do
-    {
-      fields: field_data,
+    CollectionConfiguration.new(
+      metadata: field_data,
       facets: facet_data,
-      sorts: sort_data,
-    }
+      sorts: sort_data
+    )
   end
   let(:instance) { described_class.new(data) }
 
@@ -54,13 +54,13 @@ RSpec.describe Metadata::Configuration do
 
   describe "field_names" do
     it "returns an array of field names" do
-      expect(subject.field_names).to eq(data[:fields].map { |f| f[:name] })
+      expect(subject.field_names).to eq(data.metadata.map { |f| f["name"] })
     end
   end
 
   describe "field_labels" do
     it "returns an array of field labels" do
-      expect(subject.field_labels).to eq(data[:fields].map { |f| f[:label] })
+      expect(subject.field_labels).to eq(data.metadata.map { |f| f["label"] })
     end
   end
 
@@ -101,7 +101,7 @@ RSpec.describe Metadata::Configuration do
     it "finds a facet by its name" do
       facet = subject.facet(:string_field_facet)
       expect(facet).to be_kind_of(described_class::Facet)
-      expect(facet.name).to eq(:string_field_facet)
+      expect(facet.name).to eq("string_field_facet")
     end
 
     it "returns nil if a facet doesn't exist" do
@@ -134,7 +134,7 @@ RSpec.describe Metadata::Configuration do
     it "finds a sort by its name" do
       sort = subject.sort(:string_field_sort)
       expect(sort).to be_kind_of(described_class::Sort)
-      expect(sort.name).to eq(:string_field_sort)
+      expect(sort.name).to eq("string_field_sort")
     end
 
     it "returns nil if a sort doesn't exist" do
@@ -150,33 +150,6 @@ RSpec.describe Metadata::Configuration do
       expect(described_class::Sort).to receive(:new).with(sort_data[1].merge(field: kind_of(described_class::Field))).and_call_original
       expect(subject).to be_kind_of(Array)
       expect(subject.first).to be_kind_of(described_class::Sort)
-    end
-  end
-
-  context "self" do
-    describe "item_configuration" do
-      subject { described_class.item_configuration }
-
-      after do
-        described_class.instance_variable_set :@item_configuration, nil
-      end
-
-      it "loads configuration from a yml file" do
-        described_class.instance_variable_set :@item_configuration, nil
-        expect(YAML).to receive(:load_file).with(Rails.root.join("config/metadata/", "item.yml")).and_return(fields: [])
-        expect(subject.fields).to eq([])
-      end
-
-      it "returns a configuration with an array of fields" do
-        expect(subject).to be_kind_of(described_class)
-        expect(subject.fields.first).to be_kind_of(described_class::Field)
-      end
-
-      it "maps fields to actual Item fields" do
-        subject.fields.each do |field|
-          expect(Item.new).to respond_to(field.name)
-        end
-      end
     end
   end
 end

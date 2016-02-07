@@ -2,7 +2,7 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe ItemChildrenController, type: :controller do
-  let(:parent) { double(Item, id: 1, children: Item.all, collection: collection) }
+  let(:parent) { instance_double(Item, id: 1, children: Item.all, collection: collection) }
 
   let(:collection) { instance_double(Collection, id: 1) }
   let(:relation) { Item.all }

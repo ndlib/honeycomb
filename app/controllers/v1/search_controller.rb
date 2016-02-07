@@ -7,7 +7,8 @@ module V1
         sort: params[:sort],
         rows: params[:rows],
         start: params[:start],
-        filters: { collection_id: collection.unique_id }
+        filters: { collection_id: collection.unique_id },
+        collection: collection,
       }
       @search = Waggle.search(**search_arguments)
     end

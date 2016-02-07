@@ -44,30 +44,24 @@ RSpec.describe ItemDecorator do
   end
 
   describe "#item_meta_data_form" do
-    let(:collection) { double(Collection, id: 2) }
+    let(:collection) { double(Collection, id: 2, collection_configuration: double) }
+    let(:metadata) do
+      {
+        metadata: [double(value: "value")]
+      }
+    end
     let(:item) do
       double(
         Item,
         id: 1,
         unique_id: "unique_id",
-        name: "name",
-        description: "description",
-        transcription: "transcription",
-        manuscript_url: "manuscript_url",
-        creator: "creator",
-        alternate_name: "alternate_name",
-        rights: "rights",
-        call_number: "call_number",
-        original_language: "original_language",
         collection: collection,
-        contributor: "contributor",
-        subject: "subject",
-        publisher: "publisher",
-        provenance: "provenance",
-        date_created: "date_created",
-        date_modified: "date_modified",
-        date_published: "date_published",
-        user_defined_id: 1)
+        name: "name",
+      )
+    end
+
+    before(:each) do
+      allow_any_instance_of(Metadata::Retrieval).to receive(:fields).and_return(metadata)
     end
 
     it "renders the react component" do
@@ -77,25 +71,7 @@ RSpec.describe ItemDecorator do
         authenticityToken: "token",
         url: "/v1/items/unique_id",
         method: "put",
-        data: {
-          name: "name",
-          description: "description",
-          transcription: "transcription",
-          manuscript_url: "manuscript_url",
-          creator: "creator",
-          contributor: "contributor",
-          subject: "subject",
-          publisher: "publisher",
-          alternate_name: "alternate_name",
-          rights: "rights",
-          call_number: "call_number",
-          provenance: "provenance",
-          original_language: "original_language",
-          date_created: "date_created",
-          date_modified: "date_modified",
-          date_published: "date_published",
-          user_defined_id: 1
-        }
+        data: { metadata: ["value"] }
       )
 
       subject.item_meta_data_form

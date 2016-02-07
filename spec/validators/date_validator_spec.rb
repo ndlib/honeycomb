@@ -1,5 +1,8 @@
 require "rails_helper"
 
+# commented out because it is not in use.  Not removed because I think I want to bring it
+# back in the next refactor
+=begin
 describe DateValidator do
   let(:item) { Item.new }
 
@@ -22,3 +25,4 @@ describe DateValidator do
     Item.new.save
   end
 end
+=end

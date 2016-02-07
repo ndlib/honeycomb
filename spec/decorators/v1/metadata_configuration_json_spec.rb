@@ -1,17 +1,8 @@
 require "rails_helper"
 
 RSpec.describe V1::MetadataConfigurationJSON do
-  let(:data) do
-    {
-      fields: [
-        { name: :string_field, type: :string, label: "String", default_form_field: true, optional_form_field: false, order: true },
-        { name: :date_field, type: :date, label: "Date", default_form_field: true, optional_form_field: false, order: true },
-      ],
-      facets: {},
-      sorts: {},     
-    }
-  end
-  let(:configuration) { Metadata::Configuration.new(data) }
+  let(:collection_configuration) { double(CollectionConfiguration, metadata: {}, facets: {}, sorts: {}) }
+  let(:configuration) { Metadata::Configuration.new(collection_configuration) }
   subject { described_class.new(configuration) }
 
   describe "as_json" do

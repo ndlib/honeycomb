@@ -18,13 +18,17 @@ class GoogleExportItems
     worksheet = session.get_worksheet(file: file, sheet: sheet)
     if worksheet.present?
       item_hashes = items.map do |item|
-        RewriteItemMetadataForExport.call(item_hash: item_hash(item: item))
+        RewriteItemMetadataForExport.call(item_hash: item_hash(item: item), configuration: configuration(item.collection))
       end
       session.hashes_to_worksheet(worksheet: worksheet, hashes: item_hashes)
     end
   end
 
   private
+
+  def configuration(collection)
+    @configuration ||= Metadata::Configuration.new(CollectionConfigurationQuery.new(collection).find)
+  end
 
   def item_hash(item:)
     item_fields =

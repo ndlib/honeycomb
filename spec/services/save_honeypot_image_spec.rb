@@ -23,7 +23,7 @@ RSpec.describe SaveHoneypotImage do
 
   let(:honeypot_image) { HoneypotImage.new(item_id: 1) }
   let(:collection) { double(Collection, id: 100, image: image, honeypot_image: honeypot_image, save: true) }
-  let(:item) { double(Item, id: 10, collection: collection, image: image, honeypot_image: honeypot_image, save: true) }
+  let(:item) { instance_double(Item, id: 10, collection: collection, image: image, honeypot_image: honeypot_image, save: true) }
   let(:image) { double(path: Rails.root.join("spec/fixtures/test.jpg").to_s, content_type: "image/jpeg") }
   let(:faraday_response) { double(success?: true, body: honeypot_json) }
 

@@ -67,12 +67,31 @@ RSpec.describe Waggle do
       }
     end
 
+    let(:passed_arguments) do
+      {
+        q: "q",
+        facets: nil,
+        sort: nil,
+        rows: nil,
+        start: nil,
+      }
+    end
+
+    before(:each) do
+      allow_any_instance_of(CollectionConfigurationQuery).to receive(:find).and_return(double)
+    end
+
     subject { described_class.search(**search_arguments) }
 
     it "calls Waggle::Search::Query.new" do
       query = instance_double(Waggle::Search::Query, result: "result")
-      expect(Waggle::Search::Query).to receive(:new).with(**search_arguments).and_return(query)
+      expect(Waggle::Search::Query).to receive(:new).with(**passed_arguments).and_return(query)
       expect(subject).to eq(query.result)
+    end
+
+    it "sets the configuration from the collection" do
+      expect(Waggle).to receive(:set_configuration)
+      subject
     end
   end
 end

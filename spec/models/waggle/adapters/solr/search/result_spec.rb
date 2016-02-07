@@ -11,9 +11,16 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
       filters: {},
     )
   end
+  let(:configuration) { double(Metadata::Configuration, fields: [], facets: [facet], sort: sort) }
+  let(:facet) { double(Metadata::Configuration::Facet, name: "creator") }
+  let(:sort) { double(Metadata::Configuration::Sort, field_name: "name", direction: "asc") }
 
   let(:instance) { described_class.new(query: query) }
   subject { instance }
+
+  before do
+    Waggle.set_configuration(configuration)
+  end
 
   context "response" do
     before do
@@ -75,7 +82,6 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
         facet: true,
         :"facet.field" => [
           "{!ex=creator_facet}creator_facet",
-          "{!ex=language_facet}language_facet"
         ]
       )
     end
@@ -108,10 +114,11 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
       subject { solr_params.fetch(:"facet.field") }
 
       it "is the configured facet fields, excluding their relevant filter" do
-        expect(subject).to eq([
-          "{!ex=creator_facet}creator_facet",
-          "{!ex=language_facet}language_facet"
-        ])
+        expect(subject).to eq(
+          [
+            "{!ex=creator_facet}creator_facet"
+          ]
+        )
       end
     end
 
@@ -138,7 +145,7 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
 
       it "sets fq values for selected facets and tags the filter" do
         allow(query).to receive(:facet)
-        expect(query).to receive(:facet).with(:creator).and_return("Steve")
+        expect(query).to receive(:facet).with("creator").and_return("Steve")
         expect(subject).to eq(["{!tag=creator_facet}creator_facet:\"Steve\""])
       end
     end

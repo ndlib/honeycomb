@@ -53,7 +53,7 @@ module Waggle
     private
 
     def metadata_configuration
-      ::Metadata::Configuration.item_configuration
+      Waggle.configuration
     end
 
     def image

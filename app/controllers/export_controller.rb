@@ -33,8 +33,4 @@ class ExportController < ApplicationController
   def decode_state(state_hash:)
     JSON.parse(Base64::decode64(state_hash), symbolize_names: true)
   end
-
-  def configuration
-    Metadata::Configuration.item_configuration
-  end
 end

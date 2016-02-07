@@ -6,6 +6,7 @@ RSpec.describe Index::Item do
     subject { described_class.index!(item) }
     before do
       allow(described_class).to receive(:item_to_waggle_item).and_return(waggle_item)
+      allow(described_class).to receive(:get_configuration).and_return(double)
     end
 
     it "calls Waggle.index!" do

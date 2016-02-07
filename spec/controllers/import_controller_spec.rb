@@ -29,6 +29,11 @@ RSpec.describe ImportController, type: :controller do
     let(:param_hash) { { auth_code: "auth", callback_uri: import_google_sheet_callback_collections_url } }
     let(:encoded_state_hash) { Base64::encode64(state_hash.to_json) }
     let(:subject) { get :import_google_sheet_callback, state: encoded_state_hash, code: "auth" }
+    let(:collection_configuration) { double(Metadata::Configuration) }
+
+    before(:each) do
+      allow_any_instance_of(CollectionConfigurationQuery).to receive(:find).and_return(collection_configuration)
+    end
 
     it "calls GoogleCreateItems using the given params" do
       expect(GoogleCreateItems).to receive(:call).with(hash_including(param_hash))
@@ -38,6 +43,12 @@ RSpec.describe ImportController, type: :controller do
     it "checks the editor permissions" do
       allow(GoogleCreateItems).to receive(:call).with(hash_including(param_hash))
       expect_any_instance_of(described_class).to receive(:check_user_edits!).with(collection)
+      subject
+    end
+
+    it "sets the configuration to waggle" do
+      expect(Waggle).to receive(:set_configuration)
+      allow(GoogleCreateItems).to receive(:call).with(hash_including(param_hash))
       subject
     end
   end

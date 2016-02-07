@@ -12,6 +12,7 @@ RSpec.describe SaveItem, type: :model do
     allow(SaveHoneypotImage).to receive(:call).and_return(true)
     allow(CreateUniqueId).to receive(:call).and_return(true)
     allow(Index::Item).to receive(:index!).and_return(true)
+    allow(item).to receive(:name).and_return("name")
     allow(item).to receive(:no_image!).and_return(nil)
   end
 
@@ -46,6 +47,13 @@ RSpec.describe SaveItem, type: :model do
   it "uses the sortable name converter to convert the sortable name" do
     expect(SortableNameConverter).to receive(:convert).with("name")
     subject
+  end
+
+  describe "metadata cleaning" do
+    it "calls the metadata cleaner" do
+      expect(MetadataInputCleaner).to receive(:call)
+      subject
+    end
   end
 
   describe "unique_id" do
@@ -157,6 +165,7 @@ RSpec.describe SaveItem, type: :model do
     let(:params) { {} }
 
     it "sets the name to be the uploaded filename when the item is a new record?" do
+      allow(item).to receive(:name).and_return("")
       expect(GenerateNameFromFilename).to receive(:call).at_least(:once).and_return("Filename")
       expect(item).to receive("name=").with("Filename")
 

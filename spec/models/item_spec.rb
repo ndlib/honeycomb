@@ -2,10 +2,13 @@ require "rails_helper"
 
 RSpec.describe Item do
   let(:image_with_spaces) { File.open(Rails.root.join("spec/fixtures", "test copy.jpg"), "r") }
+  let(:item_metadata) { double(Metadata::Retrieval, field: [double(value: "value")]) }
+
+  before(:each) do
+    allow(subject).to receive(:item_metadata).and_return(item_metadata)
+  end
 
   [
-    :name,
-    :description,
     :transcription,
     :collection,
     :honeypot_image,
@@ -43,12 +46,32 @@ RSpec.describe Item do
     end
   end
 
-  it "requires the name field " do
-    expect(subject).to have(1).error_on(:name)
-  end
-
   it "requires the collection field" do
     expect(subject).to have(1).error_on(:collection)
+  end
+
+  it "requires the unique_id field" do
+    expect(subject).to have(1).error_on(:unique_id)
+  end
+
+  it "requires the user_defined_id field" do
+    expect(subject).to have(1).error_on(:user_defined_id)
+  end
+
+  describe "#name" do
+    let(:field) { double(value: "value1") }
+    let(:field_result) { [field] }
+
+    it "uses the item_metadata field" do
+      expect(item_metadata).to receive(:field).with(:name).and_return(field_result)
+      subject.name
+    end
+
+    it "uses the first value of a multiple name" do
+      allow(item_metadata).to receive(:field).and_return(field_result)
+      expect(field_result).to receive(:first).and_return(double(value: "firstname"))
+      expect(subject.name).to eq("firstname")
+    end
   end
 
   describe "#manuscript_url" do
@@ -64,23 +87,6 @@ RSpec.describe Item do
     it "is invalid with a non url value" do
       subject.manuscript_url = "manuscript"
       expect(subject).to have(1).error_on(:manuscript_url)
-    end
-  end
-
-  describe "date metadata" do
-    it "validates date created" do
-      subject.date_created = { year: nil }
-      expect(subject).to have(1).error_on(:date_created)
-    end
-
-    it "validates date modified" do
-      subject.date_modified = { year: nil }
-      expect(subject).to have(1).error_on(:date_modified)
-    end
-
-    it "validates date published" do
-      subject.date_published = { year: nil }
-      expect(subject).to have(1).error_on(:date_published)
     end
   end
 
@@ -145,6 +151,13 @@ RSpec.describe Item do
         FactoryGirl.create(:item, id: 2, parent_id: 1, user_defined_id: "two")
         expect { subject.destroy }.to raise_error
       end
+    end
+  end
+
+  describe "item_metadata" do
+    it "returns the retreval object" do
+      expect(subject).to receive(:item_metadata).and_return(item_metadata)
+      expect(subject.item_metadata).to eq(item_metadata)
     end
   end
 end

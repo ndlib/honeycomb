@@ -1,15 +1,15 @@
 require "rails_helper"
 
-RSpec.describe Metadata::Configuration do
+RSpec.describe CreateCollectionConfiguration do
   Dir.glob(Rails.root.join("config/metadata/*.yml")).each do |path|
     describe path do
       let(:data) { YAML.load_file(path) }
 
-      subject { described_class.new(data) }
+      subject { described_class.new("").send(:base_config) }
 
       it "is valid" do
-        expect(subject.fields).to be_kind_of(Array)
-        expect(subject.fields.first).to be_kind_of(described_class::Field)
+        expect(subject[:fields]).to be_kind_of(Array)
+        expect(subject[:fields].first).to be_kind_of(Hash)
       end
 
       it "doesn't contain duplicate fields" do

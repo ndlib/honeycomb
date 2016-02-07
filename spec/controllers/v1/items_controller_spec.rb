@@ -64,8 +64,12 @@ RSpec.describe V1::ItemsController, type: :controller do
 
   describe "PUT #update" do
     let(:collection) { double(Collection, id: "1") }
-    let(:item) { double(Item, id: 1, parent: nil, collection: collection) }
+    let(:item) { instance_double(Item, id: 1, parent: nil, collection: collection) }
     let(:update_params) { { format: :json, id: item.id, item: { name: "item" } } }
+    let(:base_config) do
+      c = CreateCollectionConfiguration.new("")
+      c.send(:base_config)
+    end
     subject { put :update, update_params }
 
     before(:each) do
@@ -113,10 +117,10 @@ RSpec.describe V1::ItemsController, type: :controller do
       expect(assigns(:item)).to eq(item)
     end
 
-    it "accepts an array for all metadata that allows multiples" do
-      Metadata::Configuration.item_configuration.fields.each do |field|
-        if field.multiple
-          update_params[:item][field.name] = []
+    it "accepts an array for all base metadata that allows multiples" do
+      base_config[:fields].each do |field|
+        if field[:multiple]
+          update_params[:item][field[:name]] = []
         end
       end
       expect(SaveItem).to receive(:call).with(item, update_params[:item])
@@ -124,9 +128,9 @@ RSpec.describe V1::ItemsController, type: :controller do
     end
 
     it "accepts a single value for all metadata that allows multiples" do
-      Metadata::Configuration.item_configuration.fields.each do |field|
-        if field.multiple
-          update_params[:item][field.name] = field.label
+      base_config[:fields].each do |field|
+        if field[:multiple]
+          update_params[:item][field[:name]] = field[:label]
         end
       end
       expect(SaveItem).to receive(:call).with(item, update_params[:item])
@@ -134,9 +138,9 @@ RSpec.describe V1::ItemsController, type: :controller do
     end
 
     it "accepts nil for all metadata that allows multiples" do
-      Metadata::Configuration.item_configuration.fields.each do |field|
-        if field.multiple
-          update_params[:item][field.name] = nil
+      base_config[:fields].each do |field|
+        if field[:multiple]
+          update_params[:item][field[:name]] = nil
         end
       end
       expect(SaveItem).to receive(:call).with(item, update_params[:item])

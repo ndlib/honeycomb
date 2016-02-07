@@ -52,7 +52,7 @@ RSpec.describe ItemsController, type: :controller do
 
   describe "GET #new" do
     let(:collection) { double(Collection, id: 1, items: relation) }
-    let(:item) { double(Item, id: "1", collection: collection) }
+    let(:item) { instance_double(Item, id: "1", collection: collection) }
 
     before(:each) do
       allow_any_instance_of(ItemQuery).to receive(:build).and_return(item)
@@ -91,7 +91,7 @@ RSpec.describe ItemsController, type: :controller do
   describe "POST #create" do
     let(:collection) { double(Collection, id: 1, items: relation) }
     let(:create_params) { { collection_id: collection.id, item: { name: "name" } } }
-    let(:item) { double(Item, id: 1, parent: nil, collection: collection) }
+    let(:item) { instance_double(Item, id: 1, parent: nil, collection: collection) }
 
     before(:each) do
       allow_any_instance_of(CollectionQuery).to receive(:find).and_return(collection)
@@ -145,7 +145,7 @@ RSpec.describe ItemsController, type: :controller do
 
   describe "GET #edit" do
     let(:collection) { double(Collection, id: "1") }
-    let(:item) { double(Item, id: "1", collection: collection, pages: ["page1", "page2"]) }
+    let(:item) { instance_double(Item, id: "1", collection: collection, pages: ["page1", "page2"]) }
 
     before(:each) do
       allow_any_instance_of(ItemDecorator).to receive(:recent_children).and_return(nil)
@@ -189,7 +189,7 @@ RSpec.describe ItemsController, type: :controller do
 
   describe "DELETE #destroy" do
     let(:collection) { double(Collection, id: "1") }
-    let(:item) { double(Item, id: 1, collection: collection, destroy!: true, sections: [], children: [], pages: []) }
+    let(:item) { instance_double(Item, id: 1, collection: collection, destroy!: true, sections: [], children: [], pages: []) }
 
     subject { delete :destroy, id: item.id }
 
@@ -235,7 +235,7 @@ RSpec.describe ItemsController, type: :controller do
 
   describe "PUT #publish" do
     let(:collection) { double(Collection, id: "1") }
-    let(:item) { double(Item, id: 1, collection: collection, "published=" => true, parent: nil) }
+    let(:item) { instance_double(Item, id: 1, collection: collection, "published=" => true, parent: nil) }
 
     before(:each) do
       allow_any_instance_of(ItemQuery).to receive(:find).and_return(item)
@@ -273,7 +273,7 @@ RSpec.describe ItemsController, type: :controller do
 
   describe "PUT #unpublish" do
     let(:collection) { double(Collection, id: "1") }
-    let(:item) { double(Item, id: 1, collection: collection, "published=" => true, parent: nil) }
+    let(:item) { instance_double(Item, id: 1, collection: collection, "published=" => true, parent: nil) }
 
     before(:each) do
       allow_any_instance_of(ItemQuery).to receive(:find).and_return(item)

@@ -78,9 +78,9 @@ RSpec.describe Waggle::Item do
 
   describe "metadata" do
     it "is a Metadata object" do
-      expect(Waggle::Metadata::Set).to receive(:new).
-        with(data.fetch("metadata"), Metadata::Configuration.item_configuration).and_call_original
-      expect(subject.metadata).to be_kind_of(Waggle::Metadata::Set)
+      allow(subject).to receive(:metadata_configuration).and_return(double)
+      expect(Waggle::Metadata::Set).to receive(:new).and_return("METADATASET")
+      expect(subject.metadata).to eq("METADATASET")
     end
   end
 end

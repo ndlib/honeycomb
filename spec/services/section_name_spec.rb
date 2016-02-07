@@ -3,7 +3,7 @@ require "rails_helper"
 describe SectionName do
   subject { described_class.new(section) }
   let(:section) { double(Section, name: "section_name", item: item) }
-  let(:item) { double(Item, name: "item_name") }
+  let(:item) { instance_double(Item, name: "item_name") }
 
   describe "#name" do
     it "chooses the item name if the section name is nil" do

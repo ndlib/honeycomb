@@ -28,7 +28,7 @@ class CreateItems
     ActiveRecord::Base.transaction do
       items_hash.each.with_index do |item_props, index|
         rewrite_errors = []
-        item_props = yield(item_props, rewrite_errors) if block_given?
+        item_props = yield(item_props, rewrite_errors).symbolize_keys if block_given?
         item_creator = FindOrCreateItem.call(props: { collection_id: collection_id, **item_props }, find_by: find_by)
         saved = rewrite_errors.present? ? false : item_creator.save
         add_to_errors(errors: errors, index: index, new_errors: rewrite_errors | item_creator.item.errors.full_messages, item: item_creator.item)
