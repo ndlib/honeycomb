@@ -124,6 +124,6 @@ class CollectionsController < ApplicationController
       :uploaded_image,
       :about,
       :copyright,
-      :site_objects)
+      :site_path)
   end
 end

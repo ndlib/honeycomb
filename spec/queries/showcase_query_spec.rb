@@ -61,12 +61,12 @@ describe ShowcaseQuery do
     end
   end
 
-  it "can be deleted if not included in a collection's site_objects" do
+  it "can be deleted if not included in a collection's site_path" do
     expect_any_instance_of(SiteObjectsQuery).to receive(:exists?).with(collection_object: relation).and_return(false)
     expect(subject.can_delete?).to eq(true)
   end
 
-  it "cannot be deleted if included in a collection's site_objects" do
+  it "cannot be deleted if included in a collection's site_path" do
     expect_any_instance_of(SiteObjectsQuery).to receive(:exists?).with(collection_object: relation).and_return(true)
     expect(subject.can_delete?).to eq(false)
   end

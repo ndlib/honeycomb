@@ -10,8 +10,8 @@ module CacheKeys
         CacheKeys::ActiveRecord.new.generate(record: collection)
       end
 
-      def site_objects(collection:, site_objects:)
-        CacheKeys::ActiveRecord.new.generate(record: [collection, site_objects])
+      def site_path(collection:, site_path:)
+        CacheKeys::ActiveRecord.new.generate(record: [collection, site_path])
       end
     end
   end
