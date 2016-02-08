@@ -59,7 +59,7 @@ var SitePath = React.createClass({
     $.get(this.props.sitePathURL, function(result) {
       if (this.isMounted()) {
         this.setState({
-          sitePathObjects: result.site_objects
+          sitePathObjects: result.site_path
         }, this.requestAvailable);
       }
     }.bind(this));
@@ -99,7 +99,7 @@ var SitePath = React.createClass({
       url: this.props.sitePathUpdateURL,
       dataType: "json",
       data: {
-        site_objects: JSON.stringify(json)
+        site_path: JSON.stringify(json)
       },
       method: "PUT",
       success: (function() {

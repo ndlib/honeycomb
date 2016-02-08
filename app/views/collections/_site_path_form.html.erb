@@ -1,6 +1,6 @@
 <%= react_component("SitePath", {
-  sitePathURL: v1_collection_site_objects_path(@collection.unique_id),
-  sitePathUpdateURL: v1_collection_site_objects_path(@collection.unique_id),
+  sitePathURL: v1_collection_site_path_path(@collection.unique_id),
+  sitePathUpdateURL: v1_collection_site_path_path(@collection.unique_id),
   showcasesURL: v1_collection_showcases_path(@collection.unique_id),
   pagesURL: v1_collection_pages_path(@collection.unique_id)
 }) %>

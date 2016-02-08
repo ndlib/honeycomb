@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160202150100) do
+ActiveRecord::Schema.define(version: 20160208151649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20160202150100) do
     t.datetime "uploaded_image_updated_at"
     t.boolean  "enable_search"
     t.boolean  "hide_title_on_home_page"
-    t.text     "site_objects"
+    t.text     "site_path"
   end
 
   add_index "collections", ["preview_mode"], name: "index_collections_on_preview_mode", using: :btree

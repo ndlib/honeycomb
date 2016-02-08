@@ -35,7 +35,7 @@ def main():
         collection = get_json_file(collection["@id"])
         items = get_json_file(collection["hasPart/items"])
         showcases = get_json_file(collection["hasPart/showcases"])
-        site_objects = get_json_file(collection["@id"] + "/site_objects")
+        site_path = get_json_file(collection["@id"] + "/site_path")
         for item in items["items"]:
             item = get_json_file(item["@id"])
             # for each child in item["children"]
