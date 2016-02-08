@@ -104,8 +104,14 @@ RSpec.describe V1::PageJSONDecorator do
 
   describe "#image" do
     it "calls v1 image json decorator" do
+      allow(page).to receive(:image).and_return("image")
       expect(V1::ImageJSONDecorator).to receive(:new).and_return({})
       subject.image
+    end
+
+    it "returns nil if there is no image" do
+      allow(page).to receive(:image).and_return(nil)
+      expect(subject.image).to eq(nil)
     end
   end
 

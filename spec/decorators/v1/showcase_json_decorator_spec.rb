@@ -77,6 +77,11 @@ RSpec.describe V1::ShowcaseJSONDecorator do
       expect(showcase).to receive(:honeypot_image).and_return(honeypot_image)
       subject.image
     end
+
+    it "returns nil if there is no image" do
+      allow(showcase).to receive(:honeypot_image).and_return(nil)
+      expect(subject.image).to eq(nil)
+    end
   end
 
   describe "#sections" do
