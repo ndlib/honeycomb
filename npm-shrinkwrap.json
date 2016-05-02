@@ -405,6 +405,11 @@
       "from": "envify@>=3.0.0 <4.0.0",
       "resolved": "https://registry.npmjs.org/envify/-/envify-3.4.0.tgz"
     },
+    "es6-promise": {
+      "version": "3.1.2",
+      "from": "es6-promise@>=3.1.2 <4.0.0",
+      "resolved": "https://registry.npmjs.org/es6-promise/-/es6-promise-3.1.2.tgz"
+    },
     "escape-string-regexp": {
       "version": "1.0.4",
       "from": "escape-string-regexp@>=1.0.4 <2.0.0",
