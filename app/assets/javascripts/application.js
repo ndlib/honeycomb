@@ -29,5 +29,5 @@
 //= require menu-bar
 //= require flash
 //= require jquery.cookie
-require('es6-promise').polyfill();
+
 window.$ = window.jQuery = require('jquery');
