@@ -8,13 +8,13 @@ mysql_settings: &mysql_settings
   adapter:   mysql2
   encoding:  utf8
   reconnect: true
-  pool:      5
+  pool:      15
 
 pg_settings: &pg_settings
   adapter: postgresql
   encoding: utf8
   reconnect: true
-  pool: 5
+  pool: 15
 
 local_user: &local_user
   <<: *pg_settings

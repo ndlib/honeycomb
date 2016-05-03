@@ -68,7 +68,8 @@ class SaveItem
     if params[:uploaded_image]
       item.image_processing!
       begin
-        QueueJob.call(ProcessImageJob, object: item)
+        current_time = DateTime.now.to_s
+        QueueJob.call(ProcessImageJob, object: item, timestamp: current_time)
       rescue Bunny::TCPConnectionFailedForAllHosts
         item.image_unavailable!
       end
