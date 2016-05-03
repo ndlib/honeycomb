@@ -1,5 +1,22 @@
 # Change Log
 
+## [3.1.0](https://github.com/ndlib/honeycomb/tree/v3.1.0) (2016-05-03)
+[Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.0.0...v3.1.0)
+
+###New features/enhancements:###
+  - Admins can now import images from external url ([DEC-931](https://jira.library.nd.edu/browse/DEC-931), [#354](https://github.com/ndlib/honeycomb/pull/354))
+  - Collection list now renders 15x faster ([DEC-648](https://jira.library.nd.edu/browse/DEC-648), [#363](https://github.com/ndlib/honeycomb/pull/363))
+  - Improved tracking of changes to collection data ([#357](https://github.com/ndlib/honeycomb/pull/357))
+  - Searches now use OR by default, simplifying the way that item searches are performed ([DEC-913](https://jira.library.nd.edu/browse/DEC-913), [#351](https://github.com/ndlib/honeycomb/pull/351))
+
+###Bug fixes:###
+  - Fixed a bug preventing users from editing items in Internet Explorer ([DEC-925](https://jira.library.nd.edu/browse/DEC-925), [#355](https://github.com/ndlib/honeycomb/pull/355))
+  - Fixed a bug that prevented users from hiding metadata fields from items ([DEC-927](https://jira.library.nd.edu/browse/DEC-927), [#364](https://github.com/ndlib/honeycomb/pull/364))
+  - New items were not showing the correct image in search ([DEC-950](https://jira.library.nd.edu/browse/DEC-950), [#361](https://github.com/ndlib/honeycomb/pull/361))
+  - Fixed a bug that forced the user to double click the new meta field button in Safari ([DEC-928](https://jira.library.nd.edu/browse/DEC-928), [#359](https://github.com/ndlib/honeycomb/pull/359))
+  - Fixed a bug that prevented rendering external collections ([DEC-934](https://jira.library.nd.edu/browse/DEC-934), [#356](https://github.com/ndlib/honeycomb/pull/356))
+  - Fixed a bug that prevented users from Publishing/Previewing collections and several other tasks in Safari ([DEC-924](https://jira.library.nd.edu/browse/DEC-924), [#353](https://github.com/ndlib/honeycomb/pull/353))
+
 ## [3.0.0](https://github.com/ndlib/honeycomb/tree/v3.0.0) (2016-03-30)
 [Full Changelog](https://github.com/ndlib/honeycomb/compare/v2.0.0...v3.0.0)
 
