@@ -4,7 +4,7 @@
 React = require("react");
 ReactDOM = require("react-dom");
 
-Promise = require('es6-promise').Promise;
+Promise = require("es6-promise").Promise;
 
 // mixins
 APIResponseMixin = require("./mixins/APIResponseMixin");
