@@ -2,8 +2,9 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe V1::ItemsController, type: :controller do
-  let(:collection) { instance_double(Collection, id: "1", updated_at: nil, items: nil) }
-  let(:item) { instance_double(Item, id: "1", collection: nil, children: nil) }
+  let(:collection_configuration) { CollectionConfiguration.new }
+  let(:collection) { instance_double(Collection, id: "1", updated_at: nil, items: nil, collection_configuration: collection_configuration) }
+  let(:item) { instance_double(Item, id: "1", collection: collection, children: nil) }
 
   before(:each) do
     allow_any_instance_of(ItemQuery).to receive(:public_find).and_return(item)
@@ -63,7 +64,8 @@ RSpec.describe V1::ItemsController, type: :controller do
   end
 
   describe "PUT #update" do
-    let(:collection) { double(Collection, id: "1") }
+    let(:collection_configuration) { CollectionConfiguration.new }
+    let(:collection) { double(Collection, id: "1", collection_configuration: collection_configuration) }
     let(:item) { instance_double(Item, id: 1, parent: nil, collection: collection) }
     let(:update_params) { { format: :json, id: item.id, item: { name: "item" } } }
     let(:base_config) do
@@ -127,7 +129,8 @@ RSpec.describe V1::ItemsController, type: :controller do
   end
 
   describe "#create" do
-    let(:collection) { Collection.new(unique_id: "test", items: []) }
+    let(:collection_configuration) { CollectionConfiguration.new }
+    let(:collection) { Collection.new(unique_id: "test", items: [], collection_configuration: collection_configuration) }
     let(:item) { Item.new(id: 1, unique_id: "test", collection: collection) }
     let(:image) { double(path: Rails.root.join("spec/fixtures/test.jpg").to_s, content_type: "image/jpeg") }
     let(:image_params) { { collection_id: "test", item: { uploaded_image: fixture_file_upload("test.jpg", "image/jpeg", :binary) }, format: :json } }
@@ -165,8 +168,10 @@ RSpec.describe V1::ItemsController, type: :controller do
   end
 
   describe "#showcases" do
+    let(:collection_configuration) { CollectionConfiguration.new }
+    let(:collection) { Collection.new(unique_id: "test", items: [], collection_configuration: collection_configuration) }
     subject { get :showcases, item_id: "id", format: :json }
-    let(:item) { instance_double(Item, id: "1", collection: nil, children: nil, showcases: nil) }
+    let(:item) { instance_double(Item, id: "1", collection: collection, children: nil, showcases: nil) }
 
     it "calls ItemQuery" do
       expect_any_instance_of(ItemQuery).to receive(:public_find).with("id").and_return(item)
