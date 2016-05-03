@@ -9,6 +9,7 @@ module CacheKeys
                                                       decorated_section.next,
                                                       decorated_section.previous,
                                                       decorated_section.collection,
+                                                      decorated_section.collection.collection_configuration,
                                                       decorated_section.showcase])
       end
     end

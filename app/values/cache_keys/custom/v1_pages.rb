@@ -9,6 +9,7 @@ module CacheKeys
       def show(page:)
         CacheKeys::ActiveRecord.new.generate(record: [page.object,
                                                       page.collection,
+                                                      page.collection.collection_configuration,
                                                       page.items,
                                                       page.next])
       end
