@@ -90,7 +90,7 @@ gem "bootstrap-sass", "~> 3.3.1"
 gem "bootstrap-material-design"
 gem "autoprefixer-rails"
 
-gem "google_drive"
+gem "google_drive", git: "https://github.com/ndlib/google-drive-ruby.git", branch: "DEC-1008-Speedup-update-cells"
 
 group :development, :test do
   gem "rubocop", "~> 0.36.0", require: false
