@@ -89,7 +89,12 @@ class GoogleSession
       rows << row
     end
     rows[0] = header_row
-    worksheet.update_cells(1, 1, rows)
-    worksheet.save
+    rows_per_batch = Rails.configuration.settings.export_batch_size || rows.count
+    row_batches = rows.in_groups_of(rows_per_batch, false)
+
+    row_batches.each.with_index do |row_batch, i|
+      worksheet.update_cells(1 + (i * rows_per_batch), 1, row_batch)
+      worksheet.save
+    end
   end
 end
