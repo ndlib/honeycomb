@@ -41,6 +41,7 @@ PagesPanel = require("./components/PagesPanel");
 Thumbnail = require("./components/Thumbnail");
 GoogleImportButton = require("./components/GoogleImportButton");
 GoogleExportButton = require("./components/GoogleExportButton");
+SearchPage = require("./components/search/SearchPage");
 
 // embed
 EmbedCode = require("./components/embed/EmbedCode");

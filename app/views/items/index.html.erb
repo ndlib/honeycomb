@@ -3,5 +3,8 @@
 
 <%= render partial: 'action_bar', locals: { collection: @collection } %>
 
-<%= render partial: "list", locals: { items: @items } %>
-
+<%= react_component 'SearchPage', {
+    searchUrl: v1_collection_search_index_path(@collection.unique_id)
+  },
+  {prerender: false }
+%>
