@@ -40,7 +40,7 @@ class SearchStore extends EventEmitter {
     this.hits = jsonResponse.hits.hit;
     this.found = jsonResponse.hits.found;
     this.start = jsonResponse.hits.start;
-    this.emitChange()
+    this.emitChange();
   }
 
   // Receives actions sent by the AppDispatcher
