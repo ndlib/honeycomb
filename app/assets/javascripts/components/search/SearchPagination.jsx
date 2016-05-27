@@ -7,12 +7,14 @@ var SearchActions = require('../../actions/SearchActions');
 var Styles = {
   outerDiv: {
     display: "inline-block",
-    width: "100%",color:'rgba(0, 0, 0, 0.870588)', float: 'right', textAlign: 'right'
+    color:'rgba(0, 0, 0, 0.870588)',
+    float: 'right',
+    textAlign: 'right',
   },
   itemRangeLabel: {
     marginRight:'15px',
     display:'inline-block',
-    verticalAlign:'top'
+    lineHeight: '40px'
   },
   pageButton: {
     minWidth: "34px",

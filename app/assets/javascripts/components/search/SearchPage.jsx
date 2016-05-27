@@ -127,7 +127,10 @@ var SearchPage = React.createClass({
   render() {
     return (
       <div style={ Styles.outerDiv }>
-        <SearchPagination key="PaginationHeader" rows={this.props.rows} searchUrl={this.props.searchUrl} style={ Styles.paginationHeader }/>
+        <div style={{ width: "100%" }}>
+          <SearchBox searchUrl={this.props.searchUrl} rows={this.props.rows} />
+          <SearchPagination key="PaginationHeader" rows={this.props.rows} searchUrl={this.props.searchUrl} style={ Styles.paginationHeader }/>
+        </div>
         <div style={ Styles.table }>
           <mui.Table selectable={false} fixedFooter={true} onCellClick={ this.openItem }>
             <mui.TableHeader displaySelectAll={false} adjustForCheckbox={false}>

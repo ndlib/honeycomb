@@ -6,6 +6,10 @@ class SearchActions {
   executeQuery(baseApiUrl, params) {
     var url = baseApiUrl + "?";
     if(params.searchTerm) {
+      AppDispatcher.dispatch({
+        actionType: SearchActionTypes.SEARCH_SET_TERM,
+        searchTerm: params.searchTerm
+      });
       url += "q=" + params.searchTerm;
     }
     if(params.sortOption) {

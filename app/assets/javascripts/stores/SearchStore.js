@@ -49,6 +49,9 @@ class SearchStore extends EventEmitter {
       case SearchActionTypes.SEARCH_LOAD_RESULTS:
         this.loadSearchResults(action.jsonResponse);
         break;
+      case SearchActionTypes.SEARCH_SET_TERM:
+        this.searchTerm = action.searchTerm;
+        this.emitChange();
       default:
         break;
     }
