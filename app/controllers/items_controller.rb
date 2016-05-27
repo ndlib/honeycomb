@@ -30,7 +30,7 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    item = ItemQuery.new.find(params[:id])
+    item = ItemQuery.new.public_find(params[:id])
     check_user_edits!(item.collection)
 
     @item = ItemDecorator.new(item)

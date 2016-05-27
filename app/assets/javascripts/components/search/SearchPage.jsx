@@ -14,6 +14,9 @@ var Styles = {
     display: "inline-block",
     width: "100%",
   },
+  row: {
+    cursor: "pointer"
+  },
   paginationHeader: {
     paddingBottom: "4px"
   },
@@ -92,6 +95,14 @@ var SearchPage = React.createClass({
     return (<img src={ thumbnailUrl } style={ Styles.cells.thumbnailImage }/>);
   },
 
+  openItem: function(rowNumber, columnId) {
+    var selectedId = SearchStore.hits[rowNumber]["@id"];
+    var reg = new RegExp( '^.*\/(.*)$', 'i' );
+    var string = reg.exec(selectedId);
+    var itemId = string[1];
+    window.location = "/items/" + itemId + "/edit";
+  },
+
   items: function(){
     return SearchStore.hits.map(function(hit) {
       var dateOptions = { year: "numeric", month: "short", day: "numeric" };
@@ -101,7 +112,7 @@ var SearchPage = React.createClass({
         dateString = (new Date(hit.updated)).toLocaleTimeString("en-US");
       }
       return (
-        <mui.TableRow key={ hit["@id"] }>
+        <mui.TableRow key={ hit["@id"] } style={ Styles.row }>
             <mui.TableRowColumn style={ Styles.cells.thumbnail }>
               { this.getThumbnail(hit.thumbnailURL) }
             </mui.TableRowColumn>
@@ -118,7 +129,7 @@ var SearchPage = React.createClass({
       <div style={ Styles.outerDiv }>
         <SearchPagination key="PaginationHeader" rows={this.props.rows} searchUrl={this.props.searchUrl} style={ Styles.paginationHeader }/>
         <div style={ Styles.table }>
-          <mui.Table selectable={false} fixedFooter={true}>
+          <mui.Table selectable={false} fixedFooter={true} onCellClick={ this.openItem }>
             <mui.TableHeader displaySelectAll={false} adjustForCheckbox={false}>
               <mui.TableRow>
                 <mui.TableHeaderColumn style={Styles.headers.thumbnail}></mui.TableHeaderColumn>
