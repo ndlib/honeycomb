@@ -95,16 +95,28 @@ var SearchPagination = React.createClass({
     return nodes;
   },
 
-  render: function() {
-    // people think of the first record as 1, not 0.
-    // Am I not a people?
-    var startHuman = SearchStore.start + 1;
-    var endHuman = Math.min(SearchStore.start + this.props.rows, SearchStore.found);
-    return (
-      <div style={ _.extend(Styles.outerDiv, this.props.style) }>
+  rangeLabel: function() {
+    if(SearchStore.count > 0){
+      var startHuman = SearchStore.start + 1;
+      var endHuman = Math.min(SearchStore.start + this.props.rows, SearchStore.found);
+      return (
         <span style={ Styles.itemRangeLabel }>
           Showing {startHuman} - {endHuman} of {SearchStore.found}
         </span>
+      );
+    } else {
+      return (
+        <span style={ Styles.itemRangeLabel }>
+          No results found.
+        </span>
+      );
+    }
+  },
+
+  render: function() {
+    return (
+      <div style={ _.extend(Styles.outerDiv, this.props.style) }>
+        { this.rangeLabel() }
         { this.pageLinks() }
       </div>
     );

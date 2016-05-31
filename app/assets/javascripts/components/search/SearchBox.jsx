@@ -40,9 +40,7 @@ var SearchBox = React.createClass({
   },
 
   onClick: function(e) {
-    if (this.state.searchTerm) {
-      SearchActions.executeQuery(this.props.searchUrl, { searchTerm: this.state.searchTerm, rowLimit: this.props.rows })
-    }
+    SearchActions.executeQuery(this.props.searchUrl, { searchTerm: this.state.searchTerm, rowLimit: this.props.rows })
   },
 
   componentDidMount: function() {

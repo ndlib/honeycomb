@@ -15,7 +15,7 @@ class SearchStore extends EventEmitter {
     this.facets = null; // List of facet options available for this collection
     this.sorts = null;  // List of sort options available for this collection
 
-    Object.defineProperty(this, "count", { get: function() { return this._hits.length; } });
+    Object.defineProperty(this, "count", { get: function() { return this.hits.length; } });
 
     AppDispatcher.register(this.receiveAction.bind(this));
   }
@@ -40,14 +40,15 @@ class SearchStore extends EventEmitter {
     this.hits = jsonResponse.hits.hit;
     this.found = jsonResponse.hits.found;
     this.start = jsonResponse.hits.start;
-    this.emitChange();
   }
 
   // Receives actions sent by the AppDispatcher
   receiveAction(action) {
     switch(action.actionType) {
       case SearchActionTypes.SEARCH_LOAD_RESULTS:
+        this.searchTerm = action.searchTerm;
         this.loadSearchResults(action.jsonResponse);
+        this.emitChange();
         break;
       case SearchActionTypes.SEARCH_SET_TERM:
         this.searchTerm = action.searchTerm;

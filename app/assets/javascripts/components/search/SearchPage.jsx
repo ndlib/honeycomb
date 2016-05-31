@@ -1,6 +1,7 @@
 'use strict'
 var React = require('react');
 var mui = require("material-ui");
+var Colors = require("material-ui/lib/styles/colors");
 var AppDispatcher = require("../../dispatcher/AppDispatcher");
 var SearchActions = require('../../actions/SearchActions');
 var SearchStore = require('../../stores/SearchStore');
@@ -43,9 +44,16 @@ var Styles = {
       border: "1px solid #dddddd",
       borderRadius: "4px",
     },
-    name: {},
-    status: {},
-    lastModifiedAt: {},
+    textItemIcon: {
+      fontSize: "49px"
+    },
+    itemName: {
+      color: "#2c5882",
+      fontSize: "18px"
+    },
+    lastModifiedAt: {
+      fontSize: "14px"
+    },
   },
   headers: {
     thumbnail: {
@@ -56,8 +64,7 @@ var Styles = {
       paddingRight: "24px",
       width: "97px",
     },
-    name: {},
-    status: {},
+    itemName: {},
     lastModifiedAt: {},
   },
 };
@@ -85,7 +92,7 @@ var SearchPage = React.createClass({
 
   getThumbnail: function(thumbnailUrl) {
     if(thumbnailUrl == null || thumbnailUrl == ""){
-      return null;
+      return (<mui.FontIcon  className="material-icons" style={ Styles.cells.textItemIcon }>subject</mui.FontIcon>);
     }
     var reg = new RegExp( '^(.*)(\/.*)([\/].*$)', 'i' );
     var string = reg.exec(thumbnailUrl);
@@ -117,7 +124,6 @@ var SearchPage = React.createClass({
               { this.getThumbnail(hit.thumbnailURL) }
             </mui.TableRowColumn>
             <mui.TableRowColumn style={ Styles.cells.itemName }>{ hit.name }</mui.TableRowColumn>
-            <mui.TableRowColumn style={ Styles.cells.status }>OK</mui.TableRowColumn>
             <mui.TableRowColumn style={ Styles.cells.lastModifiedAt }>{ dateString }</mui.TableRowColumn>
         </mui.TableRow>
       );
@@ -137,7 +143,6 @@ var SearchPage = React.createClass({
               <mui.TableRow>
                 <mui.TableHeaderColumn style={Styles.headers.thumbnail}></mui.TableHeaderColumn>
                 <mui.TableHeaderColumn style={Styles.headers.itemName}>Items</mui.TableHeaderColumn>
-                <mui.TableHeaderColumn style={Styles.headers.status}>Status</mui.TableHeaderColumn>
                 <mui.TableHeaderColumn style={Styles.headers.lastModifiedAt}>Last Modified At</mui.TableHeaderColumn>
               </mui.TableRow>
             </mui.TableHeader>
