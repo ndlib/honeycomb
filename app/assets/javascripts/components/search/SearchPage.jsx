@@ -3,6 +3,7 @@ var React = require('react');
 var mui = require("material-ui");
 var Colors = require("material-ui/lib/styles/colors");
 var AppDispatcher = require("../../dispatcher/AppDispatcher");
+var EventEmitter = require("../../EventEmitter");
 var SearchActions = require('../../actions/SearchActions');
 var SearchStore = require('../../stores/SearchStore');
 
@@ -80,14 +81,24 @@ var SearchPage = React.createClass({
     return { rows: 100 };
   },
 
+  getInitialState: function() {
+    return { searching: false };
+  },
+
   componentWillMount: function() {
-    SearchStore.addChangeListener(this.resultsAreIn);
+    EventEmitter.on("SearchExecutingQuery", function() { this.setState({ searching: true }); }.bind(this));
+    EventEmitter.on("SearchQueryComplete", this.resultsAreIn);
     SearchActions.executeQuery(this.props.searchUrl, { searchTerm: this.props.searchTerm, rowLimit: this.props.rows })
   },
 
-  resultsAreIn: function(){
-    this.forceUpdate();
-    window.scrollTo(0,0);
+  resultsAreIn: function(result, data){
+    if(result == "success") {
+      window.scrollTo(0,0);
+    } else {
+      var link = "<a target='blank' href='https://docs.google.com/a/nd.edu/forms/d/1PH99cRyKzhZ6rV-dCJjrfkzdThA2n1GvoE9PT6kCkSk/viewform?entry.1268925684=" + window.location + "'>submit feedback</a>";
+      EventEmitter.emit("MessageCenterDisplay", "error", "Something went wrong. Please " + link + " if this continues to be an issue.", true);
+    }
+    this.setState({ searching: false });
   },
 
   getThumbnail: function(thumbnailUrl) {
@@ -130,9 +141,18 @@ var SearchPage = React.createClass({
     }.bind(this));
   },
 
+  progressCircle: function(){
+    if(this.state.searching){
+      return (<ProgressOverlay />);
+    } else {
+      return null;
+    }
+  },
+
   render() {
     return (
       <div style={ Styles.outerDiv }>
+        { this.progressCircle() }
         <div style={{ width: "100%" }}>
           <SearchBox searchUrl={this.props.searchUrl} rows={this.props.rows} />
           <SearchPagination key="PaginationHeader" rows={this.props.rows} searchUrl={this.props.searchUrl} style={ Styles.paginationHeader }/>

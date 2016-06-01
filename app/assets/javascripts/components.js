@@ -39,6 +39,7 @@ ReactDropzone = require("./components/ReactDropzone");
 ShowcasesPanel = require("./components/ShowcasesPanel");
 PagesPanel = require("./components/PagesPanel");
 Thumbnail = require("./components/Thumbnail");
+ProgressOverlay = require("./components/ProgressOverlay");
 GoogleImportButton = require("./components/GoogleImportButton");
 GoogleExportButton = require("./components/GoogleExportButton");
 

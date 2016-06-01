@@ -1,12 +1,17 @@
 "use strict"
+var EventEmitter = require("../EventEmitter");
 var AppDispatcher = require("../dispatcher/AppDispatcher");
 var SearchActionTypes = require("../constants/SearchActionTypes");
 
 class SearchActions {
   executeQuery(baseApiUrl, params) {
+    EventEmitter.emit("SearchExecutingQuery");
+
     var url = baseApiUrl + "?";
     if(params.searchTerm) {
-      url += "q=" + params.searchTerm;
+      var expandedTerms = params.searchTerm.split(" ").filter(t => t != '');
+      var joinedTerms = "*" + expandedTerms.join("* AND *") + "*";
+      url += "q=" + joinedTerms;
     }
     if(params.sortOption) {
       url += "&sort=" + params.sortOption;
@@ -29,9 +34,10 @@ class SearchActions {
           searchTerm: params.searchTerm,
           jsonResponse: result
         });
+        EventEmitter.emit("SearchQueryComplete", "success", result);
       },
       error: function(request, status, thrownError) {
-        console.log("SearchStoreQueryFailed", { request: request, status: status, error: thrownError });
+        EventEmitter.emit("SearchQueryComplete", "error", { request: request, status: status, error: thrownError });
       }
     });
   }

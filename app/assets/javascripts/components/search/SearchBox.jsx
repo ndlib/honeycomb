@@ -36,7 +36,7 @@ var SearchBox = React.createClass({
   },
 
   onChange: function(e) {
-    this.setTerm(e.target.value);
+    this.setState({searchTerm: e.target.value});
   },
 
   onClick: function(e) {
@@ -44,12 +44,7 @@ var SearchBox = React.createClass({
   },
 
   componentDidMount: function() {
-    this.setTerm(SearchStore.searchTerm);
-  },
-
-  setTerm: function(term) {
-    var cleanTerm = encodeURIComponent(term);
-    this.setState({searchTerm: cleanTerm});
+    this.setState({searchTerm: SearchStore.searchTerm});
   },
 
   handleKeyDown: function(e) {
