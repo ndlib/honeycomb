@@ -67,6 +67,14 @@ var Styles = {
     },
     itemName: {},
     lastModifiedAt: {},
+    sortedIcon: {
+      fontSize: "15px",
+      color: Colors.grey700
+    },
+    unsortedIcon: {
+      fontSize: "15px",
+      color: Colors.grey500
+    },
   },
 };
 
@@ -82,13 +90,21 @@ var SearchPage = React.createClass({
   },
 
   getInitialState: function() {
-    return { searching: false };
+    return {
+      searching: false,
+      sortField: "name",
+      sortDirection: "asc"
+    };
   },
 
   componentWillMount: function() {
     EventEmitter.on("SearchExecutingQuery", function() { this.setState({ searching: true }); }.bind(this));
     EventEmitter.on("SearchQueryComplete", this.resultsAreIn);
-    SearchActions.executeQuery(this.props.searchUrl, { searchTerm: this.props.searchTerm, rowLimit: this.props.rows })
+    SearchActions.executeQuery(this.props.searchUrl, {
+      searchTerm: this.props.searchTerm,
+      sortOption: this.state.sortField + " " + this.state.sortDirection,
+      rowLimit: this.props.rows
+    });
   },
 
   resultsAreIn: function(result, data){
@@ -141,12 +157,58 @@ var SearchPage = React.createClass({
     }.bind(this));
   },
 
+  reSortQuery: function() {
+    SearchActions.executeQuery(this.props.searchUrl, {
+      searchTerm: SearchStore.searchTerm,
+      sortOption: this.state.sortField + " " + this.state.sortDirection,
+      rowLimit: this.props.rows
+    });
+  },
+
   progressCircle: function(){
     if(this.state.searching){
       return (<ProgressOverlay />);
     } else {
       return null;
     }
+  },
+
+  sortClick: function(fieldName) {
+    // Already sorted on this field, change direction
+    if(this.state.sortField === fieldName) {
+      var newDir = this.state.sortDirection === "desc" ? "asc" : "desc";
+      this.setState({ sortDirection: newDir }, this.reSortQuery);
+    } else {
+      this.setState({ sortField: fieldName, sortDirection: "asc" }, this.reSortQuery);
+    }
+  },
+
+  sortIcon: function(fieldName) {
+    if(this.state.sortField !== fieldName) {
+      return (
+        <div>
+          <mui.FontIcon className="glyphicon glyphicon-sort" label="Sort Asc" style={ Styles.headers.unsortedIcon }/>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+      {
+        this.state.sortDirection === "desc"
+          && <mui.FontIcon className="glyphicon glyphicon-sort-by-attributes-alt" label="Sort Desc" style={ Styles.headers.sortedIcon }/>
+          || <mui.FontIcon className="glyphicon glyphicon-sort-by-attributes" label="Sort Asc" style={ Styles.headers.sortedIcon }/>
+      }
+      </div>
+    );
+  },
+
+  sortButton: function(fieldName){
+    return (
+      <mui.IconButton onTouchTap={function() { this.sortClick(fieldName) }.bind(this) }>
+        { this.sortIcon(fieldName) }
+      </mui.IconButton>
+    );
   },
 
   render() {
@@ -162,8 +224,13 @@ var SearchPage = React.createClass({
             <mui.TableHeader displaySelectAll={false} adjustForCheckbox={false}>
               <mui.TableRow>
                 <mui.TableHeaderColumn style={Styles.headers.thumbnail}></mui.TableHeaderColumn>
-                <mui.TableHeaderColumn style={Styles.headers.itemName}>Items</mui.TableHeaderColumn>
-                <mui.TableHeaderColumn style={Styles.headers.lastModifiedAt}>Last Modified At</mui.TableHeaderColumn>
+                <mui.TableHeaderColumn style={Styles.headers.itemName}>
+                  { this.sortButton("name") }
+                  <span>Items</span>
+                </mui.TableHeaderColumn>
+                <mui.TableHeaderColumn style={Styles.headers.lastModifiedAt}>
+                  <span>Last Modified At</span>
+                </mui.TableHeaderColumn>
               </mui.TableRow>
             </mui.TableHeader>
             <mui.TableBody displayRowCheckbox={false} showRowHover={true}>
