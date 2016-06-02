@@ -2,7 +2,6 @@
 var React = require('react');
 var mui = require("material-ui");
 var Colors = require("material-ui/lib/styles/colors");
-var AppDispatcher = require("../../dispatcher/AppDispatcher");
 var EventEmitter = require("../../EventEmitter");
 var SearchActions = require('../../actions/SearchActions');
 var SearchStore = require('../../stores/SearchStore');
@@ -67,14 +66,6 @@ var Styles = {
     },
     itemName: {},
     lastModifiedAt: {},
-    sortedIcon: {
-      fontSize: "15px",
-      color: Colors.grey700
-    },
-    unsortedIcon: {
-      fontSize: "15px",
-      color: Colors.grey500
-    },
   },
 };
 
@@ -92,8 +83,6 @@ var SearchPage = React.createClass({
   getInitialState: function() {
     return {
       searching: false,
-      sortField: "name",
-      sortDirection: "asc"
     };
   },
 
@@ -102,7 +91,8 @@ var SearchPage = React.createClass({
     EventEmitter.on("SearchQueryComplete", this.resultsAreIn);
     SearchActions.executeQuery(this.props.searchUrl, {
       searchTerm: this.props.searchTerm,
-      sortOption: this.state.sortField + " " + this.state.sortDirection,
+      sortField: SearchStore.sortField,
+      sortDirection: SearchStore.sortDirection,
       rowLimit: this.props.rows
     });
   },
@@ -157,58 +147,12 @@ var SearchPage = React.createClass({
     }.bind(this));
   },
 
-  reSortQuery: function() {
-    SearchActions.executeQuery(this.props.searchUrl, {
-      searchTerm: SearchStore.searchTerm,
-      sortOption: this.state.sortField + " " + this.state.sortDirection,
-      rowLimit: this.props.rows
-    });
-  },
-
   progressCircle: function(){
     if(this.state.searching){
       return (<ProgressOverlay />);
     } else {
       return null;
     }
-  },
-
-  sortClick: function(fieldName) {
-    // Already sorted on this field, change direction
-    if(this.state.sortField === fieldName) {
-      var newDir = this.state.sortDirection === "desc" ? "asc" : "desc";
-      this.setState({ sortDirection: newDir }, this.reSortQuery);
-    } else {
-      this.setState({ sortField: fieldName, sortDirection: "asc" }, this.reSortQuery);
-    }
-  },
-
-  sortIcon: function(fieldName) {
-    if(this.state.sortField !== fieldName) {
-      return (
-        <div>
-          <mui.FontIcon className="glyphicon glyphicon-sort" label="Sort Asc" style={ Styles.headers.unsortedIcon }/>
-        </div>
-      );
-    }
-
-    return (
-      <div>
-      {
-        this.state.sortDirection === "desc"
-          && <mui.FontIcon className="glyphicon glyphicon-sort-by-attributes-alt" label="Sort Desc" style={ Styles.headers.sortedIcon }/>
-          || <mui.FontIcon className="glyphicon glyphicon-sort-by-attributes" label="Sort Asc" style={ Styles.headers.sortedIcon }/>
-      }
-      </div>
-    );
-  },
-
-  sortButton: function(fieldName){
-    return (
-      <mui.IconButton onTouchTap={function() { this.sortClick(fieldName) }.bind(this) }>
-        { this.sortIcon(fieldName) }
-      </mui.IconButton>
-    );
   },
 
   render() {
@@ -225,7 +169,7 @@ var SearchPage = React.createClass({
               <mui.TableRow>
                 <mui.TableHeaderColumn style={Styles.headers.thumbnail}></mui.TableHeaderColumn>
                 <mui.TableHeaderColumn style={Styles.headers.itemName}>
-                  { this.sortButton("name") }
+                  <SearchSortButton field="name" rows={this.props.rows} searchUrl={this.props.searchUrl} />
                   <span>Items</span>
                 </mui.TableHeaderColumn>
                 <mui.TableHeaderColumn style={Styles.headers.lastModifiedAt}>

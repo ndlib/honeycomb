@@ -13,8 +13,11 @@ class SearchActions {
       var joinedTerms = "*" + expandedTerms.join("* AND *") + "*";
       url += "q=" + joinedTerms;
     }
-    if(params.sortOption) {
-      url += "&sort=" + params.sortOption;
+    if(params.sortField) {
+      url += "&sort=" + params.sortField;
+      if(params.sortDirection) {
+        url += " " + params.sortDirection;
+      }
     }
     if(params.start) {
       url += "&start=" + params.start;
@@ -32,6 +35,8 @@ class SearchActions {
         AppDispatcher.dispatch({
           actionType: SearchActionTypes.SEARCH_LOAD_RESULTS,
           searchTerm: params.searchTerm,
+          sortField: params.sortField,
+          sortDirection: params.sortDirection,
           jsonResponse: result
         });
         EventEmitter.emit("SearchQueryComplete", "success", result);

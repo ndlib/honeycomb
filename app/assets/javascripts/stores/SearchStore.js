@@ -8,6 +8,8 @@ class SearchStore extends EventEmitter {
     super();
     this.collection = null; // Collection json
     this.searchTerm = "";   // The primary search term to use when querying the API
+    this.sortField = "name";  // The selected field to sort on for the queries
+    this.sortDirection = "asc";
     this.hits = [];     // Subset of items returned by the query after filtering on facet, row limit,
                         // and starting item.
     this.found = null;  // Total number of items that were found using the search term.
@@ -47,6 +49,8 @@ class SearchStore extends EventEmitter {
     switch(action.actionType) {
       case SearchActionTypes.SEARCH_LOAD_RESULTS:
         this.searchTerm = action.searchTerm;
+        this.sortField = action.sortField;
+        this.sortDirection = action.sortDirection;
         this.loadSearchResults(action.jsonResponse);
         this.emitChange();
         break;

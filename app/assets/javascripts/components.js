@@ -47,6 +47,7 @@ GoogleExportButton = require("./components/GoogleExportButton");
 SearchPage = require("./components/search/SearchPage");
 SearchPagination = require("./components/search/SearchPagination");
 SearchBox = require("./components/search/SearchBox");
+SearchSortButton = require("./components/search/SearchSortButton");
 
 // embed
 EmbedCode = require("./components/embed/EmbedCode");

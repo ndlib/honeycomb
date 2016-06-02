@@ -40,7 +40,12 @@ var SearchBox = React.createClass({
   },
 
   onClick: function(e) {
-    SearchActions.executeQuery(this.props.searchUrl, { searchTerm: this.state.searchTerm, rowLimit: this.props.rows })
+    SearchActions.executeQuery(this.props.searchUrl, {
+      searchTerm: this.state.searchTerm,
+      sortField: SearchStore.sortField,
+      sortDirection: SearchStore.sortDirection,
+      rowLimit: this.props.rows
+    });
   },
 
   componentDidMount: function() {

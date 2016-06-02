@@ -31,7 +31,13 @@ var SearchPagination = React.createClass({
   },
 
   queryPage: function(i) {
-    SearchActions.executeQuery(this.props.searchUrl, { searchTerm: SearchStore.searchTerm, rowLimit: this.props.rows, start: i })
+    SearchActions.executeQuery(this.props.searchUrl, {
+      searchTerm: SearchStore.searchTerm,
+      sortField: SearchStore.sortField,
+      sortDirection: SearchStore.sortDirection,
+      rowLimit: this.props.rows,
+      start: i
+    });
   },
 
   componentWillMount: function() {
