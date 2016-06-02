@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160427202527) do
+ActiveRecord::Schema.define(version: 20160602203849) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -127,7 +127,6 @@ ActiveRecord::Schema.define(version: 20160427202527) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.text     "sortable_name"
     t.integer  "parent_id"
     t.string   "manuscript_url"
     t.boolean  "published"
