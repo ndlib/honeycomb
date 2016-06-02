@@ -14,6 +14,7 @@ var Styles = {
     zIndex: "9999999",
   },
   circle: {
+    color: "#2C5882",
     position: "fixed",
     display: "inline-block",
     width: "50px",
@@ -28,9 +29,15 @@ var Styles = {
 var ProgressOverlay = React.createClass({
   render() {
     return (
-      <ReactCSSTransitionGroup transitionName="progress-overlay" transitionAppear={true} transitionAppearTimeout={500}>
+      <ReactCSSTransitionGroup
+        transitionName="progress-overlay"
+        transitionAppear={true}
+        transitionAppearTimeout={300}
+        transitionEnterTimeout={0}
+        transitionLeaveTimeout={0}
+      >
         <div style={ Styles.outerDiv }>
-          <mui.CircularProgress size={2} style={ Styles.circle } />
+          <mui.CircularProgress size={2} style={ Styles.circle } color={ Styles.circle.color }/>
         </div>
       </ReactCSSTransitionGroup>
     );
