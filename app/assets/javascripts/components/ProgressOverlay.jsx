@@ -1,5 +1,6 @@
 'use strict'
 var React = require('react');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var mui = require("material-ui");
 
 var Styles = {
@@ -9,8 +10,8 @@ var Styles = {
     height: "100%",
     top: "0",
     left: "0",
-    background: "rgba(0,0,0,0.50)",
-    zIndex: "9999999"
+    background: "rgba(0,0,0,0.5)",
+    zIndex: "9999999",
   },
   circle: {
     position: "fixed",
@@ -27,9 +28,11 @@ var Styles = {
 var ProgressOverlay = React.createClass({
   render() {
     return (
-      <div style={ Styles.outerDiv }>
-        <mui.CircularProgress size={2} style={ Styles.circle } />
-      </div>
+      <ReactCSSTransitionGroup transitionName="progress-overlay" transitionAppear={true} transitionAppearTimeout={500}>
+        <div style={ Styles.outerDiv }>
+          <mui.CircularProgress size={2} style={ Styles.circle } />
+        </div>
+      </ReactCSSTransitionGroup>
     );
   }
 });
