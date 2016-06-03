@@ -73,6 +73,8 @@ var SearchPage = React.createClass({
   propTypes: {
     searchUrl: React.PropTypes.string.isRequired,
     searchTerm: React.PropTypes.string,
+    defaultSortField: React.PropTypes.string.isRequired,
+    defaultSortDirection: React.PropTypes.string.isRequired,
     rows: React.PropTypes.number
   },
 
@@ -91,8 +93,8 @@ var SearchPage = React.createClass({
     EventEmitter.on("SearchQueryComplete", this.resultsAreIn);
     SearchActions.executeQuery(this.props.searchUrl, {
       searchTerm: this.props.searchTerm,
-      sortField: SearchStore.sortField,
-      sortDirection: SearchStore.sortDirection,
+      sortField: this.props.defaultSortField,
+      sortDirection: this.props.defaultSortDirection,
       rowLimit: this.props.rows
     });
   },
@@ -173,6 +175,7 @@ var SearchPage = React.createClass({
                   <span>Items</span>
                 </mui.TableHeaderColumn>
                 <mui.TableHeaderColumn style={Styles.headers.lastModifiedAt}>
+                  <SearchSortButton field="last_updated" rows={this.props.rows} searchUrl={this.props.searchUrl} />
                   <span>Last Modified At</span>
                 </mui.TableHeaderColumn>
               </mui.TableRow>

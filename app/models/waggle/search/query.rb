@@ -24,7 +24,7 @@ module Waggle
 
       def sort_field
         if sort.present?
-          configuration.sort(sort.split(" ")[0].to_sym)
+          sort.split(" ")[0].to_sym
         end
       end
 

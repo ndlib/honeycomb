@@ -93,7 +93,7 @@ module Waggle
 
           def solr_sort
             if sort_field
-              "#{sort_field.field_name}_sort #{sort_direction}"
+              "#{sort_field}_sort #{sort_direction}"
             else
               "score desc"
             end

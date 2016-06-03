@@ -25,20 +25,24 @@ var SearchSortButton = React.createClass({
 
   getInitialState: function() {
     return {
-      direction: "asc"
+      direction: SearchStore.sortDirection
     };
+  },
+
+  componentWillMount: function() {
+    SearchStore.addChangeListener(this.storeChanged);
+  },
+
+  storeChanged: function() {
+    this.setState({ direction: SearchStore.sortDirection });
   },
 
   onClick: function(fieldName) {
     var newDir = this.state.direction === "desc" ? "asc" : "desc";
-    this.setState({ direction: newDir }, this.reSortQuery);
-  },
-
-  reSortQuery: function() {
     SearchActions.executeQuery(this.props.searchUrl, {
       searchTerm: SearchStore.searchTerm,
       sortField: this.props.field,
-      sortDirection: this.state.direction,
+      sortDirection: newDir,
       rowLimit: this.props.rows
     });
   },

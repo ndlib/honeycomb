@@ -25,6 +25,8 @@ module Waggle
               hash.merge!(string_fields)
               hash.merge!(datetime_fields)
             end
+            @as_solr[:last_updated_sort] = datetime_as_solr(waggle_item.send(:last_updated))
+            @as_solr
           end
 
           private
