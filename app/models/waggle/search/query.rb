@@ -31,7 +31,10 @@ module Waggle
       def sort_direction
         if sort.present?
           sortArr = sort.split(" ")
-          return sortArr.length >= 2 ? sortArr[1] : "desc"
+          return "desc" if sortArr.length < 2
+          dir = sortArr[1]
+          return "desc" if dir != "desc" && dir != "asc"
+          dir
         end
       end
 

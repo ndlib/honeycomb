@@ -7,7 +7,6 @@ module Migration
 
     def self.call
       Migration::Item.all.each do |item|
-        puts "processing: #{item.id}"
         new(item).convert!
       end
     end
