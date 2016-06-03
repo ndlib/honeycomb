@@ -49,6 +49,7 @@ RSpec.describe Waggle::Adapters::Solr::Index::Item do
         type_s: "Item",
         thumbnail_url_s: "http://localhost:3019/images/honeycomb/000/001/000/013/medium/pig-in-mud.jpg",
         last_updated_dt: "2015-08-04T12:47:17Z",
+        last_updated_sort: "2015-08-04T12:47:17Z",
         title_t: ["pig-in-mud"],
       )
     end
