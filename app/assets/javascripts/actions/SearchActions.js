@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 var EventEmitter = require("../EventEmitter");
 var AppDispatcher = require("../dispatcher/AppDispatcher");
 var SearchActionTypes = require("../constants/SearchActionTypes");
@@ -9,7 +9,7 @@ class SearchActions {
 
     var url = baseApiUrl + "?";
     if(params.searchTerm) {
-      var expandedTerms = params.searchTerm.split(" ").filter(t => t != '');
+      var expandedTerms = params.searchTerm.split(" ").filter(t => t !== "");
       var joinedTerms = "*" + expandedTerms.join("* AND *") + "*";
       url += "q=" + joinedTerms;
     }

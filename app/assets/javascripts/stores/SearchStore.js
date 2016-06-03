@@ -31,7 +31,7 @@ class SearchStore extends EventEmitter {
     this.removeListener("SearchStoreChanged", callback);
   }
 
-  emitChange(collection) {
+  emitChange() {
     this.emit("SearchStoreChanged");
   }
 
@@ -57,6 +57,7 @@ class SearchStore extends EventEmitter {
       case SearchActionTypes.SEARCH_SET_TERM:
         this.searchTerm = action.searchTerm;
         this.emitChange();
+        break;
       default:
         break;
     }

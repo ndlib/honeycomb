@@ -591,11 +591,10 @@ div.dataTables_filter {
 
 .progress-overlay-appear {
   opacity: 0.01;
-}
-
-.progress-overlay-appear.progress-overlay-appear-active {
-  opacity: 0.5;
-  transition: opacity 100ms ease-in 200ms;
+  .progress-overlay-appear-active {
+    opacity: 0.5;
+    transition: opacity 100ms ease-in 200ms;
+  }
 }
 
 @import "_material-design-overwrites.scss";
