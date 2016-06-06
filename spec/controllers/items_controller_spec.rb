@@ -150,7 +150,7 @@ RSpec.describe ItemsController, type: :controller do
     before(:each) do
       allow_any_instance_of(ItemDecorator).to receive(:recent_children).and_return(nil)
       allow_any_instance_of(ItemDecorator).to receive(:showcases).and_return(nil)
-      allow_any_instance_of(ItemQuery).to receive(:find).and_return(item)
+      allow_any_instance_of(ItemQuery).to receive(:public_find).and_return(item)
     end
 
     subject { get :edit, id: item.id }
@@ -163,7 +163,7 @@ RSpec.describe ItemsController, type: :controller do
     end
 
     it "uses item query" do
-      expect_any_instance_of(ItemQuery).to receive(:find).with("1").and_return(item)
+      expect_any_instance_of(ItemQuery).to receive(:public_find).with("1").and_return(item)
       subject
     end
 

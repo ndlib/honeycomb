@@ -47,8 +47,6 @@ class SaveItem
       data = { "name" => GenerateNameFromFilename.call(item.uploaded_image_file_name) }
       Metadata::Setter.call(item, data)
     end
-
-    item.sortable_name = SortableNameConverter.convert(item.name)
   end
 
   def name_should_be_filename?

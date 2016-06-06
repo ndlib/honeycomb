@@ -132,8 +132,13 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
       end
 
       it "can be set to another configured sort" do
-        allow(query).to receive(:sort).and_return("name")
+        allow(query).to receive(:sort).and_return("name asc")
         expect(subject).to eq("name_sort asc")
+      end
+
+      it "sorts desc by default when using another configured sort" do
+        allow(query).to receive(:sort).and_return("name")
+        expect(subject).to eq("name_sort desc")
       end
     end
 

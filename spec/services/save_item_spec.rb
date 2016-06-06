@@ -53,11 +53,6 @@ RSpec.describe SaveItem, type: :model do
     subject
   end
 
-  it "uses the sortable name converter to convert the sortable name" do
-    expect(SortableNameConverter).to receive(:convert).with("name")
-    subject
-  end
-
   describe "pre_process_metadata" do
     it "calls the metadata setter if there is metadata" do
       expect(Metadata::Setter).to receive(:call).with(item, metadata)

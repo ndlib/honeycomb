@@ -39,8 +39,15 @@ ReactDropzone = require("./components/ReactDropzone");
 ShowcasesPanel = require("./components/ShowcasesPanel");
 PagesPanel = require("./components/PagesPanel");
 Thumbnail = require("./components/Thumbnail");
+ProgressOverlay = require("./components/ProgressOverlay");
 GoogleImportButton = require("./components/GoogleImportButton");
 GoogleExportButton = require("./components/GoogleExportButton");
+
+// Item search
+SearchPage = require("./components/search/SearchPage");
+SearchPagination = require("./components/search/SearchPagination");
+SearchBox = require("./components/search/SearchBox");
+SearchSortButton = require("./components/search/SearchSortButton");
 
 // embed
 EmbedCode = require("./components/embed/EmbedCode");
