@@ -8,8 +8,8 @@
 ## [3.1.1](https://github.com/ndlib/honeycomb/tree/v3.1.1) (2016-05-13)
 [Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.1.0...v3.1.1)
 
-###New features/enhancements:###
-  - Exporting large collections is now significantly faster ([DEC-1008](https://jira.library.nd.edu/browse/DEC-1008), [#368](https://github.com/ndlib/honeycomb/pull/368))
+###Bug fixes:###
+  - Fixed a bug that caused exporting large collections to fail. Exporting is also now significantly faster. ([DEC-1008](https://jira.library.nd.edu/browse/DEC-1008), [#368](https://github.com/ndlib/honeycomb/pull/368))
 
 ## [3.1.0](https://github.com/ndlib/honeycomb/tree/v3.1.0) (2016-05-03)
 [Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.0.0...v3.1.0)
