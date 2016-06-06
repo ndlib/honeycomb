@@ -21,6 +21,13 @@ var Styles = {
     padding:'3px 5px',
     marginRight:'2px',
     verticalAlign:'top'
+  },
+  jumpArrows: {
+    fontSize: '1.5em',
+    minWidth: "34px",
+    padding:'3px 5px',
+    marginRight:'2px',
+    verticalAlign:'top'
   }
 };
 
@@ -72,7 +79,7 @@ var SearchPagination = React.createClass({
     if(SearchStore.start != 0) {
       nodes.push((
         <mui.RaisedButton key={ this.props.key + "PreviousPageLink" } style={ Styles.pageButton } onTouchTap={ function(){ this.queryPage(0) }.bind(this) }>
-          <i className="material-icons" style={{fontSize: '1em',}}>arrow_back</i>
+          <i className="material-icons" style={ Styles.jumpArrows }>first_page</i>
         </mui.RaisedButton>
       ));
     }
@@ -94,7 +101,7 @@ var SearchPagination = React.createClass({
       var start = this.props.rows*(last - 1);
       nodes.push((
         <mui.RaisedButton key={ this.props.key + "NextPageLink" } style={ Styles.pageButton } onTouchTap={ function(){ this.queryPage(start) }.bind(this) }>
-          <i className="material-icons" style={{fontSize: '1em'}}>arrow_forward</i>
+          <i className="material-icons" style={ Styles.jumpArrows }>last_page</i>
         </mui.RaisedButton>
       ));
     }
