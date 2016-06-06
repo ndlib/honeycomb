@@ -1,5 +1,11 @@
 # Change Log
+## [3.2.0](https://github.com/ndlib/honeycomb/tree/v3.2.0) (2016-06-06)
+[Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.1.0...v3.2.0)
 
+###New features/enhancements:###
+  - Item list for a collection now renders significantly faster ([DEC-624](https://jira.library.nd.edu/browse/DEC-624),[#369](https://github.com/ndlib/honeycomb/pull/369))
+
+  
 ## [3.1.0](https://github.com/ndlib/honeycomb/tree/v3.1.0) (2016-05-03)
 [Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.0.0...v3.1.0)
 
