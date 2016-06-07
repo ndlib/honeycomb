@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160602203849) do
+ActiveRecord::Schema.define(version: 20160606174800) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,11 +61,13 @@ ActiveRecord::Schema.define(version: 20160602203849) do
     t.boolean  "enable_search"
     t.boolean  "hide_title_on_home_page"
     t.text     "site_path"
+    t.string   "url_slug"
   end
 
   add_index "collections", ["preview_mode"], name: "index_collections_on_preview_mode", using: :btree
   add_index "collections", ["published"], name: "index_collections_on_published", using: :btree
   add_index "collections", ["unique_id"], name: "index_collections_on_unique_id", using: :btree
+  add_index "collections", ["url_slug"], name: "index_collections_on_url_slug", unique: true, using: :btree
 
   create_table "exhibits", force: :cascade do |t|
     t.text     "name"

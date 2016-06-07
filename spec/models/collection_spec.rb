@@ -4,7 +4,7 @@ RSpec.describe Collection do
   [:name_line_1, :name_line_2, :items, :unique_id, :showcases,
    :collection_users, :published, :preview_mode, :users, :updated_at, :created_at,
    :site_intro, :short_intro, :showcases, :hide_title_on_home_page, :about, :copyright,
-   :enable_search, :enable_browse, :image, :uploaded_image, :pages, :collection_configuration].each do |field|
+   :enable_search, :enable_browse, :image, :url_slug, :uploaded_image, :pages, :collection_configuration].each do |field|
     it "has field, #{field}" do
       expect(subject).to respond_to(field)
       expect(subject).to respond_to("#{field}=")
@@ -57,6 +57,13 @@ RSpec.describe Collection do
 
     it "responds to honeypot_image" do
       expect(subject).to respond_to(:honeypot_image)
+    end
+  end
+
+  describe "#url_slug" do
+    it "enforces uniqueness through validation" do
+      FactoryGirl.create(:collection, url_slug: "test")
+      expect { FactoryGirl.create(:collection, url_slug: "test") }.to raise_error
     end
   end
 

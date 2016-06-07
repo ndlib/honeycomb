@@ -14,6 +14,7 @@ class Collection < ActiveRecord::Base
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
   validates_attachment_content_type :uploaded_image, content_type: /\Aimage\/.*\Z/
   validates :name_line_1, :unique_id, presence: true
+  validates :url_slug, uniqueness: true, allow_nil: true
 
   has_paper_trail
 
