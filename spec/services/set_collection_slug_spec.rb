@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe SetCollectionSlug do
-  let(:collection) { instance_double(Collection, "url_slug=" => "test", valid?: true, save: true) }
+  let(:collection) { instance_double(Collection, "url_slug=" => "test", valid?: true, save!: true) }
   let(:collection2) { Collection.new(name_line_1: "TEST", unique_id: "1234567890") }
   let(:collection3) { Collection.new(name_line_1: "TEST2", unique_id: "0987654321") }
   let(:collection4) { Collection.new(name_line_1: "TEST3") }
@@ -15,22 +15,24 @@ describe SetCollectionSlug do
     end
 
     it "should save the collection record" do
-      expect(collection).to receive(:save).and_return(true)
+      expect(collection).to receive(:save!).and_return(true)
       subject.set_slug!
     end
 
     it "should return false if the save fails" do
-      allow(collection).to receive(:save).and_return(false)
+      allow(collection).to receive(:save!).and_return(false)
       expect(subject.set_slug!).to be_falsey
     end
 
-    it "should raise exception if slug is duplicate" do
+    it "should return false if slug is duplicate" do
       described_class.call(collection2, "test")
-      expect { described_class.call(collection3, "test") }.to raise_error(ActiveRecord::RecordNotUnique)
+      expect(described_class.call(collection3, "test")).to be_falsey
+      expect(collection3.errors.messages[:url_slug][0]).to eq "has already been taken"
     end
 
-    it "should raise exception if collection not valid" do
-      expect { described_class.call(collection4, "test") }.to raise_error(RuntimeError, "Cannot set slug: collection record not valid")
+    it "should return false if collection not valid" do
+      expect(described_class.call(collection4, "test")).to be_falsey
+      expect(collection4.valid?).to be_falsey
     end
   end
 
