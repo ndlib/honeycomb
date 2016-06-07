@@ -13,7 +13,7 @@ class SetCollectionSlug
   def set_slug!
     collection.url_slug = CreateURLSlug.call(@slug)
     if collection.valid?
-      collection.save!
+      collection.save
     else
       false
     end

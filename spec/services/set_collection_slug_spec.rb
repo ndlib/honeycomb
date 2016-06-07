@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe SetCollectionSlug do
-  let(:collection) { instance_double(Collection, "url_slug=" => "test", valid?: true, save!: true) }
+  let(:collection) { instance_double(Collection, "url_slug=" => "test", valid?: true, save: true) }
   let(:collection2) { Collection.new(name_line_1: "TEST", unique_id: "1234567890") }
   let(:collection3) { Collection.new(name_line_1: "TEST2", unique_id: "0987654321") }
   let(:collection4) { Collection.new(name_line_1: "TEST3") }
@@ -15,12 +15,12 @@ describe SetCollectionSlug do
     end
 
     it "should save the collection record" do
-      expect(collection).to receive(:save!).and_return(true)
+      expect(collection).to receive(:save).and_return(true)
       subject.set_slug!
     end
 
     it "should return false if the save fails" do
-      allow(collection).to receive(:save!).and_return(false)
+      allow(collection).to receive(:save).and_return(false)
       expect(subject.set_slug!).to be_falsey
     end
 

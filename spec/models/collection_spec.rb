@@ -60,6 +60,13 @@ RSpec.describe Collection do
     end
   end
 
+  describe "#url_slug" do
+    it "enforces uniqueness through validation" do
+      FactoryGirl.create(:collection, url_slug: "test")
+      expect { FactoryGirl.create(:collection, url_slug: "test") }.to raise_error
+    end
+  end
+
   context "foreign key constraints" do
     before(:each) do
       allow_any_instance_of(Metadata::Fields).to receive(:valid?).and_return(true)
