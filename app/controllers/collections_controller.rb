@@ -43,6 +43,9 @@ class CollectionsController < ApplicationController
   def settings_update
     @collection = CollectionQuery.new.find(params[:id])
     check_user_edits!(@collection)
+    if params[:collection][:url_slug]
+      SetCollectionSlug.call(@collection, params[:collection][:url_slug])
+    end
 
     if SaveCollection.call(@collection, save_params)
       flash[:notice] = t(".success")
