@@ -7,6 +7,7 @@ json.set! "hasPart/showcases", collection_object.showcases_url
 json.set! "hasPart/metadataConfiguration", collection_object.metadata_configuration_url
 json.id collection_object.unique_id
 json.slug collection_object.slug
+json.custom_slug collection_object.custom_slug
 json.name collection_object.name
 json.enable_browse collection_object.enable_browse
 json.enable_search collection_object.enable_search

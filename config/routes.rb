@@ -68,6 +68,7 @@ Rails.application.routes.draw do
   resources :sections, only: [:edit, :update, :destroy]
 
   namespace :v1 do
+    get :custom_slug, path: "/collections/custom_slug/:slug", to: "collections#custom_slug", defaults: { format: :json }
     resources :collections,
               only: [:show, :index],
               defaults: { format: :json } do

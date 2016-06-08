@@ -34,6 +34,13 @@ RSpec.describe Collection do
     end
   end
 
+  describe "#custom_slug" do
+    it "returns the url_slug value" do
+      subject.url_slug = "test_slug"
+      expect(subject.custom_slug).to eq "test_slug"
+    end
+  end
+
   describe "#name" do
     it "concatinates name_line_1 and name_line_2 if there is a name_line_2" do
       expect(subject).to receive(:name_line_1).and_return("name line 1")

@@ -49,6 +49,20 @@ describe CollectionQuery do
     end
   end
 
+  describe "#custom_slug_find" do
+    it "returns collection with specific custom slug" do
+      expect(relation).to receive(:where).
+        with("url_slug = ? AND (published = ? OR preview_mode = ?)", "test_slug", true, true).
+        and_return(@collection_array = [collection])
+      expect(@collection_array).to receive(:take!).and_return(collection)
+      subject.custom_slug_find("test_slug")
+    end
+
+    it "raises an error on not found" do
+      expect { subject.custom_slug_find("asdf") }.to raise_error ActiveRecord::RecordNotFound
+    end
+  end
+
   describe "#any_find" do
     it "calls any_find" do
       expect(relation).to receive(:find_by!).with(unique_id: "asdf")

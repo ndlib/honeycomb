@@ -29,6 +29,13 @@ class CollectionQuery
     ).take!
   end
 
+  def custom_slug_find(slug)
+    relation.where(
+      "url_slug = ? AND (published = ? OR preview_mode = ?)",
+      slug, true, true
+    ).take!
+  end
+
   def any_find(id)
     relation.find_by!(unique_id: id)
   end
