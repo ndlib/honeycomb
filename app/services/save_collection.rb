@@ -14,6 +14,7 @@ class SaveCollection
     fix_image_param!
     fix_url!
     collection.attributes = params
+    collection.url_slug = CreateURLSlug.call(@slug) if params[:url_slug]
     check_unique_id
     if collection.save && process_uploaded_image
       ensure_configuration_setup
