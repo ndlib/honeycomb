@@ -45,7 +45,8 @@ var Styles = {
       borderRadius: "4px",
     },
     textItemIcon: {
-      fontSize: "49px"
+      fontSize: "49px",
+      color: Colors.grey600
     },
     itemName: {
       color: "#2c5882",
@@ -111,7 +112,7 @@ var SearchPage = React.createClass({
 
   getThumbnail: function(thumbnailUrl) {
     if(thumbnailUrl == null || thumbnailUrl == ""){
-      return (<mui.FontIcon  className="material-icons" style={ Styles.cells.textItemIcon }>subject</mui.FontIcon>);
+      return (<mui.FontIcon  className="material-icons" style={ Styles.cells.textItemIcon }>local_offer</mui.FontIcon>);
     }
     var reg = new RegExp( '^(.*)(\/.*)([\/].*$)', 'i' );
     var string = reg.exec(thumbnailUrl);
