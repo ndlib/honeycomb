@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Metadata::Configuration::Facet do
   let(:field) { instance_double(Metadata::Configuration::Field, name: :my_field, label: "Default Label") }
-  let(:data) { { name: :my_facet, field_name: :my_field, field: field, label: "Custom Label", active: false } }
+  let(:data) { { name: :my_facet, field_name: :my_field, field: field, label: "Custom Label", active: false, limit: 462 } }
   let(:instance) { described_class.new(data) }
   subject { instance }
 
@@ -43,6 +43,17 @@ RSpec.describe Metadata::Configuration::Facet do
     it "is assumed true if not given in params" do
       data.delete(:active)
       expect(subject.active).to eq(true)
+    end
+  end
+
+  describe "limit" do
+    it "is the expected value" do
+      expect(subject.limit).to eq(data.fetch(:limit))
+    end
+
+    it "is assumed nil if not given in params" do
+      data.delete(:limit)
+      expect(subject.limit).to eq(nil)
     end
   end
 end

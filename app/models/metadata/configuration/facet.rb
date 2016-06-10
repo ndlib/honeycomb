@@ -1,14 +1,15 @@
 module Metadata
   class Configuration
     class Facet
-      attr_reader :field, :field_name, :name, :active
+      attr_reader :field, :field_name, :name, :active, :limit
 
-      def initialize(name:, field:, field_name:, label: nil, active: true)
+      def initialize(name:, field:, field_name:, label: nil, active: true, limit: nil)
         @name = name
         @field = field
         @field_name = field_name
         @label = label
         @active = active
+        @limit = limit
       end
 
       def label
