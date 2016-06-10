@@ -12,7 +12,7 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
     )
   end
   let(:configuration) { double(Metadata::Configuration, fields: [], facets: [facet], sort: sort) }
-  let(:facet) { double(Metadata::Configuration::Facet, name: "creator") }
+  let(:facet) { double(Metadata::Configuration::Facet, name: "creator", limit: nil) }
   let(:sort) { double(Metadata::Configuration::Sort, field_name: "name", direction: "asc") }
 
   let(:instance) { described_class.new(query: query) }
@@ -121,6 +121,18 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
             "{!ex=creator_facet}creator_facet"
           ]
         )
+      end
+    end
+
+    describe "facet.limit" do
+      it "creates a f.facet_field.facet.limit param when a limit is present in the facet" do
+        allow(facet).to receive(:limit).and_return(462)
+        expect(subject).to include(:"f.creator_facet.facet.limit" => 462)
+      end
+
+      it "does not create a f.facet_field.facet.limit param when limit is not present in the facet" do
+        allow(facet).to receive(:limit).and_return(nil)
+        expect(subject).not_to include(:"f.creator_facet.facet.limit")
       end
     end
 

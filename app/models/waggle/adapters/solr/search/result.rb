@@ -61,7 +61,7 @@ module Waggle
               defType: "edismax",
               :"facet.field" => facet_fields,
               mm: 1,
-            }
+            }.merge(facet_limits)
           end
 
           def solr_query_fields
@@ -89,6 +89,14 @@ module Waggle
               field = "#{facet.name}_facet"
               "{!ex=#{field}}#{field}"
             end
+          end
+
+          def facet_limits
+            result = {}
+            configuration.facets.each do |facet|
+              result[:"f.#{facet.name}_facet.facet.limit"] = facet.limit if facet.limit.present?
+            end
+            result
           end
 
           def solr_sort
