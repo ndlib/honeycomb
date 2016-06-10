@@ -24,18 +24,28 @@ module Waggle
 
       def sort_field
         if sort.present?
-          sort.split(" ")[0].to_sym
+          sort_sym = sort.split(" ")[0].to_sym
+          sort_field = configuration.sort(sort_sym)
+          return sort_field.field_name if sort_field.present?
+          sort_sym
         end
       end
 
       def sort_direction
         if sort.present?
+          dir = "desc"
           sort_arr = sort.split(" ")
-          return "desc" if sort_arr.length < 2
-          dir = sort_arr[1]
-          return "desc" if dir != "desc" && dir != "asc"
-          dir
+          if sort_arr.length < 2
+            sort_field = configuration.sort(sort_arr[0].to_sym)
+            return get_valid_sort_direction(sort_field.direction) if sort_field.present?
+          end
+          get_valid_sort_direction(sort_arr[1])
         end
+      end
+
+      def get_valid_sort_direction(direction)
+        return "desc" if direction != "desc" && direction != "asc"
+        direction
       end
 
       def result
