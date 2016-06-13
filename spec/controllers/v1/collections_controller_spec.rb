@@ -2,14 +2,14 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe V1::CollectionsController, type: :controller do
-  let(:collection) { instance_double(Collection, id: 1, published: false, site_path: "[]", url_slug: "test") }
+  let(:collection) { FactoryGirl.create(:collection, published: true, site_path: "[]", url_slug: "test") }
   let(:collections) { [collection] }
 
   before(:each) do
     allow_any_instance_of(CollectionQuery).to receive(:public_collections).and_return(collections)
     allow_any_instance_of(CollectionQuery).to receive(:public_find).and_return(collection)
     allow_any_instance_of(CollectionQuery).to receive(:any_find).and_return(collection)
-    allow_any_instance_of(CollectionQuery).to receive(:custom_slug_find).and_return(collection)
+    # allow_any_instance_of(CollectionQuery).to receive(:custom_slug_find).and_return(collection)
   end
 
   describe "#index" do
@@ -70,10 +70,13 @@ RSpec.describe V1::CollectionsController, type: :controller do
 
     it "is successful" do
       subject
-
       expect(response).to be_success
       expect(assigns(:collection)).to be_present
       expect(subject).to render_template("v1/collections/show")
+    end
+
+    it "returns a 404 if there is no matching collection" do
+      expect { get :custom_slug, slug: "does-not-exist", format: :json }.to raise_error
     end
 
     it_behaves_like "a private basic custom etag cacher"
@@ -85,16 +88,16 @@ RSpec.describe V1::CollectionsController, type: :controller do
   end
 
   describe "#publish" do
-    let(:collection_to_publish) { Collection.new(id: 1) }
+    let(:collection_to_publish) { Collection.new(id: 5) }
     subject { put :publish, collection_id: collection_to_publish.id, format: :json }
 
     before(:each) do
       sign_in_admin
-      allow_any_instance_of(CollectionQuery).to receive(:any_find).with("1").and_return(collection_to_publish)
+      allow_any_instance_of(CollectionQuery).to receive(:any_find).with("5").and_return(collection_to_publish)
     end
 
     it "calls CollectionQuery" do
-      expect_any_instance_of(CollectionQuery).to receive(:any_find).with("1").and_return(collection_to_publish)
+      expect_any_instance_of(CollectionQuery).to receive(:any_find).with("5").and_return(collection_to_publish)
       subject
     end
 
@@ -113,16 +116,16 @@ RSpec.describe V1::CollectionsController, type: :controller do
   end
 
   describe "#unpublish" do
-    let(:collection_to_unpublish) { Collection.new(id: 1, published: 1) }
+    let(:collection_to_unpublish) { Collection.new(id: 6, published: 1) }
     subject { put :unpublish, collection_id: collection_to_unpublish.id, format: :json }
 
     before(:each) do
       sign_in_admin
-      allow_any_instance_of(CollectionQuery).to receive(:any_find).with("1").and_return(collection_to_unpublish)
+      allow_any_instance_of(CollectionQuery).to receive(:any_find).with("6").and_return(collection_to_unpublish)
     end
 
     it "calls CollectionQuery" do
-      expect_any_instance_of(CollectionQuery).to receive(:any_find).with("1").and_return(collection_to_unpublish)
+      expect_any_instance_of(CollectionQuery).to receive(:any_find).with("6").and_return(collection_to_unpublish)
       subject
     end
 
@@ -141,8 +144,8 @@ RSpec.describe V1::CollectionsController, type: :controller do
   end
 
   describe "#preview_mode" do
-    let(:collection_to_preview) { Collection.new(id: 1, preview_mode: false) }
-    let(:collection_not_to_preview) { Collection.new(id: 2, preview_mode: true) }
+    let(:collection_to_preview) { Collection.new(id: 7, preview_mode: false) }
+    let(:collection_not_to_preview) { Collection.new(id: 8, preview_mode: true) }
     let(:set_preview_mode_true) { put :preview_mode, collection_id: collection_to_preview.id, value: true, format: :json }
     let(:set_preview_mode_false) { put :preview_mode, collection_id: collection_not_to_preview.id, value: false, format: :json }
 
@@ -151,26 +154,26 @@ RSpec.describe V1::CollectionsController, type: :controller do
     end
 
     it "calls CollectionQuery" do
-      expect_any_instance_of(CollectionQuery).to receive(:any_find).with("1").and_return(collection_to_preview)
+      expect_any_instance_of(CollectionQuery).to receive(:any_find).with("7").and_return(collection_to_preview)
       set_preview_mode_true
     end
 
     it "sets preview mode for collection to true" do
-      expect_any_instance_of(CollectionQuery).to receive(:any_find).with("1").and_return(collection_to_preview)
+      expect_any_instance_of(CollectionQuery).to receive(:any_find).with("7").and_return(collection_to_preview)
       expect_any_instance_of(SetCollectionPreviewMode).to receive(:set_preview_mode).and_return(true)
       set_preview_mode_true
       expect(response.body).to eq("{\"status\":true}")
     end
 
     it "sets preview mode for collection to false" do
-      expect_any_instance_of(CollectionQuery).to receive(:any_find).with("2").and_return(collection_not_to_preview)
+      expect_any_instance_of(CollectionQuery).to receive(:any_find).with("8").and_return(collection_not_to_preview)
       expect_any_instance_of(SetCollectionPreviewMode).to receive(:set_preview_mode).and_return(true)
       set_preview_mode_false
       expect(response.body).to eq("{\"status\":true}")
     end
 
     it "checks the editor permissions" do
-      allow_any_instance_of(CollectionQuery).to receive(:any_find).with("1").and_return(collection_to_preview)
+      allow_any_instance_of(CollectionQuery).to receive(:any_find).with("7").and_return(collection_to_preview)
       expect_any_instance_of(described_class).to receive(:user_can_edit?).with(collection_to_preview)
       set_preview_mode_true
     end
@@ -213,7 +216,7 @@ RSpec.describe V1::CollectionsController, type: :controller do
   end
 
   describe "#site_path_update" do
-    let(:collection) { instance_double(Collection, id: 1, site_path: nil) }
+    let(:collection) { instance_double(Collection, id: 9, site_path: nil) }
     let(:site_path) { "site_path" }
     let(:site_path_translated) { "site_path_translated" }
     let(:subject) { put :site_path_update, collection_id: collection.id, site_path: site_path, format: :json }
@@ -242,7 +245,7 @@ RSpec.describe V1::CollectionsController, type: :controller do
     end
 
     it "checks the editor permissions" do
-      allow_any_instance_of(CollectionQuery).to receive(:any_find).with("1").and_return(collection)
+      allow_any_instance_of(CollectionQuery).to receive(:any_find).with("9").and_return(collection)
       expect_any_instance_of(described_class).to receive(:user_can_edit?).with(collection)
       subject
     end

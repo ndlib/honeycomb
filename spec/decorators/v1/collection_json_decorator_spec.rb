@@ -29,19 +29,6 @@ RSpec.describe V1::CollectionJSONDecorator do
     end
   end
 
-  describe "#custom_slug" do
-    let(:collection) { double(Collection, custom_slug: nil) }
-
-    it "converts null to empty string" do
-      expect(subject.custom_slug).to eq("")
-    end
-
-    it "delegates to collection" do
-      expect(collection).to receive(:custom_slug).and_return("test_slug")
-      expect(subject.custom_slug).to eq("test_slug")
-    end
-  end
-
   describe "#about" do
     let(:collection) { double(Collection, about: nil) }
 

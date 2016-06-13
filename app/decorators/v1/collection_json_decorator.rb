@@ -35,10 +35,6 @@ module V1
       object.description.to_s
     end
 
-    def custom_slug
-      object.custom_slug.to_s
-    end
-
     def enable_search
       !!object.enable_search
     end
