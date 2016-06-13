@@ -2,14 +2,14 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe V1::CollectionsController, type: :controller do
-  let(:collection) { FactoryGirl.create(:collection, published: true, site_path: "[]", url_slug: "test") }
+  let(:collection) { instance_double(Collection, id: 1, published: true, site_path: "[]", url_slug: "test") }
   let(:collections) { [collection] }
 
   before(:each) do
     allow_any_instance_of(CollectionQuery).to receive(:public_collections).and_return(collections)
     allow_any_instance_of(CollectionQuery).to receive(:public_find).and_return(collection)
     allow_any_instance_of(CollectionQuery).to receive(:any_find).and_return(collection)
-    # allow_any_instance_of(CollectionQuery).to receive(:custom_slug_find).and_return(collection)
+    allow_any_instance_of(CollectionQuery).to receive(:custom_slug_find).and_return(collection)
   end
 
   describe "#index" do
@@ -76,7 +76,8 @@ RSpec.describe V1::CollectionsController, type: :controller do
     end
 
     it "returns a 404 if there is no matching collection" do
-      expect { get :custom_slug, slug: "does-not-exist", format: :json }.to raise_error
+      allow_any_instance_of(CollectionQuery).to receive(:custom_slug_find).with("does-not-exist").and_raise(ActiveRecord::RecordNotFound)
+      expect { get :custom_slug, slug: "does-not-exist", format: :json }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
     it_behaves_like "a private basic custom etag cacher"
