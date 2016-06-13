@@ -34,7 +34,7 @@ module Waggle
       def sort_direction
         if sort.present?
           sort_arr = sort.split(" ")
-          if sort_arr.length < 2
+          if sort_arr.length == 1
             sort_field = configuration.sort(sort_arr[0].to_sym)
             return get_valid_sort_direction(sort_field.direction) if sort_field.present?
           end
