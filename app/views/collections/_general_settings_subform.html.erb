@@ -2,4 +2,5 @@
 
 <%= f.input :name_line_1 %>
 <%= f.input :name_line_2 %>
+<%= f.input :url_slug, label: "Custom URL Path", hint: "ex: my-collection will become collections.library.nd.edu/my-collection" %>
 <%= render partial: 'search_and_browse_form', locals: { f: f } %>

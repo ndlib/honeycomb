@@ -2,12 +2,13 @@ require "rails_helper"
 
 RSpec.describe SaveCollection, type: :model do
   subject { described_class.call(collection, params) }
-  let(:collection) { double(Collection, id: "id", "attributes=" => true, save: true, url: nil, collection_configuration: double) }
-  let(:params) { { name_line_1: "name_line_1" } }
+  let(:collection) { double(Collection, id: "id", "attributes=" => true, save: true, url: nil, url_slug: nil, collection_configuration: double) }
+  let(:params) { { name_line_1: "name_line_1", url_slug: "Test Slug" } }
   let(:upload_image) { Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/test.jpg"), "image/jpeg") }
 
   before(:each) do
     allow(CreateUniqueId).to receive(:call).and_return(true)
+    allow(collection).to receive(:url_slug=).with("test-slug")
   end
 
   it "returns when the collection save is successful" do
@@ -22,6 +23,11 @@ RSpec.describe SaveCollection, type: :model do
 
   it "sets the attributes of the collection to be the passed in attributes " do
     expect(collection).to receive(:attributes=).with(params)
+    subject
+  end
+
+  it "sets the url_slug to appropriate value if param is supplied" do
+    expect(collection).to receive(:url_slug=).with("test-slug")
     subject
   end
 
