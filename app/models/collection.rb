@@ -33,8 +33,4 @@ class Collection < ActiveRecord::Base
   def item_json_url(item_id)
     "/api/collections/#{id}/items/#{item_id}.json?include=image"
   end
-
-  def custom_slug
-    url_slug
-  end
 end
