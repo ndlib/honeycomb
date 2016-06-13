@@ -18,6 +18,17 @@ module V1
       fresh_when(etag: cache_key.generate)
     end
 
+    def custom_slug
+      @collection = CollectionQuery.new.custom_slug_find(params[:slug])
+
+      cache_key = CacheKeys::Generator.new(key_generator: CacheKeys::Custom::V1Collections,
+                                           action: "show",
+                                           collection: @collection)
+      fresh_when(etag: cache_key.generate)
+
+      render "show"
+    end
+
     def publish
       @collection = CollectionQuery.new.any_find(params[:collection_id])
 
