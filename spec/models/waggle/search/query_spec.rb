@@ -9,10 +9,16 @@ RSpec.describe Waggle::Search::Query do
       filters: { collection_id: "collection_id" }
     }
   end
-
+  let(:configuration) { double(Metadata::Configuration, fields: [], facets: [facet], sort: sort) }
+  let(:facet) { double(Metadata::Configuration::Facet, name: "creator") }
+  let(:sort) { double(Metadata::Configuration::Sort, field_name: "name", direction: "asc") }
   let(:instance) { described_class.new(**arguments) }
 
   subject { instance }
+
+  before(:each) do
+    allow(Waggle).to receive(:configuration).and_return(configuration)
+  end
 
   it "initializes and sets arguments" do
     arguments.each do |key, value|
@@ -31,14 +37,29 @@ RSpec.describe Waggle::Search::Query do
       expect(subject.sort_field).to eq(nil)
     end
 
-    it "allows any field to pass through to solr" do
-      arguments[:sort] = "theresNoWayThisWillBeInTheConfig"
-      expect(subject.sort_field).to eq(arguments[:sort].to_sym)
+    context "when the requested field is present in the config" do
+      before(:each) do
+        allow(configuration).to receive(:sort).and_return(sort)
+      end
+
+      it "uses the field name from the config" do
+        expect(subject.sort_field).to eq(sort.field_name)
+      end
     end
 
-    it "uses the first string in params as the field name" do
-      arguments[:sort] = "one two three"
-      expect(subject.sort_field).to eq(:one)
+    context "when the requested field is not present in the config" do
+      before(:each) do
+        allow(configuration).to receive(:sort).and_return(nil)
+      end
+
+      it "allows pass-through to solr" do
+        expect(subject.sort_field).to eq(arguments[:sort].to_sym)
+      end
+
+      it "uses the first string in params as the field name" do
+        arguments[:sort] = "one two three"
+        expect(subject.sort_field).to eq(:one)
+      end
     end
   end
 
@@ -53,22 +74,32 @@ RSpec.describe Waggle::Search::Query do
       expect(subject.sort_direction).to eq(nil)
     end
 
-    it "accepts asc" do
+    it "accepts asc as an override parameter" do
       arguments[:sort] = "field asc"
       expect(subject.sort_direction).to eq("asc")
     end
 
-    it "accepts desc" do
+    it "accepts desc as an override parameter" do
       arguments[:sort] = "field desc"
       expect(subject.sort_direction).to eq("desc")
     end
 
-    it "defaults to desc if there is a field name, but no direction (same behavior as solr)" do
+    it "uses the configuration direction when no direction is given in the arguments" do
+      expect(subject.sort_direction).to eq(sort.direction)
+    end
+
+    it "defaults to desc if there is a field name, but no direction is given in the arguments or the config" do
+      allow(configuration).to receive(:sort).and_return(nil)
       expect(subject.sort_direction).to eq("desc")
     end
 
     it "defaults to desc if invalid second param is given for sort option" do
       arguments[:sort] = "field blah"
+      expect(subject.sort_direction).to eq("desc")
+    end
+
+    it "defaults to desc if there is a field name, but no direction is given in the arguments or the config" do
+      allow(sort).to receive(:direction).and_return("blah")
       expect(subject.sort_direction).to eq("desc")
     end
   end
