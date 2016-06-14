@@ -25,7 +25,18 @@ var Styles = {
     verticalAlign:'top',
   },
   outerDiv: {
-    display: 'inline-block'
+    display: 'inline-block',
+  },
+  clearButton: {
+    marginLeft: "-50px",
+    height: "38px",
+    width: "50px",
+  },
+  searchTextFieldWithClearButton: {
+    height: '38px',
+    width: '300px',
+    verticalAlign:'top',
+    paddingRight: "50px",
   }
 };
 
@@ -34,6 +45,10 @@ var SearchBox = React.createClass({
     searchUrl: React.PropTypes.string.isRequired,
     rows: React.PropTypes.number.isRequired
   },
+
+  componentWillMount: function() {
+    EventEmitter.on("SearchQueryComplete", this.resultsAreIn);
+  }
 
   onChange: function(e) {
     this.setState({searchTerm: e.target.value});
@@ -48,6 +63,12 @@ var SearchBox = React.createClass({
     });
   },
 
+  clearClick: function() {
+    this.setState({searchTerm: ""}, SearchActions.executeQuery(this.props.searchUrl, {
+      searchTerm: "",
+    }));
+  },
+
   componentDidMount: function() {
     this.setState({searchTerm: SearchStore.searchTerm});
   },
@@ -59,14 +80,26 @@ var SearchBox = React.createClass({
     }
   },
 
-  input: function() {
+  inputBox: function() {
     return (<input
       placeholder='Search'
       onChange={this.onChange}
       defaultValue={SearchStore.searchTerm}
       onKeyDown={this.handleKeyDown}
-      style={Styles.searchTextField}
+      style={SearchStore.searchTerm ? Styles.searchTextFieldWithClearButton : Styles.searchTextField }
     />);
+  },
+
+  clearButton: function() {
+    if (SearchStore.searchTerm) {
+      return (
+        <mui.IconButton onClick={this.clearClick} style={Styles.clearButton} >
+          <mui.FontIcon className="material-icons">clear</mui.FontIcon>
+        </mui.IconButton>
+      );
+    } else {
+      return;
+    }
   },
 
   button: function() {
@@ -80,7 +113,8 @@ var SearchBox = React.createClass({
   render: function() {
     return(
       <div style={ Styles.outerDiv }>
-        { this.input() }
+        { this.inputBox() }
+        { this.clearButton() }
         { this.button() }
       </div>
     );
