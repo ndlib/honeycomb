@@ -11,6 +11,7 @@ class SaveMetadata
   end
 
   def save
+    fix_params
     set_metadata
     if valid? && item.save
       item.item_metadata
@@ -20,6 +21,11 @@ class SaveMetadata
   end
 
   private
+
+  def fix_params
+    @params = params.with_indifferent_access
+    ParamCleaner.call(hash: params)
+  end
 
   def set_metadata
     if params.present?

@@ -46,4 +46,9 @@ RSpec.describe SaveMetadata, type: :model do
     expect(item).to receive(:save).and_return(false)
     expect(subject).to eq(false)
   end
+
+  it "calls the metadata params cleaner on the input" do
+    expect(ParamCleaner).to receive(:call).with(hash: params).ordered
+    subject
+  end
 end

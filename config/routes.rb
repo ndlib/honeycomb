@@ -36,6 +36,7 @@ Rails.application.routes.draw do
     end
 
     resources :items, only: [:index, :new, :create]
+
     resources :showcases, only: [:index, :new, :create]
     resources :pages, only: [:index, :new, :create]
 
@@ -89,6 +90,7 @@ Rails.application.routes.draw do
     resources :items,
               only: [:show, :update],
               defaults: { format: :json } do
+      resource :metadata, only: [:update]
       get :showcases, defaults: { format: :json }
     end
     resources :showcases, only: [:show], defaults: { format: :json }

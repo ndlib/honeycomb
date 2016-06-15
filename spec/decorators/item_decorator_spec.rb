@@ -69,7 +69,7 @@ RSpec.describe ItemDecorator do
       expect(subject.h).to receive(:react_component).with(
         "ItemMetaDataForm",
         authenticityToken: "token",
-        url: "/v1/items/unique_id",
+        url: "/v1/items/unique_id/metadata",
         method: "put",
         data: { metadata: ["value"] }
       )
