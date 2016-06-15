@@ -72,7 +72,5 @@ RSpec.describe V1::MetadataController, type: :controller do
 
       subject
     end
-
   end
-
 end
