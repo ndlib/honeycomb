@@ -12,7 +12,6 @@ class SaveItem
 
   def save
     fix_params
-    pre_process_metadata
     item.attributes = params
     check_user_defined_id
     check_unique_id
@@ -33,13 +32,6 @@ class SaveItem
     @params = params.with_indifferent_access
     fix_image_param!
     ParamCleaner.call(hash: params)
-  end
-
-  def pre_process_metadata
-    if params[:metadata].present?
-      metadata = params.delete(:metadata)
-      Metadata::Setter.call(item, metadata)
-    end
   end
 
   def pre_process_name
