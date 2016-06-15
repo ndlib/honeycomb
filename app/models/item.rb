@@ -44,18 +44,6 @@ class Item < ActiveRecord::Base
     raise "Use Metadata::Setter.call instead see SaveItem"
   end
 
-  def valid?(context = nil)
-    valid = super(context)
-
-    if !item_metadata.valid?
-      item_metadata.errors.each do |key, message|
-        errors[key] << message
-      end
-      valid = false
-    end
-    valid
-  end
-
   private
 
   def manuscript_url_is_valid_uri

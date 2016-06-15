@@ -154,29 +154,4 @@ RSpec.describe Item do
       expect { subject.metadata = ({}) }.to raise_error
     end
   end
-
-  describe "valid?" do
-    before(:each) do
-      allow(subject).to receive(:item_metadata).and_return(item_metadata)
-    end
-
-    it "calls asks the metadata if it is valid" do
-      expect(item_metadata).to receive(:valid?).and_return(true)
-      subject.valid?
-    end
-
-    it "returns false if the item_metadata is false" do
-      allow(item_metadata).to receive(:valid?).and_return(false)
-      allow(item_metadata).to receive(:errors).and_return(name: "is required")
-      expect(subject.valid?).to be(false)
-    end
-
-    it "passes errors from the metadata to the item" do
-      expect(item_metadata).to receive(:valid?).and_return(false)
-      expect(item_metadata).to receive(:errors).and_return(name: "is required")
-      subject.valid?
-
-      expect(subject.errors[:name]).to eq(["is required"])
-    end
-  end
 end
