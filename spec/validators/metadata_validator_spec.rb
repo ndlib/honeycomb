@@ -14,7 +14,7 @@ describe MetadataValidator do
   subject { MetadataValidator.new.validate(metadata) }
 
   before(:each) do
-    allow_any_instance_of(described_class).to receive(:configuration).and_return(configuration)
+    allow_any_instance_of(described_class).to receive(:load_configuration).and_return(configuration)
   end
 
   context "required_field" do

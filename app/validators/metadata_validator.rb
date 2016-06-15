@@ -3,6 +3,7 @@ class MetadataValidator < ActiveModel::Validator
 
   def validate(record)
     @record = record
+    @configuration = load_configuration
     validates_presence
     validate_dates
   end
@@ -28,7 +29,7 @@ class MetadataValidator < ActiveModel::Validator
   end
 
   def configuration
-    @configuration ||= CollectionConfigurationQuery.new(record.item.collection).find
+    @configuration
   end
 
   def not_present?(field, value)
@@ -55,5 +56,9 @@ class MetadataValidator < ActiveModel::Validator
     if record.errors[field] && !date.to_date
       record.errors[field] << "Invalid Date"
     end
+  end
+
+  def load_configuration
+    CollectionConfigurationQuery.new(@record.item.collection).find
   end
 end

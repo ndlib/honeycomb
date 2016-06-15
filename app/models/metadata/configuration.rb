@@ -3,10 +3,6 @@ module Metadata
     attr_reader :data
     private :data
 
-    def self.set_item_configuration(collection)
-      @item_configuration ||= new(CollectionConfigurationQuery.new(collection).find)
-    end
-
     def initialize(data)
       @data = data
     end
