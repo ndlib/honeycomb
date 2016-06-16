@@ -34,7 +34,8 @@ var Styles = {
 var SearchPagination = React.createClass({
   propTypes: {
     searchUrl: React.PropTypes.string.isRequired,
-    rows: React.PropTypes.number.isRequired
+    rows: React.PropTypes.number.isRequired,
+    keyPrefix: React.PropTypes.string.isRequired,
   },
 
   queryPage: function(i) {
@@ -78,7 +79,7 @@ var SearchPagination = React.createClass({
     // if not first page
     if(SearchStore.start != 0) {
       nodes.push((
-        <mui.RaisedButton key={ this.props.key + "PreviousPageLink" } style={ Styles.pageButton } onTouchTap={ function(){ this.queryPage(0) }.bind(this) }>
+        <mui.RaisedButton key={ this.props.keyPrefix + "PreviousPageLink" } style={ Styles.pageButton } onTouchTap={ function(){ this.queryPage(0) }.bind(this) }>
           <i className="material-icons" style={ Styles.jumpArrows }>first_page</i>
         </mui.RaisedButton>
       ));
@@ -100,7 +101,7 @@ var SearchPagination = React.createClass({
     if(SearchStore.start + this.props.rows < SearchStore.found) {
       var start = this.props.rows*(last - 1);
       nodes.push((
-        <mui.RaisedButton key={ this.props.key + "NextPageLink" } style={ Styles.pageButton } onTouchTap={ function(){ this.queryPage(start) }.bind(this) }>
+        <mui.RaisedButton key={ this.props.keyPrefix + "NextPageLink" } style={ Styles.pageButton } onTouchTap={ function(){ this.queryPage(start) }.bind(this) }>
           <i className="material-icons" style={ Styles.jumpArrows }>last_page</i>
         </mui.RaisedButton>
       ));

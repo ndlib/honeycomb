@@ -1,6 +1,12 @@
 //app/assets/javascripts/components.js
 //= require_self
 //= require react_ujs
+
+// Symbol definitions required by material-ui/Table
+// See https://github.com/callemall/material-ui/issues/1531
+window.Symbol = require('core-js/modules/es6.symbol');
+window.Symbol.iterator = require('core-js/fn/symbol/iterator');
+
 React = require("react");
 ReactDOM = require("react-dom");
 
