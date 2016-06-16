@@ -25,8 +25,6 @@ module V1
                                            action: "show",
                                            collection: @collection)
       fresh_when(etag: cache_key.generate)
-
-      render "show"
     end
 
     def publish

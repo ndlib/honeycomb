@@ -72,7 +72,7 @@ RSpec.describe V1::CollectionsController, type: :controller do
       subject
       expect(response).to be_success
       expect(assigns(:collection)).to be_present
-      expect(subject).to render_template("v1/collections/show")
+      expect(subject).to render_template("v1/collections/custom_slug")
     end
 
     it "returns a 404 if there is no matching collection" do
