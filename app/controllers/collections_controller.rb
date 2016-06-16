@@ -115,6 +115,7 @@ class CollectionsController < ApplicationController
       :name_line_1,
       :name_line_2,
       :description,
+      :url_slug,
       :id,
       :enable_search,
       :enable_browse,
