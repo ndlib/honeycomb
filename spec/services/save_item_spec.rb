@@ -5,8 +5,7 @@ RSpec.describe SaveItem, type: :model do
   subject { described_class.call(item, params) }
   let(:item) { Item.new }
   let(:page) { Page.new }
-  let(:params) { { unique_id: "ad", metadata: metadata } }
-  let(:metadata) { { name: "name" } }
+  let(:params) { { unique_id: "ad" } }
   let(:collection) { instance_double(Collection, collection_configuration: double) }
 
   before(:each) do
@@ -16,7 +15,6 @@ RSpec.describe SaveItem, type: :model do
     allow(Index::Item).to receive(:index!).and_return(true)
     allow(item).to receive(:name).and_return("name")
     allow(item).to receive(:no_image!).and_return(nil)
-    allow(item).to receive(:metadata=).and_return({})
     allow(CreateUserDefinedId).to receive(:call).and_return(true)
     allow(Metadata::Setter).to receive(:call).and_return(true)
 
@@ -47,30 +45,9 @@ RSpec.describe SaveItem, type: :model do
   it "removes the uploaded image from the params if the param is nil" do
     params[:uploaded_image] = nil
     allow(params).to receive(:with_indifferent_access).and_return(params)
-    allow(params).to receive(:delete).with(:metadata)
     expect(params).to receive(:delete).with(:uploaded_image)
 
     subject
-  end
-
-  describe "pre_process_metadata" do
-    it "calls the metadata setter if there is metadata" do
-      expect(Metadata::Setter).to receive(:call).with(item, metadata)
-      subject
-    end
-
-    it "removes the metadata from the params" do
-      allow(params).to receive(:with_indifferent_access).and_return(params)
-      allow(params).to receive(:delete).with(:uploaded_image)
-      expect(params).to receive(:delete).with(:metadata)
-      subject
-    end
-
-    it "does not call the metadata setter if there is no metadata" do
-      params.delete(:metadata)
-      expect(Metadata::Setter).to_not receive(:call)
-      subject
-    end
   end
 
   describe "unique_id" do
@@ -180,14 +157,21 @@ RSpec.describe SaveItem, type: :model do
 
   context "no name on a new record" do
     let(:params) { {} }
-    let(:metadata) { double }
-    let(:metadata_result) { double }
+
+    before(:each) do
+      allow(item).to receive(:name).and_return(nil)
+      allow(item).to receive(:uploaded_image_file_name).and_return("test.jpg")
+    end
 
     it "sets the name to be the uploaded filename when the item is a new record?" do
-      allow(item).to receive(:name).and_return(nil)
-      allow(MetadataInputCleaner).to receive(:call)
-      expect(GenerateNameFromFilename).to receive(:call).at_least(:once).and_return("Filename")
+      expect(GenerateNameFromFilename).to receive(:call).with("test.jpg").at_least(:once).and_return("Filename")
+      subject
+    end
 
+    it "calls the metadata setter to set the name" do
+      allow(item).to receive(:description).and_return("")
+      allow(GenerateNameFromFilename).to receive(:call).and_return("Filename")
+      expect(Metadata::Setter).to receive(:call).with(item, "name" => "Filename")
       subject
     end
   end
