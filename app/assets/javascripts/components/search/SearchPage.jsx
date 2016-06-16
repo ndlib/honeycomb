@@ -164,7 +164,7 @@ var SearchPage = React.createClass({
         { this.progressCircle() }
         <div style={{ width: "100%" }}>
           <SearchBox searchUrl={this.props.searchUrl} rows={this.props.rows} />
-          <SearchPagination key="PaginationHeader" rows={this.props.rows} searchUrl={this.props.searchUrl} style={ Styles.paginationHeader }/>
+          <SearchPagination keyPrefix="PaginationHeader" rows={this.props.rows} searchUrl={this.props.searchUrl} style={ Styles.paginationHeader }/>
         </div>
         <div style={ Styles.table }>
           <mui.Table selectable={false} fixedFooter={true} onCellClick={ this.openItem }>
@@ -186,7 +186,7 @@ var SearchPage = React.createClass({
             </mui.TableBody>
           </mui.Table>
         </div>
-        <SearchPagination key="PaginationFooter" rows={this.props.rows} searchUrl={this.props.searchUrl} style={ Styles.paginationFooter }/>
+        <SearchPagination keyPrefix="PaginationFooter" rows={this.props.rows} searchUrl={this.props.searchUrl} style={ Styles.paginationFooter }/>
       </div>
     );
   }
