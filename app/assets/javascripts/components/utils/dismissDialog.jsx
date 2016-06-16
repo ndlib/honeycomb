@@ -14,7 +14,7 @@ function dismissDialog(Component) {
     dismiss_func: function(dismiss_method) {
       return [
         <FlatButton
-          label="Adios"
+          label="Close"
           primary={true}
           onTouchTap={dismiss_method}
           />
