@@ -9,9 +9,7 @@ class SearchActions {
 
     var url = baseApiUrl + "?";
     if(params.searchTerm) {
-      var expandedTerms = params.searchTerm.split(" ").filter(t => t !== "");
-      var joinedTerms = "*" + expandedTerms.join("* AND *") + "*";
-      url += "q=" + joinedTerms;
+      url += "q=" + params.searchTerm;
     }
     if(params.sortField) {
       url += "&sort=" + params.sortField;

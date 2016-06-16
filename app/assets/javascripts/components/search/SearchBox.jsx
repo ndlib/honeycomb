@@ -41,7 +41,7 @@ var Styles = {
     width: '500px',
     verticalAlign:'top',
     paddingRight: "50px",
-  }
+  },
 };
 
 var SearchBox = React.createClass({
@@ -72,6 +72,9 @@ var SearchBox = React.createClass({
   clearClick: function() {
     this.setState({searchTerm: ""}, SearchActions.executeQuery(this.props.searchUrl, {
       searchTerm: "",
+      sortField: SearchStore.sortField,
+      sortDirection: SearchStore.sortDirection,
+      rowLimit: this.props.rows
     }));
   },
 
