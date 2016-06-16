@@ -9,7 +9,7 @@ var Styles = {
   searchIcon: {
     fontSize: '18px',
     verticalAlign: 'text-bottom',
-    minWidth: '26px',
+    minWidth: '56px',
     padding: '8px',
     borderRadius: '0 2px 2px 0',
     borderLeft: 'none'
@@ -21,20 +21,24 @@ var Styles = {
   },
   searchTextField: {
     height: '38px',
-    width: '300px',
+    width: '500px',
     verticalAlign:'top',
   },
   outerDiv: {
     display: 'inline-block',
   },
   clearButton: {
-    marginLeft: "-50px",
-    height: "38px",
-    width: "50px",
+    marginLeft: "-40px",
+    height: "34px",
+    width: "40px",
+    verticalAlign: 'text-bottom',
+    fontSize: '16px',
+    paddingTop: '6px',
+    color: "gray"
   },
   searchTextFieldWithClearButton: {
-    height: '38px',
-    width: '300px',
+    height: '36px',
+    width: '500px',
     verticalAlign:'top',
     paddingRight: "50px",
   }
@@ -46,9 +50,11 @@ var SearchBox = React.createClass({
     rows: React.PropTypes.number.isRequired
   },
 
-  componentWillMount: function() {
-    EventEmitter.on("SearchQueryComplete", this.resultsAreIn);
-  }
+  getInitialState: function() {
+    return {
+      searchTerm: "",
+    };
+  },
 
   onChange: function(e) {
     this.setState({searchTerm: e.target.value});
@@ -84,7 +90,7 @@ var SearchBox = React.createClass({
     return (<input
       placeholder='Search'
       onChange={this.onChange}
-      defaultValue={SearchStore.searchTerm}
+      value={this.state.searchTerm}
       onKeyDown={this.handleKeyDown}
       style={SearchStore.searchTerm ? Styles.searchTextFieldWithClearButton : Styles.searchTextField }
     />);
@@ -93,8 +99,8 @@ var SearchBox = React.createClass({
   clearButton: function() {
     if (SearchStore.searchTerm) {
       return (
-        <mui.IconButton onClick={this.clearClick} style={Styles.clearButton} >
-          <mui.FontIcon className="material-icons">clear</mui.FontIcon>
+        <mui.IconButton onClick={this.clearClick} style={Styles.clearButton} tooltip="Clear Search">
+          <mui.FontIcon color="gray" className="material-icons">clear</mui.FontIcon>
         </mui.IconButton>
       );
     } else {
