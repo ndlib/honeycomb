@@ -2,10 +2,6 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe V1::MetadataController, type: :controller do
-  let(:collection_configuration) { CollectionConfiguration.new }
-  let(:collection) { instance_double(Collection, id: "1", updated_at: nil, items: nil, collection_configuration: collection_configuration) }
-  let(:item) { instance_double(Item, id: "1", collection: collection, children: nil) }
-
   before(:each) do
     allow_any_instance_of(ItemQuery).to receive(:public_find).and_return(item)
     allow_any_instance_of(CollectionQuery).to receive(:public_find).and_return(collection)
@@ -60,7 +56,7 @@ RSpec.describe V1::MetadataController, type: :controller do
       expect(response).to render_template("errors")
     end
 
-    it "assigns and item" do
+    it "assigns an item" do
       subject
 
       assigns(:item)

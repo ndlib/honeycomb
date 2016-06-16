@@ -28,9 +28,7 @@ class SaveMetadata
   end
 
   def set_metadata
-    if params.present?
-      Metadata::Setter.call(item, params)
-    end
+    Metadata::Setter.call(item, params)
   end
 
   def valid?
