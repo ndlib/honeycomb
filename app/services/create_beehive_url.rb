@@ -26,7 +26,7 @@ class CreateBeehiveURL
     if collection.url_slug
       "#{Rails.configuration.settings.beehive_url}/#{collection.url_slug}"
     else
-      "#{Rails.configuration.settings.beehive_url}/#{collection.unique_id}#{CreateURLSlug.call(collection.name_line_1)}"
+      "#{Rails.configuration.settings.beehive_url}/#{collection.unique_id}/#{CreateURLSlug.call(collection.name_line_1)}"
     end
   end
 
