@@ -10,7 +10,8 @@ RSpec.describe CreateBeehiveURL do
 
       it "returns a beehive url for a collection" do
         object.name_line_1 = "Test title"
-        expect(subject.create).to eq "http://localhost:3018/test-title"
+        object.unique_id = "12345"
+        expect(subject.create).to eq "http://localhost:3018/12345/test-title"
       end
 
       it "returns custom slug if present" do
@@ -20,7 +21,8 @@ RSpec.describe CreateBeehiveURL do
 
       it "calls CreateURLSlug on the collection name_line_1" do
         object.name_line_1 = "Test title"
-        expect(subject.create).to eq "http://localhost:3018/test-title"
+        object.unique_id = "12345"
+        expect(subject.create).to eq "http://localhost:3018/12345/test-title"
       end
     end
 
