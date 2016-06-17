@@ -1,4 +1,22 @@
 # Change Log
+
+## [3.3.0](https://github.com/ndlib/honeycomb/tree/v3.3.0) (2016-06-16)
+[Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.2.0...v3.3.0)
+
+###New features/enhancements:###
+  - Users can now create a custom url for their collections, ex: collections.library.nd.edu/my-collection
+ ([DEC-1044](https://jira.library.nd.edu/browse/DEC-1044), [#370](https://github.com/ndlib/honeycomb/pull/370), [#371](https://github.com/ndlib/honeycomb/pull/371))
+  - Now renders a default thumbnail for items that only have metadata and no associated image to better support different types of collections ([DEC-1050](https://jira.library.nd.edu/browse/DEC-1050), [#373](https://github.com/ndlib/honeycomb/pull/373))
+  - Facets can now have independent limits set per facet ([DEC-1039](https://jira.library.nd.edu/browse/DEC-1039), [#374](https://github.com/ndlib/honeycomb/pull/374))
+  - Sort options can now have independent directions (ascending/descending) set per sort ([DEC-1040](https://jira.library.nd.edu/browse/DEC-1040), [#375](https://github.com/ndlib/honeycomb/pull/375))
+  - Added a search clear button to more easily reset the search when filtering items in a collection ([DEC-1062](https://jira.library.nd.edu/browse/DEC-1062), [#377](https://github.com/ndlib/honeycomb/pull/377))
+
+###Bug fixes:###
+  - Renamed the OK button on the item preview ([DEC-1065](https://jira.library.nd.edu/browse/DEC-1065), [#378](https://github.com/ndlib/honeycomb/pull/378))
+  - Fixed a few issues related to metadata configuration and creating new items ([DEC-1064](https://jira.library.nd.edu/browse/DEC-1064), [#376](https://github.com/ndlib/honeycomb/pull/376))
+  - Fixed a bug that prevented Safari users from being able to view/edit items ([DEC-624](https://jira.library.nd.edu/browse/DEC-624), [#379](https://github.com/ndlib/honeycomb/pull/379))
+
+
 ## [3.2.0](https://github.com/ndlib/honeycomb/tree/v3.2.0) (2016-06-06)
 [Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.1.1...v3.2.0)
 
