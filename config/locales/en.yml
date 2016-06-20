@@ -203,6 +203,13 @@ en:
   sections:
     new:
       title: "New Section"
+    create:
+      success: "Section created!"
+    update:
+      success: "Section updated!"
+    destroy:
+      success: "Section deleted"
+      failure: "There was a problem deleting this section"
   errors:
     messages:
       invalid_url: "must be a valid URL"
