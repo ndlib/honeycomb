@@ -8,6 +8,7 @@ RSpec.describe SaveMetadata, type: :model do
 
   before(:each) do
     allow(Metadata::Setter).to receive(:call).and_return(true)
+    allow(Index::Item).to receive(:index!)
   end
 
   it "sets the metadata with the metadata setter" do
@@ -43,6 +44,17 @@ RSpec.describe SaveMetadata, type: :model do
 
   it "calls the metadata params cleaner on the input" do
     expect(ParamCleaner).to receive(:call).with(hash: params).ordered
+    subject
+  end
+
+  it "calls the indexer on success" do
+    expect(Index::Item).to receive(:index!).with(item)
+    subject
+  end
+
+  it "does not call the indexer on failure" do
+    allow(item_metadata).to receive(:valid?).and_return(false)
+    expect(Index::Item).to_not receive(:index!)
     subject
   end
 end

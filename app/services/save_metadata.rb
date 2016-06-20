@@ -14,6 +14,7 @@ class SaveMetadata
     fix_params
     set_metadata
     if valid? && item.save
+      index_item
       item.item_metadata
     else
       false
@@ -21,6 +22,10 @@ class SaveMetadata
   end
 
   private
+
+  def index_item
+    Index::Item.index!(item)
+  end
 
   def fix_params
     @params = params.with_indifferent_access
