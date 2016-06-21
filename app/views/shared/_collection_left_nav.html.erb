@@ -10,13 +10,6 @@
     <li role="presentation" class="divider"></li>
 
     <li className="header" role="presentation">Publish Site</li>
-    <li className="togglebutton">
-      <%= react_component "CollectionPublishToggle", {
-          publishPath: v1_collection_publish_url(nav.collection.unique_id),
-          unpublishPath: v1_collection_unpublish_url(nav.collection.unique_id)
-        }
-      %>
-    </li>
 
     <li className="header" role="presentation">Preview Site</li>
     <li className="togglebutton">

@@ -97,7 +97,6 @@ PeopleSearchList = require("./components/people_search/PeopleSearchList");
 PeopleSearchListItem = require("./components/people_search/PeopleSearchListItem");
 
 // publish
-CollectionPublishToggle = require("./components/publish/CollectionPublishToggle");
 ItemPublishEmbedPanel = require("./components/publish/ItemPublishEmbedPanel");
 PublishToggle = require("./components/publish/PublishToggle");
 ShowcasePublishAction = require("./components/publish/ShowcasePublishAction");
