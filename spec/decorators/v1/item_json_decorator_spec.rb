@@ -1,7 +1,8 @@
 require "rails_helper"
 
 RSpec.describe V1::ItemJSONDecorator do
-  let(:item) { instance_double(Item) }
+  let(:image) { instance_double(Image, json_response: "json", status: 0, ready?: true) }
+  let(:item) { instance_double(Item, image: image) }
   let(:json) { double }
   let(:instance) { described_class.new(item) }
 
@@ -60,11 +61,10 @@ RSpec.describe V1::ItemJSONDecorator do
   end
 
   describe "#image" do
-    let(:item) { instance_double(Item, honeypot_image: honeypot_image, image_ready?: true) }
-    let(:honeypot_image) { double(HoneypotImage, json_response: "json_response") }
+    let(:item) { instance_double(Item, image: image) }
 
     it "gets the honeypot_image json_response" do
-      expect(honeypot_image).to receive(:json_response).and_return("json_response")
+      expect(image).to receive(:json_response).and_return("json_response")
       expect(subject.image).to eq("json_response")
     end
   end
@@ -76,13 +76,11 @@ RSpec.describe V1::ItemJSONDecorator do
         Item,
         name: "name",
         description: "description",
-        image_ready?: true,
         unique_id: "test-item",
         collection: collection,
         user_defined_id: "udi",
         metadata: {},
-        image_status: 0,
-        honeypot_image: double(json_response: "json"),
+        image: image,
         item_metadata: double(fields: [double]),
         updated_at: Time.now,
       )

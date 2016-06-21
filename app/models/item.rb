@@ -8,25 +8,10 @@ class Item < ActiveRecord::Base
   has_many :showcases, -> { distinct }, through: :sections
   has_many :items_pages
   has_many :pages, through: :items_pages
-  has_one :honeypot_image
-
-  has_attached_file :image,
-                    restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/,
-                    styles: {
-                      thumb: "300x300>",
-                      section: "x800>"
-                    }
-
-  has_attached_file :uploaded_image,
-                    restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/
+  belongs_to :image
 
   validates :collection, :unique_id, :user_defined_id, presence: true
   validate :manuscript_url_is_valid_uri
-
-  validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
-  validates_attachment_content_type :uploaded_image, content_type: /\Aimage\/.*\Z/
-
-  enum image_status: { no_image: 0, image_processing: 1, image_ready: 2, image_unavailable: 3 }
 
   def name
     item_metadata.name

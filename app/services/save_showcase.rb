@@ -1,5 +1,5 @@
 class SaveShowcase
-  attr_reader :params, :showcase
+  attr_reader :params, :showcase, :uploaded_image
 
   def self.call(showcase, params)
     new(showcase, params).save
@@ -30,15 +30,15 @@ class SaveShowcase
   end
 
   def fix_image_param!
-    # sometimes the form is sending an empty image value and this is causing paperclip to delete the image.
-    params.delete(:uploaded_image) if params[:uploaded_image].nil?
+    @uploaded_image = params[:uploaded_image]
+    params.delete(:uploaded_image)
   end
 
   def process_uploaded_image
-    if params[:uploaded_image]
-      QueueJob.call(ProcessImageJob, object: showcase)
-    else
-      true
+    if uploaded_image.present?
+      showcase.image = FindOrCreateImage.call(file: uploaded_image, collection_id: showcase.collection_id)
+      return showcase.save
     end
+    true
   end
 end

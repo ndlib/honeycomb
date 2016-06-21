@@ -6,10 +6,10 @@ class CollectionImage
   end
 
   def display
-    if collection.honeypot_image
-      HoneypotThumbnail.display(collection.honeypot_image)
+    if collection.image
+      HoneypotThumbnail.display(collection.image)
     elsif first_item_with_image
-      HoneypotThumbnail.display(first_item_with_image.honeypot_image)
+      HoneypotThumbnail.display(first_item_with_image.image)
     else
       ""
     end
@@ -18,6 +18,6 @@ class CollectionImage
   private
 
   def first_item_with_image
-    @first_item_with_image ||= collection.items.joins(:honeypot_image).first
+    @first_item_with_image ||= collection.items.joins(:image).first
   end
 end

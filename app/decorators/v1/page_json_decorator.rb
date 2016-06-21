@@ -33,7 +33,9 @@ module V1
 
     def image
       if object.image
-        V1::ImageJSONDecorator.new(object.image).to_hash
+        object.image.json_response
+      else
+        nil
       end
     end
 

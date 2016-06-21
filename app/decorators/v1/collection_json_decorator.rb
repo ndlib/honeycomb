@@ -77,8 +77,8 @@ module V1
     end
 
     def image
-      if object.honeypot_image
-        object.honeypot_image.json_response
+      if object.image
+        object.image.json_response
       end
     end
 

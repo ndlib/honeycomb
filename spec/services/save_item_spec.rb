@@ -17,7 +17,7 @@ RSpec.describe SaveItem, type: :model do
     allow(item).to receive(:no_image!).and_return(nil)
     allow(CreateUserDefinedId).to receive(:call).and_return(true)
     allow(Metadata::Setter).to receive(:call).and_return(true)
-
+    allow(FindOrCreateImage).to receive(:call).and_return(nil)
     allow_any_instance_of(Metadata::Fields).to receive(:valid?).and_return(true)
   end
 
@@ -45,6 +45,7 @@ RSpec.describe SaveItem, type: :model do
   it "removes the uploaded image from the params if the param is nil" do
     params[:uploaded_image] = nil
     allow(params).to receive(:with_indifferent_access).and_return(params)
+    allow(item).to receive("attributes=")
     expect(params).to receive(:delete).with(:uploaded_image)
 
     subject
@@ -99,58 +100,23 @@ RSpec.describe SaveItem, type: :model do
   end
 
   describe "image processing" do
-    it "sets the invalid state when the class receives a sneakers connection error" do
-      params[:uploaded_image] = upload_image
-      allow(item).to receive(:image_processing!).and_return(true)
-      allow(item).to receive(:save).and_return(true)
-      allow(QueueJob).to receive(:call).with(ProcessImageJob, object: item).and_raise(Bunny::TCPConnectionFailedForAllHosts)
-      expect(item).to receive(:image_unavailable!)
-      subject
-    end
-
-    it "Queues image processing if the image was updated" do
-      params[:uploaded_image] = upload_image
-      allow(item).to receive(:image_processing!).and_return(true)
-      allow(item).to receive(:save).and_return(true)
-      expect(QueueJob).to receive(:call).with(ProcessImageJob, object: item).and_return(true)
-      subject
-    end
-
     it "returns the item if the image was updated" do
       params[:uploaded_image] = upload_image
-      allow(item).to receive(:image_processing!).and_return(true)
       allow(item).to receive(:save).and_return(true)
-      allow(QueueJob).to receive(:call).with(ProcessImageJob, object: item).and_return(true)
       expect(subject).to eq(item)
     end
 
-    it "sets the image status to processing if the image was updated" do
+    it "calls FindOrCreateImage if the image is changed" do
       params[:uploaded_image] = upload_image
-      expect(item).to receive(:image_processing!).and_return(true)
+      expect(FindOrCreateImage).to receive(:call).and_return(nil)
       allow(item).to receive(:save).and_return(true)
       allow(QueueJob).to receive(:call).with(ProcessImageJob, object: item).and_return(true)
       subject
     end
 
-    it "is not called if the image is not changed" do
+    it "FindOrCreateImage is not called if the image is not changed" do
       params[:uploaded_image] = nil
-      allow(item).to receive(:save).and_return(true)
-      expect(QueueJob).to_not receive(:call)
-      subject
-    end
-
-    it "returns the item even if the image is not changed" do
-      params[:uploaded_image] = nil
-      allow(item).to receive(:save).and_return(true)
-      expect(subject).to eq(item)
-    end
-
-    it "sets the state to no image if there is no uploaded image and the item is in the error state" do
-      # error state currently because it is the deault state. at some point it should be changed to no image.
-      params[:uploaded_image] = nil
-      allow(item).to receive(:image_unavailable?).and_return(true)
-      allow(item).to receive(:save).and_return(true)
-      expect(item).to receive(:no_image!)
+      expect(FindOrCreateImage).not_to receive(:call)
       subject
     end
   end
@@ -164,11 +130,13 @@ RSpec.describe SaveItem, type: :model do
     end
 
     it "sets the name to be the uploaded filename when the item is a new record?" do
+      params[:uploaded_image] = upload_image
       expect(GenerateNameFromFilename).to receive(:call).with("test.jpg").at_least(:once).and_return("Filename")
       subject
     end
 
     it "calls the metadata setter to set the name" do
+      params[:uploaded_image] = upload_image
       allow(item).to receive(:description).and_return("")
       allow(GenerateNameFromFilename).to receive(:call).and_return("Filename")
       expect(Metadata::Setter).to receive(:call).with(item, "name" => "Filename")

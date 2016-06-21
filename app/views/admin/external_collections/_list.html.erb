@@ -22,8 +22,8 @@
     <% external_collections.each do |collection| %>
       <tr>
         <td>
-          <% if collection.honeypot_image %>
-            <a href="<%= raw collection.url %>"><%= HoneypotThumbnail.display(collection.honeypot_image) %></a>
+          <% if collection.image %>
+            <a href="<%= raw collection.url %>"><%= HoneypotThumbnail.display(collection.image) %></a>
           <% end %>
         </td>
         <td>

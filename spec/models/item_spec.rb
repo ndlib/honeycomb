@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe Item do
-  let(:image_with_spaces) { File.open(Rails.root.join("spec/fixtures", "test copy.jpg"), "r") }
   let(:item_metadata) do
     double(
       Metadata::Fields,
@@ -24,25 +23,13 @@ RSpec.describe Item do
 
   [
     :collection,
-    :honeypot_image,
+    :image,
     :published,
-    :image_status,
     :pages
   ].each do |field|
     it "has field, #{field}" do
       expect(subject).to respond_to(field)
       expect(subject).to respond_to("#{field}=")
-    end
-  end
-
-  [
-    :image_ready,
-    :image_unavailable,
-    :image_processing
-  ].each do |field|
-    it "has enum, #{field}" do
-      expect(subject).to respond_to("#{field}!")
-      expect(subject).to respond_to("#{field}?")
     end
   end
 
@@ -79,11 +66,6 @@ RSpec.describe Item do
     expect(subject.paper_trail_enabled_for_model?).to be(true)
   end
 
-  it "keeps spaces in the original filename" do
-    subject.image = image_with_spaces
-    expect(subject.image.original_filename).to eq("test copy.jpg")
-  end
-
   it "has a parent" do
     expect(subject).to respond_to(:parent)
     expect(subject.parent).to be_nil
@@ -104,13 +86,13 @@ RSpec.describe Item do
     expect(subject.showcases).to eq([])
   end
 
-  describe "#has honeypot image interface" do
+  describe "#has image interface" do
     it "responds to image" do
       expect(subject).to respond_to(:image)
     end
 
-    it "responds to honeypot_image" do
-      expect(subject).to respond_to(:honeypot_image)
+    it "responds to image" do
+      expect(subject).to respond_to(:image)
     end
 
     it "responds to collection" do

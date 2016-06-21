@@ -196,8 +196,6 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
-    fastimage (1.6.4)
-      addressable (~> 2.3, >= 2.3.5)
     ffi (1.9.10)
     formatador (0.2.5)
     globalid (0.3.6)
@@ -539,7 +537,6 @@ DEPENDENCIES
   faker
   faraday
   faraday_middleware
-  fastimage
   google_drive!
   guard
   guard-bundler

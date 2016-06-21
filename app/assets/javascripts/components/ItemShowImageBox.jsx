@@ -72,17 +72,17 @@ var ItemShowImageBox = React.createClass({
   renderMedia: function() {
     switch(this.state.item.image_status)
     {
-      case "image_ready":
+      case "ready":
         return this.itemReadyHtml();
-      case "image_processing":
+      case "processing":
         return this.itemProcessingHtml();
       case "no_image":
         return this.itemNoImageHtml();
-      case "image_unavailable":
+      case "unavailable":
         return this.itemImageInvalidHtml();
       default:
-        EventEmitter.emit("MessageCenterDisplay", "error", "Unknown Image Status");
-        break;
+        console.log("Unknown Image Status: " + this.state.item.image_status);
+        return this.itemImageInvalidHtml();
     }
   },
 

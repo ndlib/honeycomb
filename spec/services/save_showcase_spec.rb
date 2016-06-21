@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe SaveShowcase, type: :model do
   subject { described_class.call(showcase, params) }
-  let(:showcase) { Showcase.new }
+  let(:showcase) { instance_double(Showcase, "attributes=" => true, collection_id: 1, "image=" => true) }
   let(:params) { { name_line_1: "name_line_1" } }
   let(:upload_image) { Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/test.jpg"), "image/jpeg") }
 
@@ -27,17 +27,23 @@ RSpec.describe SaveShowcase, type: :model do
   end
 
   describe "image processing" do
-    it "Queues image processing if the image was updated" do
+    it "returns the true if the image was updated" do
       params[:uploaded_image] = upload_image
-      expect(showcase).to receive(:save).and_return(true)
-      expect(QueueJob).to receive(:call).with(ProcessImageJob, object: showcase).and_return(true)
+      allow(showcase).to receive(:save).and_return(true)
+      expect(subject).to eq(true)
+    end
+
+    it "calls FindOrCreateImage if the image is changed" do
+      params[:uploaded_image] = upload_image
+      expect(FindOrCreateImage).to receive(:call).and_return(nil)
+      allow(showcase).to receive(:save).and_return(true)
+      allow(QueueJob).to receive(:call).with(ProcessImageJob, object: showcase).and_return(true)
       subject
     end
 
-    it "is not called if the image is not changed" do
+    it "FindOrCreateImage is not called if the image is not changed" do
       params[:uploaded_image] = nil
-      expect(showcase).to receive(:save).and_return(true)
-      expect(QueueJob).to_not receive(:call)
+      expect(FindOrCreateImage).not_to receive(:call)
       subject
     end
   end

@@ -21,7 +21,7 @@ class HoneypotThumbnail < Draper::Decorator
 
   def image_json
     if honeypot_image
-      honeypot_image.image_json
+      honeypot_image.json_response
     else
       {}
     end

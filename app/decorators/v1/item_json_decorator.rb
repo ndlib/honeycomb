@@ -31,9 +31,16 @@ module V1
     end
 
     def image
-      if object.image_ready? && object.honeypot_image
-        object.honeypot_image.json_response
+      if object.image && object.image.ready?
+        object.image.json_response
       end
+    end
+
+    def image_status
+      if object.image
+        return object.image.status
+      end
+      Image.statuses.keys.first
     end
 
     def metadata
@@ -74,7 +81,7 @@ module V1
       json.slug slug
       json.name name
       json.description description.to_s
-      json.image_status object.image_status
+      json.image_status image_status
       json.image image
       json.metadata metadata
       json.last_updated updated_at
