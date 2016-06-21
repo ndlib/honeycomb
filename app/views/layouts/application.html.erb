@@ -24,6 +24,12 @@
   <body>
 
 <header id="banner" role="banner" class="home">
+  <% if Rails.env == "pprd" %>
+    <div class="pprd">
+      TEST ENV
+    </div>
+  <% end %>
+
   <nav class="navbar navbar-default" role="navigation">
     <div class="brand-bar">
       <div class="container-fluid">

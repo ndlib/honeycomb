@@ -6,6 +6,8 @@ $multi-field-color: #696969;
 $dnd-ondrag-color: rgba(0, 0, 0, 0.05);
 $dnd-onhover-color: rgba(0, 0, 0, 0.15);
 $blockquote-gray: #777;
+$pprd-background: #ff0000;
+$pprd-color: #ffffff;
 
 body {
 	background: #fff;
@@ -20,6 +22,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .row {
 	margin:0;
+}
+
+.pprd {
+  background-color: $pprd-background;
+  color: $pprd-color;
+  text-align: center;
 }
 
 .title-bar {
