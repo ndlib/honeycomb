@@ -12,12 +12,6 @@
     <li className="header" role="presentation">Publish Site</li>
 
     <li className="header" role="presentation">Preview Site</li>
-    <li className="togglebutton">
-      <%= react_component "CollectionPreviewModeToggle", {
-            previewModePath: v1_collection_preview_mode_url(nav.collection.unique_id)
-          }
-      %>
-    </li>
 
     <%= react_component "CollectionPreviewPublishLink", {
           previewLinkURL: CreateBeehiveURL.call(nav.collection),

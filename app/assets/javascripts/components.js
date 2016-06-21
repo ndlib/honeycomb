@@ -31,7 +31,6 @@ EventEmitter = require("./EventEmitter");
 HoneycombTheme = require("./themes/HoneycombTheme");
 
 // uncategorized
-CollectionPreviewModeToggle = require("./components/CollectionPreviewModeToggle");
 CollectionPreviewPublishLink = require("./components/CollectionPreviewPublishLink");
 DragContent = require("./components/DragContent");
 HoneypotImage = require("./components/HoneypotImage");
