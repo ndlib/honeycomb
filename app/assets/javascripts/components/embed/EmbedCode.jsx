@@ -12,9 +12,9 @@ var EmbedCode = React.createClass({
   },
 
   render: function () {
-    var width = 400;
-    var height = 400;
-    var embedUrl = this.props.embedBaseUrl + "/embed/items/" + this.props.item.unique_id;
+    var width = "100%";
+    var height = 800;
+    var embedUrl = this.props.embedBaseUrl + "/search?q=&view=list&item=" + this.props.item.unique_id + "&compact=true";
     var embedString = '<iframe src="' + embedUrl + '" width="' + width + '" height="' + height + '" seamless="seamless" style="overflow: hidden;" scrolling="no">Your browser or security settings does not allow iFrames.</iframe>';
     return (
       <Panel>

@@ -2,14 +2,18 @@ require "rails_helper"
 
 RSpec.describe ItemPublishEmbedPanel do
   subject { described_class.new(item) }
-  let(:item) { instance_double(Item, published: true, id: 1) }
+  let(:item) { instance_double(Item, published: true, id: 1, collection: double) }
+
+  before(:each) do
+    allow(CreateBeehiveURL).to receive(:call).and_return("embed_url")
+  end
 
   describe "display" do
     it "renders a react component" do
       expect(subject.h).to receive(:react_component).with(
         "ItemPublishEmbedPanel",
         item: item,
-        embedBaseUrl: Rails.configuration.settings.beehive_url,
+        embedBaseUrl: "embed_url",
         publishPanelTitle: "Publish",
         publishPanelHelp: "Choose if this item can be viewed.",
         publishPanelFieldName: "Published",
