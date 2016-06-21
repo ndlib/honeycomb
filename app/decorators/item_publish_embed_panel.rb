@@ -18,7 +18,7 @@ class ItemPublishEmbedPanel < Draper::Decorator
   def component_parameters
     {
       item: object,
-      embedBaseUrl: Rails.configuration.settings.beehive_url,
+      embedBaseUrl: CreateBeehiveURL.call(object.collection),
       publishPanelTitle: h.t("#{i18n_key_base}.publish"),
       publishPanelHelp: h.t("#{i18n_key_base}.publish_help"),
       publishPanelFieldName: h.t("#{i18n_key_base}.publish_field"),
