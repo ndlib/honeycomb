@@ -89,8 +89,8 @@ module Brood
     def grow_item!(data)
       brood_record = grow_brood_record(::Item, data)
       brood_record.record.collection = brood_collection.record
-
-      unless SaveItem.call(brood_record.record, brood_record.data)
+      metadata = brood_record.data.delete(:metadata)
+      unless SaveItem.call(brood_record.record, brood_record.data) && SaveMetadata.call(brood_record.record, metadata)
         error_saving_record(brood_record)
       end
     end
