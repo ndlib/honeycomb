@@ -38,7 +38,14 @@ var CollectionPreviewPublishLink = React.createClass({
 
     return (
       <div>
-        <h4>Copy Site URL</h4>
+        <p>
+          <a href={this.props.previewLinkURL} target="_blank">
+            <i className="glyphicon mdi-av-web"></i>
+            <span> Preview Site</span>
+          </a>
+        </p>
+        <br />
+        <h5>Copy URL:</h5>
         <div>
           <input
             ref={ 'copyUrl' }
@@ -68,11 +75,6 @@ var CollectionPreviewPublishLink = React.createClass({
         </div>
         <br/>
         { copyMessage }
-        <br />
-          <a href={this.props.previewLinkURL} target="_blank">
-            <i className="glyphicon mdi-av-web"></i>
-            <span> Preview Site</span>
-          </a>
       </div>
     );
   }
