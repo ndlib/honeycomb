@@ -2,4 +2,5 @@
 <ul class="nav nav-pills nav-stacked">
   <li class="<%= "active" if form.nil? || form == "general" %>"><%= link_to("General", settings_form_collection_path(collection, form: "general")) %></li>
   <li class="<%= "active" if form == "metadata" %>"><%= link_to("Metadata", settings_form_collection_path(collection, form: "metadata")) %></li>
+  <li class="<%= "active" if form == "publish_options" %>"><%= link_to("Publish Options", settings_form_collection_path(collection, form: "publish_options")) %></li>
 </ul>

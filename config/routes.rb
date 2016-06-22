@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       get :site_setup
       get "site_setup/:form", to: "collections#site_setup", as: :site_setup_form, constraints: site_setup_constraints
       put "site_setup/:form", to: "collections#site_setup_update", as: :site_setup_update_form, constraints: site_setup_constraints
-      settings_constraints = { form: /general|metadata/ }
+      settings_constraints = { form: /general|metadata|publish_options/ }
       get :settings
       get "settings/:form", to: "collections#settings", as: :settings_form, constraints: settings_constraints
       put "settings/:form", to: "collections#settings_update", as: :settings_update_form, constraints: settings_constraints

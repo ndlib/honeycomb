@@ -1,0 +1,5 @@
+<%= f.input :published, as: :boolean, label: false, hint: "Select this box will place this collecton on collections.library.nd.edu" do %>
+  <label><%= f.check_box :published %> Publish to Library Collections.</label>
+<% end %>
+
+<%= f.button :submit, value: t('buttons.save'), :class => 'btn-primary' %>
