@@ -5,7 +5,6 @@ class RedactorPageField
 
   setupField: ->
     @fieldElement.redactor({
-      source: true
       focus: true
       formatting: ['p', 'blockquote', 'h3', 'h4', 'h5']
       imageUpload: '/v1/collections/' + $("#image_collection_unique_id").val() + '/items'
@@ -27,7 +26,7 @@ class RedactorPageField
           $(image).attr 'style', 'width: 300px; height: auto; float: left; margin: 0px 10px 10px 0px;'
           $(image).attr 'rel', 'width: 300px; height: auto; float: left; margin: 0px 10px 10px 0px;'
       imageManagerJson: '/v1/collections/' + $("#image_collection_unique_id").val() + '/items'
-      plugins: ['imagemanager']
+      plugins: ['imagemanager', 'source']
     })
 
 

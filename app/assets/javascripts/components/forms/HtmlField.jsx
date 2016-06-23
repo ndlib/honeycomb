@@ -36,6 +36,7 @@ var HtmlField = React.createClass({
       this.element.redactor({
         changeCallback: this.redactorChange,
         blurCallback: this.redactorBlur,
+        plugins: ['source'],
       });
     }
   },
