@@ -9,23 +9,6 @@
     <li class="<%= nav.active_section_css(:settings) %>"><a href="<%= settings_collection_path(nav.collection) %>"><i class="glyphicon glyphicon-list-alt"></i> <%= t('collection_left_nav.settings') %></a></li>
     <li role="presentation" class="divider"></li>
 
-    <li className="header" role="presentation">Publish Site</li>
-    <li className="togglebutton">
-      <%= react_component "CollectionPublishToggle", {
-          publishPath: v1_collection_publish_url(nav.collection.unique_id),
-          unpublishPath: v1_collection_unpublish_url(nav.collection.unique_id)
-        }
-      %>
-    </li>
-
-    <li className="header" role="presentation">Preview Site</li>
-    <li className="togglebutton">
-      <%= react_component "CollectionPreviewModeToggle", {
-            previewModePath: v1_collection_preview_mode_url(nav.collection.unique_id)
-          }
-      %>
-    </li>
-
     <%= react_component "CollectionPreviewPublishLink", {
           previewLinkURL: CreateBeehiveURL.call(nav.collection),
           previewLinkLabel: t('collection_left_nav.preview_site'),
