@@ -16,6 +16,6 @@ describe CreateURLSlug do
   end
 
   it "returns name for a blank name " do
-    expect(described_class.call("")).to eq("name")
+    expect(described_class.call("")).to be_nil
   end
 end
