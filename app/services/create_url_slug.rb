@@ -13,7 +13,7 @@ class CreateURLSlug
     if name.present?
       name.downcase.gsub(/\s+/, "-").gsub(/[^0-9a-z-]/i, "")
     else
-      "name"
+      nil
     end
   end
 end
