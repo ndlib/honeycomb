@@ -80,7 +80,8 @@ ButtonLink = require("./components/forms/ButtonLink");
 SiteObjectCard = require("./components/forms/SiteObjectCard");
 SitePath = require("./components/forms/SitePath");
 MetaDataFieldDialog = require("./components/forms/MetaDataFieldDialog");
-MetaDataConfigurationForm = require("./components/forms/MetaDataConfigurationForm");
+MetaDataConfigurationForm = require("./components/forms/MetaDataConfigurationForm/MetaDataConfigurationForm");
+MetadataConfigurationListItem = require("./components/forms/MetaDataConfigurationForm/MetadataConfigurationListItem");
 
 // panel
 Panel = require("./components/panel/Panel");

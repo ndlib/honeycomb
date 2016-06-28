@@ -3,14 +3,13 @@ var mui = require("material-ui");
 
 var ReactLink = require('react/lib/ReactLink');
 var ReactStateSetters = require('react/lib/ReactStateSetters');
-var MetaDataConfigurationActions = require("../../actions/MetaDataConfigurationActions");
+var MetaDataConfigurationActions = require("../../../actions/MetaDataConfigurationActions");
 var Colors = require("material-ui/lib/styles/colors");
 var MoreVertIcons = require("material-ui/lib/svg-icons/navigation/more-vert");
 var FloatingActionButton = require("material-ui/lib/floating-action-button");
 var ContentAdd = require("material-ui/lib/svg-icons/content/add");
 var Paper = mui.Paper;
 var List = mui.List;
-var ListItem = mui.ListItem;
 var FontIcon = mui.FontIcon;
 var IconButton = mui.IconButton;
 var Toggle = mui.Toggle;
@@ -65,48 +64,6 @@ var MetaDataConfigurationForm = React.createClass({
     }
   },
 
-  getLeftIcon: function(type) {
-    switch(type){
-      case 'string':
-        return (<FontIcon className="material-icons">short_text</FontIcon>);
-      case 'html':
-        return (<FontIcon className="material-icons">format_size</FontIcon>);
-      case 'date':
-        return (<FontIcon className="material-icons">date_range</FontIcon>);
-      default:
-        return null;
-    }
-  },
-
-  getRightIcon: function(field) {
-    if(_.contains(field.immutable, "active")) {
-      return null;
-    }
-
-    if(field.active) {
-      var icon = "delete";
-      return (
-        <IconButton
-          tooltip="Remove"
-          tooltipPosition="top-center"
-          onTouchTap={function() { this.handleRemove(field.name) }.bind(this) }
-        >
-          field.active && <FontIcon className="material-icons" color={Colors.grey500} hoverColor={Colors.red500}>{icon}</FontIcon>
-        </IconButton>
-      );
-    } else {
-      return (
-        <IconButton
-          tooltip="Restore"
-          tooltipPosition="top-center"
-          onTouchTap={function() { this.handleRestore(field.name) }.bind(this) }
-        >
-          field.active && <FontIcon className="material-icons" color={Colors.grey500} hoverColor={Colors.green500}>undo</FontIcon>
-        </IconButton>
-      );
-    }
-  },
-
   backgroundStyle: function() {
     return {
       maxWidth: "500px",
@@ -130,31 +87,14 @@ var MetaDataConfigurationForm = React.createClass({
     };
   },
 
-  listItemStyle: function() {
-    return {
-      borderBottomStyle: "solid",
-      borderBottomWidth: "1px",
-      borderBottomColor: Colors.grey500
-    };
-  },
-
   getListTitle: function() {
     return this.state.showInactive ? "All Metadata Fields" : "Active Metadata Fields";
   },
 
   getFieldItems: function() {
     return this.state.fields.map(function(field) {
-      return (
-        <ListItem
-          key={ field.name }
-          primaryText={ field.label }
-          secondaryText={ field.required && "Required" }
-          leftIcon={ this.getLeftIcon(field.type) }
-          rightIconButton={ this.getRightIcon(field) }
-          onTouchTap={ function() { this.handleEditClick(field.name) }.bind(this) }
-          style={ this.listItemStyle() }
-        />
-      );
+      console.log("here");
+      return (<MetadataConfigurationListItem field={ field } handleEditClick={ this.handleEditClick } />);
     }.bind(this));
   },
 
