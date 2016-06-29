@@ -8,6 +8,7 @@ class RedactorField
       source: true
       focus: true
       formatting: ['p', 'blockquote', 'h3', 'h4', 'h5']
+      plugins: ['source']
     })
 
 

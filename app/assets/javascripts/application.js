@@ -15,6 +15,7 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require redactor
+//= require redactor-source
 //= require bootstrap-sprockets
 //= require underscore
 //= require showdown
