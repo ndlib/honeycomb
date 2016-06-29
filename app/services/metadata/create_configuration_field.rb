@@ -13,7 +13,9 @@ module Metadata
     def create_field(new_data)
       populate_defaults(values: new_data)
       new_data = ConfigurationInputCleaner.call(new_data)
-      configuration.save_field(new_data[:name], new_data)
+      unique_key = Metadata::GenerateUniqueKey.call
+      new_data[:name] = unique_key
+      configuration.save_field(unique_key, new_data)
     end
 
     private
