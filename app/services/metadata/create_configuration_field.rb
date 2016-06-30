@@ -13,9 +13,14 @@ module Metadata
     def create_field(new_data)
       populate_defaults(values: new_data)
       new_data = ConfigurationInputCleaner.call(new_data)
-      unique_key = Metadata::GenerateUniqueKey.call
-      new_data[:name] = unique_key
-      configuration.save_field(unique_key, new_data)
+
+      if duplicate_label?(new_data)
+        return nil
+      else
+        unique_key = Metadata::GenerateUniqueKey.call
+        new_data[:name] = unique_key
+        configuration.save_field(unique_key, new_data)
+      end
     end
 
     private
@@ -31,6 +36,14 @@ module Metadata
       if values[:active].nil? || values[:active] == ""
         values[:active] = true
       end
+    end
+
+    def duplicate_label?(new_data)
+      duplicates = @collection.collection_configuration.metadata.select do |m|
+        h = m.with_indifferent_access
+        h[:label].casecmp(new_data[:label]) == 0
+      end
+      duplicates.count >= 1 ? true : false
     end
 
     def configuration
