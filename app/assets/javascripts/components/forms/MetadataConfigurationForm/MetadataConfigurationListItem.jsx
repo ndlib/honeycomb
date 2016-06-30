@@ -1,14 +1,44 @@
 var React = require("react");
 var mui = require("material-ui");
 var Colors = require("material-ui/lib/styles/colors");
+var MetadataConfigurationEventTypes = require("./MetaDataConfigurationEventTypes");
+var DragSource = require('react-dnd').DragSource;
+var EventEmitter = require('../../../EventEmitter');
 
 var ListItem = mui.ListItem;
 var FontIcon = mui.FontIcon;
 var IconButton = mui.IconButton;
 
-var MetadataConfigurationListItem = React.createClass({
+var metadataCollectionSource = {
+  beginDrag: function (props, monitor, component) {
+    return props;
+  },
+
+  endDrag: function (props, monitor, component) {
+    var item = monitor.getItem();
+
+    if(monitor.didDrop()){
+      dropResult = monitor.getDropResult();
+      EventEmitter.emit(MetadataConfigurationEventTypes.CardDroppedOnTarget, dropResult, item)
+    } else {
+      EventEmitter.emit(MetadataConfigurationEventTypes.CardDroppedOnNothing, item);
+    }
+  }
+};
+
+function source_collect(connect, monitor) {
+  return {
+    connectDragSource: connect.dragSource(),
+    connectDragPreview: connect.dragPreview(),
+    isDragging: monitor.isDragging()
+  };
+}
+
+var MetaDataConfigurationListItem = React.createClass({
   propTypes: {
-    fields: React.PropTypes.object.isRequired,
+    id: React.PropTypes.number.isRequired,
+    field: React.PropTypes.object.isRequired,
+    index: React.PropTypes.number,
     handleEditClick: React.PropTypes.func.isRequired,
   },
 
@@ -63,17 +93,31 @@ var MetadataConfigurationListItem = React.createClass({
   },
 
   render: function() {
-    return (<ListItem
-        key={ this.props.field.name }
-        primaryText={ this.props.field.label }
-        secondaryText={ this.props.field.required && "Required" }
-        leftIcon={ this.getLeftIcon(this.props.field.type) }
-        rightIconButton={ this.getRightIcon(this.props.field) }
-        onTouchTap={ function() { this.props.handleEditClick(this.props.field.name) }.bind(this) }
-        style={ this.listItemStyle() }
-      />
+    var { connectDragSource, connectDragPreview, isDragging } = this.props;
+    return (connectDragSource(<div>
+      <mui.Card style={{ cursor: "move" }}>
+        <mui.CardHeader title={ this.props.field.name }  />
+      </mui.Card>
+    </div>)
     );
   },
 });
 
-module.exports = MetadataConfigurationListItem;
+function Instantiate(type) {
+  return DragSource(type, metadataCollectionSource, source_collect)(MetaDataConfigurationListItem);
+}
+
+/*
+<ListItem
+    key={ this.props.field.name }
+    primaryText={ this.props.field.label }
+    secondaryText={ this.props.field.required && "Required" }
+    leftIcon={ this.getLeftIcon(this.props.field.type) }
+    rightIconButton={ this.getRightIcon(this.props.field) }
+    onTouchTap={ function() { this.props.handleEditClick(this.props.field.name) }.bind(this) }
+    style={ this.listItemStyle() }
+  />
+  */
+
+
+module.exports = Instantiate;

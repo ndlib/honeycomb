@@ -4,14 +4,24 @@ var mui = require("material-ui");
 var ReactLink = require('react/lib/ReactLink');
 var ReactStateSetters = require('react/lib/ReactStateSetters');
 var MetaDataConfigurationActions = require("../../../actions/MetaDataConfigurationActions");
+var update = require('react/lib/update');
+
+var HTML5Backend = require('react-dnd-html5-backend');
+var DragDropContext = require('react-dnd').DragDropContext;
+var EventEmitter = require('../../../EventEmitter');
+
+var MetadataConfigurationEventTypes = require("./MetaDataConfigurationEventTypes");
+var MetaDataConfigurationListItem = require("./MetadataConfigurationListItem");
+var ListItem = MetaDataConfigurationListItem(MetadataConfigurationEventTypes.MetaDataConfigurationDnD);
+var AvailableDropTarget = StylableDropTarget(MetadataConfigurationEventTypes.MetaDataConfigurationDnD);
+
 var Colors = require("material-ui/lib/styles/colors");
 var MoreVertIcons = require("material-ui/lib/svg-icons/navigation/more-vert");
 var FloatingActionButton = require("material-ui/lib/floating-action-button");
 var ContentAdd = require("material-ui/lib/svg-icons/content/add");
+
 var Paper = mui.Paper;
 var List = mui.List;
-var FontIcon = mui.FontIcon;
-var IconButton = mui.IconButton;
 var Toggle = mui.Toggle;
 var Toolbar = mui.Toolbar;
 var ToolbarGroup = mui.ToolbarGroup;
@@ -23,11 +33,41 @@ var MetaDataConfigurationForm = React.createClass({
   },
 
   getInitialState: function() {
+    EventEmitter.on(MetadataConfigurationEventTypes.CardDroppedOnTarget, this.handleDrop);
+
     return {
       fields: this.filteredFields(false),
       selectedField: undefined,
       showInactive: false,
     };
+  },
+
+  handleDrop: function(target, source) {
+    if(source.index == target.index){
+      return;
+    }
+
+    this.moveCard(source.index, target.index, source.field);
+  },
+
+  moveCard: function(fromIndex, toIndex, field) {
+    var removeIndex = fromIndex;
+    if(toIndex < fromIndex) {
+      removeIndex++;
+    }
+
+    this.setState(update(this.state, {
+      fields: {
+        $splice: [
+          [toIndex, 0, field],
+          [removeIndex, 1],
+        ]
+      }
+    }), this.pushChanges);
+  },
+
+  pushChanges: function(){
+
   },
 
   componentDidMount: function() {
@@ -92,18 +132,25 @@ var MetaDataConfigurationForm = React.createClass({
   },
 
   getFieldItems: function() {
-    return this.state.fields.map(function(field) {
-      console.log("here");
-      return (<MetadataConfigurationListItem field={ field } handleEditClick={ this.handleEditClick } />);
+    return this.state.fields.map(function(field, index) {
+      return [
+        <AvailableDropTarget
+          className="metadata-configuration-target"
+          dragClassName="metadata-configuration-target-ondrag"
+          hoverClassName="metadata-configuration-target-onhover"
+          data={{ site_object_list: "ordered", index: index }}
+        />,
+      <ListItem key={ field.name } id={ field.id } field={ field } index={ index } handleEditClick={ this.handleEditClick } />,
+      ];
     }.bind(this));
   },
 
   handleRemove: function(fieldName) {
-    MetaDataConfigurationActions.changeActive(fieldName, false, this.props.baseUpdateUrl)
+    MetaDataConfigurationActions.changeActive(fieldName, false, this.props.baseUpdateUrl);
   },
 
   handleRestore: function(fieldName) {
-    MetaDataConfigurationActions.changeActive(fieldName, true, this.props.baseUpdateUrl)
+    MetaDataConfigurationActions.changeActive(fieldName, true, this.props.baseUpdateUrl);
   },
 
   handleEditClick: function(fieldName) {
@@ -138,7 +185,13 @@ var MetaDataConfigurationForm = React.createClass({
             <Toggle onToggle={ this.handleShowInactive }/>
           </ToolbarGroup>
         </Toolbar>
-        <List style={ this.listStyle() }>
+        <List style={ this.listStyle() } >
+          <AvailableDropTarget
+            className="metadata-configuration-target"
+            dragClassName="metadata-configuration-target-footer-ondrag"
+            hoverClassName="metadata-configuration-target-onhover"
+            data={{ site_object_list: "ordered", index: 0 }}
+          />
           {this.getFieldItems()}
         </List>
       </Paper>
@@ -146,4 +199,4 @@ var MetaDataConfigurationForm = React.createClass({
   }
 });
 
-module.exports = MetaDataConfigurationForm;
+module.exports = DragDropContext(HTML5Backend)(MetaDataConfigurationForm);
