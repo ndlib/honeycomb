@@ -4,13 +4,13 @@ RSpec.describe SaveCollection, type: :model do
   subject { described_class.call(collection, params) }
   let(:collection) do
     instance_double(Collection,
-      id: "id",
-      "attributes=" => true, 
-      save: true,
-      url: nil,
-      url_slug: nil,
-      collection_configuration: double,
-      "image=" => true)
+                    id: "id",
+                    "attributes=" => true,
+                    save: true,
+                    url: nil,
+                    url_slug: nil,
+                    collection_configuration: double,
+                    "image=" => true)
   end
   let(:params) { { name_line_1: "name_line_1", url_slug: "Test Slug" } }
   let(:upload_image) { Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/test.jpg"), "image/jpeg") }
