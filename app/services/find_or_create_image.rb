@@ -28,10 +28,8 @@ class FindOrCreateImage
   end
 
   def process_image(image:)
-    begin
-      QueueJob.call(ProcessImageJob, object: image)
-    rescue Bunny::TCPConnectionFailedForAllHosts
-      image.unavailable!
-    end
+    QueueJob.call(ProcessImageJob, object: image)
+  rescue Bunny::TCPConnectionFailedForAllHosts
+    image.unavailable!
   end
 end

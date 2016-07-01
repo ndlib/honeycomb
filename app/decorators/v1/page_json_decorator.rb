@@ -32,11 +32,7 @@ module V1
     end
 
     def image
-      if object.image
-        object.image.json_response
-      else
-        nil
-      end
+      object.image.json_response if object.image
     end
 
     def display(json)

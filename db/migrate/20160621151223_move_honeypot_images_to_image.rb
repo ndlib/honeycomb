@@ -1,21 +1,21 @@
 class MoveHoneypotImagesToImage < ActiveRecord::Migration
   def up
     Collection.all.each do |collection|
-      MakeImageFromObject(object: collection, collection_id: collection.id)
+      make_image_from_object(object: collection, collection_id: collection.id)
     end
 
     Showcase.all.each do |showcase|
-      MakeImageFromObject(object: showcase, collection_id: showcase.collection_id)
+      make_image_from_object(object: showcase, collection_id: showcase.collection_id)
     end
 
     Item.where.not(image_status: 0).each do |item|
-      image = MakeImageFromObject(object: item, collection_id: item.collection_id)
+      image = make_image_from_object(object: item, collection_id: item.collection_id)
       image.status = Item.image_statuses[item.image_status]
       image.save
     end
   end
 
-  def MakeImageFromObject(object:, collection_id:)
+  def make_image_from_object(object:, collection_id:)
     object_image = object.image
     status = "ready"
     # If an image is stuck in processing for some reason when we do this migration,
@@ -59,7 +59,6 @@ class Showcase < ActiveRecord::Base
   has_attached_file :image
   has_attached_file :uploaded_image
 end
-
 
 class HoneypotImage < ActiveRecord::Base
 end

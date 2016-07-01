@@ -29,7 +29,15 @@ RSpec.describe SaveHoneypotImage do
     ]
   end
 
-  let(:image) { instance_double(Image, id: 10, collection: collection, image: image_file, "status=" => true, "json_response=" => true, save: true, items: items) }
+  let(:image) do
+    instance_double(Image,
+      id: 10, collection: collection,
+      image: image_file,
+      "status=" => true,
+      "json_response=" => true,
+      save: true,
+      items: items)
+  end
   let(:collection) { double(Collection, id: 100, image: image_file, save: true) }
   let(:image_file) { Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/test.jpg"), "image/jpeg") }
   let(:faraday_response) { double(success?: true, body: honeypot_json) }
