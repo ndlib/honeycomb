@@ -1,9 +1,10 @@
 module V1
   class MetadataConfigurationJSON
-    attr_reader :configuration
+    attr_reader :configuration, :collection
 
-    def initialize(configuration)
+    def initialize(configuration, collection)
       @configuration = configuration
+      @collection = collection
     end
 
     def as_json(_options = {})
@@ -13,6 +14,9 @@ module V1
         fields: build_json_hash,
         facets: configuration.facets,
         sorts: configuration.sorts,
+        enableBrowse: collection.enable_browse,
+        enableSearch: collection.enable_search,
+        hasAboutPage: collection.about.present?,
       }
     end
 

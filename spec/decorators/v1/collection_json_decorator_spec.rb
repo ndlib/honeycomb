@@ -56,34 +56,6 @@ RSpec.describe V1::CollectionJSONDecorator do
     end
   end
 
-  describe "#enable_search" do
-    let(:collection) { instance_double(Collection) }
-
-    it "returns what enable_search says on collection" do
-      allow(collection).to receive(:enable_search).and_return(true)
-      expect(subject.enable_search).to eq(true)
-    end
-
-    it "converts null to false" do
-      allow(collection).to receive(:enable_search).and_return(nil)
-      expect(subject.enable_search).to eq(false)
-    end
-  end
-
-  describe "#enable_browse" do
-    let(:collection) { instance_double(Collection) }
-
-    it "returns what enable_browse says on exhibt" do
-      allow(collection).to receive(:enable_browse).and_return(true)
-      expect(subject.enable_browse).to eq(true)
-    end
-
-    it "converts null to false" do
-      allow(collection).to receive(:enable_browse).and_return(nil)
-      expect(subject.enable_browse).to eq(false)
-    end
-  end
-
   describe "#copyright" do
     let(:collection) { double(Collection) }
     let(:default) do

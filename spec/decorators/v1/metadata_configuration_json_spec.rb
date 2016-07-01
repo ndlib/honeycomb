@@ -1,9 +1,10 @@
 require "rails_helper"
 
 RSpec.describe V1::MetadataConfigurationJSON do
+  let(:collection) { instance_double(Collection, enable_browse: true, enable_search: true, about: "about") }
   let(:collection_configuration) { double(CollectionConfiguration, metadata: {}, facets: {}, sorts: {}) }
   let(:configuration) { Metadata::Configuration.new(collection_configuration) }
-  subject { described_class.new(configuration) }
+  subject { described_class.new(configuration, collection) }
 
   describe "as_json" do
     it "returns a hash with the fields from the configuration" do

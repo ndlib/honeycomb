@@ -35,14 +35,6 @@ module V1
       object.description.to_s
     end
 
-    def enable_search
-      !!object.enable_search
-    end
-
-    def enable_browse
-      !!object.enable_browse
-    end
-
     def site_intro
       object.site_intro.to_s
     end
