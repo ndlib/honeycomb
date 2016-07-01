@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe FindOrCreateImage do
-  subject { described_class.new(file: file, collection_id: 1) }
   let(:attributes) do
     [
       { id: 0, collection_id: 1, image_fingerprint: "zero" },
@@ -49,12 +48,29 @@ RSpec.describe FindOrCreateImage do
     expect(FindOrCreateImage.call(file: 2, collection_id: 1)).to eq(images[2])
   end
 
-  it "returns a new one for ones that don't exist" do
-    expect(FindOrCreateImage.call(file: 3, collection_id: 1)).to eq(new_images[3])
-  end
+  context "when an image doesn't exist yet" do
+    it "returns a new one" do
+      allow(QueueJob).to receive(:call).and_return(true)
+      allow(new_images[3]).to receive(:save).and_return(true)
+      expect(FindOrCreateImage.call(file: 3, collection_id: 1)).to eq(new_images[3])
+    end
 
-  it "returns false if the image save fails" do
-    allow(images[0]).to receive(:save).and_return(false)
-    expect(FindOrCreateImage.call(file: 0, collection_id: 1)).to eq(false)
+    it "returns false if a new image save fails" do
+      allow(new_images[3]).to receive(:save).and_return(false)
+      expect(FindOrCreateImage.call(file: 3, collection_id: 1)).to eq(false)
+    end
+
+    it "sets the invalid state when the class receives a sneakers connection error" do
+      allow(QueueJob).to receive(:call).and_raise(Bunny::TCPConnectionFailedForAllHosts)
+      expect(new_images[3]).to receive(:unavailable!)
+      FindOrCreateImage.call(file: 3, collection_id: 1)
+    end
+
+    it "Queues image processing if the image was updated" do
+      allow(new_images[3]).to receive(:processing!).and_return(true)
+      allow(new_images[3]).to receive(:save).and_return(true)
+      expect(QueueJob).to receive(:call).with(ProcessImageJob, object: new_images[3]).and_return(true)
+      FindOrCreateImage.call(file: 3, collection_id: 1)
+    end
   end
 end

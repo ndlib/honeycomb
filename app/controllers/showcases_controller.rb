@@ -15,7 +15,7 @@ class ShowcasesController < ApplicationController
 
   def create
     check_user_edits!(collection)
-    @showcase = ShowcaseQuery.new(collection.showcases).build(save_params)
+    @showcase = ShowcaseQuery.new(collection.showcases).build
 
     if SaveShowcase.call(@showcase, save_params)
       flash[:html_safe] = t(".success", href: view_context.link_to("Site Setup", site_setup_form_collection_path(collection, form: :site_path))).html_safe

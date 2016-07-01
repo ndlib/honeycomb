@@ -10,7 +10,7 @@
     <% showcases.each do |showcase| %>
       <tr>
         <td class="image" >
-          <%= link_to HoneypotThumbnail.display(showcase.honeypot_image), showcase_path(showcase) %>
+          <%= link_to HoneypotThumbnail.display(showcase.image), showcase_path(showcase) %>
         </td>
         <td>
           <h4 class="media-heading"><%= h link_to showcase.name_line_1, showcase_path(showcase) %></h4>

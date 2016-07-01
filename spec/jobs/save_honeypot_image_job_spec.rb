@@ -7,12 +7,12 @@ RSpec.describe SaveHoneypotImageJob, type: :job do
 
   describe "#perform" do
     it "calls SaveHoneypotImage with default values" do
-      expect(SaveHoneypotImage).to receive(:call).with(object: object, image_field: "image")
+      expect(SaveHoneypotImage).to receive(:call).with(image: object, image_field: "image")
       subject.perform_now(object: object)
     end
 
     it "calls SaveHoneypotImage with set values" do
-      expect(SaveHoneypotImage).to receive(:call).with(object: object, image_field: "other_image")
+      expect(SaveHoneypotImage).to receive(:call).with(image: object, image_field: "other_image")
       subject.perform_now(object: object, image_field: "other_image")
     end
   end

@@ -27,7 +27,7 @@ module Admin
       check_admin_or_admin_masquerading_permission!
       @external_collection = CollectionQuery.new.find(params[:id])
       @form_action = admin_external_collection_path(external_collection)
-      @honeypot_image = external_collection.honeypot_image[:json_response]["thumbnail/small"]["contentUrl"] if external_collection.honeypot_image
+      @image = external_collection.image[:json_response]["thumbnail/small"]["contentUrl"] if external_collection.image
     end
 
     def update

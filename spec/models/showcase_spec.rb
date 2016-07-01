@@ -24,8 +24,8 @@ RSpec.describe Showcase do
       expect(subject).to respond_to(:image)
     end
 
-    it "responds to honeypot_image" do
-      expect(subject).to respond_to(:honeypot_image)
+    it "responds to image" do
+      expect(subject).to respond_to(:image)
     end
 
     it "responds to collection" do

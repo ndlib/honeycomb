@@ -9,12 +9,13 @@ RSpec.describe ItemDecorator do
       id: 1,
       collection_id: collection.id,
       collection: collection,
-      image: "image.jpg",
+      image: image,
       showcases: { showcases: {} },
       pages: { pages: {} }
     }
   end
   let(:item) { instance_double(Item, item_stubs) }
+  let(:image) { instance_double(Image) }
   let(:collection) { instance_double(Collection, id: 2, name_line_1: "name_line_1") }
   let(:attachment) { double(Paperclip::Attachment, exists?: true, url: "image.jpg") }
 
@@ -81,7 +82,7 @@ RSpec.describe ItemDecorator do
   describe "honeypot image" do
     let(:honeypot_image) { instance_double(HoneypotImage, name: "Image Name", url: "http://example.com/image", image_json: {}) }
     before do
-      allow(item).to receive(:honeypot_image).and_return(honeypot_image)
+      allow(item).to receive(:image).and_return(honeypot_image)
     end
 
     describe "#image_name" do
@@ -174,32 +175,31 @@ RSpec.describe ItemDecorator do
 
   context "status_text" do
     before(:each) do
-      allow(item).to receive(:image_ready?).and_return(false)
-      allow(item).to receive(:no_image?).and_return(false)
-      allow(item).to receive(:image_processing?).and_return(false)
-      allow(item).to receive(:image_unavailable?).and_return(false)
+      allow(image).to receive(:ready?).and_return(false)
+      allow(image).to receive(:processing?).and_return(false)
+      allow(image).to receive(:unavailable?).and_return(false)
     end
 
     it "renders the correct success span when the image is ready" do
-      expect(item).to receive(:image_ready?).and_return(true)
+      expect(image).to receive(:ready?).and_return(true)
       expect(subject).to receive(:status_text_span).with(className: "text-success", icon: "ok", text: "OK")
       subject.status_text
     end
 
     it "renders the correct success span when the image is invalid" do
-      expect(item).to receive(:image_unavailable?).and_return(true)
+      expect(image).to receive(:unavailable?).and_return(true)
       expect(subject).to receive(:status_text_span).with(className: "text-danger", icon: "minus", text: "Error")
       subject.status_text
     end
 
     it "renders the correct success span when the image is invalid" do
-      expect(item).to receive(:no_image?).and_return(true)
+      expect(item).to receive(:image).and_return(nil)
       expect(subject).to receive(:status_text_span).with(className: "text-success", icon: "ok", text: "No Image")
       subject.status_text
     end
 
     it "renders the correct success span when the image is processing" do
-      expect(item).to receive(:image_processing?).and_return(true)
+      expect(image).to receive(:processing?).and_return(true)
       expect(subject).to receive(:status_text_span).with(className: "text-info", icon: "minus", text: "Processing")
       subject.status_text
     end

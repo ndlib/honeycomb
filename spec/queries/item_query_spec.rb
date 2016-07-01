@@ -34,7 +34,7 @@ describe ItemQuery do
     end
 
     it "includes the image" do
-      expect(relation).to receive(:includes).with(:honeypot_image).and_call_original
+      expect(relation).to receive(:includes).with(:image).and_call_original
       subject.only_top_level
     end
   end

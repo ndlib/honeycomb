@@ -10,20 +10,20 @@ class ItemDecorator < Draper::Decorator
   end
 
   def image_name
-    if object.honeypot_image
-      return object.honeypot_image.name
+    if object.image
+      return object.image.name
     end
     nil
   end
 
   def status_text
-    if object.image_ready?
-      status_text_span(className: "text-success", icon: "ok", text: h.t("status.complete"))
-    elsif object.image_processing?
-      status_text_span(className: "text-info", icon: "minus", text: h.t("status.processing"))
-    elsif object.no_image?
+    if object.image.nil?
       status_text_span(className: "text-success", icon: "ok", text: h.t("status.no_image"))
-    elsif object.image_unavailable?
+    elsif object.image.processing?
+      status_text_span(className: "text-info", icon: "minus", text: h.t("status.processing"))
+    elsif object.image.ready?
+      status_text_span(className: "text-success", icon: "ok", text: h.t("status.complete"))
+    elsif object.image.unavailable?
       status_text_span(className: "text-danger", icon: "minus", text: h.t("status.error"))
     else
       raise "Unaccounted for status in status_text"
@@ -109,8 +109,8 @@ class ItemDecorator < Draper::Decorator
   private
 
   def image_json
-    if object.image_ready? && object.honeypot_image
-      object.honeypot_image.image_json
+    if object.image.ready? && object.image
+      object.image.image_json
     else
       {}
     end

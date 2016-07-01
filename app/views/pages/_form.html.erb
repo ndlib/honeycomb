@@ -5,5 +5,5 @@
   <%= c.input :unique_id, as: :hidden, input_html: { id: "image_collection_unique_id", value: @page.collection.unique_id } %>
 <% end %>
 <%= f.input :content, wrapper_html: { class: 'page-redactor' }, input_html: { class: 'honeycomb_image_redactor'  } %>
-<%= react_component("Thumbnail", image: V1::ImageJSONDecorator.new(@page.image).to_hash) %>
+<%= HoneypotThumbnail.display(@page.image) %>
 <%= f.input :uploaded_image, as: :file %>

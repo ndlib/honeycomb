@@ -15,7 +15,7 @@ class PagesController < ApplicationController
 
   def create # rubocop:disable Metrics/AbcSize
     check_user_edits!(collection)
-    @page = PageQuery.new(collection.pages).build(save_params)
+    @page = PageQuery.new(collection.pages).build
 
     if SavePage.call(@page, save_params)
       flash[:html_safe] = t(".success", href: view_context.link_to("Site Setup", site_setup_form_collection_path(collection, form: :site_path))).html_safe
