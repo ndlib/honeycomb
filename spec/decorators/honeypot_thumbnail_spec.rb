@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe HoneypotThumbnail do
-  let(:honeypot_image) { double(HoneypotImage, json_response: {}) }
-  subject { described_class.new(honeypot_image) }
+  let(:image) { double(Image, json_response: {}) }
+  subject { described_class.new(image) }
 
   describe "#react_thumbnail" do
     it "renders a react component" do
