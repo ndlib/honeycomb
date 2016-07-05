@@ -4,7 +4,6 @@
       <th><%= t('.title') %></th>
       <th></th>
       <th></th>
-      <th><%= t('.status') %></th>
       <th><%= t('.updated_at') %></th>
     </tr>
   </thead>
@@ -18,9 +17,6 @@
           <div><%= strip_tags collection.short_intro if collection.short_intro.present? %></div>
         </td>
         <td><span class="badge"><%= t('.items_badge', number: collection.items.size) %></span></td>
-        <td>
-          <%= PublishedText.display(collection) %>
-        </td>
         <td>
            <%= ListTime.display(collection.updated_at) %>
         </td>

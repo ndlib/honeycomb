@@ -267,7 +267,7 @@ GEM
     jwt (1.5.1)
     launchy (2.4.3)
       addressable (~> 2.3)
-    libv8 (3.16.14.7)
+    libv8 (3.16.14.15)
     listen (2.7.11)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
@@ -590,4 +590,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.10.6
+   1.12.5
