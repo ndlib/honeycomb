@@ -1,5 +1,17 @@
 # Change Log
 
+## [3.3.2](https://github.com/ndlib/honeycomb/tree/v3.3.2) (2016-06-27)
+[Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.3.1...v3.3.2)
+
+###Bug fixes:###
+  - Fixed a bug that prevented saving collection settings with no custom url ([DEC-1090](https://jira.library.nd.edu/browse/DEC-1090), [#392](https://github.com/ndlib/honeycomb/pull/392))
+
+## [3.3.1](https://github.com/ndlib/honeycomb/tree/v3.3.1) (2016-06-20)
+[Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.3.0...v3.3.1)
+
+###Bug fixes:###
+  - Items were not reflecting changes to metadata on the search page ([#383](https://github.com/ndlib/honeycomb/pull/383))
+
 ## [3.3.0](https://github.com/ndlib/honeycomb/tree/v3.3.0) (2016-06-16)
 [Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.2.0...v3.3.0)
 
