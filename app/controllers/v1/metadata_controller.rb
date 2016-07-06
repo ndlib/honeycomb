@@ -13,18 +13,6 @@ module V1
       end
     end
 
-    def reorder
-      @item = ItemQuery.new.public_find(params[:item_id])
-
-      return if rendered_forbidden?(@item.collection)
-
-      if ReorderMetadata.call(@item, save_params)
-        render :update
-      else
-        render :errors, status: :unprocessable_entity
-      end
-    end
-
     private
 
     def save_params
