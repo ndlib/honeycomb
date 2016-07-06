@@ -11,9 +11,9 @@ var DragDropContext = require('react-dnd').DragDropContext;
 var EventEmitter = require('../../../EventEmitter');
 
 var MetadataConfigurationEventTypes = require("./MetaDataConfigurationEventTypes");
-var MetaDataConfigurationListItem = require("./MetadataConfigurationListItem");
-var ListItem = MetaDataConfigurationListItem(MetadataConfigurationEventTypes.MetaDataConfigurationDnD);
-var AvailableDropTarget = StylableDropTarget(MetadataConfigurationEventTypes.MetaDataConfigurationDnD);
+
+var MetaDataConfigurationList = require("./MetaDataConfigurationList");
+var MetaDataConfigurationReorder = require("./MetaDataConfigurationReorder");
 
 var Colors = require("material-ui/lib/styles/colors");
 var MoreVertIcons = require("material-ui/lib/svg-icons/navigation/more-vert");
@@ -171,6 +171,7 @@ var MetaDataConfigurationForm = React.createClass({
 
   render: function(){
     var { selectedField } = this.state;
+
     return (
       <Paper style={ this.backgroundStyle() } zDepth={1}>
         <MetaDataFieldDialog fieldName={ selectedField } open={ selectedField != undefined } baseUpdateUrl={ this.props.baseUpdateUrl }/>
@@ -185,15 +186,7 @@ var MetaDataConfigurationForm = React.createClass({
             <Toggle onToggle={ this.handleShowInactive }/>
           </ToolbarGroup>
         </Toolbar>
-        <List style={ this.listStyle() } >
-          <AvailableDropTarget
-            className="metadata-configuration-target"
-            dragClassName="metadata-configuration-target-footer-ondrag"
-            hoverClassName="metadata-configuration-target-onhover"
-            data={{ site_object_list: "ordered", index: 0 }}
-          />
-          {this.getFieldItems()}
-        </List>
+        <MetaDataConfigurationList />
       </Paper>
     );
   }
