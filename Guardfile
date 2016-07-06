@@ -1,7 +1,7 @@
 require "hesburgh_infrastructure"
 # application_name must match an application in the hesburgh_infrastructure gem
 # New applications must be added to config/applications.yml in hesburgh_infrastructure
-hesburgh_guard = HesburghInfrastructure::Guard.new(:item_admin, self)
+hesburgh_guard = HesburghInfrastructure::Guard.new(:honeycomb, self)
 
 # Automatically compile CoffeeScript files
 # https://github.com/guard/guard-coffeescript
