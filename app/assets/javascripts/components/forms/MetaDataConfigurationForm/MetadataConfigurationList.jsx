@@ -22,10 +22,14 @@ var ToolbarGroup = mui.ToolbarGroup;
 var ToolbarTitle = mui.ToolbarTitle;
 
 var MetaDataConfigurationList = React.createClass({
+  propTypes: {
+    baseUpdateUrl: React.PropTypes.string.isRequired,
+  },
 
   getInitialState: function() {
     return {
       fields: this.filteredFields(false),
+      selectedField: undefined,
     }
   },
 
@@ -56,19 +60,38 @@ var MetaDataConfigurationList = React.createClass({
     };
   },
 
+  handleEditClick: function(fieldName) {
+    this.setState({ selectedField: fieldName });
+  },
+
+  handleRemove: function(fieldName) {
+    MetaDataConfigurationActions.changeActive(fieldName, false, this.props.baseUpdateUrl);
+  },
+
   getFieldItems: function() {
     return this.state.fields.map(function(field, index) {
       return [
-      <MetaDataConfigurationListItem key={ field.name } id={ field.id } field={ field } index={ index } handleEditClick={ this.handleEditClick } />,
+      <MetaDataConfigurationListItem
+        key={ field.name }
+        id={ field.id }
+        field={ field }
+        index={ index }
+        handleEditClick={ this.handleEditClick }
+        handleRemove={ this.handleRemove } />,
       ];
     }.bind(this));
   },
 
   render: function() {
+    var { selectedField } = this.state;
+
     return (
-      <List style={ this.listStyle() } >
-        { this.getFieldItems() }
-      </List>
+      <div>
+        <MetaDataFieldDialog fieldName={ selectedField } open={ selectedField != undefined } baseUpdateUrl={ this.props.baseUpdateUrl }/>
+        <List style={ this.listStyle() } >
+          { this.getFieldItems() }
+        </List>
+      </div>
     );
   },
 });

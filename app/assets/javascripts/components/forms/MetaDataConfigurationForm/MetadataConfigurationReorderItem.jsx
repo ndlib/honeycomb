@@ -107,17 +107,5 @@ function Instantiate(type) {
   return DragSource(type, metadataCollectionSource, source_collect)(MetaDataConfigurationReorderItem);
 }
 
-/*
-<ListItem
-    key={ this.props.field.name }
-    primaryText={ this.props.field.label }
-    secondaryText={ this.props.field.required && "Required" }
-    leftIcon={ this.getLeftIcon(this.props.field.type) }
-    rightIconButton={ this.getRightIcon(this.props.field) }
-    onTouchTap={ function() { this.props.handleEditClick(this.props.field.name) }.bind(this) }
-    style={ this.listItemStyle() }
-  />
-  */
-
 
 module.exports = Instantiate;

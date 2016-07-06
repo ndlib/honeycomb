@@ -6,12 +6,6 @@ var ReactStateSetters = require('react/lib/ReactStateSetters');
 var MetaDataConfigurationActions = require("../../../actions/MetaDataConfigurationActions");
 var update = require('react/lib/update');
 
-var HTML5Backend = require('react-dnd-html5-backend');
-var DragDropContext = require('react-dnd').DragDropContext;
-var EventEmitter = require('../../../EventEmitter');
-
-var MetadataConfigurationEventTypes = require("./MetaDataConfigurationEventTypes");
-
 var MetaDataConfigurationList = require("./MetaDataConfigurationList");
 var MetaDataConfigurationReorder = require("./MetaDataConfigurationReorder");
 
@@ -33,75 +27,9 @@ var MetaDataConfigurationForm = React.createClass({
   },
 
   getInitialState: function() {
-    EventEmitter.on(MetadataConfigurationEventTypes.CardDroppedOnTarget, this.handleDrop);
-
     return {
-      fields: this.filteredFields(false),
-      selectedField: undefined,
       showInactive: false,
     };
-  },
-
-  handleDrop: function(target, source) {
-    if(source.index == target.index){
-      return;
-    }
-
-    this.moveCard(source.index, target.index, source.field);
-  },
-
-  moveCard: function(fromIndex, toIndex, field) {
-    var removeIndex = fromIndex;
-    if(toIndex < fromIndex) {
-      removeIndex++;
-    }
-
-    this.setState(update(this.state, {
-      fields: {
-        $splice: [
-          [toIndex, 0, field],
-          [removeIndex, 1],
-        ]
-      }
-    }), this.pushChanges);
-  },
-
-  pushChanges: function(){
-
-  },
-
-  componentDidMount: function() {
-    MetaDataConfigurationStore.on("MetaDataConfigurationStoreChanged", this.setFormFieldsFromConfiguration);
-    MetaDataConfigurationStore.getAll();
-  },
-
-  filteredFields: function(showInactive) {
-    var fields = _.filter(MetaDataConfigurationStore.fields, function(field) {  return showInactive || field.active; }.bind(this));
-    return this.sortedFields(fields);
-  },
-
-  sortedFields: function(fields) {
-    return _.sortBy(fields, 'order');
-  },
-
-  setFormFieldsFromConfiguration: function() {
-    this.setState({
-      fields: this.filteredFields(this.state.showInactive),
-      selectedField: undefined,
-    });
-  },
-
-  friendlyType: function(type) {
-    switch(type){
-      case 'string':
-        return "Text";
-      case 'html':
-        return "HTML";
-      case 'date':
-        return "Date";
-      default:
-        return type;
-    }
   },
 
   backgroundStyle: function() {
@@ -118,12 +46,6 @@ var MetaDataConfigurationForm = React.createClass({
       top: "2.5em",
       left: "-16px",
       zIndex: "1"
-    };
-  },
-
-  listStyle: function() {
-    return {
-      paddingBottom: "0px"
     };
   },
 
@@ -145,16 +67,8 @@ var MetaDataConfigurationForm = React.createClass({
     }.bind(this));
   },
 
-  handleRemove: function(fieldName) {
-    MetaDataConfigurationActions.changeActive(fieldName, false, this.props.baseUpdateUrl);
-  },
-
   handleRestore: function(fieldName) {
     MetaDataConfigurationActions.changeActive(fieldName, true, this.props.baseUpdateUrl);
-  },
-
-  handleEditClick: function(fieldName) {
-    this.setState({ selectedField: fieldName });
   },
 
   handleShowInactive: function(e, value) {
@@ -174,7 +88,6 @@ var MetaDataConfigurationForm = React.createClass({
 
     return (
       <Paper style={ this.backgroundStyle() } zDepth={1}>
-        <MetaDataFieldDialog fieldName={ selectedField } open={ selectedField != undefined } baseUpdateUrl={ this.props.baseUpdateUrl }/>
         <Toolbar>
           <ToolbarTitle style={{ paddingLeft: "48px" }} text={ this.getListTitle() } />
           <ToolbarGroup float="left">
@@ -186,10 +99,10 @@ var MetaDataConfigurationForm = React.createClass({
             <Toggle onToggle={ this.handleShowInactive }/>
           </ToolbarGroup>
         </Toolbar>
-        <MetaDataConfigurationList />
+        <MetaDataConfigurationList baseUpdateUrl={this.props.baseUpdateUrl} />
       </Paper>
     );
   }
 });
 
-module.exports = DragDropContext(HTML5Backend)(MetaDataConfigurationForm);
+module.exports = MetaDataConfigurationForm;
