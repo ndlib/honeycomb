@@ -20,7 +20,7 @@ var Toolbar = mui.Toolbar;
 var ToolbarGroup = mui.ToolbarGroup;
 var ToolbarTitle = mui.ToolbarTitle;
 
-var MetaDataConfigurationList = React.createClass({
+var MetaDataConfigurationUndelete = React.createClass({
   propTypes: {
     baseUpdateUrl: React.PropTypes.string.isRequired,
   },
@@ -45,7 +45,7 @@ var MetaDataConfigurationList = React.createClass({
   },
 
   filteredFields: function(showInactive) {
-    var fields = _.filter(MetaDataConfigurationStore.fields, function(field) {  return showInactive || field.active; }.bind(this));
+    var fields = _.filter(MetaDataConfigurationStore.fields, function(field) {  return !field.active; }.bind(this));
     return this.sortedFields(fields);
   },
 
@@ -60,25 +60,29 @@ var MetaDataConfigurationList = React.createClass({
   },
 
   handleEditClick: function(fieldName) {
-    this.setState({ selectedField: fieldName });
+
   },
 
-  handleRemove: function(fieldName) {
-    MetaDataConfigurationActions.changeActive(fieldName, false, this.props.baseUpdateUrl);
+  handleRestore: function(fieldName) {
+    MetaDataConfigurationActions.changeActive(fieldName, true, this.props.baseUpdateUrl);
   },
 
   getFieldItems: function() {
-    return this.state.fields.map(function(field, index) {
-      return [
-      <MetaDataConfigurationListItem
-        key={ field.name }
-        id={ field.id }
-        field={ field }
-        index={ index }
-        handleEditClick={ this.handleEditClick }
-        handleRightClick={ this.handleRemove } />,
-      ];
-    }.bind(this));
+    if (this.state.fields.length == 0) {
+      return <p>There are no fields to undelete.</p>
+    } else {
+      return this.state.fields.map(function(field, index) {
+        return [
+        <MetaDataConfigurationListItem
+          key={ field.name }
+          id={ field.id }
+          field={ field }
+          index={ index }
+          handleEditClick={ this.handleEditClick }
+          handleRightClick={ this.handleRestore } />,
+        ];
+      }.bind(this));
+    }
   },
 
   render: function() {
@@ -95,4 +99,4 @@ var MetaDataConfigurationList = React.createClass({
   },
 });
 
-module.exports = MetaDataConfigurationList;
+module.exports = MetaDataConfigurationUndelete;

@@ -54,35 +54,6 @@ var MetaDataConfigurationReorderItem = React.createClass({
     }
   },
 
-  getRightIcon: function(field) {
-    if(_.contains(field.immutable, "active")) {
-      return null;
-    }
-
-    if(field.active) {
-      var icon = "delete";
-      return (
-        <IconButton
-          tooltip="Remove"
-          tooltipPosition="top-center"
-          onTouchTap={function() { this.handleRemove(field.name) }.bind(this) }
-        >
-          field.active && <FontIcon className="material-icons" color={Colors.grey500} hoverColor={Colors.red500}>{icon}</FontIcon>
-        </IconButton>
-      );
-    } else {
-      return (
-        <IconButton
-          tooltip="Restore"
-          tooltipPosition="top-center"
-          onTouchTap={function() { this.handleRestore(field.name) }.bind(this) }
-        >
-          field.active && <FontIcon className="material-icons" color={Colors.grey500} hoverColor={Colors.green500}>undo</FontIcon>
-        </IconButton>
-      );
-    }
-  },
-
   listItemStyle: function() {
     return {
       borderBottomStyle: "solid",
@@ -94,8 +65,10 @@ var MetaDataConfigurationReorderItem = React.createClass({
   render: function() {
     var { connectDragSource, connectDragPreview, isDragging } = this.props;
     return (connectDragSource(<div>
-      <mui.Card style={{ cursor: "move" }}>
-        <mui.CardHeader title={ this.props.field.label }  />
+      <mui.Card style={{ cursor: "move", height: "55px" }}>
+        <mui.CardHeader
+          title={ this.props.field.label }
+          avatar={ <FontIcon className="material-icons">reorder</FontIcon> } />
       </mui.Card>
     </div>)
     );

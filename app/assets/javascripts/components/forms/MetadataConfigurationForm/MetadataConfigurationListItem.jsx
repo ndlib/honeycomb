@@ -13,7 +13,7 @@ var MetaDataConfigurationListItem = React.createClass({
     field: React.PropTypes.object.isRequired,
     index: React.PropTypes.number,
     handleEditClick: React.PropTypes.func.isRequired,
-    handleRemoveClick: React.PropTypes.func.isRequired,
+    handleRightClick: React.PropTypes.func.isRequired,
   },
 
 
@@ -41,7 +41,7 @@ var MetaDataConfigurationListItem = React.createClass({
         <IconButton
           tooltip="Remove"
           tooltipPosition="top-center"
-          onTouchTap={function() { this.props.handleRemove(field.name) }.bind(this) }
+          onTouchTap={function() { this.props.handleRightClick(field.name) }.bind(this) }
         >
           field.active && <FontIcon className="material-icons" color={Colors.grey500} hoverColor={Colors.red500}>{icon}</FontIcon>
         </IconButton>
@@ -51,7 +51,7 @@ var MetaDataConfigurationListItem = React.createClass({
         <IconButton
           tooltip="Restore"
           tooltipPosition="top-center"
-          onTouchTap={function() { this.handleRestore(field.name) }.bind(this) }
+          onTouchTap={function() { this.props.handleRightClick(field.name) }.bind(this) }
         >
           field.active && <FontIcon className="material-icons" color={Colors.grey500} hoverColor={Colors.green500}>undo</FontIcon>
         </IconButton>

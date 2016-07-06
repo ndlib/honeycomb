@@ -12,6 +12,7 @@ var update = require('react/lib/update');
 
 var MetaDataConfigurationList = require("./MetaDataConfigurationList");
 var MetaDataConfigurationReorder = require("./MetaDataConfigurationReorder");
+var MetaDataConfigurationUndelete = require("./MetaDataConfigurationUndelete");
 
 var Colors = require("material-ui/lib/styles/colors");
 var MoreVertIcons = require("material-ui/lib/svg-icons/navigation/more-vert");
@@ -103,7 +104,7 @@ var MetaDataConfigurationForm = React.createClass({
           <MetaDataConfigurationReorder baseUpdateUrl={this.props.baseUpdateUrl} />
         </Tab>
         <Tab label="Undelete">
-
+          <MetaDataConfigurationUndelete baseUpdateUrl={this.props.baseUpdateUrl} />
         </Tab>
       </Tabs>
     );
