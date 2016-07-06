@@ -3,6 +3,10 @@ var mui = require("material-ui");
 
 var ReactLink = require('react/lib/ReactLink');
 var ReactStateSetters = require('react/lib/ReactStateSetters');
+
+var HTML5Backend = require('react-dnd-html5-backend');
+var DragDropContext = require('react-dnd').DragDropContext;
+
 var MetaDataConfigurationActions = require("../../../actions/MetaDataConfigurationActions");
 var update = require('react/lib/update');
 
@@ -20,6 +24,8 @@ var Toggle = mui.Toggle;
 var Toolbar = mui.Toolbar;
 var ToolbarGroup = mui.ToolbarGroup;
 var ToolbarTitle = mui.ToolbarTitle;
+var Tabs = mui.Tabs;
+var Tab = mui.Tab;
 
 var MetaDataConfigurationForm = React.createClass({
   propTypes: {
@@ -34,17 +40,15 @@ var MetaDataConfigurationForm = React.createClass({
 
   backgroundStyle: function() {
     return {
-      maxWidth: "500px",
-      marginTop: "0px",
-      marginLeft: "48px",
+      backgroundColor: "#7F8C8D",
     };
   },
 
   addButtonStyle: function() {
     return {
       position: "absolute",
-      top: "2.5em",
-      left: "-16px",
+      top: "-16px",
+      left: "8px",
       zIndex: "1"
     };
   },
@@ -74,7 +78,6 @@ var MetaDataConfigurationForm = React.createClass({
   handleShowInactive: function(e, value) {
     this.setState({
       showInactive: value,
-      fields: this.filteredFields(value),
       selectedField: undefined,
     });
   },
@@ -87,22 +90,24 @@ var MetaDataConfigurationForm = React.createClass({
     var { selectedField } = this.state;
 
     return (
-      <Paper style={ this.backgroundStyle() } zDepth={1}>
-        <Toolbar>
-          <ToolbarTitle style={{ paddingLeft: "48px" }} text={ this.getListTitle() } />
-          <ToolbarGroup float="left">
+      <Tabs tabItemContainerStyle={ this.backgroundStyle() }>
+        <Tab label="Edit" >
+          <div>
             <FloatingActionButton onMouseDown={ this.handleNewClick } onTouchStart={ this.handleNewClick } mini={true} style={ this.addButtonStyle() }>
               <ContentAdd />
             </FloatingActionButton>
-          </ToolbarGroup>
-          <ToolbarGroup float="right" style={{ top: "25%" }}>
-            <Toggle onToggle={ this.handleShowInactive }/>
-          </ToolbarGroup>
-        </Toolbar>
-        <MetaDataConfigurationList baseUpdateUrl={this.props.baseUpdateUrl} />
-      </Paper>
+            <MetaDataConfigurationList baseUpdateUrl={this.props.baseUpdateUrl} />
+          </div>
+        </Tab>
+        <Tab label="Reorder">
+          <MetaDataConfigurationReorder baseUpdateUrl={this.props.baseUpdateUrl} />
+        </Tab>
+        <Tab label="Undelete">
+
+        </Tab>
+      </Tabs>
     );
   }
 });
 
-module.exports = MetaDataConfigurationForm;
+module.exports = DragDropContext(HTML5Backend)(MetaDataConfigurationForm);

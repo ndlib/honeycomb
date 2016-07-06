@@ -55,7 +55,7 @@ var MetaDataConfigurationList = React.createClass({
 
   listStyle: function() {
     return {
-      paddingBottom: "0px"
+      paddingBottom: "0px",
     };
   },
 

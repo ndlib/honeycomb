@@ -104,15 +104,20 @@ var MetaDataConfigurationReorder = React.createClass({
 
   render() {
     return (
-      <List style={ this.listStyle() } >
-        <AvailableDropTarget
-          className="metadata-configuration-target"
-          dragClassName="metadata-configuration-target-footer-ondrag"
-          hoverClassName="metadata-configuration-target-onhover"
-          data={{ site_object_list: "ordered", index: 0 }}
-        />
-        {this.getFieldItems()}
-      </List>
+      <div>
+        <p style={{ textAlign: "center", paddingTop: "15px"}}>
+          Drag and Drop the metadata fields to reorder.
+        </p>
+        <List style={ this.listStyle() } >
+          <AvailableDropTarget
+            className="metadata-configuration-target"
+            dragClassName="metadata-configuration-target-footer-ondrag"
+            hoverClassName="metadata-configuration-target-onhover"
+            data={{ site_object_list: "ordered", index: 0 }}
+          />
+          {this.getFieldItems()}
+        </List>
+      </div>
     );
   },
 });

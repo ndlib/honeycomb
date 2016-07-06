@@ -9,7 +9,7 @@ var HoneycombTheme = {
   fontFamily: "Roboto, sans-serif",
   palette: {
     primary1Color: "#2C5882",
-    primary2Color: Colors.cyan700,
+    primary2Color: Colors.grey800,
     primary3Color: Colors.cyan100,
     accent1Color: "#2C5882",
     accent2Color: Colors.pinkA400,
@@ -179,7 +179,7 @@ var HoneycombTheme = {
         menuHoverColor: "rgba(0, 0, 0, .10)",
       },
       tabs: {
-        backgroundColor: palette.primary1Color,
+        backgroundColor: palette.primary2Color,
       },
       textField: {
         textColor: palette.textColor,

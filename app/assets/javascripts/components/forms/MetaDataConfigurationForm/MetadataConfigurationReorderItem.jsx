@@ -38,8 +38,7 @@ var MetaDataConfigurationReorderItem = React.createClass({
   propTypes: {
     id: React.PropTypes.number.isRequired,
     field: React.PropTypes.object.isRequired,
-    index: React.PropTypes.number,
-    handleEditClick: React.PropTypes.func.isRequired,
+    index: React.PropTypes.number.isRequired,
   },
 
   getLeftIcon: function(type) {
@@ -96,7 +95,7 @@ var MetaDataConfigurationReorderItem = React.createClass({
     var { connectDragSource, connectDragPreview, isDragging } = this.props;
     return (connectDragSource(<div>
       <mui.Card style={{ cursor: "move" }}>
-        <mui.CardHeader title={ this.props.field.name }  />
+        <mui.CardHeader title={ this.props.field.label }  />
       </mui.Card>
     </div>)
     );
