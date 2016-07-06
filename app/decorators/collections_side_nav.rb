@@ -29,6 +29,7 @@ class CollectionsSideNav < Draper::Decorator
   def active_tab_class(tab:)
     return "active" if tab == form
     return "active" if tab == "edit" && form.nil?
+    return "active" if tab == "homepage" && form.nil?
     ""
   end
 end
