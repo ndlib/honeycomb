@@ -91,11 +91,6 @@ RSpec.describe CollectionsSideNav do
       expect(subject.active_tab_class(tab: "not_the_form")).to eq("")
     end
 
-    it "returns active if the form is nil and the tab == edit " do
-      subject = described_class.new(collection: collection, form: nil)
-      expect(subject.active_tab_class(tab: "edit")).to eq("active")
-    end
-
     it "returns active if the form is nil and the tab == homepage " do
       subject = described_class.new(collection: collection, form: nil)
       expect(subject.active_tab_class(tab: "homepage")).to eq("active")
