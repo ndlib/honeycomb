@@ -39,21 +39,6 @@ var MetaDataConfigurationForm = React.createClass({
     };
   },
 
-  backgroundStyle: function() {
-    return {
-      backgroundColor: "#7F8C8D",
-    };
-  },
-
-  addButtonStyle: function() {
-    return {
-      position: "absolute",
-      top: "-16px",
-      left: "8px",
-      zIndex: "1"
-    };
-  },
-
   getListTitle: function() {
     return this.state.showInactive ? "All Metadata Fields" : "Active Metadata Fields";
   },
@@ -72,33 +57,19 @@ var MetaDataConfigurationForm = React.createClass({
     }.bind(this));
   },
 
-  handleRestore: function(fieldName) {
-    MetaDataConfigurationActions.changeActive(fieldName, true, this.props.baseUpdateUrl);
+  backgroundStyle: function() {
+    return {
+      backgroundColor: "#7F8C8D",
+    };
   },
-
-  handleShowInactive: function(e, value) {
-    this.setState({
-      showInactive: value,
-      selectedField: undefined,
-    });
-  },
-
-  handleNewClick: function() {
-    this.setState({ selectedField: Math.random().toString(36).substring(2)});
-  },
-
+  
   render: function(){
     var { selectedField } = this.state;
 
     return (
       <Tabs tabItemContainerStyle={ this.backgroundStyle() }>
         <Tab label="Edit" >
-          <div>
-            <FloatingActionButton onMouseDown={ this.handleNewClick } onTouchStart={ this.handleNewClick } mini={true} style={ this.addButtonStyle() }>
-              <ContentAdd />
-            </FloatingActionButton>
-            <MetaDataConfigurationList baseUpdateUrl={this.props.baseUpdateUrl} />
-          </div>
+          <MetaDataConfigurationList baseUpdateUrl={this.props.baseUpdateUrl} />
         </Tab>
         <Tab label="Reorder">
           <MetaDataConfigurationReorder baseUpdateUrl={this.props.baseUpdateUrl} />

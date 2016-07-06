@@ -59,6 +59,11 @@ var MetaDataConfigurationList = React.createClass({
     };
   },
 
+  handleNewClick: function() {
+    this.setState({ selectedField: Math.random().toString(36).substring(2)});
+  },
+  
+
   handleEditClick: function(fieldName) {
     this.setState({ selectedField: fieldName });
   },
@@ -81,11 +86,23 @@ var MetaDataConfigurationList = React.createClass({
     }.bind(this));
   },
 
+  addButtonStyle: function() {
+    return {
+      position: "absolute",
+      top: "-16px",
+      left: "8px",
+      zIndex: "1"
+    };
+  },
+
   render: function() {
     var { selectedField } = this.state;
 
     return (
       <div>
+        <FloatingActionButton onMouseDown={ this.handleNewClick } onTouchStart={ this.handleNewClick } mini={true} style={ this.addButtonStyle() }>
+          <ContentAdd />
+        </FloatingActionButton>
         <MetaDataFieldDialog fieldName={ selectedField } open={ selectedField != undefined } baseUpdateUrl={ this.props.baseUpdateUrl }/>
         <List style={ this.listStyle() } >
           { this.getFieldItems() }
