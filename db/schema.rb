@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160623192946) do
+ActiveRecord::Schema.define(version: 20160706175256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -123,8 +123,6 @@ ActiveRecord::Schema.define(version: 20160623192946) do
   add_index "images", ["image_fingerprint"], name: "index_images_on_image_fingerprint", using: :btree
 
   create_table "items", force: :cascade do |t|
-    t.text     "name_save"
-    t.text     "description_save"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "collection_id"
