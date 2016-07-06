@@ -21,24 +21,6 @@ RSpec.describe CollectionsSideNav do
     end
   end
 
-  describe "#collection_introduction_link" do
-    let(:context) { double("context", site_setup_form_collection_path: "path", link_to: "link") }
-    let(:subject) { described_class.new(collection: collection, form: nil) }
-
-    before(:each) do
-      allow(subject).to receive(:h).and_return(context)
-    end
-
-    it "returns a link to the collection_introduction_form" do
-      expect(subject.collection_introduction_link).to eq("link")
-    end
-
-    it "calls the correct path method" do
-      expect(context).to receive(:site_setup_form_collection_path).with(collection, form: "collection_introduction")
-      subject.collection_introduction_link
-    end
-  end
-
   describe "#about_text_link" do
     let(:context) { double("context", site_setup_form_collection_path: "path", link_to: "link") }
     let(:subject) { described_class.new(collection: collection, form: nil) }

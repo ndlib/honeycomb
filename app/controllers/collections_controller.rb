@@ -119,7 +119,6 @@ class CollectionsController < ApplicationController
       :id,
       :enable_search,
       :enable_browse,
-      :site_intro,
       :short_intro,
       :hide_title_on_home_page,
       :uploaded_image,
