@@ -8,8 +8,8 @@ RSpec.describe CollectionImage do
   let(:items) { instance_double(ActiveRecord::Associations::CollectionProxy, joins: image) }
   let(:item_with_image) { double(Item, image: honeypot_image) }
   let(:item_with_no_image) { double(Item, image: nil) }
-  let(:collection_image) { double(HoneypotImage, url: "http://image.collection.com/image", json_response: { contentUrl: "http://collection.com/image.jpg" }) }
-  let(:honeypot_image) { double(HoneypotImage, url: "http://image.image.com/image", json_response: { contentUrl: "http://example.com/image.jpg" }) }
+  let(:collection_image) { double(Image, json_response: { contentUrl: "http://collection.com/image.jpg" }) }
+  let(:honeypot_image) { double(Image, json_response: { contentUrl: "http://example.com/image.jpg" }) }
 
   it "uses the item decorator to call the image display" do
     allow(image).to receive(:first).and_return(item_with_image)

@@ -9,13 +9,6 @@ class ItemDecorator < Draper::Decorator
     ItemsDecorator.new(children_query_recent)
   end
 
-  def image_name
-    if object.image
-      return object.image.name
-    end
-    nil
-  end
-
   def status_text
     if object.image.nil?
       status_text_span(className: "text-success", icon: "ok", text: h.t("status.no_image"))

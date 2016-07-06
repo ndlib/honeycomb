@@ -73,7 +73,6 @@ RSpec.configure do |config|
     [
       Collection,
       Item,
-      HoneypotImage,
       User,
       CollectionUser,
       Showcase,

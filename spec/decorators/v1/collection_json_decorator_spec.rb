@@ -206,7 +206,7 @@ RSpec.describe V1::CollectionJSONDecorator do
 
   describe "#image" do
     let(:collection) { double(Collection, image: image) }
-    let(:image) { double(HoneypotImage, json_response: "json_response") }
+    let(:image) { double(Image, json_response: "json_response") }
 
     it "gets the image json_response" do
       expect(image).to receive(:json_response).and_return("json_response")

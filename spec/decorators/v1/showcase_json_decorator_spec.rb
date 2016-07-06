@@ -66,7 +66,7 @@ RSpec.describe V1::ShowcaseJSONDecorator do
 
   describe "#image" do
     let(:showcase) { double(Showcase, image: image) }
-    let(:image) { double(HoneypotImage, json_response: "json_response") }
+    let(:image) { double(Image, json_response: "json_response") }
 
     it "gets the image json_response" do
       expect(image).to receive(:json_response).and_return("json_response")

@@ -26,7 +26,7 @@ module Brood
         skipped = {}
         original_data.each do |key, original_value|
           value = brood_value(original_value)
-          if record.respond_to?("#{key}=")
+          if record.respond_to?("#{key}=") || key == "uploaded_image"
             hash[key] = value
           else
             skipped[key] = value
@@ -59,7 +59,13 @@ module Brood
     end
 
     def open_file(file)
-      File.open(brood_collection.path("files/#{file}"))
+      file = File.open(brood_collection.path("files/#{file}"))
+      # This needs to mock ActionDispatch::Http::UploadedFile.original_filename
+      class << file
+        attr_accessor :original_filename
+      end
+      file.original_filename = file.path
+      file
     end
 
     def debug(message)
