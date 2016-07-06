@@ -2,6 +2,7 @@ var React = require("react");
 var mui = require("material-ui");
 var Colors = require("material-ui/lib/styles/colors");
 
+
 var ListItem = mui.ListItem;
 var FontIcon = mui.FontIcon;
 var IconButton = mui.IconButton;
@@ -12,7 +13,9 @@ var MetaDataConfigurationListItem = React.createClass({
     field: React.PropTypes.object.isRequired,
     index: React.PropTypes.number,
     handleEditClick: React.PropTypes.func.isRequired,
+    handleRemoveClick: React.PropTypes.func.isRequired,
   },
+
 
   getLeftIcon: function(type) {
     switch(type){
@@ -38,7 +41,7 @@ var MetaDataConfigurationListItem = React.createClass({
         <IconButton
           tooltip="Remove"
           tooltipPosition="top-center"
-          onTouchTap={function() { this.handleRemove(field.name) }.bind(this) }
+          onTouchTap={function() { this.props.handleRemove(field.name) }.bind(this) }
         >
           field.active && <FontIcon className="material-icons" color={Colors.grey500} hoverColor={Colors.red500}>{icon}</FontIcon>
         </IconButton>

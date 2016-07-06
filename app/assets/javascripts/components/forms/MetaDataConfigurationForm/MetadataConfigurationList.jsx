@@ -3,11 +3,10 @@ var mui = require("material-ui");
 
 var ReactLink = require('react/lib/ReactLink');
 var ReactStateSetters = require('react/lib/ReactStateSetters');
-var MetaDataConfigurationActions = require("../../../actions/MetaDataConfigurationActions");
 var update = require('react/lib/update');
 
-var MetadataConfigurationEventTypes = require("./MetaDataConfigurationEventTypes");
 var MetaDataConfigurationListItem = require("./MetadataConfigurationListItem");
+var MetaDataConfigurationActions = require("../../../actions/MetaDataConfigurationActions");
 
 var Colors = require("material-ui/lib/styles/colors");
 var MoreVertIcons = require("material-ui/lib/svg-icons/navigation/more-vert");
