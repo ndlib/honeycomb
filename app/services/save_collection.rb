@@ -1,5 +1,5 @@
 class SaveCollection
-  attr_reader :params, :collection
+  attr_reader :params, :collection, :uploaded_image
 
   def self.call(collection, params)
     new(collection, params).save
@@ -31,8 +31,8 @@ class SaveCollection
   end
 
   def fix_image_param!
-    # sometimes the form is sending an empty image value and this is causing paperclip to delete the image.
-    params.delete(:uploaded_image) if params[:uploaded_image].nil?
+    @uploaded_image = params[:uploaded_image]
+    params.delete(:uploaded_image)
   end
 
   def fix_url!
@@ -42,11 +42,11 @@ class SaveCollection
   end
 
   def process_uploaded_image
-    if params[:uploaded_image]
-      QueueJob.call(ProcessImageJob, object: collection)
-    else
-      true
+    if uploaded_image.present?
+      collection.image = FindOrCreateImage.call(file: uploaded_image, collection_id: collection.id)
+      return collection.save
     end
+    true
   end
 
   def ensure_configuration_setup

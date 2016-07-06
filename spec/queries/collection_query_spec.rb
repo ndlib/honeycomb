@@ -6,7 +6,7 @@ describe CollectionQuery do
   let(:user) { double(User, username: "username") }
   let(:collection) { double(Collection, id: 1) }
   let(:collection2) { FactoryGirl.create(:collection, url_slug: "test_slug", published: 't') }
-
+  let(:collection_array) { [collection] }
   describe "for_top_nav" do
     before(:each) do
       allow(subject).to receive(:for_editor).and_return(relation)
@@ -40,8 +40,8 @@ describe CollectionQuery do
     it "calls public_find!" do
       expect(relation).to receive(:where).
         with("unique_id = ? AND (published = ? OR preview_mode = ?)", "asdf", true, true).
-        and_return(@collection_array = [collection])
-      expect(@collection_array).to receive(:take!).and_return(collection)
+        and_return(collection_array)
+      expect(collection_array).to receive(:take!).and_return(collection)
       subject.public_find("asdf")
     end
 
@@ -53,8 +53,9 @@ describe CollectionQuery do
   describe "#custom_slug_find" do
     it "performs the ActiveRecord lookup" do
       expect(relation).to receive(:where).
-        with("url_slug = ? AND (published = ? OR preview_mode = ?)", "test_slug", true, true)
-      expect(@collection_array).to receive(:take!)
+        with("url_slug = ? AND (published = ? OR preview_mode = ?)", "test_slug", true, true).
+        and_return(collection_array)
+      expect(collection_array).to receive(:take!)
       subject.custom_slug_find("test_slug")
     end
 

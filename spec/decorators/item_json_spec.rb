@@ -10,14 +10,14 @@ RSpec.describe ItemJSON do
       user_defined_id: "udi",
       id: 1,
       collection: collection,
-      honeypot_image: honeypot_image,
+      image: honeypot_image,
       parent_id: nil,
       child_ids: []
     }
   end
   let(:item) { instance_double(Item, item_stubs) }
   let(:collection) { instance_double(Collection, id: 2, name_line_1: "name_line_1") }
-  let(:honeypot_image) { instance_double(HoneypotImage, image_json: { image: "image" }) }
+  let(:honeypot_image) { instance_double(Image, json_response: { image: "image" }) }
 
   let(:options) { {} }
   subject { described_class.new(item) }
@@ -57,12 +57,12 @@ RSpec.describe ItemJSON do
 
   describe "#image_data" do
     it "includes the image_json from the image" do
-      expect(honeypot_image).to receive(:image_json).and_return(image: "image")
+      expect(honeypot_image).to receive(:json_response).and_return(image: "image")
       expect(subject.send(:image_data)).to eq(image: "image")
     end
 
     it "is nil if there is no image" do
-      expect(item).to receive(:honeypot_image).and_return(nil)
+      expect(item).to receive(:image).and_return(nil)
       expect(subject.send(:image_data)).to be_nil
     end
   end

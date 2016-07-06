@@ -1,5 +1,5 @@
 class SaveItem
-  attr_reader :params, :item
+  attr_reader :params, :item, :uploaded_image
 
   def self.call(item, params)
     new(item, params).save
@@ -36,7 +36,7 @@ class SaveItem
 
   def pre_process_name
     if name_should_be_filename?
-      data = { "name" => GenerateNameFromFilename.call(item.uploaded_image_file_name) }
+      data = { "name" => GenerateNameFromFilename.call(uploaded_image.original_filename) }
       Metadata::Setter.call(item, data)
     end
   end
@@ -50,24 +50,16 @@ class SaveItem
   end
 
   def fix_image_param!
-    # sometimes the form is sending an empty image value and this is causing paperclip to delete the image.
-    params.delete(:uploaded_image) if params[:uploaded_image].nil?
+    @uploaded_image = params[:uploaded_image]
+    params.delete(:uploaded_image)
   end
 
   def process_uploaded_image
-    if params[:uploaded_image]
-      item.image_processing!
-      begin
-        QueueJob.call(ProcessImageJob, object: item)
-      rescue Bunny::TCPConnectionFailedForAllHosts
-        item.image_unavailable!
-      end
-    elsif item.image_unavailable?
-      set_no_image
-      true
-    else
-      true
+    if uploaded_image.present?
+      item.image = FindOrCreateImage.call(file: uploaded_image, collection_id: item.collection_id)
+      return item.save
     end
+    true
   end
 
   def check_unique_id
@@ -76,10 +68,6 @@ class SaveItem
 
   def index_item
     Index::Item.index!(item)
-  end
-
-  def set_no_image
-    item.no_image!
   end
 
   def fix_image_references

@@ -12,7 +12,7 @@ RSpec.describe Admin::ExternalCollectionsController, type: :controller do
                     showcases: [],
                     pages: [],
                     items: [],
-                    honeypot_image: nil)
+                    image: nil)
   end
   let(:create_params) { { external_collection: { name_line_1: "TITLE!!" } } }
   let(:update_params) { { id: "1", published: true, external_collection: { name_line_1: "TITLE!!" } } }

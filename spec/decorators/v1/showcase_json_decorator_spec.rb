@@ -12,7 +12,7 @@ RSpec.describe V1::ShowcaseJSONDecorator do
                     name_line_1: "showcase",
                     name_line_2: "1",
                     description: "Showcase One",
-                    honeypot_image: nil,
+                    image: nil,
                     updated_at: nil)
   end
 
@@ -65,21 +65,21 @@ RSpec.describe V1::ShowcaseJSONDecorator do
   end
 
   describe "#image" do
-    let(:showcase) { double(Showcase, honeypot_image: honeypot_image) }
-    let(:honeypot_image) { double(HoneypotImage, json_response: "json_response") }
+    let(:showcase) { double(Showcase, image: image) }
+    let(:image) { double(Image, json_response: "json_response") }
 
-    it "gets the honeypot_image json_response" do
-      expect(honeypot_image).to receive(:json_response).and_return("json_response")
+    it "gets the image json_response" do
+      expect(image).to receive(:json_response).and_return("json_response")
       expect(subject.image).to eq("json_response")
     end
 
-    it "gets the honeypot_image from the showcase" do
-      expect(showcase).to receive(:honeypot_image).and_return(honeypot_image)
+    it "gets the image from the showcase" do
+      expect(showcase).to receive(:image).and_return(image)
       subject.image
     end
 
     it "returns nil if there is no image" do
-      allow(showcase).to receive(:honeypot_image).and_return(nil)
+      allow(showcase).to receive(:image).and_return(nil)
       expect(subject.image).to eq(nil)
     end
   end

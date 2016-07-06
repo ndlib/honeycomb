@@ -32,9 +32,7 @@ module V1
     end
 
     def image
-      if object.image
-        V1::ImageJSONDecorator.new(object.image).to_hash
-      end
+      object.image.json_response if object.image
     end
 
     def display(json)

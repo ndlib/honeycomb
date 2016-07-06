@@ -29,6 +29,6 @@ class ReplacePageItem
   end
 
   def new_image_uri
-    @item.honeypot_image.json_response["thumbnail/medium"]["contentUrl"]
+    @item.image.json_response["thumbnail/medium"]["contentUrl"]
   end
 end

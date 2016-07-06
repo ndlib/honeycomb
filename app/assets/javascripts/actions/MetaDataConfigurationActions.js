@@ -79,7 +79,7 @@ class MetaDataConfigurationActions extends NodeEventEmitter {
         });
         // Communicate the error to the user
         this.emit("ChangeFieldFinished", false, xhr);
-        AppEventEmitter.emit("MessageCenterDisplay", "error", "Save failed. Please ensure to select a label and a type and try again.");
+        AppEventEmitter.emit("MessageCenterDisplay", "error", "Save failed. Please select a type and unique label and try again.");
       }).bind(this)
     });
   }
@@ -107,7 +107,7 @@ class MetaDataConfigurationActions extends NodeEventEmitter {
       error: (function(xhr) {
         // Communicate the error to the user
         this.emit("CreateFieldFinished", false, xhr);
-        AppEventEmitter.emit("MessageCenterDisplay", "error", "Create failed. Please ensure to select a label and a type and try again.");
+        AppEventEmitter.emit("MessageCenterDisplay", "error", "Create failed. Please select a unique label and try again.");
       }).bind(this)
     });
   }

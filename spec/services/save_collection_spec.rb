@@ -2,7 +2,16 @@ require "rails_helper"
 
 RSpec.describe SaveCollection, type: :model do
   subject { described_class.call(collection, params) }
-  let(:collection) { double(Collection, id: "id", "attributes=" => true, save: true, url: nil, url_slug: nil, collection_configuration: double) }
+  let(:collection) do
+    instance_double(Collection,
+                    id: "id",
+                    "attributes=" => true,
+                    save: true,
+                    url: nil,
+                    url_slug: nil,
+                    collection_configuration: double,
+                    "image=" => true)
+  end
   let(:params) { { name_line_1: "name_line_1", url_slug: "Test Slug" } }
   let(:upload_image) { Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/test.jpg"), "image/jpeg") }
 
@@ -39,17 +48,23 @@ RSpec.describe SaveCollection, type: :model do
   end
 
   describe "image processing" do
-    it "Queues image processing if the image was updated" do
+    it "returns the true if the image was updated" do
       params[:uploaded_image] = upload_image
-      expect(collection).to receive(:save).and_return(true)
-      expect(QueueJob).to receive(:call).with(ProcessImageJob, object: collection).and_return(true)
+      allow(collection).to receive(:save).and_return(true)
+      expect(subject).to eq(true)
+    end
+
+    it "calls FindOrCreateImage if the image is changed" do
+      params[:uploaded_image] = upload_image
+      expect(FindOrCreateImage).to receive(:call).and_return(nil)
+      allow(collection).to receive(:save).and_return(true)
+      allow(QueueJob).to receive(:call).with(ProcessImageJob, object: collection).and_return(true)
       subject
     end
 
-    it "is not called if the image is not changed" do
+    it "FindOrCreateImage is not called if the image is not changed" do
       params[:uploaded_image] = nil
-      expect(collection).to receive(:save).and_return(true)
-      expect(QueueJob).to_not receive(:call)
+      expect(FindOrCreateImage).not_to receive(:call)
       subject
     end
   end
