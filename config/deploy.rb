@@ -1,5 +1,5 @@
 # config valid only for current version of Capistrano
-lock "3.4"
+lock "3.5"
 
 require "airbrake/capistrano3"
 require "new_relic/recipes"
