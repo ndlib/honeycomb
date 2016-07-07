@@ -4,18 +4,17 @@ var HorizontalScrollMixin = {
     this.element = document.getElementById(element);
   },
 
-  setHorizontalScrollOnElement: function(element, speed) {
+  setHorizontalScrollOnElement: function(element, speed, event) {
     this.setElement(element);
-
-    if (this.checkScrollRight()) {
+    if (this.checkScrollRight(event)) {
       this.setState( { scroll: true });
       setTimeout(this.scroll, 50, speed);
     }
-    else if (this.checkScrollLeft()) {
+    else if (this.checkScrollLeft(event)) {
       this.setState( { scroll: true });
       setTimeout(this.scroll, 50, -speed);
     }
-    else if (this.checkDeadZone()) {
+    else if (this.checkDeadZone(event)) {
         this.setState( { scroll: false } );
     }
   },
@@ -35,15 +34,15 @@ var HorizontalScrollMixin = {
     return this.element.getBoundingClientRect().right - 100;
   },
 
-  checkDeadZone: function () {
+  checkDeadZone: function (event) {
     return event.pageX <= this.box_right() && event.pageX >= this.box_left() && this.state.scroll;
   },
 
-  checkScrollLeft: function () {
+  checkScrollLeft: function (event) {
     return event.pageX < this.box_left() && !this.state.scroll;
   },
 
-  checkScrollRight: function () {
+  checkScrollRight: function (event) {
     return event.pageX > this.box_right() && !this.state.scroll;
   }
 

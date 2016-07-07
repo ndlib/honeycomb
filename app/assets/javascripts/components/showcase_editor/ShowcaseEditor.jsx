@@ -1,4 +1,6 @@
 var React = require('react');
+var update = require("react-addons-update");
+
 var ShowcaseEditor = React.createClass({
   mixins: [HorizontalScrollMixin],
   propTypes: {
@@ -70,7 +72,6 @@ var ShowcaseEditor = React.createClass({
     });
     // Don't do anything if the section was dragged to the drop area immediately before or after its current location
     if (index < currentIndex || index > currentIndex + 1) {
-      var update = React.addons.update;
       var newSection = update(section, {$merge: {order: index}});
       var splicedSections;
       if (currentIndex < index) {
@@ -133,9 +134,9 @@ var ShowcaseEditor = React.createClass({
       }
       return
     }
-    this.setHorizontalScrollOnElement('section-content-editor', 40);
-
+    this.setHorizontalScrollOnElement('section-content-editor', 40, event);
   },
+
   componentDidMount: function() {
     this.loadSectionsFromServer();
     setTimeout(this.loadSectionsFromServer, 8000);
