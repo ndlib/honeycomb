@@ -28,6 +28,9 @@ var ToolbarGroup = mui.ToolbarGroup;
 var ToolbarTitle = mui.ToolbarTitle;
 
 var MetaDataConfigurationReorder = React.createClass({
+  propTypes: {
+    baseUpdateUrl: React.PropTypes.string.isRequired,
+  },
 
   getInitialState: function() {
     EventEmitter.on(MetadataConfigurationEventTypes.CardDroppedOnTarget, this.handleDrop);
@@ -71,6 +74,13 @@ var MetaDataConfigurationReorder = React.createClass({
         ]
       }
     }), this.pushChanges);
+  },
+
+  pushChanges: function() {
+    var reorder = this.state.fields.map(function(field, index) {
+      return { name: field.name, order: index + 1 }
+    });
+    MetaDataConfigurationActions.reorder(reorder, this.props.baseUpdateUrl);
   },
 
   filteredFields: function(showInactive) {

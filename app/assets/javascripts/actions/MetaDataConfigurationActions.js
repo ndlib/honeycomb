@@ -7,6 +7,26 @@ var APIResponseMixin = require("../mixins/APIResponseMixin");
 var update = require("react-addons-update");
 
 class MetaDataConfigurationActions extends NodeEventEmitter {
+
+  reorder(newOrder, baseUrl) {
+    baseUrl += "/reorder";
+
+    $.ajax({
+      url: baseUrl,
+      dataType: "json",
+      method: "PUT",
+      data: {
+        fields: newOrder,
+      },
+      success: (function() {
+
+      }).bind(this),
+      error: (function(xhr) {
+
+      }).bind(this),
+    });
+  }
+
   changeActive(fieldName, activeValue, pushToUrl){
     // Clone values in order to revert the store if the change fails
     var previousValue = MetaDataConfigurationStore.fields[fieldName].active;

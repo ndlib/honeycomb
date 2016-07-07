@@ -84,7 +84,11 @@ Rails.application.routes.draw do
       resources :showcases, only: [:index], defaults: { format: :json }
       resources :pages, only: [:index], defaults: { format: :json }
       resource :configurations, defaults: { format: :json }, only: [:show] do
-        resources :metadata_fields, only: [:create, :update, :destroy], defaults: { format: :json }
+        resources :metadata_fields, only: [:create, :update], defaults: { format: :json } do
+          collection do
+            put :reorder
+          end
+        end
       end
     end
     resources :items,
