@@ -30,10 +30,9 @@ module V1
       @collection = CollectionQuery.new.any_find(params[:collection_id])
 
       return if rendered_forbidden?(@collection)
-      puts "hi i am reordering"
-      puts reorder_params.inspect
+
       if ReorderMetadata.call(@collection, reorder_params)
-        render :update
+        render json: { new_order: reorder_params }.to_json
       else
         render :errors, status: :unprocessable_entity
       end

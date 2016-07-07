@@ -11,9 +11,9 @@ class ReorderMetadata
   end
 
   def reorder(new_field_order)
-    configuration.fields.each do |field|
-      if new_field_order[field.name]
-        configuration.save_field(field.name, "order" => new_field_order[field.name])
+    new_field_order.each do |_index, field|
+      if configuration.field(field["name"])
+        configuration.save_field(field["name"], "order" => field["order"].to_i)
       end
     end
   end
