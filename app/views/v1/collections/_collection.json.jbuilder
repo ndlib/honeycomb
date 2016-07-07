@@ -12,7 +12,6 @@ json.external_url collection_object.external_url
 json.name_line_1 collection_object.name_line_1
 json.name_line_2 collection_object.name_line_2
 json.short_description collection_object.short_intro
-json.description collection_object.site_intro
 json.about collection_object.about
 json.display_page_title collection_object.display_page_title
 json.image collection_object.image

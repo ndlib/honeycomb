@@ -10,10 +10,6 @@ class CollectionsSideNav < Draper::Decorator
     h.link_to("Homepage", h.site_setup_form_collection_path(collection, form: "homepage"))
   end
 
-  def collection_introduction_link
-    h.link_to("Introduction", h.site_setup_form_collection_path(collection, form: "collection_introduction"))
-  end
-
   def copyright_text_link
     h.link_to("Copyright", h.site_setup_form_collection_path(collection, form: "copyright_text"))
   end

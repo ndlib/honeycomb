@@ -48,7 +48,6 @@ en:
       collection:
         name_line_1: 'Name Line 1'
         name_line_2: 'Name Line 2'
-        site_intro: 'Site Introduction'
         short_intro: 'Short Introduction'
       showcase:
         title: 'Title Line 1'
@@ -60,7 +59,6 @@ en:
         image: "This image will appear tiled in the background of your showcase"
     placeholders:
       collection:
-        site_intro: "Create an introduction page to your site."
         short_intro: "Create a short introduction. Try to limit this to around 200 characters."
   collection_left_nav:
     items: 'Items'

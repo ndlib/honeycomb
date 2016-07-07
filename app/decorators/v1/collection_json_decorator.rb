@@ -35,10 +35,6 @@ module V1
       object.description.to_s
     end
 
-    def site_intro
-      object.site_intro.to_s
-    end
-
     def short_intro
       object.short_intro.to_s
     end
