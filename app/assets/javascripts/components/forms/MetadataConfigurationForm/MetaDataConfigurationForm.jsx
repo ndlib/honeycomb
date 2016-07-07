@@ -11,6 +11,8 @@ var MetaDataConfigurationUndelete = require("./MetaDataConfigurationUndelete");
 var Tabs = mui.Tabs;
 var Tab = mui.Tab;
 
+var TabStyle = { borderRight: "1px white solid" };
+
 var MetaDataConfigurationForm = React.createClass({
   propTypes: {
     baseUpdateUrl: React.PropTypes.string.isRequired,
@@ -25,13 +27,13 @@ var MetaDataConfigurationForm = React.createClass({
   render: function(){
     return (
       <Tabs tabItemContainerStyle={ this.backgroundStyle() }>
-        <Tab label="Edit" >
+        <Tab label="Edit" style={TabStyle}>
           <MetaDataConfigurationList baseUpdateUrl={this.props.baseUpdateUrl} />
         </Tab>
-        <Tab label="Reorder">
+        <Tab label="Reorder" style={TabStyle}>
           <MetaDataConfigurationReorder baseUpdateUrl={this.props.baseUpdateUrl} />
         </Tab>
-        <Tab label="Undelete">
+        <Tab label="Undelete" style={TabStyle}>
           <MetaDataConfigurationUndelete baseUpdateUrl={this.props.baseUpdateUrl} />
         </Tab>
       </Tabs>
