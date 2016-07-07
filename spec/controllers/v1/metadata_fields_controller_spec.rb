@@ -89,4 +89,33 @@ RSpec.describe V1::MetadataFieldsController, type: :controller do
       expect(JSON.parse(response.body)).to include("field" => params.stringify_keys)
     end
   end
+
+  describe "reorder" do
+    let(:params) { { "0" => { field: "name", order: 1 } } }
+    subject { put :reorder, collection_id: 1, fields: params, format: :json }
+
+    before(:each) do
+      allow(ReorderMetadata).to receive(:call).and_return(true)
+    end
+
+    it "queries for the collection" do
+      expect_any_instance_of(CollectionQuery).to receive(:any_find).and_return(collection)
+      subject
+    end
+
+    it "calls Metadata::UpdateConfigurationField with an empty hash even if there are no params in order to perform validation" do
+      expect(ReorderMetadata).to receive(:call).with(collection, params).and_return(true)
+      put :reorder, collection_id: 1, fields: params, format: :json
+    end
+
+    it "uses the Metadata::UpdateConfigurationField to update the data" do
+      expect(ReorderMetadata).to receive(:call).with(collection, params)
+      subject
+    end
+
+    it "checks the editor permissions" do
+      expect_any_instance_of(described_class).to receive(:user_can_edit?).with(collection)
+      subject
+    end
+  end
 end

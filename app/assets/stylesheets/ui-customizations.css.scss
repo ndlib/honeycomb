@@ -180,10 +180,6 @@ div.dataTables_filter {
 
 /* MENU TESTING */
 
-.page-header {
-	display: none;
-}
-
 .collections {
 	button {
 
@@ -462,6 +458,20 @@ div.dataTables_filter {
 .multi-field-value-cell {
   cursor: pointer;
   vertical-align: middle;
+}
+
+.metadata-configuration-target {
+  height: 15px;
+}
+
+.metadata-configuration-target-ondrag {
+  background: $dnd-ondrag-color;
+  height: 15px;
+}
+
+.metadata-configuration-target-onhover {
+  background: $dnd-onhover-color;
+  height: 72px;
 }
 
 .dualpanel {

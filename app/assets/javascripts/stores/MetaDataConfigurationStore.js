@@ -21,7 +21,19 @@ class MetaDataConfigurationStore extends EventEmitter {
       case MetaDataConfigurationActionTypes.MDC_CHANGE_FIELD:
         this.changeField(action.name, action.values);
         break;
+      case MetaDataConfigurationActionTypes.MDC_REORDER_FIELDS:
+        this.reorderFields(action.newFieldOrder);
+        break;
+
     }
+  }
+
+  reorderFields(newFieldOrder) {
+    newFieldOrder.map(function (data) {
+      this._data.fields[data.name].order = data.order;
+    }.bind(this));
+
+    this.emit("MetaDataConfigurationStoreChanged");
   }
 
   changeField(name, values) {

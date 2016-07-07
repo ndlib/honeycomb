@@ -110,6 +110,7 @@ var MetaDataFieldDialog = React.createClass({
 
   handleClose: function() {
     this.setState({ open: false });
+    this.props.handleClose();
   },
 
   getTypeOptions: function() {

@@ -7,6 +7,40 @@ var APIResponseMixin = require("../mixins/APIResponseMixin");
 var update = require("react-addons-update");
 
 class MetaDataConfigurationActions extends NodeEventEmitter {
+
+  reorder(newOrder, baseUrl) {
+    var oldOrder = _.map(MetaDataConfigurationStore.fields, function (data) {
+      return { name: data.name, order: data.order };
+    });
+
+    baseUrl += "/reorder";
+
+    AppDispatcher.dispatch({
+      actionType: MetaDataConfigurationActionTypes.MDC_REORDER_FIELDS,
+      newFieldOrder: newOrder,
+    });
+
+    $.ajax({
+      url: baseUrl,
+      dataType: "json",
+      method: "PUT",
+      data: {
+        fields: newOrder,
+      },
+      success: (function() {
+        this.emit("ChangeReorderFinished", true);
+      }).bind(this),
+      error: (function(xhr) {
+        AppDispatcher.dispatch({
+          actionType: MetaDataConfigurationActionTypes.MDC_REORDER_FIELDS,
+          newFieldOrder: oldOrder,
+        });
+        this.emit("ChangeReorderFinished", false, xhr);
+        AppEventEmitter.emit("MessageCenterDisplay", "error", "Reorder Failed.  Please try again if the problem persists please contact WSE unit.");
+      }).bind(this),
+    });
+  }
+
   changeActive(fieldName, activeValue, pushToUrl){
     // Clone values in order to revert the store if the change fails
     var previousValue = MetaDataConfigurationStore.fields[fieldName].active;

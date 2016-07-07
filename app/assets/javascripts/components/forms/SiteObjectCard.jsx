@@ -53,11 +53,6 @@ var SiteObjectCard = React.createClass({
     }
   },
 
-  getDragAvatar: function() {
-    var { connectDragSource } = this.props;
-    return connectDragSource(<div>{ this.getAvatar() }</div>);
-  },
-
   render: function () {
     var { connectDragSource, connectDragPreview, isDragging } = this.props;
     return connectDragSource(

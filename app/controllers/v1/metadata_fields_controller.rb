@@ -26,10 +26,26 @@ module V1
       end
     end
 
+    def reorder
+      @collection = CollectionQuery.new.any_find(params[:collection_id])
+
+      return if rendered_forbidden?(@collection)
+
+      if ReorderMetadata.call(@collection, field_params)
+        render json: { new_order: reorder_params }.to_json
+      else
+        render :errors, status: :unprocessable_entity
+      end
+    end
+
     private
 
     def field_params
       @field_params ||= params[:fields] ? params[:fields] : {}
+    end
+
+    def reorder_params
+      params.permit(:fields, :format, :collection_id)
     end
   end
 end
