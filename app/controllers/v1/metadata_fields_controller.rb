@@ -31,7 +31,7 @@ module V1
 
       return if rendered_forbidden?(@collection)
 
-      if ReorderMetadata.call(@collection, reorder_params)
+      if ReorderMetadata.call(@collection, field_params)
         render json: { new_order: reorder_params }.to_json
       else
         render :errors, status: :unprocessable_entity
