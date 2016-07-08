@@ -1,4 +1,5 @@
 var React = require('react');
+
 var SectionDragContent = React.createClass({
   propTypes: {
     section: React.PropTypes.object.isRequired,
