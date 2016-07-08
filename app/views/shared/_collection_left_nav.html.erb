@@ -10,7 +10,7 @@
     <li role="presentation" class="divider"></li>
 
     <%= react_component "CollectionPreviewPublishLink", {
-          previewLinkURL: CreateBeehiveURL.call(nav.collection),
+          previewLinkURL: CreateBeehiveURL.call(nav.collection, true),
           previewLinkLabel: t('collection_left_nav.preview_site'),
           liveLinkLabel: t('collection_left_nav.live_site')
       }

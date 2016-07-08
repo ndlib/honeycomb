@@ -5,24 +5,38 @@ RSpec.describe CreateBeehiveURL do
 
   describe "#create" do
     context "Collection" do
-      let(:object) { Collection.new }
-      let(:subject) { CreateBeehiveURL.new(object) }
+      context "custom url flag set to true" do
+        let(:object) { Collection.new }
+        let(:subject) { CreateBeehiveURL.new(object, true) }
 
-      it "returns a beehive url for a collection" do
-        object.name_line_1 = "Test title"
-        object.unique_id = "12345"
-        expect(subject.create).to eq "http://localhost:3018/12345/test-title"
+        it "returns a beehive url for a collection" do
+          object.name_line_1 = "Test title"
+          object.unique_id = "12345"
+          expect(subject.create).to eq "http://localhost:3018/12345/test-title"
+        end
+
+        it "returns custom slug pattern if present" do
+          object.url_slug = "test"
+          expect(subject.create).to eq "http://localhost:3018/test"
+        end
+
+        it "calls CreateURLSlug on the collection name_line_1" do
+          object.name_line_1 = "Test title"
+          object.unique_id = "12345"
+          expect(subject.create).to eq "http://localhost:3018/12345/test-title"
+        end
       end
 
-      it "returns custom slug if present" do
-        object.url_slug = "test"
-        expect(subject.create).to eq "http://localhost:3018/test"
-      end
+      context "custom url flag set to false" do
+        let(:object) { Collection.new }
+        let(:subject) { CreateBeehiveURL.new(object, false) }
 
-      it "calls CreateURLSlug on the collection name_line_1" do
-        object.name_line_1 = "Test title"
-        object.unique_id = "12345"
-        expect(subject.create).to eq "http://localhost:3018/12345/test-title"
+        it "returns normal collection url" do
+          object.url_slug = "test"
+          object.name_line_1 = "Test title"
+          object.unique_id = "12345"
+          expect(subject.create).to eq "http://localhost:3018/12345/test-title"
+        end
       end
     end
 

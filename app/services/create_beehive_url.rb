@@ -1,13 +1,14 @@
 class CreateBeehiveURL
   # object can be a Collection, Showcase, or Item
-  attr_reader :object
+  attr_reader :object, :custom_url_flag
 
-  def self.call(object)
-    new(object).create
+  def self.call(object, custom_url_flag = false)
+    new(object, custom_url_flag).create
   end
 
-  def initialize(object)
+  def initialize(object, custom_url_flag)
     @object = object
+    @custom_url_flag = custom_url_flag
   end
 
   def create
@@ -23,7 +24,7 @@ class CreateBeehiveURL
   private
 
   def collection_url(collection)
-    if collection.url_slug
+    if collection.url_slug && custom_url_flag
       "#{Rails.configuration.settings.beehive_url}/#{collection.url_slug}"
     else
       "#{Rails.configuration.settings.beehive_url}/#{collection.unique_id}/#{CreateURLSlug.call(collection.name_line_1)}"
