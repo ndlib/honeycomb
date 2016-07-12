@@ -1,16 +1,15 @@
 <% page_title(t('.title'), @collection) %>
 <%= collection_nav(@collection, :showcases) %>
+<%= back_action_bar(collections_path, '#' ) %>
 
-<%= simple_form_for [@showcase.collection, @showcase], :html => { :class => 'form-horizontal' } do |f| %>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">New Showcase</h3>
+<div class="row">
+  <div class="col-md-10">
+    <div class="page-header">
+      <h1><%= t('.title') %></h1>
     </div>
-    <div class="panel-body">
+    <%= simple_form_for [@showcase.collection, @showcase], :html => { :class => 'form-horizontal' } do |f| %>
       <%= render partial: 'form', locals: { f: f } %>
-    </div>
-    <div class="panel-footer">
       <%= f.button :submit, "Save", class: 'btn btn-primary'%>
-    </div>
+    <% end %>
   </div>
-<% end %>
+</div>
