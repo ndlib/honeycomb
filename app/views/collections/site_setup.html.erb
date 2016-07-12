@@ -1,26 +1,22 @@
-<% page_title(@collection.name) %>
+<%= page_title(t('.title')) %>
 <%= collection_nav(@collection, :website) %>
 
 <div class="row">
   <div class="col-md-10">
+    <div class="page-header">
+      <h1><%= params[:form] ? params[:form].to_s.titleize : "Homepage" %> <small>Site Setup</small></h1>
+    </div>
     <%= simple_form_for @collection, method: :put, :url => site_setup_update_form_collection_path(@collection, form: (params[:form] ? "#{params[:form]}" : 'homepage')) do |f| %>
-      <%= display_errors(f.object) %>
-
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">Site Setup</h3>
+      <!-- <%= display_errors(f.object) %> -->
+      <%= render partial: (params[:form] ? "#{params[:form]}_form" : 'homepage_form'), locals: { f: f } %>
+      <% if params[:form] != "site_path" %>
+        <div class="panel-footer">
+          <%= f.button :submit, "Save", class: 'btn btn-primary'%>
         </div>
-        <div class="panel-body">
-          <%= render partial: (params[:form] ? "#{params[:form]}_form" : 'homepage_form'), locals: { f: f } %>
-        </div>
-        <% if params[:form] != "site_path" %>
-          <div class="panel-footer">
-            <%= f.button :submit, "Save", class: 'btn btn-primary'%>
-          </div>
-        <% end %>
-      </div>
+      <% end %>
     <% end %>
   </div>
+
   <div class="col-md-2">
     <%= render "side_nav", collection: @collection, form: params[:form] %>
   </div>
