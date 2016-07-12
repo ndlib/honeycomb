@@ -5,7 +5,7 @@ var ReactLink = require('react/lib/ReactLink');
 var ReactStateSetters = require('react/lib/ReactStateSetters');
 var update = require('react/lib/update');
 
-var MetaDataConfigurationListItem = require("./MetadataConfigurationListItem");
+var MetaDataConfigurationListItem = require("./MetaDataConfigurationListItem");
 var MetaDataConfigurationActions = require("../../../actions/MetaDataConfigurationActions");
 
 var Colors = require("material-ui/lib/styles/colors");
