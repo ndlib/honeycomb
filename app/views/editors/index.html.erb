@@ -1,17 +1,21 @@
 <%= page_title(t('.title')) %>
 <%= collection_nav(@collection, :editors) %>
-<%= no_back_action_bar('#') %>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <%= t('.title') %>
+<div class="row">
+  <div class="col-md-10">
+    <div class="page-header">
+      <h1><%= t('.title') %></h1>
+    </div>
+    <%= react_component 'UserPanel', {
+        initialUsers: @editor_list.editor_hashes,
+        createUrl: collection_editors_path(@collection.id),
+        searchUrl: user_search_collection_editors_path(@collection.id),
+        title: t('.name_of_user_type'),
+      },
+      {prerender: false }
+    %>
   </div>
-  <%= react_component 'UserPanel', {
-      initialUsers: @editor_list.editor_hashes,
-      createUrl: collection_editors_path(@collection.id),
-      searchUrl: user_search_collection_editors_path(@collection.id),
-      title: t('.name_of_user_type'),
-    },
-    {prerender: false }
-  %>
+  <div class="col-md-2">
+    <%= no_back_action_bar('#') %>
+  </div>
 </div>
