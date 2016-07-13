@@ -1,6 +1,13 @@
+<% page_title(t('.title')) %>
+
 <div class="col-md-2 col-sm-2" id="col1">
   <%= render partial: "admin/admin_left_nav" %>
 </div>
-<div class="col-md-10 col-sm-10" id="col2" style="">
-  <%= render partial: "form", locals: { form_method: "post" } %>
+<div class="row">
+  <div class="col-md-10">
+    <div class="page-header">
+      <h1>External Collection<small> <%= t('.title') %></small></h1>
+    </div>
+    <%= render partial: "form", locals: { form_method: "post" } %>
+  </div>
 </div>

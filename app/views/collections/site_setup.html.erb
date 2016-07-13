@@ -10,9 +10,7 @@
       <!-- <%= display_errors(f.object) %> -->
       <%= render partial: (params[:form] ? "#{params[:form]}_form" : 'homepage_form'), locals: { f: f } %>
       <% if params[:form] != "site_path" %>
-        <div class="panel-footer">
-          <%= f.button :submit, "Save", class: 'btn btn-primary'%>
-        </div>
+        <%= f.button :submit, "Save", class: 'btn btn-primary'%>
       <% end %>
     <% end %>
   </div>
