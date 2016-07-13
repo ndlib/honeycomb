@@ -87,6 +87,8 @@ en:
       title: 'New Collection'
     settings:
       title: 'Settings'
+    site_setup:
+      title: 'Site Setup'
     settings_update:
       success: 'Collection updated'
     create:
@@ -217,6 +219,12 @@ en:
         manuscript_url: "Digitized Manuscript URL"
   admin:
     external_collections:
+      new:
+        name: "External Collection"
+        title: "Add"
+      edit:
+        name: "External Collection"
+        title: "Edit"
       create:
         success: 'Collection created'
       update:
@@ -231,11 +239,13 @@ en:
     create:
       success: "Page created! Go to %{href} to add the page to your site."
     new:
-      title: "New Page"
+      title: "Add new page"
     list:
       name: "Page"
       content: "Content"
       updated_at: 'Last Modified At'
+    edit:
+      title: "Edit page"
     update:
       success: "Page updated"
     destroy:

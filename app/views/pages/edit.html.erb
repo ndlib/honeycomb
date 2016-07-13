@@ -1,19 +1,16 @@
 <% page_title(@page.name, @page.collection) %>
 <%= collection_nav(@page.collection, :pages) %>
-
 <%= render partial: 'edit_action_bar' %>
 
-<%= simple_form_for @page, :html => { :class => 'form-horizontal' } do |f| %>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title"><%= @page.name %></h3>
+<div class="row">
+  <div class="col-md-10">
+    <div class="page-header">
+      <h1><%= @page.name %> <small><%= t('.title') %></small></h1>
     </div>
-    <div class="panel-body">
+    <%= simple_form_for @page, :html => { :class => 'form-horizontal' } do |f| %>
       <%= render partial: 'form', locals: { f: f } %>
-    </div>
-    <div class="panel-footer">
       <%= f.button :submit, "Save", class: 'btn btn-primary'%>
-    </div>
-  </div>
-<% end %>
+    <% end %>
     <%= DeletePanel.new(@page).display(PageQuery.new(@page)) %>
+  </div>
+</div>

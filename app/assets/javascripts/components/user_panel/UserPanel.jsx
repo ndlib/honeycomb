@@ -50,15 +50,11 @@ var UserPanel = React.createClass({
   render: function() {
     return (
       <div>
-        <div className="panel-body">
-          <UserList users={this.state.users} />
-        </div>
-        <div className="panel-footer">
-          <PeopleSearch
-            createUrl={this.props.createUrl}
-            searchUrl={this.props.searchUrl}
-            selectPerson={this.addUser} />
-        </div>
+        <UserList users={this.state.users} />
+        <PeopleSearch
+          createUrl={this.props.createUrl}
+          searchUrl={this.props.searchUrl}
+          selectPerson={this.addUser} />
       </div>
     );
   }
