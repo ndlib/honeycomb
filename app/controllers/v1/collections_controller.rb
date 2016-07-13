@@ -10,7 +10,7 @@ module V1
     end
 
     def show
-      @collection = CollectionQuery.new.public_find(params[:id])
+      @collection = CollectionQuery.new.any_find(params[:id])
 
       cache_key = CacheKeys::Generator.new(key_generator: CacheKeys::Custom::V1Collections,
                                            action: "show",
