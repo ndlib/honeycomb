@@ -31,8 +31,8 @@ class CollectionQuery
 
   def custom_slug_find(slug)
     relation.where(
-      "url_slug = ? AND (published = ? OR preview_mode = ?)",
-      slug, true, true
+      "url_slug = ?",
+      slug
     ).take!
   end
 
