@@ -7,7 +7,6 @@ RSpec.describe V1::CollectionsController, type: :controller do
 
   before(:each) do
     allow_any_instance_of(CollectionQuery).to receive(:public_collections).and_return(collections)
-    allow_any_instance_of(CollectionQuery).to receive(:public_find).and_return(collection)
     allow_any_instance_of(CollectionQuery).to receive(:any_find).and_return(collection)
     allow_any_instance_of(CollectionQuery).to receive(:custom_slug_find).and_return(collection)
   end
@@ -39,7 +38,7 @@ RSpec.describe V1::CollectionsController, type: :controller do
   describe "#show" do
     subject { get :show, id: "id", format: :json }
     it "calls CollectionQuery" do
-      expect_any_instance_of(CollectionQuery).to receive(:public_find).with("id").and_return(collection)
+      expect_any_instance_of(CollectionQuery).to receive(:any_find).with("id").and_return(collection)
 
       subject
     end
