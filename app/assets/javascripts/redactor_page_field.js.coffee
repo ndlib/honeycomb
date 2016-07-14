@@ -22,7 +22,7 @@ class RedactorPageField
           $(image).attr 'item_id', json.id
           $(image).attr 'src', json.image['thumbnail/medium']['contentUrl']
       imageManagerJson: '/v1/collections/' + $("#image_collection_unique_id").val() + '/items'
-      plugins: ['imagemanager', 'source']
+      plugins: ['imagemanager', 'source', 'scriptbuttons']
     })
 
 jQuery ->
