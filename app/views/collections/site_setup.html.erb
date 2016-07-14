@@ -1,6 +1,6 @@
 <%= page_title(t('.title')) %>
 <%= collection_nav(@collection, :website) %>
-
+<% form = (params[:form] ? "#{params[:form]}_form" : 'homepage_form') %>
 <div class="row">
   <div class="col-md-10">
     <div class="page-header">
@@ -8,7 +8,7 @@
     </div>
     <%= simple_form_for @collection, method: :put, :url => site_setup_update_form_collection_path(@collection, form: (params[:form] ? "#{params[:form]}" : 'homepage')) do |f| %>
       <!-- <%= display_errors(f.object) %> -->
-      <%= render partial: (params[:form] ? "#{params[:form]}_form" : 'homepage_form'), locals: { f: f } %>
+      <%= render partial: form, locals: { f: f } %>
       <% if params[:form] != "site_path" %>
         <%= f.button :submit, "Save", class: 'btn btn-primary'%>
       <% end %>
