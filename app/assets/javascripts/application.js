@@ -15,7 +15,9 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require redactor
-//= require redactor-source
+//= require RedactorModules/ImageManager
+//= require RedactorModules/RedactorScriptButtons
+//= require RedactorModules/RedactorSource
 //= require bootstrap-sprockets
 //= require underscore
 //= require showdown
@@ -26,7 +28,6 @@
 //= require components
 //= require redactor_field
 //= require redactor_page_field
-//= require imagemanager
 //= require menu-bar
 //= require flash
 //= require jquery.cookie
