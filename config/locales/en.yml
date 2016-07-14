@@ -127,7 +127,7 @@ en:
       published: Published
       updated_at: 'Last Modified At'
     edit:
-      title: "Item"
+      title: "Edit"
       metadata: "Metadata"
       media: "Media"
       replace_media: "Replace"
@@ -245,7 +245,7 @@ en:
       content: "Content"
       updated_at: 'Last Modified At'
     edit:
-      title: "Edit page"
+      title: "Edit"
     update:
       success: "Page updated"
     destroy:
