@@ -6,7 +6,6 @@ class RedactorPageField
   setupField: ->
     @fieldElement.redactor({
       focus: true
-      maxWidth: '1000px'
       formatting: ['p', 'blockquote', 'h3', 'h4', 'h5']
       imageUpload: '/v1/collections/' + $("#image_collection_unique_id").val() + '/items'
       imageUploadParam: 'item[uploaded_image]'
