@@ -116,14 +116,13 @@
 				img.src = $el.attr('rel');
 				img.alt = $el.attr('title');
 				img.title = $el.attr('title');
-				img.style.width = '300px';
-				img.style.height = 'auto';
 				img.setAttribute('class', 'hc_page_image');
 				img.setAttribute('item_id', $el.attr('item_id'));
-				img.setAttribute('style', 'width: 300px; height: auto; float: left; margin: 0px 10px 10px 0px;');
-				img.setAttribute('rel', 'width: 300px; height: auto; float: left; margin: 0px 10px 10px 0px;');
+				var figure = document.createElement('figure');
+				figure.appendChild(img);
+				figure.setAttribute('style', '');
 
-				this.insert.node(img);
+				this.insert.node(figure);
 				this.code.sync();
 				this.observe.load();
 				this.modal.close();
