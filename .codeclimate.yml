@@ -8,3 +8,5 @@ exclude_paths:
 - "app/assets/javascripts/dropzone.js"
 - "app/assets/javascripts/jquery.dataTables.js"
 - "Gemfile.lock"
+- "spec/"
+- "vendor/"

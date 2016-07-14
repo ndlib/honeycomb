@@ -17,8 +17,11 @@ cache:
   - node_modules
 addons:
   postgresql: "9.4"
+  code_climate:
+    repo_token: d27c5b84a9b2ca09b11fbed190cdd93fcbe2a5a21fd19283a5ebebad4e2552be
+
 services:
-  - postgresql  
+  - postgresql
 notifications:
   hipchat:
     on_success: change

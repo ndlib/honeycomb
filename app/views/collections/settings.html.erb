@@ -1,13 +1,13 @@
 <%= page_title(t('.title')) %>
 <%= collection_nav(@collection, :settings) %>
-
+<% form = (params[:form] ? "#{params[:form]}_settings_form" : 'general_settings_form') %>
 <div class="row">
   <div class="col-md-10">
     <div class="page-header">
       <h1><%= params[:form] ? params[:form].to_s.titleize : "General" %> <small>Settings</small></h1>
     </div>
     <%= simple_form_for @collection, method: :put, :url => settings_update_form_collection_path(@collection, form: (params[:form] ? "#{params[:form]}" : 'general')) do |f| %>
-      <%= render partial: (params[:form] ? "#{params[:form]}_settings_form" : 'general_settings_form'), locals: { f: f } %>
+      <%= render partial: form, locals: { f: f } %>
     <% end %>
   </div>
   <div class="col-md-2">
