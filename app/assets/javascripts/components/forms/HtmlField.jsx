@@ -34,8 +34,10 @@ var HtmlField = React.createClass({
     if (!this.element) {
       this.element = jQuery(ReactDOM.findDOMNode(this.refs.textarea));
       this.element.redactor({
-        changeCallback: this.redactorChange,
-        blurCallback: this.redactorBlur,
+        callbacks: {
+          change: this.redactorChange,
+          blur: this.redactorBlur,
+        },
         plugins: ['source'],
       });
     }
