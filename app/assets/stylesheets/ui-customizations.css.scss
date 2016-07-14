@@ -616,4 +616,18 @@ div.dataTables_filter {
   }
 }
 
+.redactor-editor {
+  figure {
+    width: 16.5em;
+    height: auto;
+		float: left;
+		margin: 0px 10px 10px 0px;
+  }
+  img {
+    width: inherit;
+    height: inherit;
+  }
+}
+
+
 @import "_material-design-overwrites.scss";
