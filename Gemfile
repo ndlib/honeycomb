@@ -129,7 +129,6 @@ end
 
 gem "codeclimate-test-reporter", group: :test, require: nil
 
-
 # Dalli Caching
 gem "rack-cache"
 gem "dalli"
