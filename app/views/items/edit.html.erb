@@ -21,6 +21,7 @@
         <%= @item.show_image_box %>
 
         <%= react_component("ReactDropzone", {
+          formUrl: v1_item_path( @item.unique_id ),
           authenticityToken: form_authenticity_token,
           modalTitle: raw(t(".replace_media")),
           multifileUpload: false,
