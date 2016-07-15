@@ -219,19 +219,12 @@ var ItemMetaDataForm = React.createClass({
   render: function () {
     return (
       <Form id="meta_data_form" url={this.props.url} authenticityToken={this.props.authenticityToken} method={this.props.method} >
-        <Panel>
-          <PanelHeading>{this.state.formValues.name} Meta Data</PanelHeading>
-          <PanelBody>
-            { this.dynamicFormFields() }
-            <ItemMetaDataSelectAdditionalFields
-              displayedFields={this.state.displayedFields}
-              selectableFields={this.state.formFields}
-              onChangeHandler={this.changeAddField} />
-          </PanelBody>
-          <PanelFooter>
-            <SubmitButton disabled={this.formDisabled()} handleClick={this.handleSave} />
-          </PanelFooter>
-        </Panel>
+        { this.dynamicFormFields() }
+        <ItemMetaDataSelectAdditionalFields
+          displayedFields={this.state.displayedFields}
+          selectableFields={this.state.formFields}
+          onChangeHandler={this.changeAddField} />
+        <SubmitButton disabled={this.formDisabled()} handleClick={this.handleSave} />
       </Form>
     );
   }
