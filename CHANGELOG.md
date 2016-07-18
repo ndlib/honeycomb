@@ -1,7 +1,7 @@
 # Change Log
 
-## [3.4.0](https://github.com/ndlib/honeycomb/tree/v3.4.0) (2016-06-27)
-[Full Changelog](https://github.com/ndlib/honeycomb/compare/vv3.3.2...v3.4.0)
+## [3.4.0](https://github.com/ndlib/honeycomb/tree/v3.4.0) (2016-07-15)
+[Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.3.2...v3.4.0)
 
 ###New features/enhancements:###
   - Publishing/unpublishing was moved into a "Publish Options" form in the settings menu. ([DEC-948](https://jira.library.nd.edu/browse/DEC-948), [#387](https://github.com/ndlib/honeycomb/pull/387))
@@ -12,7 +12,9 @@
   - Removed the brand bar to optimize usage of screen real estate. ([DEC-1132](https://jira.library.nd.edu/browse/DEC-1132), [#401](https://github.com/ndlib/honeycomb/pull/401))
   - Users can now change the order of their metadata fields. ([DEC-411](https://jira.library.nd.edu/browse/DEC-411), [#403](https://github.com/ndlib/honeycomb/pull/403))
   - Made a few cosmetic changes to edit forms to make them more consistent. ([#407](https://github.com/ndlib/honeycomb/pull/407),[#410](https://github.com/ndlib/honeycomb/pull/410))
-  
+  - Users can now add sub and superscripts to HTML based meta fields and pages. ([DEC-1066](https://jira.library.nd.edu/browse/DEC-1066), [#413](https://github.com/ndlib/honeycomb/pull/413))
+  - Users can now add captions to images within Pages. ([DEC-795](https://jira.library.nd.edu/browse/DEC-795), [#414](https://github.com/ndlib/honeycomb/pull/414))
+
 ###Bug fixes:###
   - Fixed a the message that appears when deleting a section in a showcase. ([DEC-541](https://jira.library.nd.edu/browse/DEC-541), [#384](https://github.com/ndlib/honeycomb/pull/384))
   - Fixed the embed code for items. ([DEC-1070](https://jira.library.nd.edu/browse/DEC-1070), [#385](https://github.com/ndlib/honeycomb/pull/385))
@@ -24,6 +26,7 @@
   - Fixed an issue with reordering sections on showcases ([DEC-1098](https://jira.library.nd.edu/browse/DEC-1098), [#404](https://github.com/ndlib/honeycomb/pull/404))
   - Fixed broken preview links ([DEC-1101](https://jira.library.nd.edu/browse/DEC-1101), [#405](https://github.com/ndlib/honeycomb/pull/405))
   - Added missing Apple touch icons ([DEC-865](https://jira.library.nd.edu/browse/DEC-865), [#406](https://github.com/ndlib/honeycomb/pull/406))
+  - Users can now preview a collection that has a custom url ([DEC-1140](https://jira.library.nd.edu/browse/DEC-1140), [#409](https://github.com/ndlib/honeycomb/pull/409))
   
 ## [3.3.2](https://github.com/ndlib/honeycomb/tree/v3.3.2) (2016-06-27)
 [Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.3.1...v3.3.2)
