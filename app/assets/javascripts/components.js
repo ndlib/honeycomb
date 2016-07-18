@@ -54,9 +54,6 @@ SearchPagination = require("./components/search/SearchPagination");
 SearchBox = require("./components/search/SearchBox");
 SearchSortButton = require("./components/search/SearchSortButton");
 
-// embed
-EmbedCode = require("./components/embed/EmbedCode");
-
 // forms
 StylableDropTarget = require("./components/forms/StylableDropTarget");
 FieldHelp = require("./components/forms/FieldHelp");
@@ -66,6 +63,7 @@ FormRow = require("./components/forms/FormRow");
 FormSavedMsg = require("./components/forms/FormSavedMsg");
 FormServerErrorMsg = require("./components/forms/FormServerErrorMsg");
 ItemMetaDataForm = require("./components/forms/ItemMetaDataForm");
+ItemForm = require("./components/forms/ItemForm/ItemForm");
 ExternalCollectionForm = require("./components/forms/ExternalCollectionForm");
 StringField = require("./components/forms/StringField");
 SubmitButton = require("./components/forms/SubmitButton");
