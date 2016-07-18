@@ -11,15 +11,19 @@ RSpec.describe ItemDecorator do
       collection: collection,
       image: image,
       showcases: { showcases: {} },
-      pages: { pages: {} }
+      pages: { pages: {} },
     }
   end
   let(:item) { instance_double(Item, item_stubs) }
   let(:image) { instance_double(Image) }
-  let(:collection) { instance_double(Collection, id: 2, name_line_1: "name_line_1") }
+  let(:collection) { instance_double(Collection, id: 2, name_line_1: "name_line_1", unique_id: "unique_id") }
   let(:attachment) { double(Paperclip::Attachment, exists?: true, url: "image.jpg") }
 
   subject { described_class.new(item) }
+
+  before(:each) do
+    allow(CreateBeehiveURL).to receive(:call).and_return("url")
+  end
 
   [:id, :name, :description].each do |field|
     it "delegates #{field}" do
@@ -45,7 +49,7 @@ RSpec.describe ItemDecorator do
   end
 
   describe "#item_meta_data_form" do
-    let(:collection) { double(Collection, id: 2, collection_configuration: double) }
+    let(:collection) { double(Collection, id: 2, collection_configuration: double, unique_id: "unique_id") }
     let(:metadata) do
       {
         metadata: [double(value: "value")]
@@ -68,11 +72,13 @@ RSpec.describe ItemDecorator do
     it "renders the react component" do
       allow(subject.h).to receive(:form_authenticity_token).and_return("token")
       expect(subject.h).to receive(:react_component).with(
-        "ItemMetaDataForm",
+        "ItemForm",
+        id: "unique_id",
         authenticityToken: "token",
-        url: "/v1/items/unique_id/metadata",
+        url: "/v1/items/unique_id",
         method: "put",
-        data: { metadata: ["value"] }
+        data: { metadata: ["value"] },
+        embedBaseUrl: "url"
       )
 
       subject.item_meta_data_form
