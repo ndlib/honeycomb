@@ -1,5 +1,30 @@
 # Change Log
 
+## [3.4.0](https://github.com/ndlib/honeycomb/tree/v3.4.0) (2016-06-27)
+[Full Changelog](https://github.com/ndlib/honeycomb/compare/vv3.3.2...v3.4.0)
+
+###New features/enhancements:###
+  - Publishing/unpublishing was moved into a "Publish Options" form in the settings menu. ([DEC-948](https://jira.library.nd.edu/browse/DEC-948), [#387](https://github.com/ndlib/honeycomb/pull/387))
+  - Updated to the newer version of Redactor, giving users access to more formatting functions for html meta fields and pages. ([DEC-1076](https://jira.library.nd.edu/browse/DEC-1076), [#390](https://github.com/ndlib/honeycomb/pull/390))
+  - Images are now treated as it's own entity, greatly simplifying the database and application. It also now reuses images that have already been uploaded. ([DEC-1079](https://jira.library.nd.edu/browse/DEC-1079), [#395](https://github.com/ndlib/honeycomb/pull/395),[#396](https://github.com/ndlib/honeycomb/pull/396))
+  - Published/unpublished status no longer shows on the collection listing. In the future, it won't be a simple binary flag, so this no longer makes sense on this view. ([DEC-1126](https://jira.library.nd.edu/browse/DEC-1126), [#397](https://github.com/ndlib/honeycomb/pull/397))
+  - Removed name_save and description_save from the database. These were archived fields as part of the migration of these fields to the metadata field and are no longer needed. ([DEC-1102](https://jira.library.nd.edu/browse/DEC-1102), [#399](https://github.com/ndlib/honeycomb/pull/399))
+  - Removed the brand bar to optimize usage of screen real estate. ([DEC-1132](https://jira.library.nd.edu/browse/DEC-1132), [#401](https://github.com/ndlib/honeycomb/pull/401))
+  - Users can now change the order of their metadata fields. ([DEC-411](https://jira.library.nd.edu/browse/DEC-411), [#403](https://github.com/ndlib/honeycomb/pull/403))
+  - Made a few cosmetic changes to edit forms to make them more consistent. ([#407](https://github.com/ndlib/honeycomb/pull/407),[#410](https://github.com/ndlib/honeycomb/pull/410))
+  
+###Bug fixes:###
+  - Fixed a the message that appears when deleting a section in a showcase. ([DEC-541](https://jira.library.nd.edu/browse/DEC-541), [#384](https://github.com/ndlib/honeycomb/pull/384))
+  - Fixed the embed code for items. ([DEC-1070](https://jira.library.nd.edu/browse/DEC-1070), [#385](https://github.com/ndlib/honeycomb/pull/385))
+  - Fixed a bug with generating seed data. ([DEC-1085](https://jira.library.nd.edu/browse/DEC-1085), [#388](https://github.com/ndlib/honeycomb/pull/388))
+  - Fixed a bug that prevented users from saving a collection's settings with no custom url ([DEC-1090](https://jira.library.nd.edu/browse/DEC-1090), [#391](https://github.com/ndlib/honeycomb/pull/391))
+  - Fixed a bug that modified an existing metadata config field if the user tried to create a new one with the same name. ([DEC-841](https://jira.library.nd.edu/browse/DEC-841), [#393](https://github.com/ndlib/honeycomb/pull/393))
+  - Users can no longer create another metadata field with the same label as another. This was causing column mapping issues when importing google sheets. ([DEC-1093](https://jira.library.nd.edu/browse/DEC-1093), [#394](https://github.com/ndlib/honeycomb/pull/394))
+  - Site settings default page will now highlight the homepage link, so that the user knows where they are in the settings menu. ([DEC-693](https://jira.library.nd.edu/browse/DEC-693), [#398](https://github.com/ndlib/honeycomb/pull/398))
+  - Fixed an issue with reordering sections on showcases ([DEC-1098](https://jira.library.nd.edu/browse/DEC-1098), [#404](https://github.com/ndlib/honeycomb/pull/404))
+  - Fixed broken preview links ([DEC-1101](https://jira.library.nd.edu/browse/DEC-1101), [#405](https://github.com/ndlib/honeycomb/pull/405))
+  - Added missing Apple touch icons ([DEC-865](https://jira.library.nd.edu/browse/DEC-865), [#406](https://github.com/ndlib/honeycomb/pull/406))
+  
 ## [3.3.2](https://github.com/ndlib/honeycomb/tree/v3.3.2) (2016-06-27)
 [Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.3.1...v3.3.2)
 
