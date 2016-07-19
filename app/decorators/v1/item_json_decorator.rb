@@ -40,7 +40,7 @@ module V1
       if object.image
         return object.image.status
       end
-      Image.statuses.keys.first
+      Image.default_status
     end
 
     def metadata

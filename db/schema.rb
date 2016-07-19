@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160718190411) do
+ActiveRecord::Schema.define(version: 20160718193812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,18 +107,18 @@ ActiveRecord::Schema.define(version: 20160718190411) do
 
   create_table "images", force: :cascade do |t|
     t.integer  "collection_id",                   null: false
-    t.string   "image_file_name",                 null: false
+    t.text     "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.string   "image_fingerprint",               null: false
+    t.text     "image_fingerprint"
     t.text     "image_meta"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.text     "json_response"
     t.integer  "status",             default: 0
     t.jsonb    "data",               default: {}, null: false
-    t.text     "type"
+    t.text     "media_type"
   end
 
   add_index "images", ["image_fingerprint"], name: "index_images_on_image_fingerprint", using: :btree
