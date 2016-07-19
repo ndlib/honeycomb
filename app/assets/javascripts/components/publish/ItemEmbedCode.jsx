@@ -4,7 +4,7 @@ var TextareaStyle = {
   width: "100%",
 };
 
-var ItemPublishEmbedPanel = React.createClass({
+var ItemEmbedCode = React.createClass({
   propTypes: {
     id: React.PropTypes.string.isRequired,
     embedBaseUrl: React.PropTypes.string.isRequired,
@@ -24,4 +24,4 @@ var ItemPublishEmbedPanel = React.createClass({
   }
 });
 
-module.exports = ItemPublishEmbedPanel;
+module.exports = ItemEmbedCode;

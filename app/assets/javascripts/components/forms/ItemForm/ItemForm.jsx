@@ -1,6 +1,11 @@
 var React = require("react");
 var mui = require("material-ui");
 
+var ItemEmbedCode = require("../../publish/ItemEmbedCode");
+var ItemActions = require("../../../actions/ItemActions");
+var ItemActionTypes = require("../../../constants/ItemActionTypes");
+var ItemStore = require("../../../stores/ItemStore");
+
 var Tabs = mui.Tabs;
 var Tab = mui.Tab;
 
@@ -20,11 +25,30 @@ var ItemForm = React.createClass({
     embedBaseUrl: React.PropTypes.string.isRequired,
   },
 
+  getInitialState: function() {
+    return {
+      item: undefined,
+    }
+  },
+
+  componentDidMount: function() {
+    ItemStore.on("ItemLoadFinished", this.setItem);
+    ItemActions.get(this.props.id);
+  },
+
+  setItem: function() {
+    this.setState({ item: ItemStore.get(this.props.id)})
+  },
+
   metdataUrl: function() {
     return this.props.basePath + "/metadata";
   },
 
-  render: function(){
+  render: function() {
+    if (!this.state.item) {
+      return (<div>Loading...</div>);
+    }
+
     return (
       <Tabs tabItemContainerStyle={ TabsStyle }>
         <Tab label="Metadata" style={TabStyle}>
@@ -40,18 +64,18 @@ var ItemForm = React.createClass({
           <div>Media</div>
         </Tab>
         <Tab label="Embed" style={TabStyle}>
-          <ItemPublishEmbedPanel
+          <ItemEmbedCode
             id={ this.props.id }
             embedBaseUrl={ this.props.embedBaseUrl }
           />
         </Tab>
+        <Tab label="Preview" />
         <Tab label="Delete" style={TabStyle}>
           <div>Delete</div>
         </Tab>
       </Tabs>
     );
   }
-
 });
 
 module.exports = ItemForm;
