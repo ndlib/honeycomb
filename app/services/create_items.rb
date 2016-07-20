@@ -31,7 +31,7 @@ class CreateItems
         item_props = yield(item_props, rewrite_errors).symbolize_keys if block_given?
         item_creator = FindOrCreateItem.call(props: { collection_id: collection_id, **item_props }, find_by: find_by)
         saved = rewrite_errors.present? ? false : item_creator.save
-        add_to_errors(errors: errors, index: index, new_errors: rewrite_errors | item_creator.item.errors.full_messages, item: item_creator.item)
+        add_to_errors(errors: errors, index: index, new_errors: rewrite_errors | item_creator.item.errors.full_messages | item_creator.item.item_metadata.errors.full_messages, item: item_creator.item)
         update_counts(save_successful: saved, item: item_creator, counts: counts)
       end
     end
