@@ -5,7 +5,7 @@ class Collection < ActiveRecord::Base
   has_many :showcases
   has_many :pages
   has_one :collection_configuration
-  belongs_to :image
+  belongs_to :image, class_name: "Image", foreign_key: :media_id
 
   validates :name_line_1, :unique_id, presence: true
   validates :url_slug, uniqueness: true, allow_nil: true

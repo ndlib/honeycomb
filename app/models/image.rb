@@ -1,4 +1,4 @@
-class Image < ActiveRecord::Base
+class Image < Media
   store_accessor :data, :image_content_type,
                         :image_file_name,
                         :image_file_size,
@@ -7,12 +7,8 @@ class Image < ActiveRecord::Base
                         :image_updated_at,
                         :json_response
 
-  belongs_to :collection
-  has_many :items
   has_attached_file :image, restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/
-
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
-  validates :collection, presence: true
 
   # The following methods were added to recreate the behavior of enum status:
   #   status, status=, unprocessed?, unprocessed!, processing?, processing!,

@@ -2,7 +2,7 @@ class Showcase < ActiveRecord::Base
   belongs_to :collection
   has_many :sections
   has_many :items, through: :sections
-  belongs_to :image
+  belongs_to :image, class_name: "Image", foreign_key: :media_id
 
   validates :name_line_1, :collection, :unique_id, presence: true
 

@@ -8,7 +8,7 @@ class Item < ActiveRecord::Base
   has_many :showcases, -> { distinct }, through: :sections
   has_many :items_pages
   has_many :pages, through: :items_pages
-  belongs_to :image
+  belongs_to :image, class_name: "Image", foreign_key: :media_id
 
   validates :collection, :unique_id, :user_defined_id, presence: true
   validate :manuscript_url_is_valid_uri
