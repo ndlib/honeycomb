@@ -44,4 +44,19 @@ RSpec.describe CacheKeys::Custom::V1Items do
       subject.showcases(item: item)
     end
   end
+
+  context "pages" do
+    let(:collection) { instance_double(Collection, items: "items", collection_configuration: "config") }
+    let(:item) { instance_double(Item, collection: collection, children: "children", pages: "pages") }
+
+    it "uses CacheKeys::ActiveRecord" do
+      expect_any_instance_of(CacheKeys::ActiveRecord).to receive(:generate)
+      subject.pages(item: item)
+    end
+
+    it "uses the correct data" do
+      expect_any_instance_of(CacheKeys::ActiveRecord).to receive(:generate).with(record: [item, collection, "pages", "config"])
+      subject.pages(item: item)
+    end
+  end
 end

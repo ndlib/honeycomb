@@ -105,6 +105,8 @@ RSpec.describe V1::ItemJSONDecorator do
         "@type",
         "@id",
         "isPartOf/collection",
+        "hasPart/showcases",
+        "hasPart/pages",
         "additionalType",
         "id",
         "user_defined_id",

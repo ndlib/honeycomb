@@ -201,4 +201,39 @@ RSpec.describe V1::ItemsController, type: :controller do
       subject
     end
   end
+
+  describe "#pages" do
+    let(:collection_configuration) { CollectionConfiguration.new }
+    let(:collection) { Collection.new(unique_id: "test", items: [], collection_configuration: collection_configuration) }
+    subject { get :pages, item_id: "id", format: :json }
+    let(:item) { instance_double(Item, id: "1", collection: collection, children: nil, pages: nil) }
+
+    it "calls ItemQuery" do
+      expect_any_instance_of(ItemQuery).to receive(:public_find).with("id").and_return(item)
+
+      subject
+    end
+
+    it "is successful" do
+      subject
+      expect(response).to be_success
+    end
+
+    it "assigns the item to render" do
+      subject
+      expect(assigns(:item)).to be_present
+    end
+
+    it "renders the correct template" do
+      expect(subject).to render_template("v1/items/pages")
+      subject
+    end
+
+    it_behaves_like "a private basic custom etag cacher"
+
+    it "uses the V1Items#pages to generate the cache key" do
+      expect_any_instance_of(CacheKeys::Custom::V1Items).to receive(:pages)
+      subject
+    end
+  end
 end

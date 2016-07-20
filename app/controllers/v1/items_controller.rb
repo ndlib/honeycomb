@@ -56,6 +56,16 @@ module V1
       fresh_when(etag: cache_key.generate)
     end
 
+    # get all pages that use the given item
+    def pages
+      @item = ItemQuery.new.public_find(params[:item_id])
+
+      cache_key = CacheKeys::Generator.new(key_generator: CacheKeys::Custom::V1Items,
+                                           action: "pages",
+                                           item: @item)
+      fresh_when(etag: cache_key.generate)
+    end
+
     protected
 
     def save_params

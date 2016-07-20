@@ -96,6 +96,7 @@ Rails.application.routes.draw do
               defaults: { format: :json } do
       resource :metadata, only: [:update]
       get :showcases, defaults: { format: :json }
+      get :pages, defaults: { format: :json }
     end
     resources :showcases, only: [:show], defaults: { format: :json }
     resources :pages, only: [:show], defaults: { format: :json }

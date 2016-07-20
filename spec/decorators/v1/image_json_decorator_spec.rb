@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe V1::ImageJSONDecorator do
   subject { described_class.new(image) }
-  let(:image) { instance_double(Image, status: "ready", image: paperclip_attachment) }
+  let(:image) { instance_double(Image, status: "ready", image: paperclip_attachment, json_response: { "thumbnail/large" => { "contentUrl" => "image_uri" }, "contentUrl" => "base_url" }) }
   let(:paperclip_attachment) do
     instance_double(Paperclip::Attachment,
                     content_type: "image/jpeg",
@@ -23,7 +23,7 @@ RSpec.describe V1::ImageJSONDecorator do
   end
 
   it "defines @id as the full url for the paperclip attachment" do
-    expect(subject.at_id).to eq("http://test.host/image_uri")
+    expect(subject.at_id).to eq("image_uri")
   end
 
   it "defines name as the paperclip filename" do
@@ -37,7 +37,7 @@ RSpec.describe V1::ImageJSONDecorator do
   end
 
   it "defines url as the full url for the paperclip attachment" do
-    expect(subject.url).to eq("http://test.host/image_uri")
+    expect(subject.url).to eq("base_url")
   end
 
   it "defines width as the width of the paperclip attachment with the px suffix" do

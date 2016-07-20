@@ -14,6 +14,14 @@ module V1
       h.v1_collection_url(collection_id)
     end
 
+    def showcases_url
+      h.v1_item_showcases_url(object.unique_id)
+    end
+
+    def pages_url
+      h.v1_item_pages_url(object.unique_id)
+    end
+
     def collection_id
       object.collection.unique_id
     end
@@ -67,6 +75,8 @@ module V1
       json.set! "@type", "CreativeWork"
       json.set! "@id", at_id
       json.set! "isPartOf/collection", collection_url
+      json.set! "hasPart/showcases", showcases_url
+      json.set! "hasPart/pages", pages_url
       json.set! "additionalType", additional_type
       json.id unique_id
       json.user_defined_id user_defined_id
