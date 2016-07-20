@@ -10,7 +10,7 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
     [
       item_meta_hash_remapped(item_id: 1),
       item_meta_hash_remapped(item_id: 2),
-      item_meta_hash_remapped(item_id: 3),
+      item_meta_hash_remapped(item_id: 3)
     ]
   end
   let(:item_errors) { instance_double(ActiveModel::Errors, full_messages: ["Item validation error"]) }
@@ -26,7 +26,7 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
     }
   end
   let(:creator) { instance_double(FindOrCreateItem, using: item, new_record?: true, changed?: false, save: true, item: item) }
-  let(:metadata_fields)  { instance_double(Metadata::Fields, errors: item_errors) }
+  let(:metadata_fields) { instance_double(Metadata::Fields, errors: item_errors) }
   let(:item) { instance_double(Item, valid?: true, changed?: false, new_record?: false, errors: item_errors, item_metadata: metadata_fields) }
   let(:subject) do
     described_class.call(collection_id: 1, find_by: [], items_hash: items, counts: counts, errors: errors)
@@ -97,8 +97,10 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
 
     context "that validate successfully as new items" do
       let(:item_errors) { instance_double(ActiveModel::Errors, full_messages: []) }
-      let(:metadata_fields)  { instance_double(Metadata::Fields, errors: item_errors) }
-      let(:item) { instance_double(Item, valid?: true, changed?: false, new_record?: false, errors: item_errors, item_metadata: metadata_fields, validate: true) }
+      let(:metadata_fields) { instance_double(Metadata::Fields, errors: item_errors) }
+      let(:item) do
+        instance_double(Item, valid?: true, changed?: false, new_record?: false, errors: item_errors, item_metadata: metadata_fields, validate: true)
+      end
 
       it "returns correct summary" do
         expected = { total_count: 3, valid_count: 3, new_count: 3, error_count: 0, changed_count: 0, unchanged_count: 0 }
@@ -115,8 +117,10 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
     context "that validate successfully as changed items" do
       let(:item_errors) { instance_double(ActiveModel::Errors, full_messages: []) }
       let(:creator) { instance_double(FindOrCreateItem, using: item, new_record?: false, changed?: true, save: true, item: item) }
-      let(:metadata_fields)  { instance_double(Metadata::Fields, errors: item_errors) }
-      let(:item) { instance_double(Item, valid?: true, changed?: false, new_record?: false, errors: item_errors, item_metadata: metadata_fields, validate: true) }
+      let(:metadata_fields) { instance_double(Metadata::Fields, errors: item_errors) }
+      let(:item) do
+        instance_double(Item, valid?: true, changed?: false, new_record?: false, errors: item_errors, item_metadata: metadata_fields, validate: true)
+      end
 
       it "returns correct summary" do
         expected = { total_count: 3, valid_count: 3, new_count: 0, error_count: 0, changed_count: 3, unchanged_count: 0 }
@@ -133,8 +137,10 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
     context "that validate successfully as unchanged items" do
       let(:item_errors) { instance_double(ActiveModel::Errors, full_messages: []) }
       let(:creator) { instance_double(FindOrCreateItem, using: item, new_record?: false, changed?: false, save: true, item: item) }
-      let(:metadata_fields)  { instance_double(Metadata::Fields, errors: item_errors) }
-      let(:item) { instance_double(Item, valid?: true, changed?: false, new_record?: false, errors: item_errors, item_metadata: metadata_fields, validate: true) }
+      let(:metadata_fields) { instance_double(Metadata::Fields, errors: item_errors) }
+      let(:item) do
+        instance_double(Item, valid?: true, changed?: false, new_record?: false, errors: item_errors, item_metadata: metadata_fields, validate: true)
+      end
 
       it "returns correct summary" do
         expected = { total_count: 3, valid_count: 3, new_count: 0, error_count: 0, changed_count: 0, unchanged_count: 3 }
@@ -151,7 +157,7 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
     context "that do not validate successfully" do
       let(:creator) { instance_double(FindOrCreateItem, using: item, new_record?: true, changed?: false, valid?: false, save: false, item: item) }
       let(:item_errors) { instance_double(ActiveModel::Errors, full_messages: ["Item validation error"]) }
-      let(:metadata_fields)  { instance_double(Metadata::Fields, errors: item_errors) }
+      let(:metadata_fields) { instance_double(Metadata::Fields, errors: item_errors) }
       let(:item) { instance_double(Item, valid?: false, changed?: false, new_record?: false, item_metadata: metadata_fields, errors: item_errors) }
 
       it "returns a hash with correct summary" do

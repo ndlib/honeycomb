@@ -4,7 +4,7 @@ describe FindOrCreateItem do
   let(:subject) { described_class.new(props: item_hash) }
   let(:item_hash) { { collection_id: 1, name: "item", unique_id: "item", user_defined_id: "item" } }
   let(:item_errors) { instance_double(ActiveModel::Errors, full_messages: []) }
-  let(:metadata_fields)  { instance_double(Metadata::Fields, errors: item_errors, valid?: true) }
+  let(:metadata_fields) { instance_double(Metadata::Fields, errors: item_errors, valid?: true) }
   let(:item) do
     instance_double(Item, save: true,
                           new_record?: true,

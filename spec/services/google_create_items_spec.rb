@@ -21,7 +21,7 @@ RSpec.describe GoogleCreateItems, helpers: :item_meta_helpers do
     ]
   end
   let(:errors) { instance_double(ActiveModel::Errors, full_messages: []) }
-  let(:metadata_fields)  { instance_double(Metadata::Fields, errors: errors) }
+  let(:metadata_fields) { instance_double(Metadata::Fields, errors: errors) }
   let(:item) { instance_double(Item, valid?: true, changed?: false, new_record?: false, errors: errors, item_metadata: metadata_fields, validate: true) }
   let(:item_creator) { instance_double(FindOrCreateItem, using: item, save: true, new_record?: true, item: item) }
   let(:worksheet) { instance_double(GoogleDrive::Worksheet) }
