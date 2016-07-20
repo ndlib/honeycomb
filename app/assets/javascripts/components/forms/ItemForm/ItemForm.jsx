@@ -41,7 +41,7 @@ var ItemForm = React.createClass({
   },
 
   metdataUrl: function() {
-    return this.props.basePath + "/metadata";
+    return ItemActions.url(this.props.id) + "/metadata";
   },
 
   render: function() {
@@ -61,7 +61,17 @@ var ItemForm = React.createClass({
           />
         </Tab>
         <Tab label="Media" style={TabStyle}>
-          <div>Media</div>
+          <div>
+            <ItemShowImageBox
+              item={ this.state.item }
+            />
+            <ReactDropzone
+              formUrl={ ItemActions.url(this.props.id) }
+              authenticityToken={ this.props.authenticityToken }
+              modalTitle="Replace"
+              multifileUpload={ false}
+            />
+          </div>
         </Tab>
         <Tab label="Embed" style={TabStyle}>
           <ItemEmbedCode

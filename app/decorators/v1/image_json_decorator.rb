@@ -31,7 +31,11 @@ module V1
     end
 
     def url(style: :original)
-      URI.join(h.root_url, object.image.url(style)).to_s
+      if object.json_response["thumbnail/#{style}"]
+        object.json_response["thumbnail/#{style}"]["contentUrl"]
+      else
+        object.json_response["contentUrl"]
+      end
     end
 
     def width(style: :original)
@@ -63,6 +67,10 @@ module V1
     end
 
     private
+
+    def honeypot_url
+      Rails.configuration.settings.honeypot_url
+    end
 
     def set_json_keys(json:)
       json.set! "@context", at_context

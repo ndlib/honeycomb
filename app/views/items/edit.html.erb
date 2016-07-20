@@ -13,22 +13,6 @@
   </div>
 
   <div class="col-md-4">
-    <div class="panel panel-default item-show-image">
-      <div class="panel-heading">
-        <h3 class="panel-title"><%= t(".media") %></h3>
-      </div>
-      <div class="panel-body">
-        <%= @item.show_image_box %>
-
-        <%= react_component("ReactDropzone", {
-          formUrl: v1_item_path( @item.unique_id ),
-          authenticityToken: form_authenticity_token,
-          modalTitle: raw(t(".replace_media")),
-          multifileUpload: false,
-        }) %>
-      </div>
-    </div>
-
     <%= react_component("ShowcasesPanel", {
           showcases: @item.showcases_json,
           panelTitle: "Showcases"

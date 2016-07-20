@@ -9,10 +9,8 @@ var APIResponseMixin = require("../mixins/APIResponseMixin");
 class ItemActions extends NodeEventEmitter {
 
   get(id) {
-    var baseUrl = "/v1/items/" + id;
-
     $.ajax({
-      url: baseUrl,
+      url: this.url(id),
       dataType: "json",
       method: "GET",
       success: (function(data) {
@@ -26,6 +24,10 @@ class ItemActions extends NodeEventEmitter {
         AppEventEmitter.emit("MessageCenterDisplay", "error", "Item Load Failed.  Please try again if the problem persists please contact WSE unit.");
       }).bind(this),
     });
+  }
+
+  url(id) {
+    return "/v1/items/" + id;
   }
 }
 

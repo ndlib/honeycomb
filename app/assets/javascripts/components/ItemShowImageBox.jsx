@@ -70,7 +70,7 @@ var ItemShowImageBox = React.createClass({
   },
 
   renderMedia: function() {
-    switch(this.state.item.image_status)
+    switch(this.state.item.image.status)
     {
       case "ready":
         return this.itemReadyHtml();
