@@ -224,7 +224,9 @@ var ItemMetaDataForm = React.createClass({
           displayedFields={this.state.displayedFields}
           selectableFields={this.state.formFields}
           onChangeHandler={this.changeAddField} />
-        <SubmitButton disabled={this.formDisabled()} handleClick={this.handleSave} />
+        <div>
+          <SubmitButton disabled={this.formDisabled()} handleClick={this.handleSave} />
+        </div>
       </Form>
     );
   }
