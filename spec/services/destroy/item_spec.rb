@@ -3,6 +3,7 @@ require "rails_helper"
 describe Destroy::Item do
   let(:section) { instance_double(Section, destroy!: true) }
   let(:page) { instance_double(Page, destroy!: true) }
+  let(:showcase) { instance_double(Showcase) }
   let(:child) { instance_double(Item, pages: [], sections: [], children: [child2], destroy!: true) }
   let(:child2) { instance_double(Item, pages: [], sections: [], children: [], destroy!: true) }
   let(:item) do
@@ -10,7 +11,9 @@ describe Destroy::Item do
       Item, pages: [page, page, page], sections: [section, section], children: [child, child], destroy!: true, item_metadata: double(valid?: true)
     )
   end
-  let(:item2) { instance_double(Item, pages: [], sections: [section, section], children: [child, child], destroy!: true, item_metadata: double(valid?: true)) }
+  let(:item2) { instance_double(Item, pages: [], sections: [], children: [], destroy!: true, item_metadata: double(valid?: true)) }
+  let(:item3) { instance_double(Item, pages: [], sections: [section, section], children: [child, child], destroy!: true, item_metadata: double(valid?: true)) }
+
   let(:destroy_section) { instance_double(Destroy::Section, cascade!: nil) }
   let(:subject) { Destroy::Item.new(destroy_section: destroy_section) }
 
@@ -20,7 +23,7 @@ describe Destroy::Item do
   end
 
   describe "#destroy!" do
-    context "when there are no page associations" do
+    context "when there are no page or sections associations" do
       it "destroys the Item" do
         expect(item2).to receive(:destroy!)
         subject.destroy!(item: item2)
@@ -33,7 +36,7 @@ describe Destroy::Item do
     end
 
     context "when there are page associations" do
-      it "destroys the Item" do
+      it "does not destroy the Item" do
         expect(item).not_to receive(:destroy!)
         subject.destroy!(item: item)
       end
@@ -41,6 +44,18 @@ describe Destroy::Item do
       it "does not remove the item from the search index" do
         expect(Index::Item).not_to receive(:remove!).with(item)
         subject.destroy!(item: item)
+      end
+    end
+
+    context "when there are sections associations" do
+      it "does not destroy the item" do
+        expect(item3).not_to receive(:destroy!)
+        subject.destroy!(item: item3)
+      end
+
+      it "does not remove the item from the search index" do
+        expect(Index::Item).not_to receive(:remove!).with(item3)
+        subject.destroy!(item: item3)
       end
     end
   end
@@ -73,13 +88,13 @@ describe Destroy::Item do
     end
 
     it "destroys the Item" do
-      expect(item).to receive(:destroy!)
-      subject.cascade!(item: item)
+      expect(item2).to receive(:destroy!)
+      subject.cascade!(item: item2)
     end
 
     it "removes the item from the search index" do
-      expect(Index::Item).to receive(:remove!).with(item)
-      subject.cascade!(item: item)
+      expect(Index::Item).to receive(:remove!).with(item2)
+      subject.cascade!(item: item2)
     end
   end
 
@@ -135,15 +150,15 @@ describe Destroy::Item do
     end
 
     it "rolls back if an error occurs with Item.destroy!" do
-      allow(item).to receive(:destroy!).and_raise("error")
-      expect { subject.cascade!(item: item) }.to raise_error("error")
+      allow(item2).to receive(:destroy!).and_raise("error")
+      expect { subject.cascade!(item: item2) }.to raise_error("error")
       data_still_exists!
     end
 
     it "does not remove the item from the index if an error occurs" do
-      expect(item).to receive(:destroy!).and_raise(RuntimeError)
-      expect(Index::Item).to_not receive(:remove!).with(item)
-      expect { subject.cascade!(item: item) }.to raise_error(RuntimeError)
+      expect(item2).to receive(:destroy!).and_raise(RuntimeError)
+      expect(Index::Item).to_not receive(:remove!).with(item2)
+      expect { subject.cascade!(item: item2) }.to raise_error(RuntimeError)
       data_still_exists!
     end
   end

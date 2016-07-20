@@ -92,7 +92,7 @@ Rails.application.routes.draw do
       end
     end
     resources :items,
-              only: [:show, :update],
+              only: [:show, :update, :destroy],
               defaults: { format: :json } do
       resource :metadata, only: [:update]
       get :showcases, defaults: { format: :json }
