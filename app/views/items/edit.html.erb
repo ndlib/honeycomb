@@ -4,25 +4,9 @@
 <%= link_to("PREVIEW", CreateBeehiveURL.call(@item.object), class: "btn btn-large btn-hollow", :target => "_blank") %>
 
 <div class="row">
-  <div class="col-md-8">
-    <div class="page-header">
-      <h1><%= @item.name %> <small><%= t('.title') %></small></h1>
-    </div>
-    <%= @item.item_meta_data_form %>
-    <%= DeletePanel.new(@item.object).display(ItemQuery.new(@item)) %>
+  <div class="page-header">
+    <h1><%= @item.name %> <small><%= t('.title') %></small></h1>
   </div>
-
-  <div class="col-md-4">
-    <%= react_component("ShowcasesPanel", {
-          showcases: @item.showcases_json,
-          panelTitle: "Showcases"
-        })
-    %>
-
-    <%= react_component("PagesPanel", {
-          pages: @item.pages_json,
-          panelTitle: "Pages"
-        })
-    %>
-  </div>
+  <%= @item.item_meta_data_form %>
+  <%= DeletePanel.new(@item.object).display(ItemQuery.new(@item)) %>
 </div>

@@ -81,7 +81,12 @@ var ItemForm = React.createClass({
         </Tab>
         <Tab label="Preview" />
         <Tab label="Delete" style={TabStyle}>
-          <div>Delete</div>
+          <ShowcasesPanel
+            id={ this.props.id }
+          />
+          <PagesPanel
+            id={ this.props.id }
+          />
         </Tab>
       </Tabs>
     );

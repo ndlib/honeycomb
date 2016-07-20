@@ -1,18 +1,31 @@
 var React = require('react');
 var mui = require("material-ui");
+
+var ItemActions = require("../actions/ItemActions");
+var ItemActionTypes = require("../constants/ItemActionTypes");
+var ItemStore = require("../stores/ItemStore");
+
 var Avatar = mui.Avatar;
 
 var ShowcasesPanel = React.createClass({
   mixins: [TitleConcatMixin, MuiThemeMixin],
   propTypes: {
-    showcases: React.PropTypes.array.isRequired,
-    panelTitle: React.PropTypes.string.isRequired,
+    id: React.PropTypes.string.isRequired,
   },
 
   getInitialState: function() {
     return {
       showcases: [],
     };
+  },
+
+  componentDidMount: function() {
+    ItemStore.on("ItemShowcaseLoadFinished", this.setShowcases);
+    ItemActions.itemShowcases(this.props.id);
+  },
+
+  setShowcases: function() {
+    this.setState({ showcases: ItemStore.getShowcases(this.props.id) });
   },
 
   showcaseImageDiv: function (showcase) {
@@ -40,10 +53,10 @@ var ShowcasesPanel = React.createClass({
   },
 
   showcaseNodes: function () {
-    if(this.props.showcases.length <= 0)
+    if(this.state.showcases.length <= 0)
       return <p>This item is not in any showcases.</p>;
 
-    return this.props.showcases.map(function(showcase, index) {
+    return this.state.showcases.map(function(showcase, index) {
       key = "showcase-" + showcase.id;
       return (
         <div key={key} className="row">
@@ -60,7 +73,7 @@ var ShowcasesPanel = React.createClass({
 
     return (
       <Panel>
-        <PanelHeading>{this.props.panelTitle}</PanelHeading>
+        <PanelHeading>Showcases</PanelHeading>
         <PanelBody>
           <div className="info-panel">
             {this.showcaseNodes()}

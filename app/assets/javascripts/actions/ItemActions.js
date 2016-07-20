@@ -26,6 +26,46 @@ class ItemActions extends NodeEventEmitter {
     });
   }
 
+  itemShowcases(id) {
+    var url = this.url(id) + "/showcases";
+
+    $.ajax({
+      url: url,
+      dataType: "json",
+      method: "GET",
+      success: (function(data) {
+        AppDispatcher.dispatch({
+          actionType: ItemActionTypes.ITEM_SHOWCASES_LOADED,
+          item: data
+        });
+      }).bind(this),
+      error: (function(xhr) {
+        this.emit("ItemShowcaseLoadFinished", false, xhr);
+        AppEventEmitter.emit("MessageCenterDisplay", "error", "Item Load Failed.  Please try again if the problem persists please contact WSE unit.");
+      }).bind(this),
+    });
+  }
+
+  itemPages(id) {
+    var url = this.url(id) + "/pages";
+
+    $.ajax({
+      url: url,
+      dataType: "json",
+      method: "GET",
+      success: (function(data) {
+        AppDispatcher.dispatch({
+          actionType: ItemActionTypes.ITEM_PAGES_LOADED,
+          item: data
+        });
+      }).bind(this),
+      error: (function(xhr) {
+        this.emit("ItemPageLoadFinished", false, xhr);
+        AppEventEmitter.emit("MessageCenterDisplay", "error", "Item Load Failed.  Please try again if the problem persists please contact WSE unit.");
+      }).bind(this),
+    });
+  }
+
   url(id) {
     return "/v1/items/" + id;
   }
