@@ -14,8 +14,20 @@ class Image < ActiveRecord::Base
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
   validates :collection, presence: true
 
-  def status=(name)
-    data["status"] = status_enum[name]
+  # The following methods were added to recreate the behavior of enum status:
+  #   status, status=, unprocessed?, unprocessed!, processing?, processing!,
+  #   ready?, ready!, unavailable?, unavailable!
+  # These were added in order to resolve a conflict between store_accessor and enum.
+  # They both try to add status and status= methods, so reimplementing the enum methods
+  # to access the status inside of the data field
+  def status=(value)
+    if status_enum.has_key?(value) || value.blank?
+      data["status"] = status_enum[value]
+    elsif status_enum.has_value?(value)
+      data["status"] = value
+    else
+      raise ArgumentError, "'#{value}' is not a valid status"
+    end
   end
 
   def status
