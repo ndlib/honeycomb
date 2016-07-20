@@ -22,6 +22,10 @@ module V1
       object.image.original_filename
     end
 
+    def status
+      object.status
+    end
+
     def encoding_format
       object.image.content_type
     end
@@ -64,6 +68,7 @@ module V1
       json.set! "@context", at_context
       json.set! "@id", at_id
       json.name name
+      json.status status
       set_image_object_json_keys(json: json, style: :large)
       json.set! "thumbnail/small" do |json_small|
         set_image_object_json_keys(json: json_small, style: :small)

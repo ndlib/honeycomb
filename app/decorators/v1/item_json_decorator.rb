@@ -31,16 +31,9 @@ module V1
     end
 
     def image
-      if object.image && object.image.ready?
-        object.image.json_response
-      end
-    end
-
-    def image_status
       if object.image
-        return object.image.status
+        V1::ImageJSONDecorator.new(object.image).to_hash
       end
-      Image.statuses.keys.first
     end
 
     def metadata
@@ -81,7 +74,6 @@ module V1
       json.slug slug
       json.name name
       json.description description.to_s
-      json.image_status image_status
       json.image image
       json.metadata metadata
       json.last_updated updated_at

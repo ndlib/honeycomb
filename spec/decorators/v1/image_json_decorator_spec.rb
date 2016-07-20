@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe V1::ImageJSONDecorator do
   subject { described_class.new(image) }
-  let(:image) { instance_double(Image, image: paperclip_attachment) }
+  let(:image) { instance_double(Image, status: "ready", image: paperclip_attachment) }
   let(:paperclip_attachment) do
     instance_double(Paperclip::Attachment,
                     content_type: "image/jpeg",
@@ -12,7 +12,7 @@ RSpec.describe V1::ImageJSONDecorator do
                     width: 200,
                     height: 100)
   end
-  let(:json) { double(Jbuilder, name: nil, width: nil, height: nil, encodingFormat: nil, contentUrl: nil) }
+  let(:json) { double(Jbuilder, name: nil, width: nil, height: nil, status: nil, encodingFormat: nil, contentUrl: nil) }
 
   it "defines @context as schema.org" do
     expect(subject.at_context).to eq("http://schema.org")
@@ -74,6 +74,11 @@ RSpec.describe V1::ImageJSONDecorator do
 
       it "sets name" do
         expect(json).to receive(:name).with(subject.name)
+        subject.display(json: json)
+      end
+
+      it "sets the image status" do
+        expect(json).to receive(:status).with(subject.status)
         subject.display(json: json)
       end
 
