@@ -5,6 +5,7 @@ var ItemEmbedCode = require("../../publish/ItemEmbedCode");
 var ItemActions = require("../../../actions/ItemActions");
 var ItemActionTypes = require("../../../constants/ItemActionTypes");
 var ItemStore = require("../../../stores/ItemStore");
+var DeleteItemForm = require("./DeleteItemForm");
 
 var Tabs = mui.Tabs;
 var Tab = mui.Tab;
@@ -87,6 +88,7 @@ var ItemForm = React.createClass({
           <PagesPanel
             id={ this.props.id }
           />
+          <DeleteItemForm />
         </Tab>
       </Tabs>
     );
