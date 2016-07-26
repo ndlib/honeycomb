@@ -66,6 +66,6 @@ class FindOrCreateItem
     end
     item.assign_attributes(props)
     CreateUniqueId.call(item)
-    @is_valid = item.valid?
+    @is_valid = item.valid? && item.item_metadata.valid?
   end
 end
