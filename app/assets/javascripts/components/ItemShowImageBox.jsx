@@ -46,7 +46,7 @@ var ItemShowImageBox = React.createClass({
           this.setState({ item: data.items, awaitingResponse: false }, this.testImageStatus);
         } else {
           var item = this.state.item;
-          item.image_status = "image_unavailable";
+          item.image_status = "unavailable";
           this.setState({ item: item, awaitingResponse: false }, this.testImageStatus);
         }
       }).bind(this),
@@ -62,9 +62,9 @@ var ItemShowImageBox = React.createClass({
   },
 
   testImageStatus: function () {
-    if (this.state.item.image_status == "image_unavailable") {
+    if (this.state.item.image_status == "unavailable") {
       EventEmitter.emit("MessageCenterDisplay", "error", "There was a problem loading the media. Try replacing or contacting support.");
-    } else if (this.state.item.image_status == "image_processing") {
+    } else if (this.state.item.image_status == "processing") {
       setTimeout(this.pingItem, this.props.retryInterval)
     }
   },
