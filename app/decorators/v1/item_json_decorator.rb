@@ -38,9 +38,8 @@ module V1
 
     def image_status
       if object.image
-        return object.image.status
+        object.image.status
       end
-      Image.statuses.keys.first
     end
 
     def metadata
