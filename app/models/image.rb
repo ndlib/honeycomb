@@ -30,10 +30,6 @@ class Image < Media
     status_enum.key data["status"]
   end
 
-  def default_status
-    "unprocessed"
-  end
-
   def unprocessed?
     data["status"] == status_enum["unprocessed"]
   end
