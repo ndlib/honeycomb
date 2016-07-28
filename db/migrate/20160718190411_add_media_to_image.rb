@@ -1,6 +1,6 @@
 class AddMediaToImage < ActiveRecord::Migration
   def up
-    add_column :images, :data, :jsonb, null: false, default: '{}'
+    add_column :images, :data, :jsonb, null: false, default: "{}"
     add_column :images, :type, :string
     # Allowing nulls to make sure we can add new images using the new data field
     # prior to archiving the old columns
@@ -9,7 +9,7 @@ class AddMediaToImage < ActiveRecord::Migration
   end
 
   def down
-    remove_column :images, :data, :jsonb, null: false, default: '{}'
+    remove_column :images, :data, :jsonb, null: false, default: "{}"
     remove_column :images, :type, :string
     # If this fails, it means there are records that were added with image data
     # stored in the jsonb field. The only solutions are to:

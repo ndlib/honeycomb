@@ -1,11 +1,12 @@
 class Image < Media
-  store_accessor :data, :image_content_type,
-                        :image_file_name,
-                        :image_file_size,
-                        :image_fingerprint,
-                        :image_meta,
-                        :image_updated_at,
-                        :json_response
+  store_accessor :data,
+                 :image_content_type,
+                 :image_file_name,
+                 :image_file_size,
+                 :image_fingerprint,
+                 :image_meta,
+                 :image_updated_at,
+                 :json_response
 
   has_attached_file :image, restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
