@@ -15,6 +15,9 @@
               <%= nav.current_user_display_name %>
             <% end %>
           </li>-->
+          <li>
+            <%= learn_more_button("#") %>
+          </li>
           <% admin_only do %>
             <li>
               <%= link_to admin_path, title: "Administration"  do %>

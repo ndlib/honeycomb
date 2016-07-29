@@ -10,7 +10,12 @@ var DeleteItemForm = require("./DeleteItemForm");
 var Tabs = mui.Tabs;
 var Tab = mui.Tab;
 
-var TabStyle = { borderRight: "1px white solid" };
+var TabStyle = {
+  borderRight: "1px white solid",
+};
+var TabContainerStyle = {
+  marginTop: "15px"
+};
 var TabsStyle = {
   backgroundColor: "#7F8C8D",
 };
@@ -52,17 +57,26 @@ var ItemForm = React.createClass({
 
     return (
       <Tabs tabItemContainerStyle={ TabsStyle }>
-        <Tab label="Metadata" style={TabStyle}>
-          <ItemMetaDataForm
-            authenticityToken={ this.props.authenticityToken }
-            method={ this.props.method }
-            data={ this.props.data }
-            url={ this.metdataUrl() }
-            objectType={ this.props.objectType }
-          />
+        <Tab label="Metadata" style={TabStyle} >
+          <div className="row" style={ TabContainerStyle }>
+            <div className="col-md-9">
+              <ItemMetaDataForm
+                authenticityToken={ this.props.authenticityToken }
+                method={ this.props.method }
+                data={ this.props.data }
+                url={ this.metdataUrl() }
+                objectType={ this.props.objectType }
+              />
+            </div>
+            <div className="col-md-3">
+              <ItemShowImageBox
+                item={ this.state.item }
+              />
+            </div>
+          </div>
         </Tab>
         <Tab label="Media" style={TabStyle}>
-          <div>
+          <div style={ TabContainerStyle }>
             <ItemShowImageBox
               item={ this.state.item }
             />
@@ -75,20 +89,28 @@ var ItemForm = React.createClass({
           </div>
         </Tab>
         <Tab label="Embed" style={TabStyle}>
-          <ItemEmbedCode
-            id={ this.props.id }
-            embedBaseUrl={ this.props.embedBaseUrl }
-          />
+          <div style={ TabContainerStyle }>
+            <ItemEmbedCode
+              id={ this.props.id }
+              embedBaseUrl={ this.props.embedBaseUrl }
+            />
+          </div>
         </Tab>
-        <Tab label="Preview" />
+        <Tab label="Preview">
+          <div style={ TabContainerStyle }>
+            hi
+          </div>
+        </Tab>
         <Tab label="Delete" style={TabStyle}>
-          <ShowcasesPanel
-            id={ this.props.id }
-          />
-          <PagesPanel
-            id={ this.props.id }
-          />
-          <DeleteItemForm />
+          <div style={ TabContainerStyle }>
+            <ShowcasesPanel
+              id={ this.props.id }
+            />
+            <PagesPanel
+              id={ this.props.id }
+            />
+            <DeleteItemForm />
+          </div>
         </Tab>
       </Tabs>
     );
