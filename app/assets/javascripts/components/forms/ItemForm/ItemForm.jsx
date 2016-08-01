@@ -9,6 +9,10 @@ var DeleteItemForm = require("./DeleteItemForm");
 
 var Tabs = mui.Tabs;
 var Tab = mui.Tab;
+var RaisedButton = mui.RaisedButton;
+var Toolbar = mui.Toolbar;
+var ToolbarGroup = mui.ToolbarGroup;
+var SwipeableViews = mui.SwipeableViews;
 
 var TabStyle = {
   borderRight: "1px white solid",
@@ -18,6 +22,10 @@ var TabContainerStyle = {
 };
 var TabsStyle = {
   backgroundColor: "#7F8C8D",
+  marginTop: "5px",
+};
+var ToolbarStyle = {
+  minWidth: "70%",
 };
 
 var ItemForm = React.createClass({
@@ -34,6 +42,7 @@ var ItemForm = React.createClass({
   getInitialState: function() {
     return {
       item: undefined,
+      selectedIndex: "metadata",
     }
   },
 
@@ -50,69 +59,102 @@ var ItemForm = React.createClass({
     return ItemActions.url(this.props.id) + "/metadata";
   },
 
+  _handleChangeTabs: function(value, event) {
+    this.setState({ selectedIndex: value });
+  },
+
+  form: function() {
+    if (this.state.selectedIndex == "metadata") {
+      return (
+        <ItemMetaDataForm
+          authenticityToken={ this.props.authenticityToken }
+          method={ this.props.method }
+          data={ this.props.data }
+          url={ this.metdataUrl() }
+          objectType={ this.props.objectType }
+        />
+      );
+    } else if (this.state.selectedIndex == "media") {
+      return (
+        <div>
+          <ItemShowImageBox
+            item={ this.state.item }
+          />
+          <ReactDropzone
+            formUrl={ ItemActions.url(this.props.id) }
+            authenticityToken={ this.props.authenticityToken }
+            modalTitle="Replace"
+            multifileUpload={ false}
+          />
+        </div>)
+      ;
+    } else if (this.state.selectedIndex == "embed") {
+      return (
+        <ItemEmbedCode
+          id={ this.props.id }
+          embedBaseUrl={ this.props.embedBaseUrl }
+        />
+      );
+    } else if (this.state.selectedIndex == "delete") {
+      return (
+        <div>
+          <ShowcasesPanel
+            id={ this.props.id }
+          />
+          <PagesPanel
+            id={ this.props.id }
+          />
+          <DeleteItemForm />
+        </div>
+      );
+    } else {
+      console.log("invalid tab");
+      return "";
+    }
+  },
+
+  mediaPreview: function () {
+    if (this.state.selectedIndex != "media") {
+      return (
+        <ItemShowImageBox
+            item={ this.state.item }
+        />
+      );
+    }
+    return (<div />);
+  },
+
   render: function() {
     if (!this.state.item) {
       return (<div>Loading...</div>);
     }
 
     return (
-      <Tabs tabItemContainerStyle={ TabsStyle }>
-        <Tab label="Metadata" style={TabStyle} >
-          <div className="row" style={ TabContainerStyle }>
-            <div className="col-md-9">
-              <ItemMetaDataForm
-                authenticityToken={ this.props.authenticityToken }
-                method={ this.props.method }
-                data={ this.props.data }
-                url={ this.metdataUrl() }
-                objectType={ this.props.objectType }
-              />
-            </div>
-            <div className="col-md-3">
-              <ItemShowImageBox
-                item={ this.state.item }
-              />
-            </div>
+      <div>
+      <Toolbar style={ ToolbarStyle }>
+        <ToolbarGroup key={0} float="left">
+          <RaisedButton>Preview</RaisedButton>
+        </ToolbarGroup>
+        <ToolbarGroup key={1} float="right" style={ ToolbarStyle }>
+          <Tabs tabItemContainerStyle={ TabsStyle } onChange={this._handleChangeTabs.bind(this)} value={ this.state.selectedIndex + "" }>
+            <Tab label="Metadata" style={TabStyle} value="metadata" />
+            <Tab label="Media" style={TabStyle} value="media" />
+            <Tab label="Embed" style={TabStyle} value="embed" />
+            <Tab label="Delete" style={ TabStyle } value="delete" />
+          </Tabs>
+        </ToolbarGroup>
+      </Toolbar>
+      <div>
+        <div className="row" style={ TabContainerStyle }>
+          <div className="col-md-9">
+            { this.form() }
           </div>
-        </Tab>
-        <Tab label="Media" style={TabStyle}>
-          <div style={ TabContainerStyle }>
-            <ItemShowImageBox
-              item={ this.state.item }
-            />
-            <ReactDropzone
-              formUrl={ ItemActions.url(this.props.id) }
-              authenticityToken={ this.props.authenticityToken }
-              modalTitle="Replace"
-              multifileUpload={ false}
-            />
+          <div className="col-md-3">
+            { this.mediaPreview() }
           </div>
-        </Tab>
-        <Tab label="Embed" style={TabStyle}>
-          <div style={ TabContainerStyle }>
-            <ItemEmbedCode
-              id={ this.props.id }
-              embedBaseUrl={ this.props.embedBaseUrl }
-            />
-          </div>
-        </Tab>
-        <Tab label="Preview">
-          <div style={ TabContainerStyle }>
-            hi
-          </div>
-        </Tab>
-        <Tab label="Delete" style={TabStyle}>
-          <div style={ TabContainerStyle }>
-            <ShowcasesPanel
-              id={ this.props.id }
-            />
-            <PagesPanel
-              id={ this.props.id }
-            />
-            <DeleteItemForm />
-          </div>
-        </Tab>
-      </Tabs>
+        </div>
+      </div>
+    </div>
     );
   }
 });
