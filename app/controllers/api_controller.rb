@@ -1,5 +1,5 @@
 class APIController < ApplicationController
-  protect_from_forgery with: :null_session
+  protect_from_forgery unless: -> { true }
   skip_before_action :redirect_to_sign_in
 
   before_action :set_access
