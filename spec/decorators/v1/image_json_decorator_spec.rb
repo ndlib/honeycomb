@@ -2,7 +2,14 @@ require "rails_helper"
 
 RSpec.describe V1::ImageJSONDecorator do
   subject { described_class.new(image) }
-  let(:image) { instance_double(Image, status: "ready", image: paperclip_attachment, json_response: { "thumbnail/large" => { "contentUrl" => "image_uri" }, "contentUrl" => "base_url" }) }
+  let(:image) do
+    instance_double(
+      Image,
+      status: "ready",
+      image: paperclip_attachment,
+      json_response: { "thumbnail/large" => { "contentUrl" => "image_uri" }, "contentUrl" => "base_url" }
+    )
+  end
   let(:paperclip_attachment) do
     instance_double(Paperclip::Attachment,
                     content_type: "image/jpeg",
