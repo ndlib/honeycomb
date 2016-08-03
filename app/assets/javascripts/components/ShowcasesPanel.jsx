@@ -20,8 +20,12 @@ var ShowcasesPanel = React.createClass({
   },
 
   componentDidMount: function() {
-    ItemStore.on("ItemShowcaseLoadFinished", this.setShowcases);
-    ItemActions.itemShowcases(this.props.id);
+    if (!ItemStore.getShowcases(this.props.id)) {
+      ItemStore.on("ItemShowcaseLoadFinished", this.setShowcases);
+      ItemActions.itemShowcases(this.props.id);
+    } else {
+      this.setShowcases();
+    }
   },
 
   setShowcases: function() {

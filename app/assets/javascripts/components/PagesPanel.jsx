@@ -19,8 +19,12 @@ var PagesPanel = React.createClass({
   },
 
   componentDidMount: function() {
-    ItemStore.on("ItemPageLoadFinished", this.setPages);
-    ItemActions.itemPages(this.props.id);
+    if (!ItemStore.getPages(this.props.id)) {
+      ItemStore.on("ItemPageLoadFinished", this.setPages);
+      ItemActions.itemPages(this.props.id);
+    } else {
+      this.setPages();
+    }
   },
 
   setPages: function() {
