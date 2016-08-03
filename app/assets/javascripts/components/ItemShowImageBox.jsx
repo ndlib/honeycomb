@@ -13,64 +13,18 @@ var ItemShowImageBox = React.createClass({
     retryInterval: React.PropTypes.number // How frequent it should retry to get the image, in ms
   },
 
-  getDefaultProps: function() {
-    return {
-      maxRetries: 7,       // Maximum number of times it will retry to get the image status.
-      retryInterval: 5000  // Time in ms to wait before retrying request for image status.
-    };
-  },
-
-  getInitialState: function() {
-    return {
-      requestCount: 0,
-      awaitingResponse: false,
-      item: this.props.item,
-    };
-  },
-
-  pingItem: function() {
-    if(this.state.awaitingResponse)
-      return;
-
-    this.setState({
-      awaitingResponse: true,
-      requestCount: this.state.requestCount + 1
-    });
-
-    $.ajax({
-      url: this.props.itemPath,
-      dataType: "json",
-      method: "GET",
-      success: (function(data) {
-        if (this.state.requestCount < this.props.maxRetries) {
-          this.setState({ item: data.items, awaitingResponse: false }, this.testImageStatus);
-        } else {
-          var item = this.state.item;
-          item.image_status = "image_unavailable";
-          this.setState({ item: item, awaitingResponse: false }, this.testImageStatus);
-        }
-      }).bind(this),
-      error: (function(xhr) {
-        this.setState({ awaitingResponse: false }, this.testImageStatus);
-        console.log(xhr);
-      }).bind(this),
-    });
-  },
-
   componentWillMount: function() {
     this.testImageStatus();
   },
 
   testImageStatus: function () {
-    if (this.state.item.image_status == "image_unavailable") {
+    if (this.props.item.image_status == "image_unavailable") {
       EventEmitter.emit("MessageCenterDisplay", "error", "There was a problem loading the media. Try replacing or contacting support.");
-    } else if (this.state.item.image_status == "image_processing") {
-      setTimeout(this.pingItem, this.props.retryInterval)
     }
   },
 
   renderMedia: function() {
-    switch(this.state.item.image.status)
+    switch(this.props.item.image.status)
     {
       case "ready":
         return this.itemReadyHtml();
@@ -81,7 +35,7 @@ var ItemShowImageBox = React.createClass({
       case "unavailable":
         return this.itemImageInvalidHtml();
       default:
-        console.log("Unknown Image Status: " + this.state.item.image_status);
+        console.log("Unknown Image Status: " + this.props.item.image_status);
         return this.itemImageInvalidHtml();
     }
   },
@@ -89,8 +43,8 @@ var ItemShowImageBox = React.createClass({
   itemReadyHtml: function () {
     return (
       <div className="hc-item-show-image-box">
-        <ItemImageZoomButton image={this.state.item.image} itemID={this.state.item.id} />
-        <Thumbnail image={this.state.item.image} />
+        <ItemImageZoomButton image={this.props.item.image} itemID={this.props.item.id} />
+        <Thumbnail image={this.props.item.image} />
       </div>
     );
   },
@@ -112,6 +66,8 @@ var ItemShowImageBox = React.createClass({
   },
 
   render: function() {
+    console.log("render");
+    console.log(this.props.item.image);
     return this.renderMedia();
   }
 });

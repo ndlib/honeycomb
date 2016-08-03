@@ -6,6 +6,7 @@ var ItemActions = require("../../../actions/ItemActions");
 var ItemActionTypes = require("../../../constants/ItemActionTypes");
 var ItemStore = require("../../../stores/ItemStore");
 var DeleteItemForm = require("./DeleteItemForm");
+var ReplaceMediaForm = require("./ReplaceMediaForm");
 
 var Tabs = mui.Tabs;
 var Tab = mui.Tab;
@@ -34,9 +35,9 @@ var ItemForm = React.createClass({
     authenticityToken: React.PropTypes.string.isRequired,
     method: React.PropTypes.string.isRequired,
     data: React.PropTypes.object.isRequired,
-    basePath: React.PropTypes.string.isRequired,
     objectType: React.PropTypes.string,
     embedBaseUrl: React.PropTypes.string.isRequired,
+    previewUrl: React.PropTypes.string.isRequired,
   },
 
   getInitialState: function() {
@@ -52,7 +53,16 @@ var ItemForm = React.createClass({
   },
 
   setItem: function() {
+    var item = ItemStore.get(this.props.id);
+    console.log("form");
+    console.log(item);
     this.setState({ item: ItemStore.get(this.props.id)})
+
+    if (item.image.status == "processing") {
+      setTimeout(function() {
+        ItemActions.get(this.props.id);
+      }.bind(this), 4000);
+    }
   },
 
   metdataUrl: function() {
@@ -77,17 +87,14 @@ var ItemForm = React.createClass({
     } else if (this.state.selectedIndex == "media") {
       return (
         <div>
-          <ItemShowImageBox
+          <ReplaceMediaForm
             item={ this.state.item }
-          />
-          <ReactDropzone
-            formUrl={ ItemActions.url(this.props.id) }
             authenticityToken={ this.props.authenticityToken }
             modalTitle="Replace"
-            multifileUpload={ false}
+            multifileUpload={ false }
           />
-        </div>)
-      ;
+        </div>
+      );
     } else if (this.state.selectedIndex == "embed") {
       return (
         <ItemEmbedCode
@@ -113,17 +120,6 @@ var ItemForm = React.createClass({
     }
   },
 
-  mediaPreview: function () {
-    if (this.state.selectedIndex != "media") {
-      return (
-        <ItemShowImageBox
-            item={ this.state.item }
-        />
-      );
-    }
-    return (<div />);
-  },
-
   render: function() {
     if (!this.state.item) {
       return (<div>Loading...</div>);
@@ -131,30 +127,30 @@ var ItemForm = React.createClass({
 
     return (
       <div>
-      <Toolbar style={ ToolbarStyle }>
-        <ToolbarGroup key={0} float="left">
-          <RaisedButton>Preview</RaisedButton>
-        </ToolbarGroup>
-        <ToolbarGroup key={1} float="right" style={ ToolbarStyle }>
-          <Tabs tabItemContainerStyle={ TabsStyle } onChange={this._handleChangeTabs.bind(this)} value={ this.state.selectedIndex + "" }>
-            <Tab label="Metadata" style={TabStyle} value="metadata" />
-            <Tab label="Media" style={TabStyle} value="media" />
-            <Tab label="Embed" style={TabStyle} value="embed" />
-            <Tab label="Delete" style={ TabStyle } value="delete" />
-          </Tabs>
-        </ToolbarGroup>
-      </Toolbar>
-      <div>
+        <Toolbar style={ ToolbarStyle }>
+          <ToolbarGroup key={0} float="left">
+            <RaisedButton href={ this.props.previewUrl } linkButton={ true } target="_blank" label="Preview" />
+          </ToolbarGroup>
+          <ToolbarGroup key={1} float="right" style={ ToolbarStyle }>
+            <Tabs tabItemContainerStyle={ TabsStyle } onChange={this._handleChangeTabs.bind(this)} value={ this.state.selectedIndex + "" }>
+              <Tab label="Metadata" style={TabStyle} value="metadata" />
+              <Tab label="Media" style={TabStyle} value="media" />
+              <Tab label="Embed" style={TabStyle} value="embed" />
+              <Tab label="Delete" style={ TabStyle } value="delete" />
+            </Tabs>
+          </ToolbarGroup>
+        </Toolbar>
         <div className="row" style={ TabContainerStyle }>
           <div className="col-md-9">
             { this.form() }
           </div>
           <div className="col-md-3">
-            { this.mediaPreview() }
+            <ItemShowImageBox
+                item={ this.state.item }
+            />
           </div>
         </div>
       </div>
-    </div>
     );
   }
 });

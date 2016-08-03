@@ -52,7 +52,8 @@ class ItemDecorator < Draper::Decorator
       url: h.v1_item_path(object.unique_id),
       method: "put",
       data: meta_data,
-      embedBaseUrl: CreateBeehiveURL.call(object.collection)
+      embedBaseUrl: CreateBeehiveURL.call(object.collection),
+      previewUrl: CreateBeehiveURL.call(object)
     )
   end
 
