@@ -66,6 +66,25 @@ class ItemActions extends NodeEventEmitter {
     });
   }
 
+  delete(id) {
+    $.ajax({
+      url: this.url(id),
+      dataType: "json",
+      method: "DELETE",
+      success: (function(data) {
+        AppDispatcher.dispatch({
+          actionType: ItemActionTypes.ITEM_DELETED,
+          item: id
+        });
+        AppEventEmitter.emit("MessageCenterDisplay", "info", "Item Deleted");
+      }).bind(this),
+      error: (function(xhr) {
+        this.emit("ItemDeleteFailed", false, xhr);
+        AppEventEmitter.emit("MessageCenterDisplay", "error", "Item Delete Failed.  Please try again if the problem persists please contact WSE unit.");
+      }).bind(this),
+    });
+  }
+
   url(id) {
     return "/v1/items/" + id;
   }

@@ -49,11 +49,10 @@ module V1
     def destroy
       @item = ItemQuery.new.public_find(params[:id])
       return if rendered_forbidden?(@item.collection)
-
       if Destroy::Item.new.destroy!(item: @item)
-        render json: "Success"
+        render json: { status: "Success" }
       else
-        render json: "Unable to delete item", status: :unprocessable_entity
+        render json: { status: "Unable to delete item" }, status: :unprocessable_entity
       end
     end
 

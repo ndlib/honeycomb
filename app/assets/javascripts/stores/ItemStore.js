@@ -26,6 +26,10 @@ class ItemStore extends EventEmitter {
         this._pages[action.item.items.id] = action.item.items.pages;
         this.emit("ItemPageLoadFinished");
         break;
+      case ItemActionTypes.ITEM_DELETED:
+        delete this._items[action.item];
+        this.emit("ItemDeleteFinished");
+        break;
     }
   }
 

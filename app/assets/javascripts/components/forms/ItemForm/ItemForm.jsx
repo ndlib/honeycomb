@@ -111,7 +111,7 @@ var ItemForm = React.createClass({
           <PagesPanel
             id={ this.props.id }
           />
-          <DeleteItemForm />
+        <DeleteItemForm item={ this.state.item }/>
         </div>
       );
     } else {
