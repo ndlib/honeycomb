@@ -13,12 +13,9 @@ var ItemShowImageBox = React.createClass({
     retryInterval: React.PropTypes.number // How frequent it should retry to get the image, in ms
   },
 
-  componentWillMount: function() {
-    this.testImageStatus();
-  },
-
   testImageStatus: function () {
-    if (this.props.item.image_status == "image_unavailable") {
+
+    if (this.props.item.image_status == "unavailable") {
       EventEmitter.emit("MessageCenterDisplay", "error", "There was a problem loading the media. Try replacing or contacting support.");
     }
   },
@@ -66,8 +63,6 @@ var ItemShowImageBox = React.createClass({
   },
 
   render: function() {
-    console.log("render");
-    console.log(this.props.item.image);
     return this.renderMedia();
   }
 });

@@ -4,7 +4,7 @@ RSpec.describe SaveCollection, type: :model do
   subject { described_class.call(collection, params) }
   let(:collection) do
     instance_double(Collection,
-                    id: "id",
+                    id: 9,
                     "attributes=" => true,
                     save: true,
                     url: nil,

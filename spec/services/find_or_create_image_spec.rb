@@ -37,8 +37,8 @@ RSpec.describe FindOrCreateImage do
     allow(Image).to receive(:new) do |params|
       new_images[params[:image]]
     end
-    allow(Image).to receive(:where) do |params|
-      image_records.detect { |image| image.collection_id == params[:collection_id] && image.image_fingerprint == params[:image_fingerprint] }
+    allow(Image).to receive(:where) do |_clause, collection_id, image_fingerprint|
+      image_records.detect { |image| image.collection_id == collection_id && image.image_fingerprint == image_fingerprint }
     end
   end
 

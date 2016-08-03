@@ -14,7 +14,7 @@ class FindOrCreateImage
     # Not sure if there is a simpler way to get paperclip to generate the fingerprint without creating a new Image
     # and processing all of the styles
     new_image = Image.new(image: file, collection_id: collection_id, status: "processing", json_response: {})
-    found_image = Image.where(collection_id: collection_id, image_fingerprint: new_image.image_fingerprint).take
+    found_image = Image.where("collection_id = ? AND data->>'image_fingerprint' = ?", collection_id, new_image.image_fingerprint).take
 
     if found_image.nil?
       if new_image.save && process_image(image: new_image)

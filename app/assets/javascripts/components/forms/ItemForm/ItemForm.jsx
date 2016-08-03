@@ -54,8 +54,6 @@ var ItemForm = React.createClass({
 
   setItem: function() {
     var item = ItemStore.get(this.props.id);
-    console.log("form");
-    console.log(item);
     this.setState({ item: ItemStore.get(this.props.id)})
 
     if (item.image.status == "processing") {
