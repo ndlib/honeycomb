@@ -6,7 +6,7 @@ var ReplaceMedia = React.createClass({
   mixins: [MuiThemeMixin, DialogMixin],
 
   propTypes: {
-    item: React.PropTypes.string.isRequired,
+    item: React.PropTypes.object.isRequired,
     authenticityToken: React.PropTypes.string.isRequired,
     multifileUpload: React.PropTypes.bool,
     modalTitle: React.PropTypes.string.isRequired,

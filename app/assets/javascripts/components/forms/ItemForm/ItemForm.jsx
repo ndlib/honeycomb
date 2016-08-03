@@ -49,7 +49,7 @@ var ItemForm = React.createClass({
 
   componentDidMount: function() {
     ItemStore.on("ItemLoadFinished", this.setItem);
-    ItemActions.get(this.props.id);
+    this.loadItem();
   },
 
   setItem: function() {
@@ -57,10 +57,12 @@ var ItemForm = React.createClass({
     this.setState({ item: ItemStore.get(this.props.id)})
 
     if (item.image.status == "processing") {
-      setTimeout(function() {
-        ItemActions.get(this.props.id);
-      }.bind(this), 4000);
+      setTimeout(this.loadItem, 4000);
     }
+  },
+
+  loadItem: function() {
+    ItemActions.get(this.props.id);
   },
 
   metdataUrl: function() {
@@ -130,7 +132,7 @@ var ItemForm = React.createClass({
             <RaisedButton href={ this.props.previewUrl } linkButton={ true } target="_blank" label="Preview" />
           </ToolbarGroup>
           <ToolbarGroup key={1} float="right" style={ ToolbarStyle }>
-            <Tabs tabItemContainerStyle={ TabsStyle } onChange={this._handleChangeTabs.bind(this)} value={ this.state.selectedIndex + "" }>
+            <Tabs tabItemContainerStyle={ TabsStyle } onChange={this._handleChangeTabs} value={ this.state.selectedIndex + "" }>
               <Tab label="Metadata" style={TabStyle} value="metadata" />
               <Tab label="Media" style={TabStyle} value="media" />
               <Tab label="Embed" style={TabStyle} value="embed" />

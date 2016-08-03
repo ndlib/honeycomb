@@ -7,7 +7,7 @@ var HtmlField = React.createClass({
     name: React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired,
     handleFieldChange: React.PropTypes.func.isRequired,
-    value: React.PropTypes.string,
+    value: React.PropTypes.any,
     required: React.PropTypes.bool,
     placeholder: React.PropTypes.string,
     help: React.PropTypes.string,

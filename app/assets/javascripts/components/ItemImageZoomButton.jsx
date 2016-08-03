@@ -52,12 +52,13 @@ var ItemImageZoomButton = React.createClass({
             />
           </div>
           <Dialog
+            key="dialog-box"
             ref="imageZoom"
             actions={this.props.dismiss_func(this.dismissMessage)}
             openImmediately={false}
             style={{zIndex: 100}}
           >
-            <OpenSeadragonViewer image={this.props.image} containerID={zoomID} height={600} />
+            <OpenSeadragonViewer key="viewer" image={this.props.image} containerID={zoomID} height={600} />
           </Dialog>
         </div>
       );
