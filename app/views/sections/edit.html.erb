@@ -1,6 +1,6 @@
 <% collection_nav(@section_form.collection, :showcases) %>
 
-<%= back_action_bar(edit_showcase_path(@section_form.showcase), '#' ) %>
+<%= back_action_bar(edit_showcase_path(@section_form.showcase)) %>
 
 <%= simple_form_for @section_form.form_url do | f | %>
   <div class="panel panel-default">

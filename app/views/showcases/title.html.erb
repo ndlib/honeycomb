@@ -1,7 +1,7 @@
 <% page_title(@showcase.name_line_1, @showcase.collection) %>
 <%= collection_nav(@showcase.collection, :showcases) %>
 
-<%= back_action_bar(edit_showcase_path(@showcase.id), '#' ) %>
+<%= back_action_bar(edit_showcase_path(@showcase.id)) %>
 
 <%= simple_form_for @showcase do |f| %>
   <div class="panel panel-default">

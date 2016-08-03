@@ -11,12 +11,6 @@ class ItemsController < ApplicationController
     fresh_when(etag: cache_key.generate)
   end
 
-  def new
-    check_user_edits!(collection)
-
-    @item = ItemQuery.new(collection.items).build
-  end
-
   def create
     check_user_edits!(collection)
 
@@ -39,38 +33,6 @@ class ItemsController < ApplicationController
                                          action: "edit",
                                          decorated_item: @item)
     fresh_when(etag: cache_key.generate)
-  end
-
-  def destroy
-    @item = ItemQuery.new.find(params[:id])
-    check_user_edits!(@item.collection)
-    Destroy::Item.new.destroy!(item: @item)
-
-    flash[:notice] = t(".success")
-
-    redirect_to collection_path(@item.collection)
-  end
-
-  def publish
-    @item = ItemQuery.new.find(params[:id])
-    check_user_edits!(@item.collection)
-
-    unless Publish.call(@item)
-      fail "Error publishing #{@item.name}"
-    end
-
-    item_save_success(@item)
-  end
-
-  def unpublish
-    @item = ItemQuery.new.find(params[:id])
-    check_user_edits!(@item.collection)
-
-    unless Unpublish.call(@item)
-      fail "Error unpublishing #{@item.name}"
-    end
-
-    item_save_success(@item)
   end
 
   protected

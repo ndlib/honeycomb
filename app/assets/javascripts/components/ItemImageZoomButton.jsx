@@ -44,7 +44,7 @@ var ItemImageZoomButton = React.createClass({
     if (this.props.image && this.props.image.contentUrl) {
       return (
         <div>
-          <div className="hc-image-zoom-button-outer">
+          <div key="div" className="hc-image-zoom-button-outer">
             <FlatButton
               onTouchTap={this.showModal}
               label={ buttonLabel }
@@ -52,12 +52,13 @@ var ItemImageZoomButton = React.createClass({
             />
           </div>
           <Dialog
+            key="dialog-box"
             ref="imageZoom"
             actions={this.props.dismiss_func(this.dismissMessage)}
             openImmediately={false}
             style={{zIndex: 100}}
           >
-            <OpenSeadragonViewer image={this.props.image} containerID={zoomID} height={600} />
+            <OpenSeadragonViewer key="viewer" image={this.props.image} containerID={zoomID} height={600} />
           </Dialog>
         </div>
       );

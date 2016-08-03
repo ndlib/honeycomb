@@ -193,16 +193,15 @@ RSpec.describe V1::CollectionJSONDecorator do
 
   describe "#image" do
     let(:collection) { double(Collection, image: image) }
-    let(:image) { double(Image, json_response: "json_response") }
+    let(:image) { double(Image) }
 
-    it "gets the image json_response" do
-      expect(image).to receive(:json_response).and_return("json_response")
-      expect(subject.image).to eq("json_response")
+    before(:each) do
+      allow_any_instance_of(V1::ImageJSONDecorator).to receive(:to_hash).and_return(image: "image")
     end
 
-    it "gets the image" do
-      expect(collection).to receive(:image).and_return(image)
-      subject.image
+    it "gets the image json_response" do
+      allow_any_instance_of(V1::ImageJSONDecorator).to receive(:to_hash).and_return(image: "image")
+      expect(subject.image).to eq(image: "image")
     end
   end
 

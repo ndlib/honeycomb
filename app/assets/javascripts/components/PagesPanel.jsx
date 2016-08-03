@@ -2,17 +2,33 @@ var React = require('react');
 var mui = require("material-ui");
 var Avatar = mui.Avatar;
 
+var ItemActions = require("../actions/ItemActions");
+var ItemActionTypes = require("../constants/ItemActionTypes");
+var ItemStore = require("../stores/ItemStore");
+
 var PagesPanel = React.createClass({
   mixins: [TitleConcatMixin, MuiThemeMixin],
   propTypes: {
-    pages: React.PropTypes.array.isRequired,
-    panelTitle: React.PropTypes.string.isRequired,
+    id: React.PropTypes.string.isRequired,
   },
 
   getInitialState: function() {
     return {
       pages: [],
     };
+  },
+
+  componentDidMount: function() {
+    if (!ItemStore.getPages(this.props.id)) {
+      ItemStore.on("ItemPageLoadFinished", this.setPages);
+      ItemActions.itemPages(this.props.id);
+    } else {
+      this.setPages();
+    }
+  },
+
+  setPages: function() {
+    this.setState({ pages: ItemStore.getPages(this.props.id) });
   },
 
   pageImageDiv: function (page) {
@@ -40,10 +56,10 @@ var PagesPanel = React.createClass({
   },
 
   pageNodes: function () {
-    if(this.props.pages.length <= 0)
+    if(this.state.pages.length <= 0)
       return <p>This item is not in any pages.</p>;
 
-    return this.props.pages.map(function(page, index) {
+    return this.state.pages.map(function(page, index) {
       key = "page-" + page.id;
       return (
         <div key={key} className="row">
@@ -60,7 +76,7 @@ var PagesPanel = React.createClass({
 
     return (
       <Panel>
-        <PanelHeading>{this.props.panelTitle}</PanelHeading>
+        <PanelHeading>Pages</PanelHeading>
         <PanelBody>
           <div className="info-panel">
             {this.pageNodes()}

@@ -46,11 +46,15 @@ class ItemDecorator < Draper::Decorator
 
   def item_meta_data_form
     h.react_component(
-      "ItemMetaDataForm",
+      "ItemForm",
+      id: object.unique_id,
       authenticityToken: h.form_authenticity_token,
-      url: h.v1_item_metadata_path(object.unique_id),
+      url: h.v1_item_path(object.unique_id),
       method: "put",
-      data: meta_data)
+      data: meta_data,
+      embedBaseUrl: CreateBeehiveURL.call(object.collection),
+      previewUrl: CreateBeehiveURL.call(object)
+    )
   end
 
   def meta_data
