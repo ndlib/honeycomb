@@ -44,7 +44,7 @@ var ItemImageZoomButton = React.createClass({
     if (this.props.image && this.props.image.contentUrl) {
       return (
         <div>
-          <div className="hc-image-zoom-button-outer">
+          <div key="div" className="hc-image-zoom-button-outer">
             <FlatButton
               onTouchTap={this.showModal}
               label={ buttonLabel }

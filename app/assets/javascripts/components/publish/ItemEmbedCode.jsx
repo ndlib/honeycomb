@@ -57,12 +57,12 @@ var ItemEmbedCode = React.createClass({
           value={embedString}
           style={ TextareaStyle }
           rows="5" />
-        <FlatButton
-          onClick={ this.copyToClipBoard }
-          label="Copy To Clipboard"
-          icon={ <FontIcon className="material-icons">content_copy</FontIcon> }
-        />
-        <p>{ copyMessage }</p>
+          <FlatButton
+            onClick={ this.copyToClipBoard }
+            label="Copy To Clipboard"
+            icon={ <FontIcon className="material-icons">content_copy</FontIcon> }
+          />
+          { copyMessage }
       </div>
     );
   }

@@ -193,7 +193,7 @@ RSpec.describe V1::ItemsController, type: :controller do
       expect(response).to be_unprocessable
     end
 
-    it "assigns and item" do
+    it "assigns an item" do
       subject
 
       assigns(:item)

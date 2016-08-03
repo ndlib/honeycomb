@@ -132,7 +132,7 @@ var ItemForm = React.createClass({
             <RaisedButton href={ this.props.previewUrl } linkButton={ true } target="_blank" label="Preview" />
           </ToolbarGroup>
           <ToolbarGroup key={1} float="right" style={ ToolbarStyle }>
-            <Tabs tabItemContainerStyle={ TabsStyle } onChange={this._handleChangeTabs} value={ this.state.selectedIndex + "" }>
+            <Tabs tabItemContainerStyle={ TabsStyle } onChange={this._handleChangeTabs} value={ this.state.selectedIndex }>
               <Tab label="Metadata" style={TabStyle} value="metadata" />
               <Tab label="Media" style={TabStyle} value="media" />
               <Tab label="Embed" style={TabStyle} value="embed" />
