@@ -78,7 +78,8 @@ RSpec.describe ItemDecorator do
         url: "/v1/items/unique_id",
         method: "put",
         data: { metadata: ["value"] },
-        embedBaseUrl: "url"
+        embedBaseUrl: "url",
+        previewUrl: "url"
       )
 
       subject.item_meta_data_form
