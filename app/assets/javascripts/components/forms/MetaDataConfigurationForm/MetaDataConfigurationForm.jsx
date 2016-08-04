@@ -12,21 +12,18 @@ var Tabs = mui.Tabs;
 var Tab = mui.Tab;
 
 var TabStyle = { borderRight: "1px white solid" };
+var TabsStyle = {
+  backgroundColor: "#7F8C8D",
+};
 
 var MetaDataConfigurationForm = React.createClass({
   propTypes: {
     baseUpdateUrl: React.PropTypes.string.isRequired,
   },
 
-  backgroundStyle: function() {
-    return {
-      backgroundColor: "#7F8C8D",
-    };
-  },
-
   render: function(){
     return (
-      <Tabs tabItemContainerStyle={ this.backgroundStyle() }>
+      <Tabs tabItemContainerStyle={ TabsStyle }>
         <Tab label="Edit" style={TabStyle}>
           <MetaDataConfigurationList baseUpdateUrl={this.props.baseUpdateUrl} />
         </Tab>

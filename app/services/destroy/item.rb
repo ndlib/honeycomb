@@ -9,7 +9,7 @@ module Destroy
 
     # Destroy the object only
     def destroy!(item:)
-      unless item.pages.any?
+      unless item.pages.any? || item.sections.any?
         item.destroy!
         remove_from_index(item: item)
       end

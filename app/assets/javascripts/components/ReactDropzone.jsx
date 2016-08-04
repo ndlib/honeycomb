@@ -57,7 +57,6 @@ var ReactDropzone = React.createClass({
   },
 
   checkfileCallback: function () {
-    console.log('checkfileCallback');
     var hasFiles = (this.dropzone.files.length > 0);
     this.setState( { hasFiles: hasFiles } );
   },

@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe V1::PageJSONDecorator do
   subject { described_class.new(page) }
   let(:collection) { instance_double(Collection, unique_id: "collection1") }
-  let(:image) { instance_double(Image, json_response: true) }
+  let(:image) { instance_double(Image) }
   let(:page) do
     instance_double(Page,
                     collection: collection,
@@ -13,6 +13,10 @@ RSpec.describe V1::PageJSONDecorator do
                     image: image,
                     content: "<html/>",
                     updated_at: nil)
+  end
+
+  before(:each) do
+    allow_any_instance_of(V1::ImageJSONDecorator).to receive(:to_hash).and_return(image: "image")
   end
 
   describe "generic fields" do
@@ -105,8 +109,8 @@ RSpec.describe V1::PageJSONDecorator do
 
   describe "#image" do
     it "uses the json response from the image server" do
-      expect(image).to receive(:json_response).and_return({})
-      subject.image
+      expect_any_instance_of(V1::ImageJSONDecorator).to receive(:to_hash).and_return(image: "image")
+      expect(subject.image).to eq(image: "image")
     end
 
     it "returns nil if there is no image" do

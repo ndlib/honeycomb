@@ -56,15 +56,16 @@ var ItemMetaDataForm = React.createClass({
 
   componentDidMount: function() {
     window.addEventListener("beforeunload", this.unloadMsg);
+    if (MetaDataConfigurationStore.activeFields.length == 0) {
+      MetaDataConfigurationStore.on("MetaDataConfigurationStoreChanged", this.setFormFieldsFromConfiguration);
+      MetaDataConfigurationStore.getAll();
+    } else {
+      this.setFormFieldsFromConfiguration();
+    }
   },
 
   componentWillUnmount: function() {
     window.removeEventListener("beforeunload", this.unloadMsg);
-  },
-
-  componentWillMount: function () {
-    MetaDataConfigurationStore.on("MetaDataConfigurationStoreChanged", this.setFormFieldsFromConfiguration);
-    MetaDataConfigurationStore.getAll();
   },
 
   setFormFieldsFromConfiguration: function() {
@@ -224,7 +225,9 @@ var ItemMetaDataForm = React.createClass({
           displayedFields={this.state.displayedFields}
           selectableFields={this.state.formFields}
           onChangeHandler={this.changeAddField} />
-        <SubmitButton disabled={this.formDisabled()} handleClick={this.handleSave} />
+        <div>
+          <SubmitButton disabled={this.formDisabled()} handleClick={this.handleSave} />
+        </div>
       </Form>
     );
   }

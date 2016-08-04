@@ -13,6 +13,10 @@ module CacheKeys
       def showcases(item:)
         CacheKeys::ActiveRecord.new.generate(record: [item, item.collection, item.showcases, item.collection.collection_configuration])
       end
+
+      def pages(item:)
+        CacheKeys::ActiveRecord.new.generate(record: [item, item.collection, item.pages, item.collection.collection_configuration])
+      end
     end
   end
 end
