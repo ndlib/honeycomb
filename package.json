@@ -26,7 +26,8 @@
     "react-dom": "0.14.7",
     "react-scroll": "0.18.0",
     "react-tap-event-plugin": "0.2.1",
-    "reactify": "0.17.1"
+    "reactify": "0.17.1",
+    "evaporate": "1.4.6"
   },
   "devDependencies": {
     "react-tools": "0.12.2"
