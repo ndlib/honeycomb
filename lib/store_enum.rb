@@ -1,5 +1,4 @@
 require 'active_support/core_ext/object/deep_dup'
-rubocop:disable all
 
 # Declare an enum attribute where the values map to integers in the database,
 # but can be queried by name. Example:
@@ -196,4 +195,3 @@ module StoreEnum
       end
     end
 end
-rubocop:enable all
