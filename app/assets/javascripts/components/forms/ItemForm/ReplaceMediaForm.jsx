@@ -49,9 +49,12 @@ var ReplaceMedia = React.createClass({
     };
     console.log(f.files[0]);
     xhr.send(f.files[0]);
+//
+//<input type="file" id="uploadFile" ref={ "uploadFile" } name="upload" />
+//  <RaisedButton label="Uploady" onClick={ this.uploady } />
+//</div>
+//
   },
-
-
 
   completeCallback: function() {
     if (this.dropzone.files.length > 0) {
@@ -77,9 +80,6 @@ var ReplaceMedia = React.createClass({
           multifileUpload={ true }
           paramName="item[uploaded_image]"
         />
-      <input type="file" id="uploadFile" ref={ "uploadFile" } name="upload" />
-        <RaisedButton label="Uploady" onClick={ this.uploady } />
-      </div>
     );
   }
 });

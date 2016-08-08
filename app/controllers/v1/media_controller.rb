@@ -3,7 +3,7 @@ module V1
   class MediaController < APIController
     def create
       uuid = SecureRandom.hex
-      render json: { status: AllocateS3Url.call(uuid, "filename.jpg") }
+      render json: { uploadURL: AllocateS3Url.call(uuid, "filename.jpg") }
     end
 
     def update
