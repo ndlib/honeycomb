@@ -14,6 +14,4 @@ class Image < Media
 
   has_attached_file :image, restricted_characters: /[&$+,\/:;=?@<>\[\]{}\|\\^~%#]/
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\Z/
-
-  has_paper_trail
 end
