@@ -10,7 +10,6 @@ describe AllocateS3Url do
   let(:bucket) { double(object: bucket_object) }
   let(:bucket_object) { double(presigned_url: url) }
   let(:url) { "url" }
-  let(:test_url) { "https://testlibnd-wse-honeycomb-jon.s3.amazonaws.com/abcdefg..jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAIH6RIUHKPGB7YEMQ%2F20160808%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20160808T130209Z&X-Amz-Expires=900&X-Amz-SignedHeaders=host&X-Amz-Signature=b424942b306b0260afc498ffb00cdd55a6d7239e9b0d9ebf105ca7e38db8712f" }
 
   before(:each) do
     allow_any_instance_of(described_class).to receive(:s3).and_return(s3)
