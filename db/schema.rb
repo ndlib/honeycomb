@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720143041) do
+ActiveRecord::Schema.define(version: 20160805194419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -157,9 +157,11 @@ ActiveRecord::Schema.define(version: 20160720143041) do
     t.integer  "status_save",             default: 0
     t.jsonb    "data",                    default: {}, null: false
     t.string   "type"
+    t.uuid     "uuid"
   end
 
   add_index "media", ["image_fingerprint_save"], name: "index_media_on_image_fingerprint_save", using: :btree
+  add_index "media", ["uuid"], name: "index_media_on_uuid", using: :btree
 
   create_table "pages", force: :cascade do |t|
     t.string   "unique_id"
