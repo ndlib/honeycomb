@@ -95,6 +95,11 @@ Rails.application.routes.draw do
               only: [:show, :update, :destroy],
               defaults: { format: :json } do
       resource :metadata, only: [:update]
+      resources :media,
+                only: [:create, :update] do
+                  put :start_upload
+                  put :finish_upload
+                end
       get :showcases, defaults: { format: :json }
       get :pages, defaults: { format: :json }
     end
