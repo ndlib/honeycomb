@@ -36,7 +36,5 @@ describe AllocateS3Url do
     subject
   end
 
-  it "sets the time limit to 1 hour" do
-    
-  end
+  it "sets the time limit to 1 hour"
 end
