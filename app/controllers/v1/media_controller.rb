@@ -2,6 +2,10 @@ module V1
   # Version 1 API
   class MediaController < APIController
     def create
+      @item = ItemQuery.new.public_find(params[:item_id])
+
+      check_user_edits!(@item.collection)
+
       uuid = SecureRandom.hex
       render json: { uploadURL: AllocateS3Url.call(uuid, "filename.jpg") }
     end

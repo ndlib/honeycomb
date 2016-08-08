@@ -88,6 +88,19 @@ class ItemActions extends NodeEventEmitter {
   url(id) {
     return "/v1/items/" + id;
   }
+
+  getSignedUrl(id) {
+    var url = this.url(id) + "/media";
+
+    $.ajax({
+      url: this.url(id),
+      dataType: "json",
+      method: "POST",
+      success: (function(data) {
+        this.emit("GotSignedUrl", data);
+      }),
+    });
+  }
 }
 
 module.exports = new ItemActions();
