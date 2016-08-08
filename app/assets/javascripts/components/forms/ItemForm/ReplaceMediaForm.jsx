@@ -1,5 +1,7 @@
 var React = require('react');
 var mui = require("material-ui");
+var RaisedButton = mui.RaisedButton;
+
 var ItemActions = require("../../../actions/ItemActions");
 
 var ReplaceMedia = React.createClass({
@@ -53,7 +55,7 @@ var ReplaceMedia = React.createClass({
           multifileUpload={ true }
           paramName="item[uploaded_image]"
         />
-      </div>
+    </div>
     );
   }
 });
