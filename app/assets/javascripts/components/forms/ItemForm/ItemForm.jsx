@@ -7,6 +7,9 @@ var ItemActionTypes = require("../../../constants/ItemActionTypes");
 var ItemStore = require("../../../stores/ItemStore");
 var DeleteItemForm = require("./DeleteItemForm");
 var ReplaceMediaForm = require("./ReplaceMediaForm");
+var StreamingForm = require("./StreamingForm");
+
+var LoadingImage = require("../../LoadingImage");
 
 var Tabs = mui.Tabs;
 var Tab = mui.Tab;
@@ -90,8 +93,6 @@ var ItemForm = React.createClass({
           <ReplaceMediaForm
             item={ this.state.item }
             authenticityToken={ this.props.authenticityToken }
-            modalTitle="Replace"
-            multifileUpload={ false }
           />
         </div>
       );
@@ -122,7 +123,7 @@ var ItemForm = React.createClass({
 
   render: function() {
     if (!this.state.item) {
-      return (<div>Loading...</div>);
+      return (<LoadingImage />);
     }
 
     return (

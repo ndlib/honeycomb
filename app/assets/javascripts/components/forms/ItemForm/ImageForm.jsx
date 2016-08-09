@@ -5,56 +5,52 @@ var RaisedButton = mui.RaisedButton;
 var ItemActions = require("../../../actions/ItemActions");
 
 var ImageForm = React.createClass({
+  mixins: [MuiThemeMixin, DialogMixin],
+
   propTypes: {
     item: React.PropTypes.object.isRequired,
-  }
+    authenticityToken: React.PropTypes.string.isRequired,
+    primary: React.PropTypes.bool,
+  },
 
-  getInitialState: function() {
+  getDefaultProps: function() {
     return {
-      processing: false,
+      modalId: "add-items",
+    };
+  },
+
+  dropzoneInitialized: function(dropzone) {
+    this.dropzone = dropzone;
+    this.dropzone.on('addedfile', this.checkfileCallback);
+    this.dropzone.on('removedfile', this.checkfileCallback);
+  },
+
+  completeCallback: function() {
+    if (this.dropzone.files.length > 0) {
+      ItemActions.get(this.props.item.id);
     }
   },
 
-  componentDidMount: function() {
-    ItemActions.on("GotSignedUrl", this.getSignedUrl);
-
-  }
-
-  uploady: function() {
-    this.setState({ processing: true});
-    ItemActions.getSignedUrl(this.props.item.id)
-  },
-
-  getSignedUrl: function(d1, d2) {
-    console.log(d1);
-    console.log(d2);
-  },
-
-  uploadFile: function() {
-    var f = this.refs.uploadFile;
-    var xhr = new XMLHttpRequest();
-    xhr.open('PUT', signerUrl);
-    xhr.onreadystatechange = () => {
-      if(xhr.readyState === 4) {
-        this.setState({ processing: true});
-        if(xhr.status === 200) {
-          alert ("UPLOADED !! ");
-        } else {
-          alert('Could not upload file.');
-        }
-      }
-    };
-    xhr.send(f.files[0]);
+  checkfileCallback: function () {
+    var hasFiles = (this.dropzone.files.length > 0);
+    this.setState( { hasFiles: hasFiles } );
   },
 
   render: function() {
     return (
       <div>
-        <input type="file" id="uploadFile" ref={ "uploadFile" } name="upload" />
-        <RaisedButton label="Uploady" onClick={ this.uploady } />
-      </div>
+        <DropzoneForm
+          authenticityToken={this.props.authenticityToken}
+          baseID={this.props.modalId}
+          completeCallback={this.completeCallback}
+          formUrl={ ItemActions.url(this.props.item.id) }
+          initializeCallback={this.dropzoneInitialized}
+          method="put"
+          multifileUpload={ true }
+          paramName="item[uploaded_image]"
+        />
+    </div>
     );
   }
 });
-
 module.exports = ImageForm;
