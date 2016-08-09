@@ -29,10 +29,14 @@ class AllocateS3Url
   end
 
   def bucket_name
-    "testlibnd-wse-honeycomb-jon"
+    configuration["bucket"]
   end
 
   def s3
     @s3 ||= Aws::S3::Resource.new
+  end
+
+  def configuration
+    @configuration ||= Rails.application.secrets.aws
   end
 end

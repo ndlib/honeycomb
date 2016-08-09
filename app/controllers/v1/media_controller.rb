@@ -6,8 +6,8 @@ module V1
 
       check_user_edits!(@item.collection)
 
-      uuid = SecureRandom.hex
-      render json: { uploadURL: AllocateS3Url.call(uuid, "filename.jpg") }
+      media = CreateMedia.call(collection: @item.collection, params: create_params)
+      render json: media.to_json
     end
 
     def update
@@ -16,7 +16,11 @@ module V1
     def start_upload
     end
 
-    def finsh_upload
+    def finish_upload
+    end
+
+    def create_params
+      params.require(:medium)
     end
   end
 end
