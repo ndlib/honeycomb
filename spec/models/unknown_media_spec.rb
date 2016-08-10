@@ -21,6 +21,6 @@ RSpec.describe UnknownMedia do
   end
 
   it "has media_type errors" do
-    expect(subject.errors).to eq(error: [{ name:"media_type", description: "Unknown media type 'Foo'" }])
+    expect(subject.errors).to eq(error: [{ name: "media_type", description: "Unknown media type 'Foo'" }])
   end
 end
