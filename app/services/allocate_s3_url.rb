@@ -11,7 +11,7 @@ class AllocateS3Url
   end
 
   def generate
-    bucket_object.presigned_url(:put)
+    bucket_object.presigned_url(:put, expires_in: 3600)
   end
 
   private

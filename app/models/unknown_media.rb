@@ -20,6 +20,10 @@ class UnknownMedia < Media
     }
   end
 
+  def uuid
+    nil
+  end
+
   def json_response
     nil
   end

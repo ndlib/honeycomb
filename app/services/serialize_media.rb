@@ -3,7 +3,9 @@
 # we should create separate service classes for each
 class SerializeMedia
   def self.to_hash(media:)
-    media.json_response || media.errors.to_hash
+    result = { uuid: media.uuid, file_name: media.file_name, media_type: media.type.downcase }
+    result.merge!(media.json_response) if media.json_response
+    result.merge!(media.errors.to_hash) if media.errors
   end
 
   def self.to_json(media:)

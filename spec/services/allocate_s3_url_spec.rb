@@ -35,5 +35,8 @@ describe AllocateS3Url do
     subject
   end
 
-  it "sets the time limit to 1 hour"
+  it "sets the time limit to 1 hour" do
+    expect(bucket_object).to receive(:presigned_url).with(:put, expires_in: 3600)
+    subject
+  end
 end

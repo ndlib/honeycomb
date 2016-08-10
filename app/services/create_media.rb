@@ -14,19 +14,14 @@ class CreateMedia
 
   def create!
     type = params.delete(:media_type)
-    param_syms = params.symbolize_keys
     case type
       # Video and audio construction are identical atm. When they diverge
       # we should probably create CreateVideo and CreateAudio service objects
       # and offload the work to those
       when "video"
-        @media = Video.new(param_syms, collection: collection, uuid: SecureRandom.uuid)
-        save_and_associate
-        media
+        create_and_associate(type: Video)
       when "audio"
-        @media = Audio.new(param_syms, collection: collection, uuid: SecureRandom.uuid)
-        save_and_associate
-        media
+        create_and_associate(type: Audio)
       else
         @media = UnknownMedia.new(media_type: type)
         media.serializer = SerializeMedia
@@ -36,8 +31,11 @@ class CreateMedia
 
   private
 
-  def save_and_associate
+  def create_and_associate(type:)
+    media = type.new(params.symbolize_keys)
+    media.uuid = SecureRandom.uuid
     media.collection = collection
+    media.status = "allocated"
     if media.save
       media.serializer = SerializeNewS3Media
       owner.media_id = media.id
@@ -45,5 +43,6 @@ class CreateMedia
     else
       media.serializer = SerializeMedia
     end
+    media
   end
 end
