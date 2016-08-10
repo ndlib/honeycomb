@@ -8,7 +8,7 @@ RSpec.describe SerializeNewS3Media do
            file_name: "filename.ext",
            type: "Type",
            json_response: { response_key: "response value" },
-           errors: { error_key: "error value" } )
+           errors: { error_key: "error value" })
   end
 
   before(:each) do

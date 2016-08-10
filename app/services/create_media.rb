@@ -15,17 +15,17 @@ class CreateMedia
   def create!
     type = params.delete(:media_type)
     case type
-      # Video and audio construction are identical atm. When they diverge
-      # we should probably create CreateVideo and CreateAudio service objects
-      # and offload the work to those
-      when "video"
-        create_and_associate(type: Video)
-      when "audio"
-        create_and_associate(type: Audio)
-      else
-        @media = UnknownMedia.new(media_type: type)
-        media.serializer = SerializeMedia
-        media
+    # Video and audio construction are identical atm. When they diverge
+    # we should probably create CreateVideo and CreateAudio service objects
+    # and offload the work to those
+    when "video"
+      create_and_associate(type: Video)
+    when "audio"
+      create_and_associate(type: Audio)
+    else
+      @media = UnknownMedia.new(media_type: type)
+      media.serializer = SerializeMedia
+      media
     end
   end
 

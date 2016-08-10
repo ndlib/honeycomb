@@ -13,8 +13,8 @@ class UnknownMedia < Media
     {
       error: [
         {
-            name: "media_type",
-            description: "Unknown media type '#{media_type}'"
+          name: "media_type",
+          description: "Unknown media type '#{media_type}'"
         }
       ]
     }
