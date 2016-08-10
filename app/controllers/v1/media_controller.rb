@@ -4,7 +4,7 @@ module V1
     def create_for_item
       @item = ItemQuery.new.public_find(params[:item_id])
 
-      #check_user_edits!(@item.collection)
+      check_user_edits!(@item.collection)
 
       media = CreateMedia.call(owner: @item, collection: @item.collection, params: create_params)
       status = media.valid? ? :ok : :unprocessable_entity
