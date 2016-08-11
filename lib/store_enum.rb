@@ -1,6 +1,10 @@
 require 'active_support/core_ext/object/deep_dup'
 
-# Declare an enum attribute where the values map to integers in the database,
+# An enum implementation that works with a Rails Store. Based on Rails 4.2.6 enum:
+#   https://github.com/rails/rails/blob/v4.2.6/activerecord/lib/active_record/enum.rb
+# Note: This implementation assumes your store uses strings as keys, not symbols!
+#
+# Declare an enum attribute where the values map to integers in a store,
 # but can be queried by name. Example:
 #
 #   class Conversation < ActiveRecord::Base
@@ -81,7 +85,7 @@ module StoreEnum
     definitions.each do |name, values|
       # statuses = { }
       enum_values = ActiveSupport::HashWithIndifferentAccess.new
-      name        = name.to_sym
+      name        = name.to_s # This assumes the store is always storing keys as strings not symbols!
 
       # def self.statuses statuses end
       detect_enum_conflict!(name, name.to_s.pluralize, true)

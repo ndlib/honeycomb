@@ -11,7 +11,7 @@ class AllocateS3Url
   end
 
   def generate
-    bucket_object.presigned_url(:put)
+    bucket_object.presigned_url(:put, expires_in: 3600)
   end
 
   private
@@ -29,10 +29,14 @@ class AllocateS3Url
   end
 
   def bucket_name
-    "testlibnd-wse-honeycomb-jon"
+    configuration["bucket"]
   end
 
   def s3
     @s3 ||= Aws::S3::Resource.new
+  end
+
+  def configuration
+    @configuration ||= Rails.application.secrets.aws
   end
 end
