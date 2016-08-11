@@ -4,6 +4,7 @@ var RaisedButton = mui.RaisedButton;
 var LoadingImage = require("../../LoadingImage");
 
 var ItemActions = require("../../../actions/ItemActions");
+var ItemStore = require("../../../stores/ItemStore");
 var AppEventEmitter = require("../../../EventEmitter");
 
 var StreamingForm = React.createClass({
@@ -14,24 +15,42 @@ var StreamingForm = React.createClass({
   getInitialState: function() {
     return {
       processing: false,
+      item: null
     }
+  },
+
+  componentDidMount: function() {
+    ItemStore.on("ItemCreateFinished", this.setItem);
+    this.setState({ item: this.props.item })
+  },
+
+  setItem(data) {
+    this.setState({ item: data }, this.loadSigningUrl);
   },
 
   uploady: function() {
     var f = this.refs.uploadFile;
     if (f.files[0]) {
-      this.setState({ processing: true});
+      this.setState({ processing: true });
+      this.createNewItem(f.files[0]);
+    }
+  },
+
+  createNewItem: function(file) {
+    if (this.state.item) {
       this.loadSigningUrl();
+    } else {
+      ItemActions.create(file.name)
     }
   },
 
   loadSigningUrl: function() {
-    var url = ItemActions.url(this.props.item.id) + "/media";
+    var url = ItemActions.url(this.state.item.id) + "/media"
 
     $.ajax({
       url: url,
       dataType: "json",
-      method: "POST",      
+      method: "POST",
       success: (function(data) {
         this.uploadFile(data.uploadURL);
       }.bind(this)),
@@ -48,7 +67,7 @@ var StreamingForm = React.createClass({
         if(xhr.status === 200) {
 
         } else {
-          AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error.  Please try again if the problem persists please contact WSE unit.");
+          AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error. Please try again if the problem persists please contact WSE unit.");
         }
       }
     };

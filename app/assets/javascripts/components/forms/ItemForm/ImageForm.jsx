@@ -9,13 +9,12 @@ var ImageForm = React.createClass({
 
   propTypes: {
     item: React.PropTypes.object.isRequired,
-    authenticityToken: React.PropTypes.string.isRequired,
-    primary: React.PropTypes.bool,
   },
 
   getDefaultProps: function() {
     return {
-      modalId: "add-items",
+      method: "put",
+      modalId: "add-items"
     };
   },
 
@@ -45,7 +44,7 @@ var ImageForm = React.createClass({
           completeCallback={this.completeCallback}
           formUrl={ ItemActions.url(this.props.item.id) }
           initializeCallback={this.dropzoneInitialized}
-          method="put"
+          method={ this.method }
           multifileUpload={ true }
           paramName="item[uploaded_image]"
         />

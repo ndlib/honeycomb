@@ -30,6 +30,7 @@ class SaveItem
 
   def fix_params
     @params = params.with_indifferent_access
+    fix_name_param!
     fix_image_param!
     ParamCleaner.call(hash: params)
   end
@@ -52,6 +53,13 @@ class SaveItem
   def fix_image_param!
     @uploaded_image = params[:uploaded_image]
     params.delete(:uploaded_image)
+  end
+
+  def fix_name_param!
+    if params[:name]
+      data = { "name" => params.delete(:name) }
+      Metadata::Setter.call(item, data)
+    end
   end
 
   def process_uploaded_image

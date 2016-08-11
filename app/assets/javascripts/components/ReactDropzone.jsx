@@ -12,10 +12,6 @@ var ReactDropzone = React.createClass({
     formUrl: React.PropTypes.string.isRequired,
     authenticityToken: React.PropTypes.string.isRequired,
     multifileUpload: React.PropTypes.bool,
-    modalTitle: React.PropTypes.string.isRequired,
-    doneText: React.PropTypes.string,
-    cancelText: React.PropTypes.string,
-    primary: React.PropTypes.bool,
   },
 
   getDefaultProps: function() {
@@ -28,7 +24,6 @@ var ReactDropzone = React.createClass({
 
   getInitialState: function() {
     return {
-      closed: false,
       hasFiles: false,
     };
   },
@@ -37,23 +32,6 @@ var ReactDropzone = React.createClass({
     this.dropzone = dropzone;
     this.dropzone.on('addedfile', this.checkfileCallback);
     this.dropzone.on('removedfile', this.checkfileCallback);
-  },
-
-  closeCallback: function() {
-    if (this.dropzone.files.length > 0) {
-      this.setState({closed: true});
-      window.location.reload();
-    }
-  },
-
-  dismissMessage: function() {
-    this.refs.addItems.dismiss();
-  },
-
-  completeCallback: function() {
-    if (!this.props.multifileUpload) {
-      this.closeCallback();
-    }
   },
 
   checkfileCallback: function () {
@@ -134,25 +112,8 @@ var ReactDropzone = React.createClass({
     );
     return (
       <div>
-        <RaisedButton
-          primary={this.props.primary}
-          onTouchTap={this.showModal}
-          label={buttonLabel}
-          />
-        <Dialog
-          ref="addItems"
-          autoDetectWindowHeight={true}
-          autoScrollBodyContent={true}
-          modal={true}
-          title={this.props.modalTitle}
-          actions={this.okDismiss()}
-          openImmediately={false}
-          onDismiss={this.closeCallback}
-          style={{zIndex: 100}}
-        >
-          { this.dropzoneForm() }
-          { this.spinner() }
-        </Dialog>
+        { this.dropzoneForm() }
+        { this.spinner() }
       </div>
     );
   }

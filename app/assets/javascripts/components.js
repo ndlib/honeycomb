@@ -41,6 +41,7 @@ LoadingImage = require("./components/LoadingImage");
 Modal = require("./components/Modal");
 OpenSeadragonViewer = require("./components/OpenSeadragonViewer");
 ReactDropzone = require("./components/ReactDropzone");
+AddNewItemsButton = require("./components/forms/ItemForm/AddNewItemsButton");
 ShowcasesPanel = require("./components/ShowcasesPanel");
 PagesPanel = require("./components/PagesPanel");
 Thumbnail = require("./components/Thumbnail");
