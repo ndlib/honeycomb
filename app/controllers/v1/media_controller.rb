@@ -14,7 +14,6 @@ module V1
     private
 
     def create_params
-      puts params.inspect
       params.require(:medium)
     end
   end
