@@ -10,6 +10,7 @@ var AppEventEmitter = require("../../../EventEmitter");
 var StreamingForm = React.createClass({
   propTypes: {
     item: React.PropTypes.object.isRequired,
+    hasFiles: React.PropTypes.func
   },
 
   getInitialState: function() {
@@ -32,6 +33,9 @@ var StreamingForm = React.createClass({
     var f = this.refs.uploadFile;
     if (f.files[0]) {
       this.setState({ processing: true });
+      if (this.props.hasFiles) {
+        this.props.hasFiles();
+      }
       this.createNewItem(f.files[0]);
     }
   },
@@ -45,14 +49,20 @@ var StreamingForm = React.createClass({
   },
 
   loadSigningUrl: function() {
-    var url = ItemActions.url(this.state.item.id) + "/media"
+    var f = this.refs.uploadFile;
+    var url = ItemActions.url(this.state.item.id) + "/media";
+    var postData = { medium: { file_name: f.files[0].name, media_type: "video" } };
 
     $.ajax({
       url: url,
       dataType: "json",
       method: "POST",
+      data: postData,
       success: (function(data) {
-        this.uploadFile(data.uploadURL);
+        this.uploadFile(data.upload_url);
+      }.bind(this)),
+      error: (function(xhr) {
+        AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error. Please try again if the problem persists please contact WSE unit.");
       }.bind(this)),
     });
   },
@@ -65,7 +75,7 @@ var StreamingForm = React.createClass({
       if(xhr.readyState === 4) {
         this.setState({ processing: false});
         if(xhr.status === 200) {
-
+          alert("SEND FINISHED UPDATE TO HC");
         } else {
           AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error. Please try again if the problem persists please contact WSE unit.");
         }

@@ -30,7 +30,7 @@ class ItemActions extends NodeEventEmitter {
   }
 
   create(name) {
-    var postData = {  item: { name: name } }
+    var postData = { item: { name: name } }
 
     $.ajax({
       url: this.createUrl(),

@@ -9,6 +9,7 @@ var ImageForm = React.createClass({
 
   propTypes: {
     item: React.PropTypes.object.isRequired,
+    hasFiles: React.PropTypes.func
   },
 
   getDefaultProps: function() {
@@ -33,6 +34,7 @@ var ImageForm = React.createClass({
   checkfileCallback: function () {
     var hasFiles = (this.dropzone.files.length > 0);
     this.setState( { hasFiles: hasFiles } );
+    this.props.hasFiles();
   },
 
   render: function() {

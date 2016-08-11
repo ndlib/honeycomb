@@ -22,10 +22,8 @@ var AddNewItemsButton = React.createClass({
   },
 
   closeCallback: function() {
-    if (this.dropzone.files.length > 0) {
-      this.setState({closed: true});
-      window.location.reload();
-    }
+    this.setState({closed: true});
+    window.location.reload();
   },
 
   dismissMessage: function() {
@@ -40,6 +38,10 @@ var AddNewItemsButton = React.createClass({
 
   showModal: function() {
     this.refs.addItems.show();
+  },
+
+  setHasFiles: function() {
+    this.setState({ hasFiles: true });
   },
 
   render: function() {
@@ -73,6 +75,7 @@ var AddNewItemsButton = React.createClass({
             <Tab label="Video">
               <StreamingForm
                 item={null}
+                hasFiles={ this.setHasFiles }
               />
             </Tab>
             <Tab label="Audio">

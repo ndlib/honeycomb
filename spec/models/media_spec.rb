@@ -18,4 +18,11 @@ RSpec.describe Media do
     expect(subject).to respond_to(:paper_trail_enabled_for_model?)
     expect(subject.paper_trail_enabled_for_model?).to be(true)
   end
+
+  it "delegates to_json to a serializer if one is given" do
+    serializer = {}
+    allow(subject).to receive(:serializer).and_return(serializer)
+    allow(serializer).to receive(:to_json).and_return("serializer.to_json")
+    expect(subject.to_json).to eq("serializer.to_json")
+  end
 end
