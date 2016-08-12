@@ -9,7 +9,7 @@ RSpec.describe V1::ItemJSONDecorator do
   let(:instance) { described_class.new(item) }
 
   before(:each) do
-    allow_any_instance_of(V1::ImageJSONDecorator).to receive(:to_hash).and_return(image: "image!")
+    allow(SerializeMedia).to receive(:to_hash).and_return(image: "image!")
   end
 
   subject { instance }
@@ -69,9 +69,9 @@ RSpec.describe V1::ItemJSONDecorator do
   describe "#media" do
     let(:item) { instance_double(Item, media: nil) }
 
-    it "uses the output of ImageJSONDecorator if the media is an image" do
+    it "uses the output of SerializeMedia if the media is an image" do
       allow(item).to receive(:media).and_return(image)
-      allow_any_instance_of(V1::ImageJSONDecorator).to receive(:to_hash).and_return("image json_response")
+      allow(SerializeMedia).to receive(:to_hash).with(media: image).and_return("image json_response")
       expect(subject.media).to eq("image json_response")
     end
 

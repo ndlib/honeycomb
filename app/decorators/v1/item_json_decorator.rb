@@ -40,12 +40,7 @@ module V1
 
     def media
       if object.media
-      case object.media.type
-        when "Image"
-          V1::ImageJSONDecorator.new(object.media).to_hash
-        else
-          SerializeMedia.to_hash(media: object.media)
-        end
+        SerializeMedia.to_hash(media: object.media)
       end
     end
 

@@ -16,7 +16,7 @@ RSpec.describe V1::PageJSONDecorator do
   end
 
   before(:each) do
-    allow_any_instance_of(V1::ImageJSONDecorator).to receive(:to_hash).and_return(image: "image")
+    allow(SerializeMedia).to receive(:to_hash).and_return(image: "image")
   end
 
   describe "generic fields" do
@@ -109,7 +109,7 @@ RSpec.describe V1::PageJSONDecorator do
 
   describe "#image" do
     it "uses the json response from the image server" do
-      expect_any_instance_of(V1::ImageJSONDecorator).to receive(:to_hash).and_return(image: "image")
+      expect(SerializeMedia).to receive(:to_hash).and_return(image: "image")
       expect(subject.image).to eq(image: "image")
     end
 

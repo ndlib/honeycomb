@@ -13,90 +13,34 @@ RSpec.describe SerializeMedia do
   end
 
   describe "to_hash" do
-    let(:subject) { SerializeMedia.to_hash(media: media) }
+    let(:subject) { described_class.to_hash(media: media) }
 
-    it "includes the @id" do
-      expect(subject).to include("@id" => media.uuid)
+    it "delegates to SerializeAVMedia when the type is Audio|Video" do
+      allow(media).to receive(:type).and_return("Audio")
+      allow(SerializeAVMedia).to receive(:to_hash).with(media: media).and_return("SerializeAVMedia#to_hash result")
+      expect(subject).to eq("SerializeAVMedia#to_hash result")
     end
 
-    it "includes the name" do
-      expect(subject).to include(name: media.file_name)
-    end
-
-    it "includes the type" do
-      expect(subject).to include("@type" => "TypeObject")
-    end
-
-    it "includes the json response" do
-      expect(subject).to include(media.json_response)
-    end
-
-    it "includes the errors" do
-      expect(subject).to include(media.errors)
-    end
-
-    it "uses the Honeycomb uuid as @id even when json_response contains an @id" do
-      allow(media).to receive(:json_response).and_return({ "@id" => "media server @id" })
-      expect(subject).to include("@id" => media.uuid)
-      expect(subject).not_to include("@id" => "media server @id")
-    end
-
-    ["allocated"].each do |state|
-      it "renders a status of 'not ready' for the '#{state}' state" do
-        allow(media).to receive(:status).and_return(state)
-        expect(subject).to include(status: "not ready")
-      end
-    end
-
-    ["ready"].each do |state|
-      it "renders a status of 'ready' for the '#{state}' state" do
-        allow(media).to receive(:status).and_return(state)
-        expect(subject).to include(status: "ready")
-      end
+    it "delegates to SerializeImageMedia when the type is Image" do
+      allow(media).to receive(:type).and_return("Image")
+      allow(SerializeImageMedia).to receive(:to_hash).and_return("SerializeImageMedia#to_hash result")
+      expect(subject).to eq("SerializeImageMedia#to_hash result")
     end
   end
 
   describe "to_json" do
-    let(:subject) { JSON.parse(SerializeMedia.to_json(media: media), symbolize_names: true) }
+    let(:subject) { described_class.to_json(media: media) }
 
-    it "includes the @id" do
-      expect(subject).to include(:"@id" => media.uuid)
+    it "delegates to SerializeAVMedia when the type is Audio|Video" do
+      allow(media).to receive(:type).and_return("Audio")
+      allow(SerializeAVMedia).to receive(:to_hash).with(media: media).and_return("SerializeAVMedia#to_hash result")
+      expect(subject).to eq("\"SerializeAVMedia#to_hash result\"")
     end
 
-    it "includes the name" do
-      expect(subject).to include(name: media.file_name)
-    end
-
-    it "includes the type" do
-      expect(subject).to include(:"@type" => "TypeObject")
-    end
-
-    it "includes the json response" do
-      expect(subject).to include(media.json_response)
-    end
-
-    it "includes the errors" do
-      expect(subject).to include(media.errors)
-    end
-
-    it "uses the Honeycomb uuid as @id even when json_response contains an @id" do
-      allow(media).to receive(:json_response).and_return({ "@id" => "media server @id" })
-      expect(subject).to include(:"@id" => media.uuid)
-      expect(subject).not_to include(:"@id" => "media server @id")
-    end
-
-    ["allocated"].each do |state|
-      it "renders a status of 'not ready' for the '#{state}' state" do
-        allow(media).to receive(:status).and_return(state)
-        expect(subject).to include(status: "not ready")
-      end
-    end
-
-    ["ready"].each do |state|
-      it "renders a status of 'ready' for the '#{state}' state" do
-        allow(media).to receive(:status).and_return(state)
-        expect(subject).to include(status: "ready")
-      end
+    it "delegates to SerializeImageMedia when the type is Image" do
+      allow(media).to receive(:type).and_return("Image")
+      allow(SerializeImageMedia).to receive(:to_hash).and_return("SerializeImageMedia#to_hash result")
+      expect(subject).to eq("\"SerializeImageMedia#to_hash result\"")
     end
   end
 end
