@@ -10,7 +10,7 @@ RSpec.describe ItemJSON do
       user_defined_id: "udi",
       id: 1,
       collection: collection,
-      image: honeypot_image,
+      media: honeypot_image,
       parent_id: nil,
       child_ids: []
     }
@@ -62,7 +62,7 @@ RSpec.describe ItemJSON do
     end
 
     it "is nil if there is no image" do
-      expect(item).to receive(:image).and_return(nil)
+      expect(item).to receive(:media).and_return(nil)
       expect(subject.send(:image_data)).to be_nil
     end
   end

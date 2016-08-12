@@ -9,7 +9,7 @@ RSpec.describe ItemDecorator do
       id: 1,
       collection_id: collection.id,
       collection: collection,
-      image: image,
+      media: image,
       showcases: { showcases: {} },
       pages: { pages: {} },
     }
@@ -89,7 +89,7 @@ RSpec.describe ItemDecorator do
   describe "image" do
     let(:image) { instance_double(Image, json_response: {}) }
     before do
-      allow(item).to receive(:image).and_return(image)
+      allow(item).to receive(:media).and_return(image)
     end
 
     describe "#show_image_box" do
@@ -152,7 +152,7 @@ RSpec.describe ItemDecorator do
         id: 2,
         collection_id: collection.id,
         collection: collection,
-        image: "image.jpg",
+        media: "image.jpg",
         parent_id: 1
       }
     end
@@ -194,7 +194,7 @@ RSpec.describe ItemDecorator do
     end
 
     it "renders the correct success span when the image is invalid" do
-      expect(item).to receive(:image).and_return(nil)
+      expect(item).to receive(:media).and_return(nil)
       expect(subject).to receive(:status_text_span).with(className: "text-success", icon: "ok", text: "No Image")
       subject.status_text
     end

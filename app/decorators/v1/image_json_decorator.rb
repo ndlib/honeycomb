@@ -84,6 +84,9 @@ module V1
       json.set! "thumbnail/medium" do |json_medium|
         set_image_object_json_keys(json: json_medium, style: :medium)
       end
+      json.set! "thumbnail/dzi" do |json_dzi|
+        set_image_object_json_keys(json: json_dzi, style: :dzi)
+      end
     end
 
     def set_image_object_json_keys(json:, style:)

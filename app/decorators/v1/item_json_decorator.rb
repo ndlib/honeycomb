@@ -38,9 +38,14 @@ module V1
       CreateURLSlug.call(object.name)
     end
 
-    def image
-      if object.image
-        V1::ImageJSONDecorator.new(object.image).to_hash
+    def media
+      if object.media
+      case object.media.type
+        when "Image"
+          V1::ImageJSONDecorator.new(object.media).to_hash
+        else
+          SerializeMedia.to_hash(media: object.media)
+        end
       end
     end
 
@@ -84,7 +89,7 @@ module V1
       json.slug slug
       json.name name
       json.description description.to_s
-      json.image image
+      json.media media
       json.metadata metadata
       json.last_updated updated_at
     end

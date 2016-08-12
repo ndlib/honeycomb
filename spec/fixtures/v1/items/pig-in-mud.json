@@ -17,7 +17,7 @@
   "copyright":"\u003cp\u003e\u003ca href=\"http://www.nd.edu/copyright/\"\u003eCopyright\u003c/a\u003e 2015 \u003ca href=\"http://www.nd.edu\"\u003eUniversity of Notre Dame\u003c/a\u003e\u003c/p\u003e",
   "items":{
     "@context":"http://schema.org",
-    "@type":"CreativeWork",
+    "@type":"ImageObject",
     "@id":"http://localhost:3017/v1/items/pig-in-mud",
     "isPartOf/collection":"http://localhost:3017/v1/collections/animals",
     "id":"pig-in-mud",
@@ -25,7 +25,7 @@
     "slug":"pig-in-mud",
     "name":"pig-in-mud",
     "description":"\u003cp\u003eSource: \u003ca href=\"https://pixabay.com/en/pig-sow-animal-portrait-752555/\"\u003ehttps://pixabay.com/en/pig-sow-animal-portrait-752555/\u003c/a\u003e\n\u003c/p\u003e",
-    "image":{
+    "media":{
       "@context":"http://schema.org",
       "@type":"ImageObject",
       "@id":"http://localhost:3019/api/v1/images/honeycomb/000/001/000/013/pig-in-mud.jpg",

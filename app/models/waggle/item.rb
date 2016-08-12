@@ -37,8 +37,17 @@ module Waggle
     end
 
     def thumbnail_url
-      if thumbnail
-        thumbnail["contentUrl"]
+      if media
+        case media["@type"]
+        when "AudioObject"
+          media["thumbnailUrl"]
+        when "VideoObject"
+          media["thumbnailUrl"]
+        when "ImageObject"
+          media["thumbnail/medium"]["contentUrl"]
+        else
+          nil
+        end
       end
     end
 
@@ -56,14 +65,8 @@ module Waggle
       Waggle.configuration
     end
 
-    def image
-      data.fetch("image")
-    end
-
-    def thumbnail
-      if image
-        image["thumbnail/medium"]
-      end
+    def media
+      data.fetch("media")
     end
   end
 end

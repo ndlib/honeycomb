@@ -10,13 +10,13 @@ class ItemDecorator < Draper::Decorator
   end
 
   def status_text
-    if object.image.nil?
+    if object.media.nil?
       status_text_span(className: "text-success", icon: "ok", text: h.t("status.no_image"))
-    elsif object.image.processing?
+    elsif object.media.processing?
       status_text_span(className: "text-info", icon: "minus", text: h.t("status.processing"))
-    elsif object.image.ready?
+    elsif object.media.ready?
       status_text_span(className: "text-success", icon: "ok", text: h.t("status.complete"))
-    elsif object.image.unavailable?
+    elsif object.media.unavailable?
       status_text_span(className: "text-danger", icon: "minus", text: h.t("status.error"))
     else
       raise "Unaccounted for status in status_text"

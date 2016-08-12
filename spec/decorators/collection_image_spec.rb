@@ -6,8 +6,8 @@ RSpec.describe CollectionImage do
   let(:collection) { instance_double(Collection, id: 2, image: collection_image, items: items) }
   let(:image) { instance_double(ActiveRecord::AssociationRelation, first: item_with_image) }
   let(:items) { instance_double(ActiveRecord::Associations::CollectionProxy, joins: image) }
-  let(:item_with_image) { double(Item, image: honeypot_image) }
-  let(:item_with_no_image) { double(Item, image: nil) }
+  let(:item_with_image) { double(Item, media: honeypot_image) }
+  let(:item_with_no_image) { double(Item, media: nil) }
   let(:collection_image) { double(Image, json_response: { contentUrl: "http://collection.com/image.jpg" }) }
   let(:honeypot_image) { double(Image, json_response: { contentUrl: "http://example.com/image.jpg" }) }
 

@@ -7,6 +7,7 @@ RSpec.describe SerializeMedia do
            uuid: "uuid",
            file_name: "filename.ext",
            type: "Type",
+           status: "allocated",
            json_response: { response_key: "response value" },
            errors: { error_key: "error value" })
   end
@@ -14,16 +15,16 @@ RSpec.describe SerializeMedia do
   describe "to_hash" do
     let(:subject) { SerializeMedia.to_hash(media: media) }
 
-    it "includes the uuid" do
-      expect(subject).to include(uuid: media.uuid)
+    it "includes the @id" do
+      expect(subject).to include("@id" => media.uuid)
     end
 
-    it "includes the filename" do
-      expect(subject).to include(file_name: media.file_name)
+    it "includes the name" do
+      expect(subject).to include(name: media.file_name)
     end
 
-    it "includes the type lowercase" do
-      expect(subject).to include(media_type: media.type.downcase)
+    it "includes the type" do
+      expect(subject).to include("@type" => "TypeObject")
     end
 
     it "includes the json response" do
@@ -32,22 +33,42 @@ RSpec.describe SerializeMedia do
 
     it "includes the errors" do
       expect(subject).to include(media.errors)
+    end
+
+    it "uses the Honeycomb uuid as @id even when json_response contains an @id" do
+      allow(media).to receive(:json_response).and_return({ "@id" => "media server @id" })
+      expect(subject).to include("@id" => media.uuid)
+      expect(subject).not_to include("@id" => "media server @id")
+    end
+
+    ["allocated"].each do |state|
+      it "renders a status of 'not ready' for the '#{state}' state" do
+        allow(media).to receive(:status).and_return(state)
+        expect(subject).to include(status: "not ready")
+      end
+    end
+
+    ["ready"].each do |state|
+      it "renders a status of 'ready' for the '#{state}' state" do
+        allow(media).to receive(:status).and_return(state)
+        expect(subject).to include(status: "ready")
+      end
     end
   end
 
   describe "to_json" do
     let(:subject) { JSON.parse(SerializeMedia.to_json(media: media), symbolize_names: true) }
 
-    it "includes the uuid" do
-      expect(subject).to include(uuid: media.uuid)
+    it "includes the @id" do
+      expect(subject).to include(:"@id" => media.uuid)
     end
 
-    it "includes the filename" do
-      expect(subject).to include(file_name: media.file_name)
+    it "includes the name" do
+      expect(subject).to include(name: media.file_name)
     end
 
-    it "includes the type lowercase" do
-      expect(subject).to include(media_type: media.type.downcase)
+    it "includes the type" do
+      expect(subject).to include(:"@type" => "TypeObject")
     end
 
     it "includes the json response" do
@@ -58,8 +79,24 @@ RSpec.describe SerializeMedia do
       expect(subject).to include(media.errors)
     end
 
-    it "includes the json response" do
-      expect(subject).to include(uuid: media.uuid)
+    it "uses the Honeycomb uuid as @id even when json_response contains an @id" do
+      allow(media).to receive(:json_response).and_return({ "@id" => "media server @id" })
+      expect(subject).to include(:"@id" => media.uuid)
+      expect(subject).not_to include(:"@id" => "media server @id")
+    end
+
+    ["allocated"].each do |state|
+      it "renders a status of 'not ready' for the '#{state}' state" do
+        allow(media).to receive(:status).and_return(state)
+        expect(subject).to include(status: "not ready")
+      end
+    end
+
+    ["ready"].each do |state|
+      it "renders a status of 'ready' for the '#{state}' state" do
+        allow(media).to receive(:status).and_return(state)
+        expect(subject).to include(status: "ready")
+      end
     end
   end
 end
