@@ -18,12 +18,18 @@ var NoMediaForm = React.createClass({
 
   getInitialState: function() {
     return {
-      newItems: []
+      processing: false
     }
   },
 
   componentDidMount: function() {
-    ItemStore.on("ItemCreateFinished", this.setItem);
+    ItemStore.on("ItemCreateFinished", this.goToNewItem);
+  },
+
+  goToNewItem: function(data) {
+    if (this.state.processing) {
+      window.location.href = "/items/" + data.id + "/edit";
+    }
   },
 
   checkEnter: function(event) {
@@ -32,44 +38,21 @@ var NoMediaForm = React.createClass({
     }
   },
 
-  setItem: function(data) {
-    var f = this.refs.newItem;
-    var items = this.state.newItems;
-    items.push(data.name);
-    f.value = "";
-    this.setState({ newItems: items } );
-  },
-
   uploady: function() {
     var f = this.refs.newItem;
     ItemActions.create(f.value);
     this.props.hasFiles();
-  },
-
-  uploadedListItems: function() {
-    return this.state.newItems.map(function (name) {
-      return (<ListItem key={name} primaryText={name} leftIcon={ <FontIcon className="material-icons">local_offer</FontIcon> } rightIcon={ <FontIcon className="material-icons">done</FontIcon> } />);
-    });
-  },
-
-  uploadedList: function() {
-    if (this.state.newItems.length > 0) {
-      return (
-        <div>
-          <List subheader="Created Items" style={{ width: "75%" }}>
-            { this.uploadedListItems() }
-          </List>
-          <hr />
-        </div>
-      );
-    }
-    return (<div />);
+    this.setState( { processing: true });
   },
 
   render: function() {
+    var button = (<RaisedButton label="Save" primary={ true } onClick={ this.uploady } />);
+    if (this.state.saving) {
+      button = <LoadingImage />
+    }
+
     return (
       <div>
-        { this.uploadedList() }
         <div className="form-group string control-label required">
           <label className="string control-label required" htmlFor="item_name">
             <abbr title="required">* </abbr>
@@ -78,7 +61,7 @@ var NoMediaForm = React.createClass({
           <input type="text" className="form-control required" id="item_name" ref={ "newItem" } name="name" onKeyPress={ this.checkEnter }/>
         </div>
         <div>
-          <RaisedButton label="Save" primary={ true } onClick={ this.uploady } />
+          { button }
         </div>
       </div>
     );

@@ -7,12 +7,10 @@ var Dialog = mui.Dialog;
 var RaisedButton = mui.RaisedButton;
 var Tab = mui.Tab;
 var Tabs = mui.Tabs;
-var IconMenu = mui.IconMenu;
 var FontIcon = mui.FontIcon;
-var MenuItem = mui.MenuItem;
-var RaisedButton = mui.RaisedButton;
 
 var ItemActions = require("../../../actions/ItemActions");
+var ItemStore = require("../../../stores/ItemStore");
 
 var AddNewItemsButton = React.createClass({
   mixins: [MuiThemeMixin, DialogMixin],
@@ -49,7 +47,7 @@ var AddNewItemsButton = React.createClass({
 
   render: function() {
     var iconButtonElement = (<RaisedButton icon={ <FontIcon className="material-icons">expand_more</FontIcon> } />);
-    
+
     return (
       <div>
         <RaisedButton
@@ -57,12 +55,6 @@ var AddNewItemsButton = React.createClass({
           onTouchTap={this.showModal}
           label="Add New Items"
           />
-          <IconMenu iconButtonElement={iconButtonElement}>
-            <MenuItem primaryText="Images" index={ 0 }>Images</MenuItem>
-            <MenuItem primaryText="Video" index={ 1 }>Video</MenuItem>
-            <MenuItem primaryText="Audio" index={ 2 }>Audio</MenuItem>
-            <MenuItem primaryText="No Media" index={ 3 }>No Media</MenuItem>
-          </IconMenu>
         <Dialog
           ref="addItems"
           autoDetectWindowHeight={true}

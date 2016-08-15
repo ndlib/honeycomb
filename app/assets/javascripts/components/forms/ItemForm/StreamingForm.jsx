@@ -16,18 +16,22 @@ var StreamingForm = React.createClass({
   getInitialState: function() {
     return {
       processing: false,
-      item: null
+      item: null,
+      creating: true
     }
   },
 
   componentDidMount: function() {
     ItemStore.on("ItemCreateFinished", this.setItem);
-    this.setState({ item: this.props.item })
+    if (this.props.item) {
+      this.setState({ item: this.props.item, creating: true })
+    }
   },
 
   setItem(data) {
-    return;
-    this.setState({ item: data }, this.loadSigningUrl);
+    if (this.state.processing) {
+      this.setState({ item: data }, this.loadSigningUrl);
+    }
   },
 
   uploady: function() {
@@ -42,10 +46,10 @@ var StreamingForm = React.createClass({
   },
 
   createNewItem: function(file) {
-    if (this.state.item) {
-      this.loadSigningUrl();
-    } else {
+    if (this.state.creating) {
       ItemActions.create(file.name)
+    } else {
+      this.loadSigningUrl();
     }
   },
 
@@ -77,6 +81,7 @@ var StreamingForm = React.createClass({
         this.setState({ processing: false});
         if(xhr.status === 200) {
           alert("SEND FINISHED UPDATE TO HC");
+          this.goToNewItem();
         } else {
           AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error. Please try again if the problem persists please contact WSE unit.");
         }
@@ -84,6 +89,13 @@ var StreamingForm = React.createClass({
     };
     xhr.send(f.files[0]);
   },
+
+  goToNewItem: function() {
+    if (this.state.creating) {
+      window.location.href = "/items/" + this.state.item.id + "/edit";
+    }
+  },
+
 
   render: function() {
     if (this.state.processing) {
