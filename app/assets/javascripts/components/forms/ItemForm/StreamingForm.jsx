@@ -96,7 +96,6 @@ var StreamingForm = React.createClass({
     }
   },
 
-
   render: function() {
     if (this.state.processing) {
       var button = (<LoadingImage />);
