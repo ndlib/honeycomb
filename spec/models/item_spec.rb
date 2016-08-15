@@ -23,7 +23,7 @@ RSpec.describe Item do
 
   [
     :collection,
-    :image,
+    :media,
     :published,
     :pages
   ].each do |field|
@@ -88,11 +88,7 @@ RSpec.describe Item do
 
   describe "#has image interface" do
     it "responds to image" do
-      expect(subject).to respond_to(:image)
-    end
-
-    it "responds to image" do
-      expect(subject).to respond_to(:image)
+      expect(subject).to respond_to(:media)
     end
 
     it "responds to collection" do

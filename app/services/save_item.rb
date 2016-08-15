@@ -56,7 +56,7 @@ class SaveItem
 
   def process_uploaded_image
     if uploaded_image.present?
-      item.image = FindOrCreateImage.call(file: uploaded_image, collection_id: item.collection_id)
+      item.media = FindOrCreateImage.call(file: uploaded_image, collection_id: item.collection_id)
       return item.save
     end
     true

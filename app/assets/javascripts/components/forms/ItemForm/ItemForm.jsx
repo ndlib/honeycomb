@@ -56,7 +56,7 @@ var ItemForm = React.createClass({
     var item = ItemStore.get(this.props.id);
     this.setState({ item: ItemStore.get(this.props.id)})
 
-    if (item.image.status == "processing") {
+    if (item.media && item.media.status == "processing") {
       setTimeout(this.loadItem, 4000);
     }
   },
@@ -145,9 +145,12 @@ var ItemForm = React.createClass({
             { this.form() }
           </div>
           <div className="col-md-3">
-            <ItemShowImageBox
+            {
+              this.state.item.media && this.state.item.media["@type"] === "ImageObject" &&
+              <ItemShowImageBox
                 item={ this.state.item }
-            />
+              />
+            }
           </div>
         </div>
       </div>
