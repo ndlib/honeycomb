@@ -74,7 +74,7 @@ module V1
 
     def image
       if object.image
-        V1::ImageJSONDecorator.new(object.image).to_hash
+        SerializeMedia.to_hash(media: object.image)
       end
     end
 

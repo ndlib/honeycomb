@@ -15,21 +15,17 @@ var ItemShowImageBox = React.createClass({
 
   testImageStatus: function () {
 
-    if (this.props.item.image_status == "unavailable") {
+    if (this.props.media.status == "unavailable") {
       EventEmitter.emit("MessageCenterDisplay", "error", "There was a problem loading the media. Try replacing or contacting support.");
     }
   },
 
   renderMedia: function() {
-    if (!this.props.item.image) {
-      return (
-        <div className="hc-item-show-image-box">
-          No Media
-        </div>
-      );
+    if (!this.props.item.media) {
+      return (this.itemNoImageHtml());
     }
 
-    switch(this.props.item.image.status)
+    switch(this.props.item.media.status)
     {
       case "ready":
         return this.itemReadyHtml();
@@ -40,7 +36,7 @@ var ItemShowImageBox = React.createClass({
       case "unavailable":
         return this.itemImageInvalidHtml();
       default:
-        console.log("Unknown Image Status: " + this.props.item.image_status);
+        console.log("Unknown Image Status: " + this.props.item.media.status);
         return this.itemImageInvalidHtml();
     }
   },
@@ -48,8 +44,8 @@ var ItemShowImageBox = React.createClass({
   itemReadyHtml: function () {
     return (
       <div className="hc-item-show-image-box">
-        <ItemImageZoomButton image={this.props.item.image} itemID={this.props.item.id} />
-        <Thumbnail image={this.props.item.image} />
+        <ItemImageZoomButton image={this.props.item.media} itemID={this.props.item.id} />
+        <Thumbnail image={this.props.item.media} />
       </div>
     );
   },
@@ -63,7 +59,7 @@ var ItemShowImageBox = React.createClass({
   },
 
   itemNoImageHtml: function () {
-    return (<p>No Item Image.</p>);
+    return (<p>No Item Media.</p>);
   },
 
   itemImageInvalidHtml: function () {

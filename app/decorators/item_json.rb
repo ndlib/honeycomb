@@ -47,8 +47,8 @@ class ItemJSON < Draper::Decorator
   end
 
   def image_data
-    if object.image.present?
-      object.image.json_response
+    if object.media.present?
+      object.media.json_response
     else
       nil
     end

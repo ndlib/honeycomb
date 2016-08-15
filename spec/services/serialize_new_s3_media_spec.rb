@@ -7,6 +7,7 @@ RSpec.describe SerializeNewS3Media do
            uuid: "uuid",
            file_name: "filename.ext",
            type: "Type",
+           status: "allocated",
            json_response: { response_key: "response value" },
            errors: { error_key: "error value" })
   end
@@ -16,7 +17,7 @@ RSpec.describe SerializeNewS3Media do
   end
 
   describe "to_hash" do
-    let(:subject) { SerializeNewS3Media.to_hash(media: media) }
+    let(:subject) { described_class.to_hash(media: media) }
 
     it "uses SerializeMedia" do
       expect(SerializeMedia).to receive(:to_hash).with(media: media).and_return({})
@@ -30,7 +31,7 @@ RSpec.describe SerializeNewS3Media do
   end
 
   describe "to_json" do
-    let(:subject) { JSON.parse(SerializeNewS3Media.to_json(media: media), symbolize_names: true) }
+    let(:subject) { JSON.parse(described_class.to_json(media: media), symbolize_names: true) }
 
     it "uses SerializeMedia" do
       expect(SerializeMedia).to receive(:to_hash).with(media: media).and_return({})

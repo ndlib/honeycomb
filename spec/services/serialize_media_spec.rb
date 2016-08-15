@@ -7,59 +7,40 @@ RSpec.describe SerializeMedia do
            uuid: "uuid",
            file_name: "filename.ext",
            type: "Type",
+           status: "allocated",
            json_response: { response_key: "response value" },
            errors: { error_key: "error value" })
   end
 
   describe "to_hash" do
-    let(:subject) { SerializeMedia.to_hash(media: media) }
+    let(:subject) { described_class.to_hash(media: media) }
 
-    it "includes the uuid" do
-      expect(subject).to include(uuid: media.uuid)
+    it "delegates to SerializeAVMedia when the type is Audio|Video" do
+      allow(media).to receive(:type).and_return("Audio")
+      allow(SerializeAVMedia).to receive(:to_hash).with(media: media).and_return("SerializeAVMedia#to_hash result")
+      expect(subject).to eq("SerializeAVMedia#to_hash result")
     end
 
-    it "includes the filename" do
-      expect(subject).to include(file_name: media.file_name)
-    end
-
-    it "includes the type lowercase" do
-      expect(subject).to include(media_type: media.type.downcase)
-    end
-
-    it "includes the json response" do
-      expect(subject).to include(media.json_response)
-    end
-
-    it "includes the errors" do
-      expect(subject).to include(media.errors)
+    it "delegates to SerializeImageMedia when the type is Image" do
+      allow(media).to receive(:type).and_return("Image")
+      allow(SerializeImageMedia).to receive(:to_hash).and_return("SerializeImageMedia#to_hash result")
+      expect(subject).to eq("SerializeImageMedia#to_hash result")
     end
   end
 
   describe "to_json" do
-    let(:subject) { JSON.parse(SerializeMedia.to_json(media: media), symbolize_names: true) }
+    let(:subject) { described_class.to_json(media: media) }
 
-    it "includes the uuid" do
-      expect(subject).to include(uuid: media.uuid)
+    it "delegates to SerializeAVMedia when the type is Audio|Video" do
+      allow(media).to receive(:type).and_return("Audio")
+      allow(SerializeAVMedia).to receive(:to_hash).with(media: media).and_return("SerializeAVMedia#to_hash result")
+      expect(subject).to eq("\"SerializeAVMedia#to_hash result\"")
     end
 
-    it "includes the filename" do
-      expect(subject).to include(file_name: media.file_name)
-    end
-
-    it "includes the type lowercase" do
-      expect(subject).to include(media_type: media.type.downcase)
-    end
-
-    it "includes the json response" do
-      expect(subject).to include(media.json_response)
-    end
-
-    it "includes the errors" do
-      expect(subject).to include(media.errors)
-    end
-
-    it "includes the json response" do
-      expect(subject).to include(uuid: media.uuid)
+    it "delegates to SerializeImageMedia when the type is Image" do
+      allow(media).to receive(:type).and_return("Image")
+      allow(SerializeImageMedia).to receive(:to_hash).and_return("SerializeImageMedia#to_hash result")
+      expect(subject).to eq("\"SerializeImageMedia#to_hash result\"")
     end
   end
 end

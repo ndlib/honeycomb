@@ -4,15 +4,7 @@ RSpec.describe Waggle::Item do
   let(:item_id) { "pig-in-mud" }
   let(:raw_data) { File.read(Rails.root.join("spec/fixtures/v1/items/#{item_id}.json")) }
   let(:data) { JSON.parse(raw_data).fetch("items") }
-  let(:instance) { described_class.new(data) }
-  let(:other_instance) do
-    data = instance.data.clone
-    data["id"] += "other"
-    data["metadata"]["name"]["value"] += " pig"
-    described_class.new(data)
-  end
-
-  subject { instance }
+  let(:subject) { described_class.new(data) }
 
   describe "id" do
     it "is the id" do
@@ -45,9 +37,21 @@ RSpec.describe Waggle::Item do
   end
 
   describe "thumbnail_url" do
-    it "is the correct value" do
-      expect(subject.thumbnail_url).to be_present
-      expect(subject.thumbnail_url).to eq(data["image"]["thumbnail/medium"]["contentUrl"])
+    it "is the media's medium thumbnail contentUrl when the media is an ImageObject" do
+      data["media"]["@type"] = "ImageObject"
+      expect(subject.thumbnail_url).to eq(data["media"]["thumbnail/medium"]["contentUrl"])
+    end
+
+    it "is the media's thumbnailUrl when the media is an AudioObject" do
+      data["media"]["@type"] = "AudioObject"
+      data["media"]["thumbnailUrl"] = "audio thumbnail"
+      expect(subject.thumbnail_url).to eq("audio thumbnail")
+    end
+
+    it "is the media's thumbnailUrl when the media is an VideoObject" do
+      data["media"]["@type"] = "VideoObject"
+      data["media"]["thumbnailUrl"] = "video thumbnail"
+      expect(subject.thumbnail_url).to eq("video thumbnail")
     end
   end
 
