@@ -21,6 +21,14 @@ var ItemShowImageBox = React.createClass({
   },
 
   renderMedia: function() {
+    if (!this.props.item.image) {
+      return (
+        <div className="hc-item-show-image-box">
+          No Media
+        </div>
+      );
+    }
+
     switch(this.props.item.image.status)
     {
       case "ready":

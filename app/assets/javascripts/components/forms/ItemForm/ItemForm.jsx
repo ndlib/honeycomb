@@ -121,6 +121,13 @@ var ItemForm = React.createClass({
     }
   },
 
+  mediaToolbar: function() {
+    if (this.state.item.image) {
+      return (<Tab label="Media" style={TabStyle} value="media" />);
+    }
+    return (<div />);
+  },
+
   render: function() {
     if (!this.state.item) {
       return (<LoadingImage />);
@@ -135,7 +142,7 @@ var ItemForm = React.createClass({
           <ToolbarGroup key={1} float="right" style={ ToolbarStyle }>
             <Tabs tabItemContainerStyle={ TabsStyle } onChange={this._handleChangeTabs} value={ this.state.selectedIndex }>
               <Tab label="Metadata" style={TabStyle} value="metadata" />
-              <Tab label="Media" style={TabStyle} value="media" />
+              { this.mediaToolbar() }
               <Tab label="Embed" style={TabStyle} value="embed" />
               <Tab label="Delete" style={ TabStyle } value="delete" />
             </Tabs>

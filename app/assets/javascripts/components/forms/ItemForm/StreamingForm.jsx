@@ -26,6 +26,7 @@ var StreamingForm = React.createClass({
   },
 
   setItem(data) {
+    return;
     this.setState({ item: data }, this.loadSigningUrl);
   },
 
@@ -51,7 +52,7 @@ var StreamingForm = React.createClass({
   loadSigningUrl: function() {
     var f = this.refs.uploadFile;
     var url = ItemActions.url(this.state.item.id) + "/media";
-    var postData = { medium: { file_name: f.files[0].name, media_type: "video" } };
+    var postData = { medium: { file_name: f.files[0].name, media_type: this.props.type } };
 
     $.ajax({
       url: url,

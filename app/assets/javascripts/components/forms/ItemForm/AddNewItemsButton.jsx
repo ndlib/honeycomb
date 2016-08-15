@@ -1,13 +1,16 @@
 var React = require('react');
 var mui = require("material-ui");
 var StreamingForm = require("./StreamingForm");
-
+var NoMediaForm = require("./NoMediaForm");
 
 var Dialog = mui.Dialog;
 var RaisedButton = mui.RaisedButton;
 var Tab = mui.Tab;
 var Tabs = mui.Tabs;
-
+var IconMenu = mui.IconMenu;
+var FontIcon = mui.FontIcon;
+var MenuItem = mui.MenuItem;
+var RaisedButton = mui.RaisedButton;
 
 var ItemActions = require("../../../actions/ItemActions");
 
@@ -45,14 +48,21 @@ var AddNewItemsButton = React.createClass({
   },
 
   render: function() {
+    var iconButtonElement = (<RaisedButton icon={ <FontIcon className="material-icons">expand_more</FontIcon> } />);
+    
     return (
       <div>
         <RaisedButton
           primary={ true }
           onTouchTap={this.showModal}
           label="Add New Items"
-
           />
+          <IconMenu iconButtonElement={iconButtonElement}>
+            <MenuItem primaryText="Images" index={ 0 }>Images</MenuItem>
+            <MenuItem primaryText="Video" index={ 1 }>Video</MenuItem>
+            <MenuItem primaryText="Audio" index={ 2 }>Audio</MenuItem>
+            <MenuItem primaryText="No Media" index={ 3 }>No Media</MenuItem>
+          </IconMenu>
         <Dialog
           ref="addItems"
           autoDetectWindowHeight={true}
@@ -64,7 +74,7 @@ var AddNewItemsButton = React.createClass({
           onDismiss={this.closeCallback}
           style={{zIndex: 100}}
         >
-          <Tabs>
+          <Tabs style={ { marginBottom: "10px"} }>
             <Tab label="Images">
               <ReactDropzone
                 formUrl={ this.props.formUrl }
@@ -75,12 +85,21 @@ var AddNewItemsButton = React.createClass({
             <Tab label="Video">
               <StreamingForm
                 item={null}
+                type="video"
                 hasFiles={ this.setHasFiles }
               />
             </Tab>
             <Tab label="Audio">
+              <StreamingForm
+                item={null}
+                type="audio"
+                hasFiles={ this.setHasFiles }
+              />
             </Tab>
             <Tab label="No Media">
+              <NoMediaForm
+                hasFiles={ this.setHasFiles }
+              />
             </Tab>
           </Tabs>
         </Dialog>
