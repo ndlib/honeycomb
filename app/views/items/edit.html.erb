@@ -1,46 +1,8 @@
 <%= page_title(@item.name, @item.collection) %>
 <%= collection_nav(@item.collection, :items) %>
-<%= back_action_bar(@item.back_path, "#" ) %>
-<%= link_to("PREVIEW", CreateBeehiveURL.call(@item.object), class: "btn btn-large btn-hollow", :target => "_blank") %>
+<%= back_action_bar(@item.back_path) %>
 
 <div class="row">
-  <div class="col-md-8">
-    <div class="page-header">
-      <h1><%= @item.name %> <small><%= t('.title') %></small></h1>
-    </div>
-    <%= @item.item_meta_data_form %>
-    <%= DeletePanel.new(@item.object).display(ItemQuery.new(@item)) %>
-  </div>
-
-  <div class="col-md-4">
-    <div class="panel panel-default item-show-image">
-      <div class="panel-heading">
-        <h3 class="panel-title"><%= t(".media") %></h3>
-      </div>
-      <div class="panel-body">
-        <%= @item.show_image_box %>
-
-        <%= react_component("ReactDropzone", {
-          formUrl: v1_item_path( @item.unique_id ),
-          authenticityToken: form_authenticity_token,
-          modalTitle: raw(t(".replace_media")),
-          multifileUpload: false,
-        }) %>
-      </div>
-    </div>
-
-    <%= react_component("ShowcasesPanel", {
-          showcases: @item.showcases_json,
-          panelTitle: "Showcases"
-        })
-    %>
-
-    <%= react_component("PagesPanel", {
-          pages: @item.pages_json,
-          panelTitle: "Pages"
-        })
-    %>
-
-    <%= ItemPublishEmbedPanel.display(@item.object) %>
-  </div>
+  <h1><%= @item.name %></h1>
+  <%= @item.item_meta_data_form %>
 </div>

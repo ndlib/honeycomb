@@ -92,10 +92,13 @@ Rails.application.routes.draw do
       end
     end
     resources :items,
-              only: [:show, :update],
+              only: [:show, :update, :destroy],
               defaults: { format: :json } do
       resource :metadata, only: [:update]
+      post "media", to: "media#create_for_item"
+
       get :showcases, defaults: { format: :json }
+      get :pages, defaults: { format: :json }
     end
     resources :showcases, only: [:show], defaults: { format: :json }
     resources :pages, only: [:show], defaults: { format: :json }

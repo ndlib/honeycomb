@@ -46,12 +46,32 @@ module V1
       end
     end
 
+    def destroy
+      @item = ItemQuery.new.public_find(params[:id])
+      return if rendered_forbidden?(@item.collection)
+      if Destroy::Item.new.destroy!(item: @item)
+        render json: { status: "Success" }
+      else
+        render json: { status: "Unable to delete item" }, status: :unprocessable_entity
+      end
+    end
+
     # get all showcases that use the given item
     def showcases
       @item = ItemQuery.new.public_find(params[:item_id])
 
       cache_key = CacheKeys::Generator.new(key_generator: CacheKeys::Custom::V1Items,
                                            action: "showcases",
+                                           item: @item)
+      fresh_when(etag: cache_key.generate)
+    end
+
+    # get all pages that use the given item
+    def pages
+      @item = ItemQuery.new.public_find(params[:item_id])
+
+      cache_key = CacheKeys::Generator.new(key_generator: CacheKeys::Custom::V1Items,
+                                           action: "pages",
                                            item: @item)
       fresh_when(etag: cache_key.generate)
     end

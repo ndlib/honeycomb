@@ -6,7 +6,7 @@ var StringField = React.createClass({
     objectType: React.PropTypes.string.isRequired,
     name: React.PropTypes.string.isRequired,
     title: React.PropTypes.string.isRequired,
-    value: React.PropTypes.string,
+    value: React.PropTypes.any,
     required: React.PropTypes.bool,
     handleFieldChange: React.PropTypes.func.isRequired,
     placeholder: React.PropTypes.string,

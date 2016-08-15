@@ -5,7 +5,7 @@
 <div class="row">
   <div class="col-md-10">
     <div class="page-header">
-      <h1><%= @page.name %> <small><%= t('.title') %></small></h1>
+      <h1><%= @page.name %></h1>
     </div>
     <%= simple_form_for @page, :html => { :class => 'form-horizontal' } do |f| %>
       <%= render partial: 'form', locals: { f: f } %>

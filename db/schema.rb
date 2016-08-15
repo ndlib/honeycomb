@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160706194509) do
+ActiveRecord::Schema.define(version: 20160805194419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20160706194509) do
     t.boolean  "hide_title_on_home_page"
     t.text     "site_path"
     t.string   "url_slug"
-    t.integer  "image_id"
+    t.integer  "media_id"
   end
 
   add_index "collections", ["preview_mode"], name: "index_collections_on_preview_mode", using: :btree
@@ -105,22 +105,6 @@ ActiveRecord::Schema.define(version: 20160706194509) do
 
   add_index "honeypot_images", ["item_id"], name: "index_honeypot_images_on_item_id", using: :btree
 
-  create_table "images", force: :cascade do |t|
-    t.integer  "collection_id",                  null: false
-    t.string   "image_file_name",                null: false
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
-    t.string   "image_fingerprint",              null: false
-    t.text     "image_meta"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
-    t.text     "json_response"
-    t.integer  "status",             default: 0
-  end
-
-  add_index "images", ["image_fingerprint"], name: "index_images_on_image_fingerprint", using: :btree
-
   create_table "items", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -142,7 +126,7 @@ ActiveRecord::Schema.define(version: 20160706194509) do
     t.integer  "image_status_save",                default: 0
     t.string   "user_defined_id",                               null: false
     t.jsonb    "metadata",                         default: {}, null: false
-    t.integer  "image_id"
+    t.integer  "media_id"
   end
 
   add_index "items", ["collection_id", "user_defined_id"], name: "index_items_on_collection_id_and_user_defined_id", unique: true, using: :btree
@@ -158,6 +142,26 @@ ActiveRecord::Schema.define(version: 20160706194509) do
 
   add_index "items_pages", ["item_id", "page_id"], name: "index_items_pages_on_item_id_and_page_id", using: :btree
   add_index "items_pages", ["page_id", "item_id"], name: "index_items_pages_on_page_id_and_item_id", using: :btree
+
+  create_table "media", force: :cascade do |t|
+    t.integer  "collection_id",                        null: false
+    t.text     "image_file_name_save"
+    t.string   "image_content_type_save"
+    t.integer  "image_file_size_save"
+    t.datetime "image_updated_at_save"
+    t.text     "image_fingerprint_save"
+    t.text     "image_meta_save"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.text     "json_response_save"
+    t.integer  "status_save",             default: 0
+    t.jsonb    "data",                    default: {}, null: false
+    t.string   "type"
+    t.uuid     "uuid"
+  end
+
+  add_index "media", ["image_fingerprint_save"], name: "index_media_on_image_fingerprint_save", using: :btree
+  add_index "media", ["uuid"], name: "index_media_on_uuid", using: :btree
 
   create_table "pages", force: :cascade do |t|
     t.string   "unique_id"
@@ -203,7 +207,7 @@ ActiveRecord::Schema.define(version: 20160706194509) do
     t.integer  "uploaded_image_file_size_save"
     t.datetime "uploaded_image_updated_at_save"
     t.integer  "collection_id"
-    t.integer  "image_id"
+    t.integer  "media_id"
   end
 
   add_index "showcases", ["collection_id"], name: "index_showcases_on_collection_id", using: :btree
@@ -244,16 +248,16 @@ ActiveRecord::Schema.define(version: 20160706194509) do
   add_foreign_key "collection_configurations", "collections"
   add_foreign_key "collection_users", "collections"
   add_foreign_key "collection_users", "users"
-  add_foreign_key "collections", "images"
+  add_foreign_key "collections", "media", column: "media_id"
   add_foreign_key "items", "collections"
-  add_foreign_key "items", "images"
   add_foreign_key "items", "items", column: "parent_id"
+  add_foreign_key "items", "media", column: "media_id"
   add_foreign_key "items_pages", "items"
   add_foreign_key "items_pages", "pages"
   add_foreign_key "pages", "collections"
-  add_foreign_key "pages", "images"
+  add_foreign_key "pages", "media", column: "image_id"
   add_foreign_key "sections", "items"
   add_foreign_key "sections", "showcases"
   add_foreign_key "showcases", "collections"
-  add_foreign_key "showcases", "images"
+  add_foreign_key "showcases", "media", column: "media_id"
 end

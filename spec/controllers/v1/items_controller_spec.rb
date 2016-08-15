@@ -167,6 +167,59 @@ RSpec.describe V1::ItemsController, type: :controller do
     end
   end
 
+  describe "DELETE #destroy" do
+    let(:collection) { double(Collection, id: "1") }
+    let(:item) { instance_double(Item, id: 1, collection: collection, destroy!: true, sections: [], children: [], pages: []) }
+
+    subject { delete :destroy, id: item.id }
+
+    before(:each) do
+      sign_in_admin
+      allow_any_instance_of(ItemQuery).to receive(:public_find).and_return(item)
+      allow_any_instance_of(Destroy::Item).to receive(:destroy!).and_return(true)
+    end
+
+    it "on success 200 " do
+      expect_any_instance_of(Destroy::Item).to receive(:destroy!).and_return(true)
+
+      subject
+      expect(response).to be_success
+    end
+
+    it "renders 422 if it can't do the work" do
+      expect_any_instance_of(Destroy::Item).to receive(:destroy!).and_return(false)
+
+      subject
+      expect(response).to be_unprocessable
+    end
+
+    it "assigns an item" do
+      subject
+
+      assigns(:item)
+      expect(assigns(:item)).to eq(item)
+    end
+
+    it "checks the editor permissions" do
+      expect_any_instance_of(described_class).to receive(:rendered_forbidden?).with(collection)
+      subject
+    end
+
+    it "uses item query " do
+      expect_any_instance_of(ItemQuery).to receive(:public_find).with("1").and_return(item)
+      subject
+    end
+
+    # We should not cascade here since we've decided the user needs to correct
+    # the associations before deleting the item. If we later decide to just clean
+    # up all children and sections for the user when deleting the Item, then change
+    # this to use cascade
+    it "uses the Destroy::Item.destroy! method" do
+      expect_any_instance_of(Destroy::Item).to receive(:destroy!)
+      subject
+    end
+  end
+
   describe "#showcases" do
     let(:collection_configuration) { CollectionConfiguration.new }
     let(:collection) { Collection.new(unique_id: "test", items: [], collection_configuration: collection_configuration) }
@@ -198,6 +251,41 @@ RSpec.describe V1::ItemsController, type: :controller do
 
     it "uses the V1Items#showcases to generate the cache key" do
       expect_any_instance_of(CacheKeys::Custom::V1Items).to receive(:showcases)
+      subject
+    end
+  end
+
+  describe "#pages" do
+    let(:collection_configuration) { CollectionConfiguration.new }
+    let(:collection) { Collection.new(unique_id: "test", items: [], collection_configuration: collection_configuration) }
+    subject { get :pages, item_id: "id", format: :json }
+    let(:item) { instance_double(Item, id: "1", collection: collection, children: nil, pages: nil) }
+
+    it "calls ItemQuery" do
+      expect_any_instance_of(ItemQuery).to receive(:public_find).with("id").and_return(item)
+
+      subject
+    end
+
+    it "is successful" do
+      subject
+      expect(response).to be_success
+    end
+
+    it "assigns the item to render" do
+      subject
+      expect(assigns(:item)).to be_present
+    end
+
+    it "renders the correct template" do
+      expect(subject).to render_template("v1/items/pages")
+      subject
+    end
+
+    it_behaves_like "a private basic custom etag cacher"
+
+    it "uses the V1Items#pages to generate the cache key" do
+      expect_any_instance_of(CacheKeys::Custom::V1Items).to receive(:pages)
       subject
     end
   end

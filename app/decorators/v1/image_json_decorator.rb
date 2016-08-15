@@ -22,12 +22,20 @@ module V1
       object.image.original_filename
     end
 
+    def status
+      object.status
+    end
+
     def encoding_format
       object.image.content_type
     end
 
     def url(style: :original)
-      URI.join(h.root_url, object.image.url(style)).to_s
+      if object.json_response["thumbnail/#{style}"]
+        object.json_response["thumbnail/#{style}"]["contentUrl"]
+      else
+        object.json_response["contentUrl"]
+      end
     end
 
     def width(style: :original)
@@ -60,10 +68,15 @@ module V1
 
     private
 
+    def honeypot_url
+      Rails.configuration.settings.honeypot_url
+    end
+
     def set_json_keys(json:)
       json.set! "@context", at_context
       json.set! "@id", at_id
       json.name name
+      json.status status
       set_image_object_json_keys(json: json, style: :large)
       json.set! "thumbnail/small" do |json_small|
         set_image_object_json_keys(json: json_small, style: :small)

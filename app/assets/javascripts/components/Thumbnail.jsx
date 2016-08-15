@@ -7,42 +7,13 @@ var Thumbnail = React.createClass({
       React.PropTypes.string,
       React.PropTypes.object,
     ]),
-    thumbnailSrc: React.PropTypes.string,
-  },
-
-  getInitialState: function() {
-    return {
-      image: null,
-    };
-  },
-
-  setImage: function(image) {
-    var imageObject = image['thumbnail/small'];
-    if (!imageObject) {
-      imageObject = image;
-    }
-    this.setState({
-      image: imageObject,
-    });
-  },
-
-  componentDidMount: function() {
-    if (!this.props.thumbnailSrc) {
-      if (typeof(this.props.image) == 'object') {
-        this.setImage(this.props.image);
-      } else {
-        $.get(this.props.image, function(result) {
-          this.setImage(result);
-        }.bind(this));
-      }
-    }
   },
 
   thumbnailSrc: function() {
-    if (this.props.thumbnailSrc) {
-      return this.props.thumbnailSrc;
-    } else if (this.state.image) {
-      return this.state.image.contentUrl;
+    if (this.props.image["thumbnail/small"]) {
+      return this.props.image["thumbnail/small"].contentUrl;
+    } else if (this.props.image) {
+      return this.props.image.contentUrl;
     } else {
       return '/images/blank.png';
     }
@@ -51,7 +22,6 @@ var Thumbnail = React.createClass({
   classes: function() {
     var classes = classNames({
       'hc-thumbnail': true,
-      'hc-thumbnail-loading': !this.props.thumbnailSrc && !this.state.image
     });
     return classes;
   },
