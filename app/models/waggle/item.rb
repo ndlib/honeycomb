@@ -45,8 +45,6 @@ module Waggle
           media["thumbnailUrl"]
         when "ImageObject"
           media["thumbnail/medium"]["contentUrl"]
-        else
-          nil
         end
       end
     end

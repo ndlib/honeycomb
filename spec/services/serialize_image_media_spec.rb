@@ -13,9 +13,9 @@ RSpec.describe SerializeImageMedia do
   end
   let(:media) do
     instance_double(Image,
-          status: "ready",
-          image: paperclip_attachment,
-          json_response: { "thumbnail/large" => { "contentUrl" => "image_uri" }, "contentUrl" => "base_url" })
+                    status: "ready",
+                    image: paperclip_attachment,
+                    json_response: {"thumbnail/large" => {"contentUrl" => "image_uri"}, "contentUrl" => "base_url"})
   end
 
   describe "to_hash" do
@@ -37,26 +37,26 @@ RSpec.describe SerializeImageMedia do
       expect(subject).to include(media.json_response)
     end
 
-    #["unprocessed", "processing"].each do |state|
+    # ["unprocessed", "processing"].each do |state|
     #  it "renders a status of 'not ready' for the '#{state}' state" do
     #    allow(media).to receive(:status).and_return(state)
     #    expect(subject).to include("status" => "not ready")
     #  end
-    #end
+    # end
 
-    #["ready"].each do |state|
+    # ["ready"].each do |state|
     #  it "renders a status of 'ready' for the '#{state}' state" do
     #    allow(media).to receive(:status).and_return(state)
     #    expect(subject).to include("status" => "ready")
     #  end
-    #end
+    # end
 
-    #["unavailable"].each do |state|
+    # ["unavailable"].each do |state|
     #  it "renders a status of 'error' for the '#{state}' state" do
     #    allow(media).to receive(:status).and_return(state)
     #    expect(subject).to include("status" => "error")
     #  end
-    #end
+    # end
   end
 
   describe "to_json" do

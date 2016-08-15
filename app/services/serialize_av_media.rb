@@ -21,8 +21,6 @@ class SerializeAVMedia
     to_hash(media: media).to_json
   end
 
-  private
-
   # Converts from media subclass to @type
   # So far, all of our objects map as follows:
   #   Audio => AudioObject
@@ -44,4 +42,7 @@ class SerializeAVMedia
       "error"
     end
   end
+
+  private_class_method :at_type
+  private_class_method :status
 end

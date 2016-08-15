@@ -14,8 +14,6 @@ class SerializeImageMedia
     to_hash(media: media).to_json
   end
 
-  private
-
   def self.url(media:, style: :original)
     if media.json_response["thumbnail/#{style}"]
       media.json_response["thumbnail/#{style}"]["contentUrl"]
@@ -36,4 +34,7 @@ class SerializeImageMedia
       "error"
     end
   end
+
+  private_class_method :url
+  private_class_method :status
 end

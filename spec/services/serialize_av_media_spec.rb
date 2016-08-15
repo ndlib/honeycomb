@@ -1,6 +1,7 @@
 require "rails_helper"
 require "support/item_meta_helpers"
 
+# rubocop:disable Style/HashSyntax
 RSpec.describe SerializeAVMedia do
   let(:media) do
     double(Media,
@@ -8,8 +9,8 @@ RSpec.describe SerializeAVMedia do
            file_name: "filename.ext",
            type: "Type",
            status: "allocated",
-           json_response: { response_key: "response value" },
-           errors: { error_key: "error value" })
+           json_response: {response_key: "response value"},
+           errors: {error_key: "error value"})
   end
 
   describe "to_hash" do
@@ -36,7 +37,7 @@ RSpec.describe SerializeAVMedia do
     end
 
     it "uses the Honeycomb uuid as @id even when json_response contains an @id" do
-      allow(media).to receive(:json_response).and_return({ "@id" => "media server @id" })
+      allow(media).to receive(:json_response).and_return("@id" => "media server @id")
       expect(subject).to include("@id" => media.uuid)
       expect(subject).not_to include("@id" => "media server @id")
     end
@@ -80,7 +81,7 @@ RSpec.describe SerializeAVMedia do
     end
 
     it "uses the Honeycomb uuid as @id even when json_response contains an @id" do
-      allow(media).to receive(:json_response).and_return({ "@id" => "media server @id" })
+      allow(media).to receive(:json_response).and_return("@id" => "media server @id")
       expect(subject).to include(:"@id" => media.uuid)
       expect(subject).not_to include(:"@id" => "media server @id")
     end
@@ -99,4 +100,5 @@ RSpec.describe SerializeAVMedia do
       end
     end
   end
+  # rubocop:enable Style/HashSyntax
 end
