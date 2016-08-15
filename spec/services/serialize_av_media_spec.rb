@@ -9,8 +9,8 @@ RSpec.describe SerializeAVMedia do
            file_name: "filename.ext",
            type: "Type",
            status: "allocated",
-           json_response: {response_key: "response value"},
-           errors: {error_key: "error value"})
+           json_response: { response_key: "response value" },
+           errors: { error_key: "error value" })
   end
 
   describe "to_hash" do

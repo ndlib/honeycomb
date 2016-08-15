@@ -15,7 +15,7 @@ RSpec.describe SerializeImageMedia do
     instance_double(Image,
                     status: "ready",
                     image: paperclip_attachment,
-                    json_response: {"thumbnail/large" => {"contentUrl" => "image_uri"}, "contentUrl" => "base_url"})
+                    json_response: { "thumbnail/large" => {"contentUrl" => "image_uri" }, "contentUrl" => "base_url" })
   end
 
   describe "to_hash" do
