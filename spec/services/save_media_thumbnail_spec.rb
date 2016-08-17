@@ -112,10 +112,12 @@ RSpec.describe SaveMediaThumbnail do
   describe "when request fails" do
     it "returns false when the image request fails" do
       expect_any_instance_of(described_class).to receive(:image_server_connection).and_return(failed_image_connection)
+      allow_any_instance_of(described_class).to receive(:media_server_connection).and_return(media_server_connection)
       expect(subject.save!).to eq(false)
     end
 
     it "returns false when the media request fails" do
+      allow_any_instance_of(described_class).to receive(:image_server_connection).and_return(image_server_connection)
       expect_any_instance_of(described_class).to receive(:media_server_connection).and_return(failed_media_connection)
       expect(subject.save!).to eq(false)
     end
@@ -152,6 +154,7 @@ RSpec.describe SaveMediaThumbnail do
   describe "#image_server_url" do
     it "uses the collection id as the group id" do
       allow_any_instance_of(described_class).to receive(:image_server_connection).and_return(image_server_connection)
+      allow_any_instance_of(described_class).to receive(:media_server_connection).and_return(media_server_connection)
       subject = described_class.new(image: image, item: item, media: video)
       expect(image_server_connection).to receive(:post).with(
         "/api/images",
@@ -163,11 +166,12 @@ RSpec.describe SaveMediaThumbnail do
 
   describe "#media_server_url" do
     it "presents correct media_file data as put param" do
+      allow_any_instance_of(described_class).to receive(:image_server_connection).and_return(image_server_connection)
       allow_any_instance_of(described_class).to receive(:media_server_connection).and_return(media_server_connection)
       subject = described_class.new(image: image, item: item, media: video)
       expect(media_server_connection).to receive(:put).with(
         "/v1/media_files/xxxx-yyyy-zzzz",
-        hash_including(media_file: { thumbnail_url: "http://localhost:3019/images/honeycomb/000/100/000/001/test.jpg" })
+        hash_including(media_file: { thumbnail_url: "http://localhost:3019/images/test/000/001/000/001/1920x1200.jpeg" })
       ).and_return(media_response)
       subject.save!
     end
