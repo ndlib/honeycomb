@@ -117,9 +117,9 @@ RSpec.describe SaveHoneypotImage do
     end
   end
 
-  describe "#api_url" do
+  describe "#image_server_url" do
     it "returns a url to the honeypot application" do
-      expect(subject.send(:api_url)).to eq("http://localhost:3019")
+      expect(subject.send(:image_server_url)).to eq("http://localhost:3019")
     end
   end
 
