@@ -63,7 +63,7 @@ RSpec.describe V1::MediaController, type: :controller do
     end
     subject { put :finish_upload, medium_id: media.id }
 
-    describe "finsih_upload" do
+    describe "finish_upload" do
       before(:each) do
         sign_in_admin
         allow_any_instance_of(MediaQuery).to receive(:public_find).and_return(media)
