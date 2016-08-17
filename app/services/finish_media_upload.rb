@@ -12,7 +12,7 @@ class FinishMediaUpload
 
   def finish!
     media.status = :ready
-    media.save!
+    media.save
     media.serializer = SerializeMedia
 
     media

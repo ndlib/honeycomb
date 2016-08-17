@@ -2,7 +2,7 @@ require "rails_helper"
 require "support/item_meta_helpers"
 
 RSpec.describe FinishMediaUpload do
-  let(:media) { instance_double(Video, id: 1, save!: true, "serializer=" => true, "status=" => 1) }
+  let(:media) { instance_double(Video, id: 1, save: true, "serializer=" => true, "status=" => 1) }
   let(:subject) { FinishMediaUpload.call(media: media) }
 
   it "sets the status to ready" do
@@ -11,7 +11,7 @@ RSpec.describe FinishMediaUpload do
   end
 
   it "saves the media" do
-    expect(media).to receive(:save!).and_return(true)
+    expect(media).to receive(:save).and_return(true)
     subject
   end
 
