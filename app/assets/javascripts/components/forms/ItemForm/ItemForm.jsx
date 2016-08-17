@@ -88,6 +88,7 @@ var ItemForm = React.createClass({
         />
       );
     } else if (this.state.selectedIndex == "media") {
+      console.log("media--->");
       return (
         <div>
           <ReplaceMediaForm
@@ -122,7 +123,7 @@ var ItemForm = React.createClass({
   },
 
   mediaToolbar: function() {
-    if (this.state.item.image) {
+    if (this.state.item.media) {
       return (<Tab label="Media" style={TabStyle} value="media" />);
     }
     return (<div />);

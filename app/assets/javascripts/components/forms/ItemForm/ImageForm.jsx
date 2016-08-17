@@ -34,7 +34,9 @@ var ImageForm = React.createClass({
   checkfileCallback: function () {
     var hasFiles = (this.dropzone.files.length > 0);
     this.setState( { hasFiles: hasFiles } );
-    this.props.hasFiles();
+    if (this.props.hasFiles) {
+      this.props.hasFiles();
+    }
   },
 
   render: function() {

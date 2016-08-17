@@ -102,7 +102,6 @@ var StreamingForm = React.createClass({
     } else {
       var button = (<RaisedButton label="Upload" primary={ true } onClick={ this.uploady } />)
     }
-
     return (
       <div>
         <h2>Replace Item Media</h2>
