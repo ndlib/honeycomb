@@ -1,0 +1,20 @@
+{
+  "@context":"http://schema.org",
+  "@type":"UpdateAction",
+  "actionStatus":"CompletedActionStatus",
+  "object":{
+    "@context":"http://schema.org",
+    "@type":"VideoObject",
+    "@id":"7af44cac-f418-4767-9371-58a6a6f2bd93",
+    "description":"bubba_smith.mp4",
+    "name":"bubba_smith.mp4",
+    "thumbnailUrl":"http://localhost:3019/images/honeycomb/000/001/000/004/grumpy_cat.jpeg",
+    "uploadDate":"2016-08-16T15:54:25.915Z",
+    "embedUrl":"http://localhost:3023/?id=7af44cac-f418-4767-9371-58a6a6f2bd93",
+    "contentUrl":[
+      "http://wowza.library.nd.edu:1935/buzz_wow/_definst_/mp4:amazons3/buzz-bucket.library.nd.edu/bubba_smit.mp4/playlist.m3u8",
+      "rtmp://wowza.library.nd.edu:1935/buzz_wow/_definst_/mp4:amazons3/buzz-bucket.library.nd.edu/bubba_smit.mp4"
+    ],
+    "url":"http://localhost:3023/v1/media_files/7af44cac-f418-4767-9371-58a6a6f2bd93"
+  }
+}

@@ -51,7 +51,7 @@ class SaveHoneypotImage
   end
 
   def connection
-    @connection ||= Faraday.new(api_url) do |f|
+    @connection ||= Faraday.new(image_server_url) do |f|
       f.request :multipart
       f.request :url_encoded
       f.adapter :net_http
@@ -68,10 +68,10 @@ class SaveHoneypotImage
   end
 
   def post
-    { application_id: "honeycomb", group_id: image.collection.id, item_id: image.id, image: upload_image }
+    {application_id: "honeycomb", group_id: image.collection.id, item_id: image.id, image: upload_image}
   end
 
-  def api_url
-    Rails.configuration.settings.honeypot_url
+  def image_server_url
+    Rails.configuration.settings.image_server_url
   end
 end
