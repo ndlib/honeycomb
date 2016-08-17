@@ -6,8 +6,9 @@ defaults: &defaults
 
 local: &local
   <<: *defaults
-  honeypot_url: 'http://localhost:3019'
+  image_server_url: 'http://localhost:3019'
   beehive_url: 'http://localhost:3018'
+  media_server_url: 'http://localhost:3023'
 
 vm: &vm
   <<: *defaults
@@ -23,11 +24,13 @@ test:
 pre_production:
   <<: *vm
   cas_base: https://login.nd.edu/cas
-  honeypot_url: https://honeypotpprd.library.nd.edu
+  image_server_url: https://honeypotpprd.library.nd.edu
   beehive_url: https://collections-pprd.library.nd.edu
+  media_server_url: https://buzz-pprd.library.nd.edu
 
 production:
   <<: *vm
   cas_base: https://login.nd.edu/cas
-  honeypot_url: https://honeypot.library.nd.edu
+  image_server_url: https://honeypot.library.nd.edu
   beehive_url: https://collections.library.nd.edu
+  media_server_url: https://buzz.library.nd.edu
