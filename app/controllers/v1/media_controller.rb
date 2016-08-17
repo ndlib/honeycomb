@@ -14,10 +14,10 @@ module V1
     def finish_upload
       @media = MediaQuery.new.public_find
 
-      media = FinishMediaUpload.call(media: @media, params: finish_params)
+      FinishMediaUpload.call(media: @media)
 
-      status = media.valid? ? :ok : :unprocessable_entity
-      render json: media.to_json, status: status
+      status = @media.valid? ? :ok : :unprocessable_entity
+      render json: @media.to_json, status: status
     end
 
     private

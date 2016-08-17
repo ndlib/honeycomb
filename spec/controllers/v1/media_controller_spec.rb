@@ -49,4 +49,49 @@ RSpec.describe V1::MediaController, type: :controller do
       end
     end
   end
+
+  context "finish upload" do
+    let(:collection) { instance_double(Collection, id: "1") }
+    let(:media) do
+      instance_double(Media,
+                      id: "1",
+                      updated_at: nil,
+                      valid?: true,
+                      save: true,
+                      to_json: "media 1 json",
+                      collection: collection)
+    end
+    subject { put :finish_upload, medium_id: media.id }
+
+    describe "finsih_upload" do
+      before(:each) do
+        sign_in_admin
+        allow_any_instance_of(MediaQuery).to receive(:public_find).and_return(media)
+      end
+
+      it "uses the FinishMediaUpload service" do
+        expect(FinishMediaUpload).to receive(:call).with(media: media).and_return(media)
+        subject
+      end
+
+      it "renders 200 when media is valid" do
+        allow(FinishMediaUpload).to receive(:call).with(media: media).and_return(media)
+        subject
+        expect(response.status).to eq(200)
+      end
+
+      it "renders the media as json when media is valid" do
+        allow(FinishMediaUpload).to receive(:call).with(media: media).and_return(media)
+        subject
+        expect(response.body).to eq("media 1 json")
+      end
+
+      it "renders 422 when media is invalid" do
+        allow(media).to receive(:valid?).and_return(false)
+        allow(FinishMediaUpload).to receive(:call).with(media: media).and_return(media)
+        subject
+        expect(response.status).to eq(422)
+      end
+    end
+  end
 end
