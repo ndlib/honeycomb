@@ -86,8 +86,8 @@ RSpec.describe SaveMediaThumbnail do
         "/v1/media_files/xxxx-yyyy-zzzz",
         application_id: "honeycomb",
         media_file: { thumbnail_url: "http://localhost:3019/images/test/000/001/000/001/1920x1200.jpeg" }
-      )
-        .and_return(media_response)
+      ).
+        and_return(media_response)
 
       subject.save!
     end

@@ -68,7 +68,7 @@ class SaveHoneypotImage
   end
 
   def post
-    {application_id: "honeycomb", group_id: image.collection.id, item_id: image.id, image: upload_image}
+    { application_id: "honeycomb", group_id: image.collection.id, item_id: image.id, image: upload_image }
   end
 
   def image_server_url
