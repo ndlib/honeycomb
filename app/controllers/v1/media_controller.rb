@@ -11,6 +11,15 @@ module V1
       render json: media.to_json, status: status
     end
 
+    def finish_upload
+      @media = MediaQuery.new.public_find
+
+      media = FinishMediaUpload.call(media: @media, params: finish_params)
+
+      status = media.valid? ? :ok : :unprocessable_entity
+      render json: media.to_json, status: status
+    end
+
     private
 
     def create_params
