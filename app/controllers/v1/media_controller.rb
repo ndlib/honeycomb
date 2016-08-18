@@ -20,10 +20,27 @@ module V1
       render json: @media.to_json, status: status
     end
 
+    def add_thumbnail
+      @media = MediaQuery.new.public_find(media_params[:id])
+      @uploaded_image = media_params[:uploaded_image]
+      return_value = SaveMediaThumbnail.call(
+        image: media_params[:uploaded_image],
+        item: @media.items[0],
+        media: @media
+      ) if @uploaded_image.present?
+
+      status = return_value ? :ok : :unprocessable_entity
+      render json: return_value.to_json, status: status
+    end
+
     private
 
     def create_params
       params.require(:medium)
+    end
+
+    def media_params
+      params[:media].to_hash.with_indifferent_access
     end
   end
 end
