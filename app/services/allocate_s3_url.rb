@@ -1,17 +1,25 @@
 class AllocateS3Url
   attr_reader :uid, :filename
 
-  def self.call(uid, filename)
-    new(uid, filename).generate
-  end
-
   def initialize(uid, filename)
     @filename = filename
     @uid = uid
   end
 
-  def generate
+  def self.presigned_url(uid, filename)
+    new(uid, filename).generate_presigned_url
+  end
+
+  def self.public_url(uid, filename)
+    new(uid, filename).generate_public_url
+  end
+
+  def generate_presigned_url
     bucket_object.presigned_url(:put, expires_in: 3600)
+  end
+
+  def generate_public_url
+    bucket_object.public_url
   end
 
   private

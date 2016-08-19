@@ -12,7 +12,7 @@ module V1
     end
 
     def finish_upload
-      @media = MediaQuery.new.public_find
+      @media = MediaQuery.new.public_find(params[:medium_id])
 
       FinishMediaUpload.call(media: @media)
 

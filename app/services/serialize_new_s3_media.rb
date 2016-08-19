@@ -1,7 +1,7 @@
 class SerializeNewS3Media
   def self.to_hash(media:)
     result = SerializeMedia.to_hash(media: media)
-    result[:upload_url] = AllocateS3Url.call(media.uuid, media.file_name)
+    result[:upload_url] = AllocateS3Url.presigned_url(media.uuid, media.file_name)
     result
   end
 
