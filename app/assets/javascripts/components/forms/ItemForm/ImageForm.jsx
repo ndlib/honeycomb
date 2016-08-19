@@ -14,26 +14,16 @@ var ImageForm = React.createClass({
 
   getDefaultProps: function() {
     return {
-      method: "put",
-      modalId: "add-items"
+      modalId: "replace-image",
+      paramName: "item[uploaded_image]",
     };
   },
 
-  dropzoneInitialized: function(dropzone) {
-    this.dropzone = dropzone;
-    this.dropzone.on('addedfile', this.checkfileCallback);
-    this.dropzone.on('removedfile', this.checkfileCallback);
-  },
-
   completeCallback: function() {
-    if (this.dropzone.files.length > 0) {
-      ItemActions.get(this.props.item.id);
-    }
+    ItemActions.get(this.props.item.id);
   },
 
-  checkfileCallback: function () {
-    var hasFiles = (this.dropzone.files.length > 0);
-    this.setState( { hasFiles: hasFiles } );
+  startedCallback: function () {
     if (this.props.hasFiles) {
       this.props.hasFiles();
     }
@@ -45,12 +35,12 @@ var ImageForm = React.createClass({
         <DropzoneForm
           authenticityToken={this.props.authenticityToken}
           baseID={this.props.modalId}
-          completeCallback={this.completeCallback}
+          completeCallback={ this.completeCallback }
+          startedCallback={ this.startedCallback }
           formUrl={ ItemActions.url(this.props.item.id) }
-          initializeCallback={this.dropzoneInitialized}
-          method={ this.method }
+          method={ "put" }
           multifileUpload={ true }
-          paramName="item[uploaded_image]"
+          paramName={ this.props.paramName }
         />
     </div>
     );

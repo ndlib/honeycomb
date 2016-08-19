@@ -80,6 +80,7 @@ var StreamingForm = React.createClass({
       if(xhr.readyState === 4) {
         this.setState({ processing: false});
         if(xhr.status === 200) {
+          console.log(xhr);
           alert("SEND FINISHED UPDATE TO HC");
           this.goToNewItem();
         } else {

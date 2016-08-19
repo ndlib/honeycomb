@@ -68,10 +68,14 @@ var AddNewItemsButton = React.createClass({
         >
           <Tabs style={ { marginBottom: "10px"} }>
             <Tab label="Images">
-              <ReactDropzone
-                formUrl={ this.props.formUrl }
-                authenticityToken={ this.props.authenticityToken }
-                multifileUpload={ this.props.multifileUpload }
+              <DropzoneForm
+                authenticityToken={this.props.authenticityToken}
+                baseID="add-new-item"
+                startedCallback={this.setHasFiles}
+                formUrl={this.props.formUrl}
+                method="post"
+                multifileUpload={ true }
+                paramName="item[uploaded_image]"
               />
             </Tab>
             <Tab label="Video">

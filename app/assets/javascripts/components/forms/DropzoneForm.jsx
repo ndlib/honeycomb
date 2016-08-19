@@ -5,21 +5,39 @@ var DropzoneForm = React.createClass({
   propTypes: {
     authenticityToken: React.PropTypes.string.isRequired,
     baseID: React.PropTypes.string.isRequired,
-    completeCallback: React.PropTypes.func,
     formUrl: React.PropTypes.string.isRequired,
-    initializeCallback: React.PropTypes.func,
     method: React.PropTypes.string.isRequired,
-    multifileUpload: React.PropTypes.bool,
     paramName: React.PropTypes.string.isRequired,
+    multifileUpload: React.PropTypes.bool,
+    completeCallback: React.PropTypes.func,
+    startedCallback: React.PropTypes.func,
+    removedCallback: React.PropTypes.func,
+    initializeCallback: React.PropTypes.func,
+  },
+
+  getDefaultProps: function() {
+    return {
+      multifileUpload: true,
+    };
   },
 
   componentDidMount: function() {
     this.setupDropzone();
   },
 
+  componentWillUnmount: function() {
+    if (this.dropzone) {
+      this.dropzone.destroy();
+      this.dropzone = null;
+    }
+  },
+
   setupDropzone: function() {
     if (!this.dropzone) {
       this.dropzone = new Dropzone(ReactDOM.findDOMNode(this), this.options());
+      this.dropzone.on('addedfile', this.startedCallback);
+      this.dropzone.on('removedfile', this.startedCallback);
+
       if (this.props.initializeCallback) {
         this.props.initializeCallback(this.dropzone);
       }
@@ -43,16 +61,21 @@ var DropzoneForm = React.createClass({
     };
   },
 
-  completeCallback: function() {
-    if (this.props.completeCallback) {
-      this.props.completeCallback();
+  startedCallback: function() {
+    if (this.props.startedCallback) {
+      this.props.startedCallback(this.dropzone);
     }
   },
 
-  componentWillUnmount: function() {
-    if (this.dropzone) {
-      this.dropzone.destroy();
-      this.dropzone = null;
+  removedCallback:  function() {
+    if (this.props.removedCallback) {
+      this.props.removedCallback(this.dropzone);
+    }
+  },
+
+  completeCallback: function() {
+    if (this.props.completeCallback) {
+      this.props.completeCallback(this.dropzone);
     }
   },
 
