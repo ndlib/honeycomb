@@ -21,16 +21,23 @@ var ReplaceMedia = React.createClass({
     return this.props.item.media["@type"];
   },
 
+  uploadComplete: function() {
+    ItemActions.get(this.props.item.id);
+  },
+
   render: function() {
     switch (this.type())
     {
       case "ImageObject":
         return (
-          <ImageForm
-            item={ this.props.item }
-            authenticityToken={ this.props.authenticityToken }
+          <DropzoneForm
+            authenticityToken={this.props.authenticityToken}
+            baseID="replace-image"
+            completeCallback={ this.uploadComplete }
             formUrl={ ItemActions.url(this.props.item.id) }
-            method="put"
+            method={ "put" }
+            multifileUpload={ true }
+            paramName="item[uploaded_image]"
           />
         );
       case "VideoObject":
