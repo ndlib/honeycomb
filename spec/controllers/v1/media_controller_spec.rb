@@ -111,26 +111,32 @@ RSpec.describe V1::MediaController, type: :controller do
     end
   end
 
-  context "add_thumbnail" do
+  context "#update" do
     let(:collection) { instance_double(Collection, id: "1") }
     let(:item) { instance_double(Item, id: "1") }
     let(:image) { "file" }
     let(:media) do
       instance_double(
-        Media,
+        Video,
         id: "1",
+        uuid: "xxxx-yyyy-zzzz",
         updated_at: nil,
+        file_name: "test.txt",
+        status: "available",
+        json_response: { response: "test " },
         valid?: true,
         save: true,
         to_json: "media 1 json",
+        errors: {},
+        type: "video",
         items: [item],
         collection: collection
       )
     end
     let(:return_value) { { status: "ok" } }
-    subject { put :add_thumbnail, medium_id: media.id, media: { uploaded_image: image } }
+    subject { put :update, id: media.id, media: { uploaded_image: image } }
 
-    describe "#add_thumbnail" do
+    describe "#update" do
       before(:each) do
         sign_in_admin
         allow_any_instance_of(MediaQuery).to receive(:public_find).and_return(media)
@@ -162,8 +168,9 @@ RSpec.describe V1::MediaController, type: :controller do
           item: item,
           media: media
         ).and_return(return_value)
+        allow(SerializeMedia).to receive(:to_hash).with(media: media).and_return(response: true)
         subject
-        expect(response.body).to eq("{\"status\":\"ok\"}")
+        expect(response.body).to eq("{\"response\":true}")
       end
     end
   end

@@ -20,7 +20,7 @@ module V1
       render json: @media.to_json, status: status
     end
 
-    def add_thumbnail
+    def update
       @media = MediaQuery.new.public_find(media_params[:id])
       @uploaded_image = media_params[:uploaded_image]
       return_value = SaveMediaThumbnail.call(
@@ -30,7 +30,7 @@ module V1
       ) if @uploaded_image.present?
 
       status = return_value ? :ok : :unprocessable_entity
-      render json: return_value.to_json, status: status
+      render json: SerializeMedia.to_json(media: @media), status: status
     end
 
     private

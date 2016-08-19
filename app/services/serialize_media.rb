@@ -4,7 +4,8 @@ class SerializeMedia
     when "Image"
       SerializeImageMedia.to_hash(media: media)
     else
-      SerializeAVMedia.to_hash(media: media)
+      result = SerializeAVMedia.to_hash(media: media)
+      result
     end
   end
 
