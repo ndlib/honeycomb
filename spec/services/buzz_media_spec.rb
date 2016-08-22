@@ -76,12 +76,12 @@ RSpec.describe BuzzMedia do
     describe "when request fails" do
       it "throws an Buzz::UnprocessableEntity exception when Buzz returns a 422" do
         allow_any_instance_of(described_class).to receive(:media_server_connection).and_return(unprocessable_media_connection)
-        expect{ subject.create }.to raise_error(Buzz::UnprocessableEntity)
+        expect { subject.create }.to raise_error(Buzz::UnprocessableEntity)
       end
 
       it "throws an Buzz::InternalServerError exception when Buzz returns a 422" do
         allow_any_instance_of(described_class).to receive(:media_server_connection).and_return(failed_media_connection)
-        expect{ subject.create }.to raise_error(Buzz::InternalServerError)
+        expect { subject.create }.to raise_error(Buzz::InternalServerError)
       end
     end
   end
@@ -137,12 +137,12 @@ RSpec.describe BuzzMedia do
     describe "when request fails" do
       it "throws an Buzz::UnprocessableEntity exception when Buzz returns a 422" do
         allow_any_instance_of(described_class).to receive(:media_server_connection).and_return(unprocessable_media_connection)
-        expect{ subject.update }.to raise_error(Buzz::UnprocessableEntity)
+        expect { subject.update }.to raise_error(Buzz::UnprocessableEntity)
       end
 
       it "throws an Buzz::InternalServerError exception when Buzz returns a 422" do
         allow_any_instance_of(described_class).to receive(:media_server_connection).and_return(failed_media_connection)
-        expect{ subject.update }.to raise_error(Buzz::InternalServerError)
+        expect { subject.update }.to raise_error(Buzz::InternalServerError)
       end
     end
   end

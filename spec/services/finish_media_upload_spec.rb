@@ -2,8 +2,18 @@ require "rails_helper"
 require "support/item_meta_helpers"
 
 RSpec.describe FinishMediaUpload do
-  let(:media) { instance_double(Video, id: 1, save: true, "serializer=" => true, "status=" => 1, uuid: "uuid", file_name: "file name", type: "Video", "json_response=" => true) }
   let(:subject) { FinishMediaUpload.call(media: media) }
+  let(:media) do
+    instance_double(Video,
+                    id: 1,
+                    save: true, 
+                    "serializer=" => true,
+                    "status=" => 1,
+                    uuid: "uuid",
+                    file_name: "file name",
+                    type: "Video",
+                    "json_response=" => true)
+  end
 
   before(:each) do
     allow(BuzzMedia).to receive(:call_create).and_return(media)
