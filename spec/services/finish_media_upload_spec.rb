@@ -6,7 +6,7 @@ RSpec.describe FinishMediaUpload do
   let(:media) do
     instance_double(Video,
                     id: 1,
-                    save: true, 
+                    save: true,
                     "serializer=" => true,
                     "status=" => 1,
                     uuid: "uuid",
