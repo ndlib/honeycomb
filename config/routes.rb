@@ -101,7 +101,7 @@ Rails.application.routes.draw do
       get :pages, defaults: { format: :json }
     end
 
-    resources :media, only: [] do
+    resources :media, only: [:update] do
       put "finish_upload", to: "media#finish_upload"
     end
 
