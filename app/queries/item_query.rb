@@ -10,7 +10,7 @@ class ItemQuery
   end
 
   def only_top_level
-    relation.where(parent_id: nil).includes(:image)
+    relation.where(parent_id: nil).includes(:media)
   end
 
   delegate :find, to: :relation
