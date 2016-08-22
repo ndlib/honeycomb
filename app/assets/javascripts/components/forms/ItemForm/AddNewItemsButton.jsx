@@ -82,19 +82,19 @@ var AddNewItemsButton = React.createClass({
               <StreamingForm
                 item={null}
                 type="video"
-                hasFiles={ this.setHasFiles }
+                uploadStarted={ this.setHasFiles }
               />
             </Tab>
             <Tab label="Audio">
               <StreamingForm
                 item={null}
                 type="audio"
-                hasFiles={ this.setHasFiles }
+                uploadStarted={ this.setHasFiles }
               />
             </Tab>
             <Tab label="No Media">
               <NoMediaForm
-                hasFiles={ this.setHasFiles }
+                uploadStarted={ this.setHasFiles }
               />
             </Tab>
           </Tabs>

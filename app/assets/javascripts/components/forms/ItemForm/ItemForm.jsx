@@ -88,7 +88,6 @@ var ItemForm = React.createClass({
         />
       );
     } else if (this.state.selectedIndex == "media") {
-      console.log("media--->");
       return (
         <div>
           <ReplaceMediaForm

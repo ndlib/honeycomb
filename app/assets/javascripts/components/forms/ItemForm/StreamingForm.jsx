@@ -10,7 +10,8 @@ var AppEventEmitter = require("../../../EventEmitter");
 var StreamingForm = React.createClass({
   propTypes: {
     item: React.PropTypes.object.isRequired,
-    hasFiles: React.PropTypes.func
+    uploadStarted: React.PropTypes.func,
+    uploadComplete: React.PropTypes.func
   },
 
   getInitialState: function() {
@@ -38,8 +39,8 @@ var StreamingForm = React.createClass({
     var f = this.refs.uploadFile;
     if (f.files[0]) {
       this.setState({ processing: true });
-      if (this.props.hasFiles) {
-        this.props.hasFiles();
+      if (this.props.uploadStarted) {
+        this.props.uploadStarted();
       }
       this.createNewItem(f.files[0]);
     }
@@ -82,6 +83,9 @@ var StreamingForm = React.createClass({
         if(xhr.status === 200) {
           console.log(xhr);
           alert("SEND FINISHED UPDATE TO HC");
+          if (this.props.uploadComplete) {
+            this.props.uploadComplete()
+          }
           this.goToNewItem();
         } else {
           AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error. Please try again if the problem persists please contact WSE unit.");

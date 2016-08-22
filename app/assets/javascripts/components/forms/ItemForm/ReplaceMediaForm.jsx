@@ -2,7 +2,6 @@ var React = require('react');
 var mui = require("material-ui");
 var RaisedButton = mui.RaisedButton;
 var StreamingForm = require("./StreamingForm");
-var ImageForm = require("./ImageForm");
 
 var ItemActions = require("../../../actions/ItemActions");
 
@@ -42,10 +41,22 @@ var ReplaceMedia = React.createClass({
         );
       case "VideoObject":
         return (
-          <StreamingForm
-            item={ this.props.item }
-            type="video"
-          />
+          <div>
+            <StreamingForm
+              item={ this.props.item }
+              type="video"
+            />
+            <h4>Video Key Frame</h4>
+            <DropzoneForm
+              authenticityToken={this.props.authenticityToken}
+              baseID="replace-image"
+              completeCallback={ this.uploadComplete }
+              formUrl={ ItemActions.url(this.props.item.id) }
+              method={ "put" }
+              multifileUpload={ true }
+              paramName="media[uploaded_image]"
+            />
+          </div>
         );
       case "AudioObject":
         return (
