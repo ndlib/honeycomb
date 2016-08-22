@@ -41,7 +41,9 @@ class AllocateS3Url
   end
 
   def s3
-    @s3 ||= Aws::S3::Resource.new
+    credentials = Aws::Credentials.new(configuration["access_key_id"], configuration["secret_access_key"])
+    client = Aws::S3::Client.new(region: configuration["region"], credentials: credentials)
+    @s3 ||= Aws::S3::Resource.new(client: client)
   end
 
   def configuration

@@ -5,6 +5,14 @@ RSpec.describe FinishMediaUpload do
   let(:media) { instance_double(Video, id: 1, save: true, "serializer=" => true, "status=" => 1, uuid: "uuid", file_name: "file name", type: "Video", "json_response=" => true) }
   let(:subject) { FinishMediaUpload.call(media: media) }
 
+  let(:s3) { double(bucket: bucket) }
+  let(:bucket) { double(object: bucket_object) }
+  let(:bucket_object) { double(presigned_url: "presigned url", public_url: "public url") }
+
+  before(:each) do
+    allow_any_instance_of(AllocateS3Url).to receive(:s3).and_return(s3)
+  end
+
   it "sets the status to ready" do
     expect(media).to receive("status=").with(:ready)
     subject

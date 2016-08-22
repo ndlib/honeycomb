@@ -6,6 +6,14 @@ RSpec.describe BuzzMedia do
   let(:media_server_json) { JSON.parse(File.read(File.join(Rails.root, "spec/fixtures/buzz_response.json"))) }
   let(:collection) { instance_double(Collection, id: 100) }
 
+  let(:s3) { double(bucket: bucket) }
+  let(:bucket) { double(object: bucket_object) }
+  let(:bucket_object) { double(presigned_url: "presigned url", public_url: "public url") }
+
+  before(:each) do
+    allow_any_instance_of(AllocateS3Url).to receive(:s3).and_return(s3)
+  end
+
   let(:video) do
     instance_double(Video,
                     type: "Video",
@@ -62,7 +70,7 @@ RSpec.describe BuzzMedia do
       it "sends a create request to the media server" do
         expect(media_server_connection).to receive(:post).with(
           "/v1/media_files",
-          media_file: { file_path: "https://s3.amazonaws.com/aws_bucket/xxxx-yyyy-zzzz.jpeg", media_type: "video" }
+          media_file: { file_path: bucket_object.public_url, media_type: "video" }
         ).and_return(media_response)
 
         subject.create
