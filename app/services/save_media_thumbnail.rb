@@ -52,10 +52,6 @@ class SaveMediaThumbnail
     end
   end
 
-  def media_image
-    media.thumbnail_url
-  end
-
   def upload_image
     Faraday::UploadIO.new(@image.path, "image")
   end
