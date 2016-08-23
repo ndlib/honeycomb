@@ -5,7 +5,7 @@ RSpec.describe Audio do
     expect(described_class).to be < Media
   end
 
-  [:file_name, :json_response].each do |field|
+  [:file_name, :thumbnail_url, :json_response].each do |field|
     it "has field, #{field}" do
       expect(subject).to respond_to(field)
       expect(subject).to respond_to("#{field}=")

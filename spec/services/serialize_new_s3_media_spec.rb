@@ -13,7 +13,7 @@ RSpec.describe SerializeNewS3Media do
   end
 
   before(:each) do
-    allow(AllocateS3Url).to receive(:call).and_return("upload url")
+    allow(AllocateS3Url).to receive(:presigned_url).and_return("upload url")
   end
 
   describe "to_hash" do
@@ -25,7 +25,7 @@ RSpec.describe SerializeNewS3Media do
     end
 
     it "uses AllocateS3Url to create the upload_url" do
-      allow(AllocateS3Url).to receive(:call).and_return("upload url")
+      allow(AllocateS3Url).to receive(:presigned_url).and_return("upload url")
       expect(subject).to include(upload_url: "upload url")
     end
   end
@@ -39,7 +39,7 @@ RSpec.describe SerializeNewS3Media do
     end
 
     it "uses AllocateS3Url to create the upload_url" do
-      allow(AllocateS3Url).to receive(:call).and_return("upload url")
+      allow(AllocateS3Url).to receive(:presigned_url).and_return("upload url")
       expect(subject).to include(upload_url: "upload url")
     end
   end

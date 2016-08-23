@@ -11,10 +11,14 @@ class FinishMediaUpload
   end
 
   def finish!
-    media.status = :ready
-    media.save
-    media.serializer = SerializeMedia
+    result = BuzzMedia.call_create(media: media)
+    if result
+      media.json_response = result
+      media.status = :ready
+      media.save
+    end
 
+    media.serializer = SerializeMedia
     media
   end
 end
