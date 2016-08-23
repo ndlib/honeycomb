@@ -8,6 +8,7 @@ script:
   - bundle exec rspec spec
 before_script:
   - cp config/secrets.example.yml config/secrets.yml
+  - cp config/database_example.yml config/database.yml
   - psql -c 'create database honeycomb_test' -U postgres
   - psql -c 'create role root superuser createdb createrole inherit login replication' -U postgres
   - RAILS_ENV=test bundle exec rake --trace db:migrate test
