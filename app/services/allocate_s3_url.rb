@@ -1,23 +1,35 @@
 class AllocateS3Url
   attr_reader :uid, :filename
 
-  def self.call(uid, filename)
-    new(uid, filename).generate
-  end
-
   def initialize(uid, filename)
     @filename = filename
     @uid = uid
   end
 
-  def generate
+  def self.presigned_url(uid, filename)
+    new(uid, filename).generate_presigned_url
+  end
+
+  def self.public_url(uid, filename)
+    new(uid, filename).generate_public_url
+  end
+
+  def generate_presigned_url
     bucket_object.presigned_url(:put, expires_in: 3600)
+  end
+
+  def generate_public_url
+    bucket_object.public_url
+  end
+
+  def file_name
+    "#{uid}#{file_extension}"
   end
 
   private
 
   def bucket_object
-    bucket.object("#{uid}#{file_extension}")
+    bucket.object(file_name)
   end
 
   def bucket
@@ -33,7 +45,9 @@ class AllocateS3Url
   end
 
   def s3
-    @s3 ||= Aws::S3::Resource.new
+    credentials = Aws::Credentials.new(configuration["access_key_id"], configuration["secret_access_key"])
+    client = Aws::S3::Client.new(region: configuration["region"], credentials: credentials)
+    @s3 ||= Aws::S3::Resource.new(client: client)
   end
 
   def configuration

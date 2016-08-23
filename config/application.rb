@@ -12,6 +12,7 @@ module ItemAdmin
       Rails.root.join("lib"),
       Rails.root.join("app", "queries"),
       Rails.root.join("app", "decorators"),
+      Rails.root.join("app", "errors"),
       Rails.root.join("app", "policy"),
       Rails.root.join("app", "services"),
       Rails.root.join("app", "forms"),

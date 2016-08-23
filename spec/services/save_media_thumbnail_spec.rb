@@ -15,32 +15,10 @@ RSpec.describe SaveMediaThumbnail do
     end
   end
 
-  let(:media_server_connection) do
-    Faraday.new do |builder|
-      builder.adapter :test do |stub|
-        stub.put("/v1/media_files/xxxx-yyyy-zzzz") do |_env|
-          [
-            200,
-            { content_type: "application/json" },
-            media_server_json
-          ]
-        end
-      end
-    end
-  end
-
   let(:failed_image_connection) do
     Faraday.new do |builder|
       builder.adapter :test do |stub|
         stub.post("/api/images") { |_env| [500, { content_type: "application/json" }, "failed"] }
-      end
-    end
-  end
-
-  let(:failed_media_connection) do
-    Faraday.new do |builder|
-      builder.adapter :test do |stub|
-        stub.put("/v1/media_files/xxxx-yyyy-zzzz") { |_env| [500, { content_type: "application/json" }, "failed"] }
       end
     end
   end
@@ -51,7 +29,10 @@ RSpec.describe SaveMediaThumbnail do
     instance_double(Video,
                     id: 10,
                     collection: collection,
+                    json_response: { "@id" => "7af44cac-f418-4767-9371-58a6a6f2bd93" },
                     "json_response=" => true,
+                    thumbnail_url: "",
+                    "thumbnail_url=" => true,
                     data: { object: "test" },
                     save!: true,
                     uuid: "xxxx-yyyy-zzzz",
@@ -61,12 +42,11 @@ RSpec.describe SaveMediaThumbnail do
   let(:collection) { double(Collection, id: 100, image: image_file, save: true) }
   let(:image_file) { Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/test.jpg"), "image/jpeg") }
   let(:image_response) { double(success?: true, body: image_server_json) }
-  let(:media_response) { double(success?: true, body: media_server_json) }
 
   describe "successful request" do
     before(:each) do
       expect_any_instance_of(described_class).to receive(:image_server_connection).and_return(image_server_connection)
-      expect_any_instance_of(described_class).to receive(:media_server_connection).and_return(media_server_connection)
+      allow(BuzzMedia).to receive(:call_update).and_return(media_server_json)
     end
 
     it "sends a request to the image server" do
@@ -81,14 +61,8 @@ RSpec.describe SaveMediaThumbnail do
       subject.save!
     end
 
-    it "sends an update request to the media server" do
-      expect(media_server_connection).to receive(:put).with(
-        "/v1/media_files/xxxx-yyyy-zzzz",
-        application_id: "honeycomb",
-        media_file: { thumbnail_url: "http://localhost:3019/images/test/000/001/000/001/1920x1200.jpeg" }
-      ).
-        and_return(media_response)
-
+    it "uses BuzzMedia to send an update request to the media server" do
+      expect(BuzzMedia).to receive(:call_update)
       subject.save!
     end
   end
@@ -96,11 +70,11 @@ RSpec.describe SaveMediaThumbnail do
   describe "#save!" do
     before(:each) do
       expect_any_instance_of(described_class).to receive(:image_server_connection).and_return(image_server_connection)
-      expect_any_instance_of(described_class).to receive(:media_server_connection).and_return(media_server_connection)
+      expect(BuzzMedia).to receive(:call_update).and_return(media_server_json)
     end
 
-    it "returns the image when the request is successful" do
-      expect(subject.save!).to eq(media_response.body)
+    it "returns true when the request is successful" do
+      expect(subject.save!).to eq(true)
     end
 
     it "returns false when the media does not save" do
@@ -112,13 +86,13 @@ RSpec.describe SaveMediaThumbnail do
   describe "when request fails" do
     it "returns false when the image request fails" do
       expect_any_instance_of(described_class).to receive(:image_server_connection).and_return(failed_image_connection)
-      allow_any_instance_of(described_class).to receive(:media_server_connection).and_return(media_server_connection)
+      allow(BuzzMedia).to receive(:call_update).and_return(false)
       expect(subject.save!).to eq(false)
     end
 
     it "returns false when the media request fails" do
       allow_any_instance_of(described_class).to receive(:image_server_connection).and_return(image_server_connection)
-      expect_any_instance_of(described_class).to receive(:media_server_connection).and_return(failed_media_connection)
+      expect(BuzzMedia).to receive(:call_update).and_return(false)
       expect(subject.save!).to eq(false)
     end
   end
@@ -143,36 +117,15 @@ RSpec.describe SaveMediaThumbnail do
     end
   end
 
-  describe "#media_server_connection" do
-    it "is a Faraday connection" do
-      connection = subject.send(:media_server_connection)
-      expect(connection).to be_kind_of(Faraday::Connection)
-      expect(connection.url_prefix.to_s).to eq("http://localhost:3023/")
-    end
-  end
-
   describe "#image_server_url" do
     it "uses the collection id as the group id" do
       allow_any_instance_of(described_class).to receive(:image_server_connection).and_return(image_server_connection)
-      allow_any_instance_of(described_class).to receive(:media_server_connection).and_return(media_server_connection)
+      expect(BuzzMedia).to receive(:call_update).and_return(true)
       subject = described_class.new(image: image, item: item, media: video)
       expect(image_server_connection).to receive(:post).with(
         "/api/images",
         hash_including(group_id: collection.id)
       ).and_return(image_response)
-      subject.save!
-    end
-  end
-
-  describe "#media_server_url" do
-    it "presents correct media_file data as put param" do
-      allow_any_instance_of(described_class).to receive(:image_server_connection).and_return(image_server_connection)
-      allow_any_instance_of(described_class).to receive(:media_server_connection).and_return(media_server_connection)
-      subject = described_class.new(image: image, item: item, media: video)
-      expect(media_server_connection).to receive(:put).with(
-        "/v1/media_files/xxxx-yyyy-zzzz",
-        hash_including(media_file: { thumbnail_url: "http://localhost:3019/images/test/000/001/000/001/1920x1200.jpeg" })
-      ).and_return(media_response)
       subject.save!
     end
   end
