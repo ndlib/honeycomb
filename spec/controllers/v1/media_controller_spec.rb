@@ -82,7 +82,7 @@ RSpec.describe V1::MediaController, type: :controller do
     describe "finish_upload" do
       before(:each) do
         sign_in_admin
-        allow_any_instance_of(MediaQuery).to receive(:public_find).and_return(media)
+        allow_any_instance_of(MediaQuery).to receive(:public_find).with(media.id).and_return(media)
       end
 
       it "uses the FinishMediaUpload service" do
