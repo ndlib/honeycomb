@@ -33,7 +33,7 @@ class SaveMediaThumbnail
   end
 
   def update_media_record
-    @media.thumbnail_url = @image_response.body["contentUrl"]
+    @media.thumbnail_url = @image_response.body["thumbnail/medium"]["contentUrl"]
     @media_response = BuzzMedia.call_update(media: @media)
     if @media_response
       @media.data["json_response"] = @media_response
