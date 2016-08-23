@@ -22,10 +22,14 @@ class AllocateS3Url
     bucket_object.public_url
   end
 
+  def file_name
+    "#{uid}#{file_extension}"
+  end
+
   private
 
   def bucket_object
-    bucket.object("#{uid}#{file_extension}")
+    bucket.object(file_name)
   end
 
   def bucket
