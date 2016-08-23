@@ -68,6 +68,7 @@ var StreamingForm = React.createClass({
         this.uploadFile(data);
       }.bind(this)),
       error: (function(xhr) {
+        this.setState({ processing: false});
         AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error. Please try again if the problem persists please contact WSE unit.");
       }.bind(this)),
     });
@@ -80,9 +81,9 @@ var StreamingForm = React.createClass({
     xhr.onreadystatechange = () => {
       if(xhr.readyState === 4) {
         if(xhr.status === 200) {
-          console.log(this.props);          
           this.finishUpload(media)
         } else {
+          this.setState({ processing: false});
           AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error. Please try again if the problem persists please contact WSE unit.");
         }
       }
@@ -102,6 +103,7 @@ var StreamingForm = React.createClass({
         //this.goToNewItem();
       }.bind(this)),
       error: (function(xhr) {
+        this.setState({ processing: false});
         AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error. Please try again if the problem persists please contact WSE unit.");
       }.bind(this)),
     });
