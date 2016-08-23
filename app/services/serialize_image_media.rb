@@ -6,6 +6,7 @@ class SerializeImageMedia
     result["@id"] = url(media: media, style: :large)
     result["name"] = media.image.original_filename
     result["status"] = media.status
+    result["thumbnailUrl"] = url(media: media, style: :medium)
     result = media.json_response.merge(result)
     result
   end
