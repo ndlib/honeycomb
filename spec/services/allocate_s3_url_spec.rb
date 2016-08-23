@@ -15,6 +15,10 @@ describe AllocateS3Url do
     allow(Aws::S3::Resource).to receive(:new).and_return(s3)
   end
 
+  it "preserves the extension of the original file name but uses the uuid" do
+    expect(described_class.new(uid, filename).file_name).to eq("abcdefg.jpg")
+  end
+
   describe "presigned_url" do
     subject { described_class.presigned_url(uid, filename) }
 

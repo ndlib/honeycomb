@@ -66,7 +66,7 @@ RSpec.describe BuzzMedia do
       it "sends a create request to the media server" do
         expect(media_server_connection).to receive(:post).with(
           "/v1/media_files",
-          media_file: { file_path: "public url", media_type: "video" }
+          media_file: { file_path: "xxxx-yyyy-zzzz.jpeg", media_type: "video" }
         ).and_return(media_response)
 
         subject.create

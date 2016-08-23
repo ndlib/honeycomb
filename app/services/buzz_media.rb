@@ -38,7 +38,7 @@ class BuzzMedia
   def create_json
     {
       media_file: {
-        file_path: AllocateS3Url.public_url(media.uuid, media.file_name),
+        file_path: AllocateS3Url.new(media.uuid, media.file_name).file_name,
         media_type: @media.type.downcase
       }
     }
