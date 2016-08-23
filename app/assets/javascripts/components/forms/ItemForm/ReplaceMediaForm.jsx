@@ -25,6 +25,7 @@ var ReplaceMedia = React.createClass({
   },
 
   render: function() {
+    console.log(this.props.item);
     switch (this.type())
     {
       case "ImageObject":
@@ -51,7 +52,7 @@ var ReplaceMedia = React.createClass({
               authenticityToken={this.props.authenticityToken}
               baseID="replace-image"
               completeCallback={ this.uploadComplete }
-              formUrl={ ItemActions.url(this.props.item.id) }
+              formUrl={ "/v1/media/" + this.props.item.media["@id"] }
               method={ "put" }
               multifileUpload={ true }
               paramName="media[uploaded_image]"

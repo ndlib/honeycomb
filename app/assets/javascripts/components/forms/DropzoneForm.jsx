@@ -46,7 +46,7 @@ var DropzoneForm = React.createClass({
 
   options: function() {
     return {
-      paramName: "item[uploaded_image]",
+      paramName: this.props.paramName,
       acceptedFiles: "image/*",
       addRemoveLinks: true,
       autoProcessQueue: true,

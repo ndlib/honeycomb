@@ -65,7 +65,7 @@ var StreamingForm = React.createClass({
       method: "POST",
       data: postData,
       success: (function(data) {
-        this.uploadFile(data.upload_url);
+        this.uploadFile(data);
       }.bind(this)),
       error: (function(xhr) {
         AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error. Please try again if the problem persists please contact WSE unit.");
@@ -73,26 +73,38 @@ var StreamingForm = React.createClass({
     });
   },
 
-  uploadFile: function(signedUrl) {
+  uploadFile: function(media) {
     var f = this.refs.uploadFile;
     var xhr = new XMLHttpRequest();
-    xhr.open('PUT', signedUrl);
+    xhr.open('PUT', media.upload_url);
     xhr.onreadystatechange = () => {
       if(xhr.readyState === 4) {
-        this.setState({ processing: false});
         if(xhr.status === 200) {
-          console.log(xhr);
-          alert("SEND FINISHED UPDATE TO HC");
-          if (this.props.uploadComplete) {
-            this.props.uploadComplete()
-          }
-          this.goToNewItem();
+          console.log(this.props);          
+          this.finishUpload(media)
         } else {
           AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error. Please try again if the problem persists please contact WSE unit.");
         }
       }
     };
     xhr.send(f.files[0]);
+  },
+
+  finishUpload: function(media) {
+    url = "/v1/media/" + media["@id"] + "/finish_upload";
+    $.ajax({
+      url: url,
+      dataType: "json",
+      method: "put",
+      success: (function(data) {
+        this.setState({ processing: false});
+        this.props.uploadComplete();
+        //this.goToNewItem();
+      }.bind(this)),
+      error: (function(xhr) {
+        AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error. Please try again if the problem persists please contact WSE unit.");
+      }.bind(this)),
+    });
   },
 
   goToNewItem: function() {
