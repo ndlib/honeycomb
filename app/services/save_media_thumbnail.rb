@@ -9,7 +9,6 @@ class SaveMediaThumbnail
     @image = image
     @item = item
     @media = media
-    puts @media.inspect
   end
 
   def save!
