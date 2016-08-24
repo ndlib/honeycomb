@@ -4,7 +4,20 @@
 
 <div class="row">
   <h1><%= @page.name %></h1>
-  <%= react_component 'PageForm', { previewUrl: CreateBeehiveURL.call(@page) } %>
+  <%= react_component 'PageForm', {
+    id: @page.collection.unique_id,
+    data: @page,
+    pageName: @page.name,
+    previewUrl: CreateBeehiveURL.call(@page),
+    thumbnailImage: HoneypotThumbnail.display(@page.image)
+     } %>
+    <!-- <%= react_component '../../Thumbnail', {
+      thumbnailImage: @page.image
+       } %>
+     <%= react_component '../SubmitButton', {
+       name: "save",
+       value: "Save"
+        } %> -->
   <div class="row col-md-12">
     <div class="">
       <%= simple_form_for @page, :html => { :class => 'form-horizontal' } do |f| %>
