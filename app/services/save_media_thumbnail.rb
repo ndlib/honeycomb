@@ -53,11 +53,11 @@ class SaveMediaThumbnail
   end
 
   def upload_image
-    Faraday::UploadIO.new(@image.path, "image")
+    Faraday::UploadIO.new(image.path, "image")
   end
 
   def image_post
-    { application_id: "honeycomb", group_id: @item.collection.id, item_id: @item.id, image: upload_image }
+    { application_id: "honeycomb", group_id: item.collection.id, item_id: item.id, image: upload_image }
   end
 
   def image_server_url
