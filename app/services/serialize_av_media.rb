@@ -15,6 +15,10 @@ class SerializeAVMedia
     # (contained in json_response) can simply be added to the media object's attributes
     result = media.json_response.merge(result) if media.json_response
     result.merge!(media.errors.to_hash) if media.errors
+    unless result[:thumbnailUrl].present?
+      result[:thumbnailUrl] = default_thumbnail(media: media)
+    end
+    result
   end
 
   def self.to_json(media:)
@@ -41,6 +45,11 @@ class SerializeAVMedia
     else
       "error"
     end
+  end
+
+  def self.default_thumbnail(media:)
+    image_name = "medium/default-#{media.type.downcase}-thumbnail.jpg"
+    URI.join(Rails.application.routes.url_helpers.root_url, ActionController::Base.helpers.image_url(image_name)).to_s
   end
 
   private_class_method :at_type

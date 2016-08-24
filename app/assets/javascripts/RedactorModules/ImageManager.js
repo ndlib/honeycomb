@@ -95,12 +95,12 @@
               var media = val.media;
               if (typeof media == 'object')
               {
-                var thumbnail = media['thumbnailUrl'] || "https://www.nasa.gov/sites/default/files/styles/image_card_4x3_ratio/public/thumbnails/image/leisa_christmas_false_color.png"
+                var thumbnail = media['thumbnailUrl']
                 var img = $('<img src="' +
                   thumbnail +
                   '" rel="' + thumbnail +
                   '" item_id="' + val.id +
-                  '"title="' + thumbtitle +
+                  '" title="' + thumbtitle +
                   '" style="width: 100px; height: 75px; cursor: pointer;" />');
                 $('#redactor-image-manager-box').append(img);
                 $(img).click($.proxy(this.imagemanager.insert, this));

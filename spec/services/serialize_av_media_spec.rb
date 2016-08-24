@@ -9,6 +9,7 @@ RSpec.describe SerializeAVMedia do
            file_name: "filename.ext",
            type: "Type",
            status: "allocated",
+           thumbnail_url: "thumbnail url",
            json_response: { response_key: "response value" },
            errors: { error_key: "error value" })
   end
@@ -40,6 +41,26 @@ RSpec.describe SerializeAVMedia do
       allow(media).to receive(:json_response).and_return("@id" => "media server @id")
       expect(subject).to include("@id" => media.uuid)
       expect(subject).not_to include("@id" => "media server @id")
+    end
+
+    it "includes the default thumbnailUrl when there is none in the json response" do
+      media.json_response.delete(:thumbnailUrl)
+      expect(subject).to include(thumbnailUrl: "http://test.host/images/default-type-thumbnail.jpg")
+    end
+
+    it "includes the default thumbnailUrl when there is a nil one in the json response" do
+      media.json_response[:thumbnailUrl] = nil
+      expect(subject).to include(thumbnailUrl: "http://test.host/images/default-type-thumbnail.jpg")
+    end
+
+    it "includes the default thumbnailUrl when there is an empty string one in the json response" do
+      media.json_response[:thumbnailUrl] = ""
+      expect(subject).to include(thumbnailUrl: "http://test.host/images/default-type-thumbnail.jpg")
+    end
+
+    it "includes the given thumbnailUrl when one is present in the json response" do
+      media.json_response[:thumbnailUrl] = "thumbnail url"
+      expect(subject).to include(thumbnailUrl: "thumbnail url")
     end
 
     ["allocated"].each do |state|
