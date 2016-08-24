@@ -26,6 +26,7 @@ var ReplaceMedia = React.createClass({
 
   render: function() {
     console.log(this.props.item);
+    console.log(this.props.item.media);
     switch (this.type())
     {
       case "ImageObject":
