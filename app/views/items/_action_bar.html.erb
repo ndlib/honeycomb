@@ -2,7 +2,7 @@
 <div class="items-menu-bar menu-bar default pull-left">
   <div class="btn-group">
     <div style="float: left;">
-      <%= react_component("ReactDropzone", {
+      <%= react_component("AddNewItemsButton", {
         formUrl: url_for( @item ),
         authenticityToken: form_authenticity_token,
         modalTitle: raw(t(".new")),

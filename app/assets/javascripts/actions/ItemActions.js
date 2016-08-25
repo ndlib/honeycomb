@@ -5,6 +5,9 @@ var AppEventEmitter = require("../EventEmitter");
 var NodeEventEmitter = require("events").EventEmitter;
 var APIResponseMixin = require("../mixins/APIResponseMixin");
 
+var CollectionStore = require("../stores/Collection");
+
+
 
 class ItemActions extends NodeEventEmitter {
 
@@ -22,6 +25,27 @@ class ItemActions extends NodeEventEmitter {
       error: (function(xhr) {
         this.emit("ItemLoadFinished", false, xhr);
         AppEventEmitter.emit("MessageCenterDisplay", "error", "Item Load Failed.  Please try again if the problem persists please contact WSE unit.");
+      }).bind(this),
+    });
+  }
+
+  create(name) {
+    var postData = { item: { name: name } }
+
+    $.ajax({
+      url: this.createUrl(),
+      dataType: "json",
+      method: "POST",
+      data: postData,
+      success: (function(data) {
+        AppDispatcher.dispatch({
+          actionType: ItemActionTypes.ITEM_CREATED,
+          item: data
+        });
+      }).bind(this),
+      error: (function(xhr) {
+        this.emit("ItemLoadFinished", false, xhr);
+        AppEventEmitter.emit("MessageCenterDisplay", "error", "Item Create Failed.  Please try again if the problem persists please contact WSE unit.");
       }).bind(this),
     });
   }
@@ -89,17 +113,8 @@ class ItemActions extends NodeEventEmitter {
     return "/v1/items/" + id;
   }
 
-  getSignedUrl(id) {
-    var url = this.url(id) + "/media";
-
-    $.ajax({
-      url: this.url(id),
-      dataType: "json",
-      method: "POST",
-      success: (function(data) {
-        this.emit("GotSignedUrl", data);
-      }),
-    });
+  createUrl() {
+    return "/v1/collections/" + CollectionStore.uniqueId + "/items";
   }
 }
 

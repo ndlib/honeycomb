@@ -18,6 +18,10 @@ class ItemStore extends EventEmitter {
         this._items[action.item.items.id] = action.item.items;
         this.emit("ItemLoadFinished");
         break;
+      case ItemActionTypes.ITEM_CREATED:
+        this._items[action.item.id] = action.item;
+        this.emit("ItemCreateFinished", action.item);
+        break;
       case ItemActionTypes.ITEM_SHOWCASES_LOADED:
         this._showcases[action.item.items.id] = action.item.items.showcases;
         this.emit("ItemShowcaseLoadFinished");

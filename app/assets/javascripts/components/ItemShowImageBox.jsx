@@ -14,22 +14,23 @@ var ItemShowImageBox = React.createClass({
   },
 
   testImageStatus: function () {
-
-    if (this.props.media.status == "unavailable") {
+    if (this.props.media.status == "error") {
       EventEmitter.emit("MessageCenterDisplay", "error", "There was a problem loading the media. Try replacing or contacting support.");
     }
   },
 
   renderMedia: function() {
+    if (!this.props.item.media) {
+      return (this.itemNoImageHtml());
+    }
+
     switch(this.props.item.media.status)
     {
       case "ready":
         return this.itemReadyHtml();
-      case "processing":
+      case "not ready":
         return this.itemProcessingHtml();
-      case "no_image":
-        return this.itemNoImageHtml();
-      case "unavailable":
+      case "error":
         return this.itemImageInvalidHtml();
       default:
         console.log("Unknown Image Status: " + this.props.item.media.status);
@@ -37,13 +38,20 @@ var ItemShowImageBox = React.createClass({
     }
   },
 
+  thumbnailSrc: function() {
+    if (this.props.item.media.thumbnailUrl) {
+      return this.props.item.media.thumbnailUrl;
+    } else {
+      return '/images/blank.png';
+    }
+  },
+
   itemReadyHtml: function () {
-    return (
-      <div className="hc-item-show-image-box">
-        <ItemImageZoomButton image={this.props.item.media} itemID={this.props.item.id} />
-        <Thumbnail image={this.props.item.media} />
-      </div>
-    );
+    return (<Thumbnail thumbnailUrl={ this.props.item.media.thumbnailUrl } />);
+  },
+
+  itemNoImageHtml: function () {
+    return (<div>No Image</div>);
   },
 
   itemProcessingHtml: function () {
@@ -52,10 +60,6 @@ var ItemShowImageBox = React.createClass({
         <CircularProgress mode="indeterminate" size={0.5} />
       </div>
     );
-  },
-
-  itemNoImageHtml: function () {
-    return (<p>No Item Image.</p>);
   },
 
   itemImageInvalidHtml: function () {

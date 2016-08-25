@@ -1,6 +1,7 @@
 var React = require('react');
 var mui = require("material-ui");
 var RaisedButton = mui.RaisedButton;
+var StreamingForm = require("./StreamingForm");
 
 var ItemActions = require("../../../actions/ItemActions");
 
@@ -10,53 +11,64 @@ var ReplaceMedia = React.createClass({
   propTypes: {
     item: React.PropTypes.object.isRequired,
     authenticityToken: React.PropTypes.string.isRequired,
-    multifileUpload: React.PropTypes.bool,
-    modalTitle: React.PropTypes.string.isRequired,
-    doneText: React.PropTypes.string,
-    cancelText: React.PropTypes.string,
-    primary: React.PropTypes.bool,
   },
 
-  getDefaultProps: function() {
-    return {
-      multifileUpload: true,
-      closeText: 'Close',
-      modalId: "add-items",
-    };
-  },
-
-  dropzoneInitialized: function(dropzone) {
-    this.dropzone = dropzone;
-    this.dropzone.on('addedfile', this.checkfileCallback);
-    this.dropzone.on('removedfile', this.checkfileCallback);
-  },
-
-  completeCallback: function() {
-    if (this.dropzone.files.length > 0) {
-      ItemActions.get(this.props.item.id);
+  type: function() {
+    if (!this.props.item.media) {
+      return "NoMediaObject";
     }
+    return this.props.item.media["@type"];
   },
 
-  checkfileCallback: function () {
-    var hasFiles = (this.dropzone.files.length > 0);
-    this.setState( { hasFiles: hasFiles } );
+  uploadComplete: function() {
+    ItemActions.get(this.props.item.id);
   },
 
   render: function() {
-    return (
-      <div>
-        <DropzoneForm
-          authenticityToken={this.props.authenticityToken}
-          baseID={this.props.modalId}
-          completeCallback={this.completeCallback}
-          formUrl={ ItemActions.url(this.props.item.id) }
-          initializeCallback={this.dropzoneInitialized}
-          method="put"
-          multifileUpload={ true }
-          paramName="item[uploaded_image]"
-        />
-    </div>
-    );
+    switch (this.type())
+    {
+      case "ImageObject":
+        return (
+          <DropzoneForm
+            authenticityToken={this.props.authenticityToken}
+            baseID="replace-image"
+            completeCallback={ this.uploadComplete }
+            formUrl={ ItemActions.url(this.props.item.id) }
+            method={ "put" }
+            multifileUpload={ true }
+            paramName="item[uploaded_image]"
+          />
+        );
+      case "VideoObject":
+        return (
+          <div>
+            <h4>Change Associated Media</h4>
+            <StreamingForm
+              item={ this.props.item }
+              type="video"
+            />
+            <hr />
+            <h4>Add Video Image</h4>
+            <DropzoneForm
+              authenticityToken={this.props.authenticityToken}
+              baseID="replace-image"
+              completeCallback={ this.uploadComplete }
+              formUrl={ "/v1/media/" + this.props.item.media["@id"] }
+              method={ "put" }
+              multifileUpload={ true }
+              paramName="media[uploaded_image]"
+            />
+          <p>With a video image the link to play this video will include this image rather than a generic video image</p>
+          </div>
+        );
+      case "AudioObject":
+        return (
+          <StreamingForm
+            item={ this.props.item }
+            type="audio"
+          />
+        );
+    }
   }
 });
 module.exports = ReplaceMedia;
