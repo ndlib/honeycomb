@@ -10,6 +10,7 @@ var HtmlField = React.createClass({
     value: React.PropTypes.any,
     required: React.PropTypes.bool,
     placeholder: React.PropTypes.string,
+    imageLoader: React.PropTypes.bool,
     help: React.PropTypes.string,
     errorMsg: React.PropTypes.array,
   },
@@ -18,6 +19,7 @@ var HtmlField = React.createClass({
     return {
       value: "",
       required: false,
+      imageLoader: false,
     };
   },
 
@@ -26,7 +28,6 @@ var HtmlField = React.createClass({
     if (this.props.required) {
       css += ' required';
     }
-
     return css;
   },
 
@@ -38,9 +39,13 @@ var HtmlField = React.createClass({
           change: this.redactorChange,
           blur: this.redactorBlur,
         },
-        plugins: ['source', 'scriptbuttons'],
+        plugins: ['imagemanager', 'source', 'scriptbuttons'],
       });
     }
+  },
+
+  imagePath: function() {
+   imageUpload: '/v1/collections/1/items'  
   },
 
   // Triggered when the HTML editor is changed
