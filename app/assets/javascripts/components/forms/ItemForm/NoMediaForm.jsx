@@ -13,7 +13,8 @@ var AppEventEmitter = require("../../../EventEmitter");
 
 var NoMediaForm = React.createClass({
   propTypes: {
-    hasFiles: React.PropTypes.func
+    uploadStarted: React.PropTypes.func,
+    uploadComplete: React.PropTypes.func
   },
 
   getInitialState: function() {
@@ -27,9 +28,7 @@ var NoMediaForm = React.createClass({
   },
 
   goToNewItem: function(data) {
-    if (this.state.processing) {
-      window.location.href = "/items/" + data.id + "/edit";
-    }
+    this.props.uploadComplete(data);
   },
 
   checkEnter: function(event) {
@@ -41,7 +40,7 @@ var NoMediaForm = React.createClass({
   uploady: function() {
     var f = this.refs.newItem;
     ItemActions.create(f.value);
-    this.props.hasFiles();
+    this.props.uploadStarted();
     this.setState( { processing: true });
   },
 

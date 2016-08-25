@@ -17,8 +17,9 @@ var StreamingForm = React.createClass({
   getInitialState: function() {
     return {
       processing: false,
-      item: null,
-      creating: true
+      item: this.props.item,
+      creating: true,
+      hasFile: false,
     }
   },
 
@@ -27,6 +28,10 @@ var StreamingForm = React.createClass({
     if (this.props.item) {
       this.setState({ item: this.props.item, creating: true })
     }
+  },
+
+  addFile() {
+    this.setState({ hasFile: true });
   },
 
   setItem(data) {
@@ -98,9 +103,8 @@ var StreamingForm = React.createClass({
       dataType: "json",
       method: "put",
       success: (function(data) {
-        this.setState({ processing: false});
-        this.props.uploadComplete();
-        //this.goToNewItem();
+        this.setState({ processing: false, hasFile: false });
+        this.props.uploadComplete(this.state.item);
       }.bind(this)),
       error: (function(xhr) {
         this.setState({ processing: false});
@@ -119,12 +123,11 @@ var StreamingForm = React.createClass({
     if (this.state.processing) {
       var button = (<LoadingImage />);
     } else {
-      var button = (<RaisedButton label="Upload" primary={ true } onClick={ this.uploady } />)
+      var button = (<RaisedButton label="Upload" primary={ true } onClick={ this.uploady } disabled={ !this.state.hasFile } />)
     }
     return (
-      <div>
-        <h2>Replace Item Media</h2>
-        <p><input type="file" id="uploadFile" ref={ "uploadFile" } name="upload" /></p>
+      <div style={{ marginTop: "14px" }}>
+        <input style={{ display: "inline" }} type="file" id="uploadFile" ref={ "uploadFile" } name="upload" onChange={ this.addFile }/>
         { button }
       </div>
     );

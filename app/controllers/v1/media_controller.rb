@@ -21,7 +21,7 @@ module V1
     end
 
     def update
-      @media = MediaQuery.new.public_find(media_params[:id])
+      @media = MediaQuery.new.public_find(params[:id])
       @uploaded_image = media_params[:uploaded_image]
       return_value = SaveMediaThumbnail.call(
         image: media_params[:uploaded_image],
