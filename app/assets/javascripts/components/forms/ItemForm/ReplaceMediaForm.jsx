@@ -46,6 +46,7 @@ var ReplaceMedia = React.createClass({
             <StreamingForm
               item={ this.props.item }
               type="video"
+              uploadComplete={ this.uploadComplete }
             />
             <hr />
             <h4>Add Video Image</h4>
@@ -63,10 +64,26 @@ var ReplaceMedia = React.createClass({
         );
       case "AudioObject":
         return (
-          <StreamingForm
-            item={ this.props.item }
-            type="audio"
-          />
+          <div>
+            <h4>Change Associated Media</h4>
+            <StreamingForm
+              item={ this.props.item }
+              type="audio"
+              uploadComplete={ this.uploadComplete }
+            />
+            <hr />
+            <h4>Add Audio Image</h4>
+            <DropzoneForm
+              authenticityToken={this.props.authenticityToken}
+              baseID="replace-image"
+              completeCallback={ this.uploadComplete }
+              formUrl={ "/v1/media/" + this.props.item.media["@id"] }
+              method={ "put" }
+              multifileUpload={ true }
+              paramName="media[uploaded_image]"
+            />
+          <p>With an audio image the link to play this video will include this image rather than a generic video image</p>
+          </div>
         );
     }
   }
