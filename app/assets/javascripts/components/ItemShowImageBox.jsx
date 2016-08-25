@@ -51,7 +51,7 @@ var ItemShowImageBox = React.createClass({
   },
 
   itemNoImageHtml: function () {
-    return (<div>No Image</div>);
+    return (<div></div>);
   },
 
   itemProcessingHtml: function () {
