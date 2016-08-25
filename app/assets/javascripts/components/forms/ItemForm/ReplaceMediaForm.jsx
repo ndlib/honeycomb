@@ -25,7 +25,6 @@ var ReplaceMedia = React.createClass({
   },
 
   render: function() {
-    console.log(this.props.item);
     switch (this.type())
     {
       case "ImageObject":
@@ -43,11 +42,13 @@ var ReplaceMedia = React.createClass({
       case "VideoObject":
         return (
           <div>
+            <h4>Change Associated Media</h4>
             <StreamingForm
               item={ this.props.item }
               type="video"
             />
-            <h4>Video Key Frame</h4>
+            <hr />
+            <h4>Add Video Image</h4>
             <DropzoneForm
               authenticityToken={this.props.authenticityToken}
               baseID="replace-image"
@@ -57,6 +58,7 @@ var ReplaceMedia = React.createClass({
               multifileUpload={ true }
               paramName="media[uploaded_image]"
             />
+          <p>With a video image the link to play this video will include this image rather than a generic video image</p>
           </div>
         );
       case "AudioObject":

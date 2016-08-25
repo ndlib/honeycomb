@@ -153,12 +153,9 @@ var ItemForm = React.createClass({
             { this.form() }
           </div>
           <div className="col-md-3">
-            {
-              this.state.item.media && this.state.item.media["@type"] === "ImageObject" &&
-              <ItemShowImageBox
-                item={ this.state.item }
-              />
-            }
+            <ItemShowImageBox
+              item={ this.state.item }
+            />
           </div>
         </div>
       </div>
