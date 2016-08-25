@@ -92,14 +92,15 @@
                 thumbtitle = val.name;
               }
 
-              var image = val.image;
-              if (typeof image == 'object')
+              var media = val.media;
+              if (typeof media == 'object')
               {
+                var thumbnail = media['thumbnailUrl']
                 var img = $('<img src="' +
-                  image['thumbnail/small'].contentUrl +
-                  '" rel="' + image['thumbnail/medium'].contentUrl +
+                  thumbnail +
+                  '" rel="' + thumbnail +
                   '" item_id="' + val.id +
-                  '"title="' + thumbtitle +
+                  '" title="' + thumbtitle +
                   '" style="width: 100px; height: 75px; cursor: pointer;" />');
                 $('#redactor-image-manager-box').append(img);
                 $(img).click($.proxy(this.imagemanager.insert, this));
