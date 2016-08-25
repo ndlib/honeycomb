@@ -48,7 +48,7 @@ var ReplaceMedia = React.createClass({
               type="video"
             />
             <hr />
-            <h4>Add Video Still</h4>
+            <h4>Add Video Image</h4>
             <DropzoneForm
               authenticityToken={this.props.authenticityToken}
               baseID="replace-image"
@@ -58,6 +58,7 @@ var ReplaceMedia = React.createClass({
               multifileUpload={ true }
               paramName="media[uploaded_image]"
             />
+          <p>With a video image the link to play this video will include this image rather than a generic video image</p>
           </div>
         );
       case "AudioObject":
