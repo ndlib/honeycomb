@@ -6,8 +6,6 @@ class ChangePageImageToMedia < ActiveRecord::Migration
   end
 
   def down
-    remove_foreign_key :pages, column: :media_id
     rename_column :pages, :media_id, :image_id
-    add_foreign_key :pages, :images
   end
 end
