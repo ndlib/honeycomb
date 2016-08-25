@@ -1,35 +1,20 @@
 var React = require("react");
+var mui = require("material-ui");
 var classNames = require("classnames");
 
 var Thumbnail = React.createClass({
   propTypes: {
-    image: React.PropTypes.oneOfType([
-      React.PropTypes.string,
-      React.PropTypes.object,
-    ]),
-  },
-
-  thumbnailSrc: function() {
-    if (this.props.image["thumbnail/small"]) {
-      return this.props.image["thumbnail/small"].contentUrl;
-    } else if (this.props.image) {
-      return this.props.image.contentUrl;
-    } else {
-      return '/images/blank.png';
-    }
-  },
-
-  classes: function() {
-    var classes = classNames({
-      'hc-thumbnail': true,
-    });
-    return classes;
+    thumbnailUrl: React.PropTypes.string
   },
 
   render: function() {
-    return (
-      <span className={this.classes()}><span className="hc-thumbnail-helper"></span><img src={this.thumbnailSrc()} className="hc-thumbnail-image"/></span>
-    );
+    if (this.props.thumbnailUrl) {
+      return (
+        <img src={this.props.thumbnailUrl} className="hc-thumbnail-image" />
+      );
+    } else {
+      return (<mui.FontIcon  className="material-icons">local_offer</mui.FontIcon>);
+    }
   }
 });
 module.exports = Thumbnail;

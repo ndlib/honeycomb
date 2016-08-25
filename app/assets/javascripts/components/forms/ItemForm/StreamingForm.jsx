@@ -17,7 +17,7 @@ var StreamingForm = React.createClass({
   getInitialState: function() {
     return {
       processing: false,
-      item: null,
+      item: this.props.item,
       creating: true
     }
   },
@@ -99,8 +99,7 @@ var StreamingForm = React.createClass({
       method: "put",
       success: (function(data) {
         this.setState({ processing: false});
-        this.props.uploadComplete();
-        //this.goToNewItem();
+        this.props.uploadComplete(this.state.item);
       }.bind(this)),
       error: (function(xhr) {
         this.setState({ processing: false});

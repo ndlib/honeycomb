@@ -45,9 +45,11 @@ var AddNewItemsButton = React.createClass({
     this.setState({ hasFiles: true });
   },
 
-  render: function() {
-    var iconButtonElement = (<RaisedButton icon={ <FontIcon className="material-icons">expand_more</FontIcon> } />);
+  goToNewItem(item) {
+    window.location.href = "/items/" + item.id + "/edit";
+  },
 
+  render: function() {
     return (
       <div>
         <RaisedButton
@@ -82,19 +84,22 @@ var AddNewItemsButton = React.createClass({
               <StreamingForm
                 item={null}
                 type="video"
-                uploadStarted={ this.setHasFiles }
+                uploadCompleted={ this.goToNewItem }
+                uploadStarted={ this.hasFiles }
               />
             </Tab>
             <Tab label="Audio">
               <StreamingForm
                 item={null}
                 type="audio"
-                uploadStarted={ this.setHasFiles }
+                uploadComplete={ this.goToNewItem }
+                uploadStarted={ this.hasFiles }
               />
             </Tab>
             <Tab label="No Media">
               <NoMediaForm
-                uploadStarted={ this.setHasFiles }
+                uploadComplete={ this.goToNewItem }
+                uploadStarted={ this.hasFiles }
               />
             </Tab>
           </Tabs>
