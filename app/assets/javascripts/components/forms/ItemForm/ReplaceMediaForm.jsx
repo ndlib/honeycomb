@@ -42,11 +42,13 @@ var ReplaceMedia = React.createClass({
       case "VideoObject":
         return (
           <div>
+            <h4>Change Associated Media</h4>
             <StreamingForm
               item={ this.props.item }
               type="video"
             />
-            <h4>Video Key Frame</h4>
+            <hr />
+            <h4>Add Video Still</h4>
             <DropzoneForm
               authenticityToken={this.props.authenticityToken}
               baseID="replace-image"
