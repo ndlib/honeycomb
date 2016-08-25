@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160805194419) do
+ActiveRecord::Schema.define(version: 20160825183434) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,7 +170,7 @@ ActiveRecord::Schema.define(version: 20160805194419) do
     t.integer  "collection_id", null: false
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
-    t.integer  "image_id"
+    t.integer  "media_id"
   end
 
   create_table "sections", force: :cascade do |t|
@@ -255,7 +255,7 @@ ActiveRecord::Schema.define(version: 20160805194419) do
   add_foreign_key "items_pages", "items"
   add_foreign_key "items_pages", "pages"
   add_foreign_key "pages", "collections"
-  add_foreign_key "pages", "media", column: "image_id"
+  add_foreign_key "pages", "media", column: "media_id"
   add_foreign_key "sections", "items"
   add_foreign_key "sections", "showcases"
   add_foreign_key "showcases", "collections"
