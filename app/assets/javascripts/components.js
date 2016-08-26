@@ -16,7 +16,6 @@ Promise = require("es6-promise").Promise;
 APIResponseMixin = require("./mixins/APIResponseMixin");
 DialogMixin = require("./mixins/DialogMixin");
 DraggableMixin = require("./mixins/DraggableMixin");
-HoneypotImageMixin = require("./mixins/HoneypotImageMixin");
 HorizontalScrollMixin = require("./mixins/HorizontalScrollMixin");
 MuiThemeMixin = require("./mixins/MuiThemeMixin");
 TitleConcatMixin = require("./mixins/TitleConcatMixin");
@@ -33,7 +32,7 @@ HoneycombTheme = require("./themes/HoneycombTheme");
 // uncategorized
 CollectionPreviewPublishLink = require("./components/CollectionPreviewPublishLink");
 DragContent = require("./components/DragContent");
-HoneypotImage = require("./components/HoneypotImage");
+MediaImage = require("./components/MediaImage");
 ImageCaptionEditor = require("./components/ImageCaptionEditor");
 ItemImageZoomButton = require("./components/ItemImageZoomButton");
 ItemShowImageBox = require("./components/ItemShowImageBox");
