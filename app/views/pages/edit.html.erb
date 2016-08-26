@@ -5,8 +5,7 @@
 <div class="row">
   <h1><%= @page.name %></h1>
   <%= react_component 'PageForm', {
-    id: @page.collection.unique_id,
-    page: @page,
+    id: @page.unique_id,
     previewUrl: CreateBeehiveURL.call(@page),
     authenticityToken: form_authenticity_token,
     objectType: 'page',
