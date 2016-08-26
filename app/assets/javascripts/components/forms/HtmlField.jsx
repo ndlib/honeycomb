@@ -10,9 +10,9 @@ var HtmlField = React.createClass({
     value: React.PropTypes.any,
     required: React.PropTypes.bool,
     placeholder: React.PropTypes.string,
-    imageLoader: React.PropTypes.bool,
     help: React.PropTypes.string,
     errorMsg: React.PropTypes.array,
+    imageLoader: React.PropTypes.bool,
   },
 
   getDefaultProps: function() {
@@ -42,10 +42,6 @@ var HtmlField = React.createClass({
         plugins: ['imagemanager', 'source', 'scriptbuttons'],
       });
     }
-  },
-
-  imagePath: function() {
-   imageUpload: '/v1/collections/1/items'  
   },
 
   // Triggered when the HTML editor is changed
