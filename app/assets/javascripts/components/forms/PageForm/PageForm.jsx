@@ -4,6 +4,7 @@ var mui = require("material-ui");
 var PageActions = require("../../../actions/PageActions");
 var PageStore = require("../../../stores/PageStore")
 var LoadingImage = require("../../LoadingImage");
+var PageStore = require("../../../stores/PageStore")
 var RaisedButton = mui.RaisedButton;
 var Toolbar = mui.Toolbar;
 var ToolbarGroup = mui.ToolbarGroup;
@@ -55,7 +56,8 @@ var PageForm = React.createClass({
   },
 
   render: function() {
-    console.log(this.state.formValues)
+    console.log(this.state.formValues);
+
     if (!this.state.formValues) {
           return (<LoadingImage />);
         }
@@ -72,11 +74,17 @@ var PageForm = React.createClass({
           </ToolbarGroup>
         </Toolbar>
 
-        <form className="simple_form" noValidate="novalidate" id="edit_page" encType="multipart/form-data" acceptCharset="UTF-8" method="post" action={ "/pages/" + this.props.id }>
+        <form
+          className="simple_form"
+          noValidate="novalidate"
+          id="edit_page"
+          encType="multipart/form-data"
+          acceptCharset="UTF-8"
+          method="post"
+          action={ "/pages/" + this.props.id }>
           <input type="hidden" name="_method" value="patch" />
           <input name="utf8" type="hidden" value="✓" />
           <input type="hidden" name="authenticity_token" value={ this.props.authenticityToken} />
-
 
           <div>
             <StringField
@@ -100,10 +108,15 @@ var PageForm = React.createClass({
             />
           </div>
 
-          <div data-react-class="Thumbnail"><p>image goes here</p></div>
+          <div>
+            <img
+              src={ this.state.formValues.image["thumbnail/small"].contentUrl }>
+            </img>
+          </div>
 
           <input type="submit" name="commit" value="Save" className="btn btn-default btn btn-primary" />
       </form>
+
       <DropzoneForm
         authenticityToken={this.props.authenticityToken}
         baseID="replace-image"

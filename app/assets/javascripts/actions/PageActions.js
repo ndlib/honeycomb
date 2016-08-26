@@ -24,6 +24,25 @@ class PageActions extends NodeEventEmitter {
     });
   }
 
+  update(changedPageData) {
+    $.ajax({
+      url: this.url(id),
+      dataType: "json",
+      method: "POST",
+      data: changedPageData,
+      success: (function(data) {
+        AppDispatcher.dispatch({
+          actionType: PageActionTypes.PAGE_CHANGED,
+          item: data
+        });
+      }).bind(this),
+      error: (function(xhr) {
+        this.emit("PageUpdateFinished", false, xhr);
+        AppEventEmitter.emit("MessageCenterDisplay", "error", "Page Update Failed.  Please try again if the problem persists please contact WSE unit.");
+      }).bind(this),
+    });
+  }
+
   url(id) {
     return "/v1/pages/" + id;
   }
