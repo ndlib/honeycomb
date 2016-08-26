@@ -48,7 +48,11 @@ var PageForm = React.createClass({
       <div>
         <Toolbar style={ ToolbarStyle }>
           <ToolbarGroup key={0}>
-            <RaisedButton href={ this.props.previewUrl } linkButton={ true } target="_blank" label="Preview" />
+            <RaisedButton
+              href={ this.props.previewUrl }
+              linkButton={ true }
+              target="_blank"
+              label="Preview" />
           </ToolbarGroup>
         </Toolbar>
 
@@ -57,13 +61,29 @@ var PageForm = React.createClass({
           <input type="hidden" name="authenticity_token" value={ this.props.authenticityToken} />
 
 
-            <div>
-              <StringField objectType={this.props.objectType} name={'name'} required={true} title="Name" value={this.state.formValues.name} handleFieldChange={this.handleFieldChange} errorMsg={this.fieldError('name')} />
-              <HtmlField objectType={this.props.objectType} name={'content'} required={true} title="Content" value={this.state.formValues.content} handleFieldChange={this.handleFieldChange} imageLoader={true} errorMsg={this.fieldError('content')} />
-            </div>
+          <div>
+            <StringField
+              objectType={this.props.objectType}
+              name={'name'}
+              required={true}
+              title="Name"
+              value={this.state.formValues.name}
+              handleFieldChange={this.handleFieldChange}
+              errorMsg={this.fieldError('name')}
+            />
+            <HtmlField
+              objectType={this.props.objectType}
+              name={'content'}
+              required={true}
+              title="Content"
+              value={this.state.formValues.content}
+              handleFieldChange={this.handleFieldChange}
+              imageLoader={true}
+              errorMsg={this.fieldError('content')}
+            />
+          </div>
 
-
-          <div data-react-class="Thumbnail"><p></p>image goes here</div>
+          <div data-react-class="Thumbnail"><p>image goes here</p></div>
 
           <div className="form-group file optional page_uploaded_image">
             <label className="file optional control-label" htmlFor="page_uploaded_image" >Uploaded image

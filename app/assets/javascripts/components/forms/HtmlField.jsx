@@ -1,5 +1,7 @@
 //app/assets/javascripts/components/forms/HtmlField.jsx
 var React = require('react');
+var CollectionStore = require("../../stores/Collection");
+
 var HtmlField = React.createClass({
 
   propTypes: {
@@ -34,14 +36,24 @@ var HtmlField = React.createClass({
   componentDidMount: function() {
     if (!this.element) {
       this.element = jQuery(ReactDOM.findDOMNode(this.refs.textarea));
-      this.element.redactor({
-        callbacks: {
-          change: this.redactorChange,
-          blur: this.redactorBlur,
-        },
-        plugins: ['imagemanager', 'source', 'scriptbuttons'],
-      });
+      this.element.redactor(this.loadRedactorParams());
     }
+  },
+
+  loadRedactorParams: function() {
+    var redactorParams = {
+      callbacks: {
+        change: this.redactorChange,
+        blur: this.redactorBlur,
+      },
+      plugins: ['source', 'scriptbuttons'],
+    };
+    if (this.props.imageLoader) {
+      redactorParams.imageUpload = '/v1/collections/' + CollectionStore.uniqueId + '/items';
+      redactorParams.imageManagerJson = '/v1/collections/' + CollectionStore.uniqueId + '/items';
+      redactorParams.plugins.push('imagemanager');
+    };
+    return redactorParams;
   },
 
   // Triggered when the HTML editor is changed
