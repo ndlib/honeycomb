@@ -42,7 +42,7 @@ RSpec.describe Image do
       it "fails if a page references it" do
         FactoryGirl.create(:collection)
         subject = FactoryGirl.create(:image, id: 1)
-        FactoryGirl.create(:page, image_id: 1)
+        FactoryGirl.create(:page, media_id: 1)
         expect { subject.destroy }.to raise_error
       end
     end

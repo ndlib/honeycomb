@@ -121,6 +121,15 @@ RSpec.describe SaveItem, type: :model do
     end
   end
 
+  context "name" do
+    let(:params) { { name: "name" } }
+
+    it "allows name to be passed as param" do
+      expect(Metadata::Setter).to receive(:call).with(item, "name" => "name").and_return(true)
+      subject
+    end
+  end
+
   context "no name on a new record" do
     let(:params) { {} }
 

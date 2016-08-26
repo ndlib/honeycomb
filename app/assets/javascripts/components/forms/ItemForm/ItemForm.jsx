@@ -7,6 +7,9 @@ var ItemActionTypes = require("../../../constants/ItemActionTypes");
 var ItemStore = require("../../../stores/ItemStore");
 var DeleteItemForm = require("./DeleteItemForm");
 var ReplaceMediaForm = require("./ReplaceMediaForm");
+var StreamingForm = require("./StreamingForm");
+
+var LoadingImage = require("../../LoadingImage");
 
 var Tabs = mui.Tabs;
 var Tab = mui.Tab;
@@ -90,8 +93,6 @@ var ItemForm = React.createClass({
           <ReplaceMediaForm
             item={ this.state.item }
             authenticityToken={ this.props.authenticityToken }
-            modalTitle="Replace"
-            multifileUpload={ false }
           />
         </div>
       );
@@ -120,9 +121,16 @@ var ItemForm = React.createClass({
     }
   },
 
+  mediaToolbar: function() {
+    if (this.state.item.media) {
+      return (<Tab label="Media" style={TabStyle} value="media" />);
+    }
+    return (<div />);
+  },
+
   render: function() {
     if (!this.state.item) {
-      return (<div>Loading...</div>);
+      return (<LoadingImage />);
     }
 
     return (
@@ -134,7 +142,7 @@ var ItemForm = React.createClass({
           <ToolbarGroup key={1} float="right" style={ ToolbarStyle }>
             <Tabs tabItemContainerStyle={ TabsStyle } onChange={this._handleChangeTabs} value={ this.state.selectedIndex }>
               <Tab label="Metadata" style={TabStyle} value="metadata" />
-              <Tab label="Media" style={TabStyle} value="media" />
+              { this.mediaToolbar() }
               <Tab label="Embed" style={TabStyle} value="embed" />
               <Tab label="Delete" style={ TabStyle } value="delete" />
             </Tabs>
@@ -145,12 +153,9 @@ var ItemForm = React.createClass({
             { this.form() }
           </div>
           <div className="col-md-3">
-            {
-              this.state.item.media && this.state.item.media["@type"] === "ImageObject" &&
-              <ItemShowImageBox
-                item={ this.state.item }
-              />
-            }
+            <ItemShowImageBox
+              item={ this.state.item }
+            />
           </div>
         </div>
       </div>

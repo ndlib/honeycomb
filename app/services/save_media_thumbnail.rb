@@ -33,11 +33,11 @@ class SaveMediaThumbnail
   end
 
   def update_media_record
-    @media.thumbnail_url = @image_response.body["thumbnail/medium"]["contentUrl"]
-    @media_response = BuzzMedia.call_update(media: @media)
-    if @media_response
-      @media.data["json_response"] = @media_response
-      @media.save!
+    media.thumbnail_url = @image_response.body["thumbnail/medium"]["contentUrl"]
+    media_response = BuzzMedia.call_update(media: media)
+    if media_response
+      media.data["json_response"] = media_response
+      media.save!
     else
       false
     end
@@ -53,11 +53,11 @@ class SaveMediaThumbnail
   end
 
   def upload_image
-    Faraday::UploadIO.new(@image.path, "image")
+    Faraday::UploadIO.new(image.path, "image")
   end
 
   def image_post
-    { application_id: "honeycomb", group_id: @item.collection.id, item_id: @item.id, image: upload_image }
+    { application_id: "honeycomb", group_id: item.collection.id, item_id: item.id, image: upload_image }
   end
 
   def image_server_url
