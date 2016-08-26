@@ -4,7 +4,7 @@
 <%= render partial: 'edit_action_bar' %>
 
 <%= react_component 'ShowcaseEditor', {
-      itemsJSONPath: @showcase.collection.items_json_url,
+      itemsJSONPath: v1_collection_items_path(@showcase.collection.unique_id),
       sectionsCreatePath: showcase_sections_path(@showcase, :json),
       showcaseJSONPath: showcase_path(@showcase.id, :json),
     },

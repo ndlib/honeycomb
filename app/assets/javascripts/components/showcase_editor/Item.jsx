@@ -25,17 +25,17 @@ var Item = React.createClass({
   },
 
   render: function() {
-    var honeypot_image = this.props.item.links.image;
-    if (honeypot_image == null) {
+    var media = this.props.item.media;
+    if (media == null) {
       return null;
     }
     var dragContent = (
-      <HoneypotImage honeypot_image={honeypot_image} style="small" cssStyle={{height: '100px', margin: '5px'}} title={this.props.item.name} />
+      <MediaImage media={media} style="small" cssStyle={{height: '100px', margin: '5px'}} title={this.props.item.name} />
     );
     return (
       <div className='cursor-grab' onMouseDown={this.onMouseDown} style={this.style()}>
         <DragContent content={dragContent} dragging={this.state.dragging} left={this.state.left} top={this.state.top} />
-        <HoneypotImage honeypot_image={honeypot_image} style="small" cssStyle={{height: '100px', margin: '5px'}} title={this.props.item.name} />
+        <MediaImage media={media} style="small" cssStyle={{height: '100px', margin: '5px'}} title={this.props.item.name} />
       </div>
     );
   }

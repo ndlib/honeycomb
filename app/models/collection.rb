@@ -19,12 +19,4 @@ class Collection < ActiveRecord::Base
       name_line_1
     end
   end
-
-  def items_json_url
-    "/api/collections/#{id}/items.json?include=image"
-  end
-
-  def item_json_url(item_id)
-    "/api/collections/#{id}/items/#{item_id}.json?include=image"
-  end
 end

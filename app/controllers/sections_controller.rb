@@ -1,18 +1,12 @@
 class SectionsController < ApplicationController
-  def index
-    ### TODO: API ONLY remove in favor of the actual api.
-    @section_list = ShowcaseList.new(showcase)
-    check_user_edits!(@section_list.collection)
-  end
-
-  def new
-    check_user_edits!(showcase.collection)
-    @section_form = SectionForm.build_from_params(self)
-  end
-
   def create
     check_user_edits!(showcase.collection)
     @section = SectionQuery.new(showcase.sections).build
+
+    # This is to translate from public item.unique_id to internal item.id
+    # Once we convert all of this to use the v1 api, we won't need to translate
+    item = ItemQuery.new.public_find(params[:section].delete(:item_id))
+    @section.item = item if item
 
     respond_to do |format|
       if SaveSection.call(@section, section_params)

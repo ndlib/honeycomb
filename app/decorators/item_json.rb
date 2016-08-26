@@ -48,7 +48,7 @@ class ItemJSON < Draper::Decorator
 
   def image_data
     if object.media.present?
-      object.media.json_response
+      SerializeMedia.to_hash(media: object.media)
     else
       nil
     end

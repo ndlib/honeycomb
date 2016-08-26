@@ -1,8 +1,8 @@
 json.id section.id
 json.name section.name
 json.description section.description
-if section.item && section.item.image
-  json.image section.item.image.json_response["thumbnail/medium"]["contentUrl"]
+if section.item && section.image
+  json.image section.image
 end
 json.has_spacer section.has_spacer
 json.caption section.caption

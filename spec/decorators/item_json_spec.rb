@@ -17,7 +17,14 @@ RSpec.describe ItemJSON do
   end
   let(:item) { instance_double(Item, item_stubs) }
   let(:collection) { instance_double(Collection, id: 2, name_line_1: "name_line_1") }
-  let(:honeypot_image) { instance_double(Image, json_response: { image: "image" }) }
+  let(:honeypot_image) do
+    instance_double(Image,
+                    json_response: { image: "image" },
+                    type: "Image",
+                    uuid: "uuid",
+                    status: "status",
+                    image: double(Object, original_filename: "file"))
+  end
 
   let(:options) { {} }
   subject { described_class.new(item) }
@@ -56,8 +63,8 @@ RSpec.describe ItemJSON do
   end
 
   describe "#image_data" do
-    it "includes the image_json from the image" do
-      expect(honeypot_image).to receive(:json_response).and_return(image: "image")
+    it "uses SerializeMedia for the image" do
+      expect(SerializeMedia).to receive(:to_hash).and_return(image: "image")
       expect(subject.send(:image_data)).to eq(image: "image")
     end
 

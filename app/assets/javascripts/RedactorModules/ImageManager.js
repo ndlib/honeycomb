@@ -93,7 +93,7 @@
               }
 
               var media = val.media;
-              if (typeof media == 'object')
+              if (media != undefined)
               {
                 var thumbnail = media['thumbnailUrl']
                 var img = $('<img src="' +
