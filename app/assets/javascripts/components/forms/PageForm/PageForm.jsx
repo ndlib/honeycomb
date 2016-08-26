@@ -4,7 +4,6 @@ var mui = require("material-ui");
 var PageActions = require("../../../actions/PageActions");
 var PageStore = require("../../../stores/PageStore")
 var LoadingImage = require("../../LoadingImage");
-var PageStore = require("../../../stores/PageStore")
 var RaisedButton = mui.RaisedButton;
 var Toolbar = mui.Toolbar;
 var ToolbarGroup = mui.ToolbarGroup;
