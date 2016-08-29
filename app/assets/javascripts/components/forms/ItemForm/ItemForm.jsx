@@ -3,7 +3,6 @@ var mui = require("material-ui");
 
 var ItemEmbedCode = require("../../publish/ItemEmbedCode");
 var ItemActions = require("../../../actions/ItemActions");
-var ItemActionTypes = require("../../../constants/ItemActionTypes");
 var ItemStore = require("../../../stores/ItemStore");
 var DeleteItemForm = require("./DeleteItemForm");
 var ReplaceMediaForm = require("./ReplaceMediaForm");
@@ -57,7 +56,7 @@ var ItemForm = React.createClass({
 
   setItem: function() {
     var item = ItemStore.get(this.props.id);
-    this.setState({ item: ItemStore.get(this.props.id)})
+    this.setState({ item: item });
 
     if (item.media && item.media.status == "processing") {
       setTimeout(this.loadItem, 4000);

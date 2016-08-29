@@ -34,18 +34,6 @@ class PagesController < ApplicationController
     fresh_when(etag: cache_key.generate)
   end
 
-  def update
-    @page = PageQuery.new.find(params[:id])
-    check_user_edits!(@page.collection)
-
-    if SavePage.call(@page, save_params)
-      flash[:notice] = t(".success")
-      redirect_to edit_page_path(@page)
-    else
-      render :edit
-    end
-  end
-
   def destroy
     @page = PageQuery.new.find(params[:id])
     check_user_edits!(@page.collection)

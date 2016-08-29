@@ -10,13 +10,5 @@
     authenticityToken: form_authenticity_token,
     objectType: 'page',
      } %>
-  <div class="row col-md-12">
-    <div class="">
-      <%= simple_form_for @page, :html => { :class => 'form-horizontal' } do |f| %>
-        <%= render partial: 'form', locals: { f: f } %>
-        <%= f.button :submit, "Save", class: 'btn btn-primary' %>
-      <% end %>
-    </div>
-    <%= DeletePanel.new(@page).display(PageQuery.new(@page)) %>
-  </div>
+  <%= DeletePanel.new(@page).display(PageQuery.new(@page)) %>
 </div>

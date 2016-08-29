@@ -19,5 +19,26 @@ module V1
                                            page: @page)
       fresh_when(etag: cache_key.generate)
     end
+
+    def update
+      @page = PageQuery.new.public_find(params[:id])
+      check_user_edits!(@page.collection)
+
+      if SavePage.call(@page, save_params)
+        @page = PageJSONDecorator.new(@page)
+      else
+        render :errors, status: :unprocessable_entity
+      end
+    end
+
+    private
+
+    def save_params
+      params.require(:page).permit([
+        :name,
+        :content,
+        :uploaded_image
+      ])
+    end
   end
 end

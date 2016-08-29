@@ -82,7 +82,7 @@ Rails.application.routes.draw do
       resources :search, only: [:index], defaults: { format: :json }
       resources :items, only: [:index, :create], defaults: { format: :json }
       resources :showcases, only: [:index], defaults: { format: :json }
-      resources :pages, only: [:index], defaults: { format: :json }
+      resources :pages, only: [:index, :create], defaults: { format: :json }
       resource :configurations, defaults: { format: :json }, only: [:show] do
         resources :metadata_fields, only: [:create, :update], defaults: { format: :json } do
           collection do
@@ -106,7 +106,7 @@ Rails.application.routes.draw do
     end
 
     resources :showcases, only: [:show], defaults: { format: :json }
-    resources :pages, only: [:show], defaults: { format: :json }
+    resources :pages, only: [:show, :update], defaults: { format: :json }
     resources :sections, only: [:show], defaults: { format: :json }
   end
 

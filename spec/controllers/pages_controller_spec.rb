@@ -118,48 +118,6 @@ RSpec.describe PagesController, type: :controller do
     it_behaves_like "a private content-based etag cacher"
   end
 
-  describe "PUT #update" do
-    subject { put :update, update_params }
-
-    it "checks the editor permissions" do
-      expect_any_instance_of(described_class).to receive(:check_user_edits!).with(collection)
-      subject
-    end
-
-    it "uses page query " do
-      expect_any_instance_of(PageQuery).to receive(:find).with("1").and_return(page)
-      subject
-    end
-
-    it "redirects on success" do
-      subject
-      expect(response).to be_redirect
-    end
-
-    it "flashes a notice" do
-      subject
-      expect(flash[:notice]).to_not be_nil
-    end
-
-    it "renders new on failure" do
-      allow(SavePage).to receive(:call).and_return(false)
-      subject
-      expect(response).to render_template("edit")
-    end
-
-    it "assigns a page" do
-      subject
-      expect(assigns(:page)).to eq(page)
-    end
-
-    it "uses the save page service" do
-      expect(SavePage).to receive(:call).with(page, update_params[:page]).and_return(true)
-      subject
-    end
-
-    it_behaves_like "a private content-based etag cacher"
-  end
-
   describe "GET #edit" do
     subject { get :edit, id: page.id }
 

@@ -55,12 +55,10 @@ var PageForm = React.createClass({
   },
 
   render: function() {
-    console.log(this.state.formValues);
-
     if (!this.state.formValues) {
-          return (<LoadingImage />);
-        }
-
+      return (<LoadingImage />);
+    }
+    
     return (
       <div>
         <Toolbar style={ ToolbarStyle }>
@@ -72,54 +70,54 @@ var PageForm = React.createClass({
               label="Preview" />
           </ToolbarGroup>
         </Toolbar>
+        <div className="row">
+          <div className="col-md-9">
+            <form
+              className="simple_form"
+              noValidate="novalidate"
+              id="edit_page"
+              encType="multipart/form-data"
+              acceptCharset="UTF-8"
+              method="post"
+              action={ "/pages/" + this.props.id }>
+              <input type="hidden" name="_method" value="patch" />
+              <input name="utf8" type="hidden" value="✓" />
+              <input type="hidden" name="authenticity_token" value={ this.props.authenticityToken} />
 
-        <form
-          className="simple_form"
-          noValidate="novalidate"
-          id="edit_page"
-          encType="multipart/form-data"
-          acceptCharset="UTF-8"
-          method="post"
-          action={ "/pages/" + this.props.id }>
-          <input type="hidden" name="_method" value="patch" />
-          <input name="utf8" type="hidden" value="✓" />
-          <input type="hidden" name="authenticity_token" value={ this.props.authenticityToken} />
+              <div>
+                <StringField
+                  objectType={this.props.objectType}
+                  name={'name'}
+                  required={true}
+                  title="Name"
+                  value={this.state.formValues.name}
+                  handleFieldChange={this.handleFieldChange}
+                  errorMsg={this.fieldError('name')}
+                />
+                <HtmlField
+                  objectType={this.props.objectType}
+                  name={'content'}
+                  required={true}
+                  title="Content"
+                  value={this.state.formValues.content}
+                  handleFieldChange={this.handleFieldChange}
+                  imageLoader={true}
+                  errorMsg={this.fieldError('content')}
+                />
+              </div>
 
-          <div>
-            <StringField
-              objectType={this.props.objectType}
-              name={'name'}
-              required={true}
-              title="Name"
-              value={this.state.formValues.name}
-              handleFieldChange={this.handleFieldChange}
-              errorMsg={this.fieldError('name')}
-            />
-            <HtmlField
-              objectType={this.props.objectType}
-              name={'content'}
-              required={true}
-              title="Content"
-              value={this.state.formValues.content}
-              handleFieldChange={this.handleFieldChange}
-              imageLoader={true}
-              errorMsg={this.fieldError('content')}
-            />
-          </div>
-
-          <div>
-            <img
-              src={ this.state.formValues.image["thumbnail/small"].contentUrl }>
-            </img>
-          </div>
-
-          <input type="submit" name="commit" value="Save" className="btn btn-default btn btn-primary" />
-      </form>
+              <input type="submit" name="commit" value="Save" className="btn btn-default btn btn-primary" />
+          </form>
+        </div>
+        <div className="col-md-3">
+          <Thumbnail media={this.state.formValues.image} />
+        </div>
+      </div>
 
       <DropzoneForm
         authenticityToken={this.props.authenticityToken}
         baseID="replace-image"
-        formUrl={ "/pages/" + this.props.id }
+        formUrl={ "/v1/pages/" + this.props.id }
         method={ "put" }
         multifileUpload={ true }
         paramName="page[uploaded_image]"
