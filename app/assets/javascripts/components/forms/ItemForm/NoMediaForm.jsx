@@ -19,7 +19,8 @@ var NoMediaForm = React.createClass({
 
   getInitialState: function() {
     return {
-      processing: false
+      processing: false,
+      dirty: false,
     }
   },
 
@@ -35,23 +36,28 @@ var NoMediaForm = React.createClass({
     if (event.key == "Enter") {
       this.uploady();
     }
+
+    if (!this.state.dirty) {
+      this.setState({ dirty: true });
+    }
   },
 
   uploady: function() {
+    this.setState( { processing: true });
     var f = this.refs.newItem;
     ItemActions.create(f.value);
     this.props.uploadStarted();
-    this.setState( { processing: true });
   },
 
   render: function() {
-    var button = (<RaisedButton label="Save" primary={ true } onClick={ this.uploady } />);
-    if (this.state.saving) {
+    var button = (<RaisedButton label="Save" primary={ true } disabled={ !this.state.dirty } onClick={ this.uploady } />);
+    if (this.state.processing) {
       button = <LoadingImage />
     }
 
     return (
-      <div>
+      <div style={{ paddingTop: "14px" }}>
+        <p> Type the name of the new item you wish to create. </p>
         <div className="form-group string control-label required">
           <label className="string control-label required" htmlFor="item_name">
             <abbr title="required">* </abbr>

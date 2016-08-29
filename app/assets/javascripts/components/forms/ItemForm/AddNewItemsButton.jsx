@@ -81,6 +81,7 @@ var AddNewItemsButton = React.createClass({
               />
             </Tab>
             <Tab label="Video">
+              <p style={{ marginTop: "14px" }}>Select a video file from your computer.</p>
               <StreamingForm
                 item={null}
                 type="video"
@@ -89,6 +90,7 @@ var AddNewItemsButton = React.createClass({
               />
             </Tab>
             <Tab label="Audio">
+              <p style={{ marginTop: "14px" }}>Select an audio file from your computer.</p>
               <StreamingForm
                 item={null}
                 type="audio"

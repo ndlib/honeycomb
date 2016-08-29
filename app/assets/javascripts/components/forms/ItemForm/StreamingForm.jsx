@@ -104,7 +104,9 @@ var StreamingForm = React.createClass({
       method: "put",
       success: (function(data) {
         this.setState({ processing: false, hasFile: false });
-        this.props.uploadComplete(this.state.item);
+        if (this.props.uploadComplete) {
+          this.props.uploadComplete(this.state.item);
+        }        
       }.bind(this)),
       error: (function(xhr) {
         this.setState({ processing: false});
