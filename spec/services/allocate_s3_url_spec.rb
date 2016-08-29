@@ -10,7 +10,7 @@ describe AllocateS3Url do
   let(:bucket_object) { double(presigned_url: "presigned url", public_url: "public url") }
 
   before(:each) do
-    allow(Aws::Credentials).to receive(:new).and_return(nil)
+    allow(Aws::SharedCredentials).to receive(:new).and_return(nil)
     allow(Aws::S3::Client).to receive(:new).and_return(nil)
     allow(Aws::S3::Resource).to receive(:new).and_return(s3)
   end
