@@ -9,6 +9,10 @@ local: &local
   image_server_url: 'http://localhost:3019'
   beehive_url: 'http://localhost:3018'
   media_server_url: 'http://localhost:3023'
+  aws:
+    region: us-east-1
+    bucket: testlibnd-wse-honeycomb-dev
+    profile: honeycomb
 
 vm: &vm
   <<: *defaults
@@ -27,6 +31,10 @@ pre_production:
   image_server_url: https://honeypotpprd.library.nd.edu
   beehive_url: https://collections-pprd.library.nd.edu
   media_server_url: https://buzz-pprd.library.nd.edu
+  aws:
+    region: us-east-1
+    bucket: testlibnd-wse-honeycomb-pprd
+    profile: honeycomb
 
 production:
   <<: *vm
@@ -34,3 +42,7 @@ production:
   image_server_url: https://honeypot.library.nd.edu
   beehive_url: https://collections.library.nd.edu
   media_server_url: https://buzz.library.nd.edu
+  aws:
+    region: us-east-1
+    bucket: testlibnd-wse-honeycomb-prod
+    profile: honeycomb

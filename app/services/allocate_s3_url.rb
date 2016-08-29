@@ -45,12 +45,15 @@ class AllocateS3Url
   end
 
   def s3
-    credentials = Aws::Credentials.new(configuration["access_key_id"], configuration["secret_access_key"])
+    # Force a reload of the shared config each time, otherwise we won't get any new rotated creds
+    # https://github.com/aws/aws-sdk-ruby/blob/e9276ee29af123384304848381698ffd307b1533/aws-sdk-core/lib/aws-sdk-core/shared_credentials.rb#L25
+    Aws.shared_config.fresh
+    credentials = Aws::SharedCredentials.new(profile_name: configuration["profile"])
     client = Aws::S3::Client.new(region: configuration["region"], credentials: credentials)
     @s3 ||= Aws::S3::Resource.new(client: client)
   end
 
   def configuration
-    @configuration ||= Rails.application.secrets.aws
+    @configuration ||= Rails.configuration.settings.aws
   end
 end
