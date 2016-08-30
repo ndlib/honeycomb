@@ -42,9 +42,20 @@ RSpec.describe Waggle::Adapters::Solr::Search::Hit do
       expect(subject.description).to be_kind_of(String)
     end
 
-    it "feteches the description" do
+    it "fetches the description" do
       expect(subject).to receive(:fetch_text).with(:description)
       subject.description
+    end
+  end
+
+  describe "media" do
+    it "it is a hash" do
+      expect(subject.media).to be_kind_of(Hash)
+    end
+
+    it "fetches the media" do
+      expect(subject).to receive(:fetch_string).with(:media).and_return('{"test" => "test"}')
+      subject.media
     end
   end
 
@@ -64,7 +75,7 @@ RSpec.describe Waggle::Adapters::Solr::Search::Hit do
       expect(subject.date_created).to be_kind_of(String)
     end
 
-    it "feteches the date_created" do
+    it "fetches the date_created" do
       expect(subject).to receive(:fetch_text).with(:date_created)
       subject.date_created
     end

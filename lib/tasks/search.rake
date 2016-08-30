@@ -11,7 +11,7 @@ namespace :search do
 
   desc "rebuild search index"
   task rebuild: :environment do
-    Rake::Task["search:remove"].invoke
-    Rake::Task["search:reindex"].invoke
+    Rake::Task["search:remove_all"].invoke
+    Rake::Task["search:index_all"].invoke
   end
 end

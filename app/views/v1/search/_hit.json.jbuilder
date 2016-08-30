@@ -1,6 +1,6 @@
-json.set! "@type", "SearchHit"
+json.set! "@type", hit.type
 json.set! "@id", hit.at_id
-json.type hit.type
+json.type hit.media["@type"]
 json.name hit.name
 json.shortDescription hit.short_description
 json.description hit.description
