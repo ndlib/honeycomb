@@ -31,7 +31,7 @@ module Waggle
       if media
         media["@type"]
       else
-        "Unknown"
+        "Metadata Only"
       end
     end
 
