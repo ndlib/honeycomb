@@ -47,6 +47,7 @@ RSpec.describe SaveMediaThumbnail do
     before(:each) do
       expect_any_instance_of(described_class).to receive(:image_server_connection).and_return(image_server_connection)
       allow(BuzzMedia).to receive(:call_update).and_return(media_server_json)
+      allow(Index::Item).to receive(:index!).and_return(true)
     end
 
     it "sends a request to the image server" do
@@ -71,6 +72,7 @@ RSpec.describe SaveMediaThumbnail do
     before(:each) do
       expect_any_instance_of(described_class).to receive(:image_server_connection).and_return(image_server_connection)
       expect(BuzzMedia).to receive(:call_update).and_return(media_server_json)
+      allow(Index::Item).to receive(:index!).and_return(true)
     end
 
     it "returns true when the request is successful" do
@@ -121,6 +123,7 @@ RSpec.describe SaveMediaThumbnail do
     it "uses the collection id as the group id" do
       allow_any_instance_of(described_class).to receive(:image_server_connection).and_return(image_server_connection)
       expect(BuzzMedia).to receive(:call_update).and_return(true)
+      allow(Index::Item).to receive(:index!).and_return(true)
       subject = described_class.new(image: image, item: item, media: video)
       expect(image_server_connection).to receive(:post).with(
         "/api/images",

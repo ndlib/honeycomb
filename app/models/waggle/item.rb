@@ -1,6 +1,5 @@
 module Waggle
   class Item
-    TYPE = "Item"
     attr_reader :data
 
     def self.from_item(item)
@@ -29,7 +28,11 @@ module Waggle
     end
 
     def type
-      TYPE
+      if media
+        media["@type"]
+      else
+        "Metadata Only"
+      end
     end
 
     def last_updated

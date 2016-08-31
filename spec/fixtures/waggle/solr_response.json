@@ -47,7 +47,7 @@
         "at_id_s":"http://localhost:3017/v1/items/honeycreeper-on-flower",
         "unique_id_s":"honeycreeper-on-flower",
         "collection_id_s":"animals",
-        "type_s":"Item",
+        "type_s":"ImageObject",
         "thumbnail_url_s":"http://localhost:3019/images/honeycomb/000/001/000/002/small/honeycreeper-on-flower.jpg",
         "last_updated_dt":"2015-09-16T19:09:26Z",
         "timestamp":"2015-09-22T16:25:18.577Z",

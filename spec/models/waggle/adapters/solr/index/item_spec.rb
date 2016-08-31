@@ -28,7 +28,7 @@ RSpec.describe Waggle::Adapters::Solr::Index::Item do
 
   describe "id" do
     it "is the id plus type" do
-      expect(subject.id).to eq("#{data.fetch('id')} Item")
+      expect(subject.id).to eq("#{data.fetch('id')} ImageObject")
     end
   end
 
@@ -42,11 +42,11 @@ RSpec.describe Waggle::Adapters::Solr::Index::Item do
         creator_facet: ["Bob"],
         name_sort: "pig-in-mud",
         creator_sort: "Bob",
-        id: "pig-in-mud Item",
+        id: "pig-in-mud ImageObject",
         at_id_s: "http://localhost:3017/v1/items/pig-in-mud",
         unique_id_s: "pig-in-mud",
         collection_id_s: "animals",
-        type_s: "Item",
+        type_s: "ImageObject",
         thumbnail_url_s: "http://localhost:3019/images/honeycomb/000/001/000/013/medium/pig-in-mud.jpg",
         last_updated_dt: "2015-08-04T12:47:17Z",
         last_updated_sort: "2015-08-04T12:47:17Z",

@@ -32,7 +32,7 @@ RSpec.describe Waggle::Item do
 
   describe "type" do
     it "is Item" do
-      expect(subject.type).to eq("Item")
+      expect(subject.type).to eq("ImageObject")
     end
   end
 
