@@ -38,8 +38,7 @@ module Waggle
                 :unique_id,
                 :collection_id,
                 :type,
-                :thumbnail_url,
-                :media
+                :thumbnail_url
               ].each do |field|
                 hash[string_field_name(field)] = string_as_solr(waggle_item.send(field))
               end

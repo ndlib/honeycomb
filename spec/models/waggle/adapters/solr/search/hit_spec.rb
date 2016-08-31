@@ -48,17 +48,6 @@ RSpec.describe Waggle::Adapters::Solr::Search::Hit do
     end
   end
 
-  describe "media" do
-    it "it is a hash" do
-      expect(subject.media).to be_kind_of(Hash)
-    end
-
-    it "fetches the media" do
-      expect(subject).to receive(:fetch_string).with(:media).and_return('{"test" => "test"}')
-      subject.media
-    end
-  end
-
   describe "creator" do
     it "it is text" do
       expect(subject.creator).to be_kind_of(String)

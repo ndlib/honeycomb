@@ -46,10 +46,6 @@ module Waggle
             fetch_text(:description)
           end
 
-          def media
-            eval(fetch_string(:media))
-          end
-
           def creator
             fetch_text(:creator)
           end
