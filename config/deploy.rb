@@ -64,5 +64,4 @@ after "deploy:finished", "sneakers:restart"
 
 before "npm:install", "npm:prune"
 
-after "deploy:finished"
-after "deploy:updated", "newrelic:notice_deployment"
+after "deploy:finished", "deploy:updated", "newrelic:notice_deployment"
