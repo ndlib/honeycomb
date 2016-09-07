@@ -11,7 +11,7 @@ local: &local
   media_server_url: 'http://localhost:3023'
   aws:
     region: us-east-1
-    bucket: testlibnd-wse-honeycomb-dev
+    bucket: testlibnd-wse-honeycomb-pprd
     profile: honeycomb
 
 vm: &vm

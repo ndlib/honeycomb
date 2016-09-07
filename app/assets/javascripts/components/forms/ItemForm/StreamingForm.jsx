@@ -10,8 +10,8 @@ var AppEventEmitter = require("../../../EventEmitter");
 var StreamingForm = React.createClass({
   propTypes: {
     item: React.PropTypes.object.isRequired,
-    uploadStarted: React.PropTypes.func,
-    uploadComplete: React.PropTypes.func
+    fileUploadStarted: React.PropTypes.func,
+    fileUploadComplete: React.PropTypes.func
   },
 
   getInitialState: function() {
@@ -40,12 +40,12 @@ var StreamingForm = React.createClass({
     }
   },
 
-  uploady: function() {
+  button_click: function() {
     var f = this.refs.uploadFile;
     if (f.files[0]) {
       this.setState({ processing: true });
-      if (this.props.uploadStarted) {
-        this.props.uploadStarted();
+      if (this.props.fileUploadStarted) {
+        this.props.fileUploadStarted();
       }
       this.createNewItem(f.files[0]);
     }
@@ -97,6 +97,7 @@ var StreamingForm = React.createClass({
   },
 
   finishUpload: function(media) {
+    alert("finished");
     url = "/v1/media/" + media["@id"] + "/finish_upload";
     $.ajax({
       url: url,
@@ -104,9 +105,9 @@ var StreamingForm = React.createClass({
       method: "put",
       success: (function(data) {
         this.setState({ processing: false, hasFile: false });
-        if (this.props.uploadComplete) {
-          this.props.uploadComplete(this.state.item);
-        }        
+        if (this.props.fileUploadComplete) {
+          this.props.fileUploadComplete(this.state.item);
+        }
       }.bind(this)),
       error: (function(xhr) {
         this.setState({ processing: false});
@@ -116,6 +117,7 @@ var StreamingForm = React.createClass({
   },
 
   goToNewItem: function() {
+    alert("goto")
     if (this.state.creating) {
       window.location.href = "/items/" + this.state.item.id + "/edit";
     }
@@ -125,7 +127,7 @@ var StreamingForm = React.createClass({
     if (this.state.processing) {
       var button = (<LoadingImage />);
     } else {
-      var button = (<RaisedButton label="Upload" primary={ true } onClick={ this.uploady } disabled={ !this.state.hasFile } />)
+      var button = (<RaisedButton label="Upload" primary={ true } onClick={ this.button_click } disabled={ !this.state.hasFile } />)
     }
     return (
       <div style={{ marginTop: "14px" }}>
