@@ -1,12 +1,21 @@
 class SectionsController < ApplicationController
+  def new
+    @section_form = SectionForm.build_from_params(self)
+    check_user_edits!(@section_form.collection)
+  end
+
   def create
     check_user_edits!(showcase.collection)
     @section = SectionQuery.new(showcase.sections).build
 
     # This is to translate from public item.unique_id to internal item.id
     # Once we convert all of this to use the v1 api, we won't need to translate
-    item = ItemQuery.new.public_find(params[:section].delete(:item_id))
-    @section.item = item if item
+    id = params[:section].delete(:item_id)
+    # If there's no item id (eg. new text field) this id is NULL
+    if id
+      item = ItemQuery.new.public_find(id)
+      @section.item = item if item
+    end
 
     respond_to do |format|
       if SaveSection.call(@section, section_params)
