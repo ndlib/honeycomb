@@ -29,6 +29,6 @@ class ReplacePageItem
   end
 
   def new_image_uri
-    @item.image.json_response["thumbnail/medium"]["contentUrl"]
+    @item.media.json_response["thumbnail/medium"]["contentUrl"]
   end
 end
