@@ -102,7 +102,6 @@ var StreamingForm = React.createClass({
   },
 
   finishUpload: function(media) {
-    alert("finished");
     url = "/v1/media/" + media["@id"] + "/finish_upload";
     $.ajax({
       url: url,
@@ -122,7 +121,6 @@ var StreamingForm = React.createClass({
   },
 
   goToNewItem: function() {
-    alert("goto")
     if (this.state.creating) {
       window.location.href = "/items/" + this.state.item.id + "/edit";
     }

@@ -42,13 +42,11 @@ var AddNewItemsButton = React.createClass({
   },
 
   setHasFiles: function() {
-    console.log("has files")
     this.setState({ hasFiles: true });
   },
 
   goToNewItem(item) {
-    console.log("button");
-    //window.location.href = "/items/" + item.id + "/edit";
+    window.location.href = "/items/" + item.id + "/edit";
   },
 
   render: function() {
