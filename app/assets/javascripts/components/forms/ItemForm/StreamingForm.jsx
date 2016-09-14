@@ -24,7 +24,6 @@ var StreamingForm = React.createClass({
   },
 
   componentDidMount: function() {
-    ItemStore.on("ItemCreateFinished", this.setItem);
     if (this.props.item) {
       this.setState({ item: this.props.item, creating: true })
     }
@@ -32,6 +31,11 @@ var StreamingForm = React.createClass({
 
   addFile() {
     this.setState({ hasFile: true });
+  },
+
+  createFinished: function(data) {
+    ItemStore.removeListener("ItemCreateFinished", this.createFinished);
+    this.setItem(data);
   },
 
   setItem(data) {
@@ -53,6 +57,7 @@ var StreamingForm = React.createClass({
 
   createNewItem: function(file) {
     if (this.state.creating) {
+      ItemStore.on("ItemCreateFinished", this.createFinished);
       ItemActions.create(file.name)
     } else {
       this.loadSigningUrl();

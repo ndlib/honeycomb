@@ -24,8 +24,9 @@ var NoMediaForm = React.createClass({
     }
   },
 
-  componentDidMount: function() {
-    ItemStore.on("ItemCreateFinished", this.goToNewItem);
+  createFinished: function(data) {
+    ItemStore.removeListener("ItemCreateFinished", this.createFinished);
+    this.goToNewItem(data);
   },
 
   goToNewItem: function(data) {
@@ -47,6 +48,7 @@ var NoMediaForm = React.createClass({
   uploady: function() {
     this.setState( { processing: true });
     var f = this.refs.newItem;
+    ItemStore.on("ItemCreateFinished", this.createFinished);
     ItemActions.create(f.value);
     if (this.props.mediaSaveStarted) {
       this.props.mediaSaveStarted();

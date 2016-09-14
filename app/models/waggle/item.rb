@@ -47,7 +47,11 @@ module Waggle
         when "VideoObject"
           media["thumbnailUrl"]
         when "ImageObject"
-          media["thumbnail/medium"]["contentUrl"]
+          if media["thumbnail/medium"]
+            media["thumbnail/medium"]["contentUrl"]
+          else
+            ""
+          end
         end
       end
     end
