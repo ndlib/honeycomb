@@ -10,7 +10,7 @@ var CollectionStore = require("../stores/Collection");
 
 
 class ItemActions extends NodeEventEmitter {
-
+  
   get(id) {
     $.ajax({
       url: this.url(id),
@@ -90,7 +90,7 @@ class ItemActions extends NodeEventEmitter {
     });
   }
 
-  delete(id) {
+  delete(id, message=true) {
     $.ajax({
       url: this.url(id),
       dataType: "json",
@@ -100,11 +100,15 @@ class ItemActions extends NodeEventEmitter {
           actionType: ItemActionTypes.ITEM_DELETED,
           item: id
         });
-        AppEventEmitter.emit("MessageCenterDisplay", "info", "Item Deleted");
+        if (message) {
+          AppEventEmitter.emit("MessageCenterDisplay", "info", "Item Deleted");
+        }
       }).bind(this),
       error: (function(xhr) {
         this.emit("ItemDeleteFailed", false, xhr);
-        AppEventEmitter.emit("MessageCenterDisplay", "error", "Item Delete Failed.  Please try again if the problem persists please contact WSE unit.");
+        if (message) {
+          AppEventEmitter.emit("MessageCenterDisplay", "error", "Item Delete Failed.  Please try again if the problem persists please contact WSE unit.");
+        }
       }).bind(this),
     });
   }

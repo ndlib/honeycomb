@@ -38,6 +38,14 @@ var StreamingForm = React.createClass({
     this.setItem(data);
   },
 
+  handleError: function() {
+    this.setState({ processing: false });
+    AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error. Please try again if the problem persists please contact WSE unit.");
+    if (this.state.creating && this.state.item) {
+      ItemActions.delete(this.state.item.id, false)
+    }
+  },
+
   setItem(data) {
     if (this.state.processing) {
       this.setState({ item: data }, this.loadSigningUrl);
@@ -78,8 +86,7 @@ var StreamingForm = React.createClass({
         this.uploadFile(data);
       }.bind(this)),
       error: (function(xhr) {
-        this.setState({ processing: false});
-        AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error. Please try again if the problem persists please contact WSE unit.");
+        this.handleError();
       }.bind(this)),
     });
   },
@@ -93,8 +100,7 @@ var StreamingForm = React.createClass({
         if(xhr.status === 200) {
           this.finishUpload(media)
         } else {
-          this.setState({ processing: false});
-          AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error. Please try again if the problem persists please contact WSE unit.");
+          this.handleError();
         }
       }
     };
@@ -114,8 +120,7 @@ var StreamingForm = React.createClass({
         }
       }.bind(this)),
       error: (function(xhr) {
-        this.setState({ processing: false});
-        AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error. Please try again if the problem persists please contact WSE unit.");
+        this.handleError();
       }.bind(this)),
     });
   },
