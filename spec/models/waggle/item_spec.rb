@@ -53,6 +53,11 @@ RSpec.describe Waggle::Item do
       data["media"]["thumbnailUrl"] = "video thumbnail"
       expect(subject.thumbnail_url).to eq("video thumbnail")
     end
+
+    it "returns empty string if the medium thumbnail is nil" do
+      data["media"]["thumbnail/medium"] = nil
+      expect(subject.thumbnail_url).to eq("")
+    end
   end
 
   describe "last_updated" do
