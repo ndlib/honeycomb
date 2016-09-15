@@ -85,8 +85,8 @@ var AddNewItemsButton = React.createClass({
               <StreamingForm
                 item={null}
                 type="video"
-                uploadCompleted={ this.goToNewItem }
-                uploadStarted={ this.hasFiles }
+                fileUploadStarted={ this.hasFiles }
+                fileUploadCompleted={ this.goToNewItem }
               />
             </Tab>
             <Tab label="Audio">
@@ -94,14 +94,14 @@ var AddNewItemsButton = React.createClass({
               <StreamingForm
                 item={null}
                 type="audio"
-                uploadComplete={ this.goToNewItem }
-                uploadStarted={ this.hasFiles }
+                fileUploadStarted={ this.hasFiles }
+                fileUploadCompleted={ this.goToNewItem }
               />
             </Tab>
             <Tab label="No Media">
               <NoMediaForm
-                uploadComplete={ this.goToNewItem }
-                uploadStarted={ this.hasFiles }
+                mediaSaveStarted={ this.hasFiles }
+                mediaSaveCompleted={ this.goToNewItem }
               />
             </Tab>
           </Tabs>

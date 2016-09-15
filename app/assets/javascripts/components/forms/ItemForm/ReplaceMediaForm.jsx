@@ -46,7 +46,7 @@ var ReplaceMedia = React.createClass({
             <StreamingForm
               item={ this.props.item }
               type="video"
-              uploadComplete={ this.uploadComplete }
+              fileUploadComplete={ this.uploadComplete }
             />
             <hr />
             <h4>Add Video Image</h4>
@@ -69,7 +69,7 @@ var ReplaceMedia = React.createClass({
             <StreamingForm
               item={ this.props.item }
               type="audio"
-              uploadComplete={ this.uploadComplete }
+              fileUploadComplete={ this.uploadComplete }
             />
             <hr />
             <h4>Add Audio Image</h4>

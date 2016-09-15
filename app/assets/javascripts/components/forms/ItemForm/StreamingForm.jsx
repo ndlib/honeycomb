@@ -10,8 +10,8 @@ var AppEventEmitter = require("../../../EventEmitter");
 var StreamingForm = React.createClass({
   propTypes: {
     item: React.PropTypes.object.isRequired,
-    uploadStarted: React.PropTypes.func,
-    uploadComplete: React.PropTypes.func
+    fileUploadStarted: React.PropTypes.func,
+    fileUploadComplete: React.PropTypes.func
   },
 
   getInitialState: function() {
@@ -24,7 +24,6 @@ var StreamingForm = React.createClass({
   },
 
   componentDidMount: function() {
-    ItemStore.on("ItemCreateFinished", this.setItem);
     if (this.props.item) {
       this.setState({ item: this.props.item, creating: true })
     }
@@ -34,18 +33,23 @@ var StreamingForm = React.createClass({
     this.setState({ hasFile: true });
   },
 
+  createFinished: function(data) {
+    ItemStore.removeListener("ItemCreateFinished", this.createFinished);
+    this.setItem(data);
+  },
+
   setItem(data) {
     if (this.state.processing) {
       this.setState({ item: data }, this.loadSigningUrl);
     }
   },
 
-  uploady: function() {
+  button_click: function() {
     var f = this.refs.uploadFile;
     if (f.files[0]) {
       this.setState({ processing: true });
-      if (this.props.uploadStarted) {
-        this.props.uploadStarted();
+      if (this.props.fileUploadStarted) {
+        this.props.fileUploadStarted();
       }
       this.createNewItem(f.files[0]);
     }
@@ -53,6 +57,7 @@ var StreamingForm = React.createClass({
 
   createNewItem: function(file) {
     if (this.state.creating) {
+      ItemStore.on("ItemCreateFinished", this.createFinished);
       ItemActions.create(file.name)
     } else {
       this.loadSigningUrl();
@@ -104,9 +109,9 @@ var StreamingForm = React.createClass({
       method: "put",
       success: (function(data) {
         this.setState({ processing: false, hasFile: false });
-        if (this.props.uploadComplete) {
-          this.props.uploadComplete(this.state.item);
-        }        
+        if (this.props.fileUploadComplete) {
+          this.props.fileUploadComplete(this.state.item);
+        }
       }.bind(this)),
       error: (function(xhr) {
         this.setState({ processing: false});
@@ -125,7 +130,7 @@ var StreamingForm = React.createClass({
     if (this.state.processing) {
       var button = (<LoadingImage />);
     } else {
-      var button = (<RaisedButton label="Upload" primary={ true } onClick={ this.uploady } disabled={ !this.state.hasFile } />)
+      var button = (<RaisedButton label="Upload" primary={ true } onClick={ this.button_click } disabled={ !this.state.hasFile } />)
     }
     return (
       <div style={{ marginTop: "14px" }}>

@@ -13,8 +13,8 @@ var AppEventEmitter = require("../../../EventEmitter");
 
 var NoMediaForm = React.createClass({
   propTypes: {
-    uploadStarted: React.PropTypes.func,
-    uploadComplete: React.PropTypes.func
+    mediaSaveStarted: React.PropTypes.func,
+    mediaSaveCompleted: React.PropTypes.func
   },
 
   getInitialState: function() {
@@ -24,12 +24,15 @@ var NoMediaForm = React.createClass({
     }
   },
 
-  componentDidMount: function() {
-    ItemStore.on("ItemCreateFinished", this.goToNewItem);
+  createFinished: function(data) {
+    ItemStore.removeListener("ItemCreateFinished", this.createFinished);
+    this.goToNewItem(data);
   },
 
   goToNewItem: function(data) {
-    this.props.uploadComplete(data);
+    if (this.props.mediaSaveCompleted) {
+      this.props.mediaSaveCompleted(data);
+    }
   },
 
   checkEnter: function(event) {
@@ -45,8 +48,11 @@ var NoMediaForm = React.createClass({
   uploady: function() {
     this.setState( { processing: true });
     var f = this.refs.newItem;
+    ItemStore.on("ItemCreateFinished", this.createFinished);
     ItemActions.create(f.value);
-    this.props.uploadStarted();
+    if (this.props.mediaSaveStarted) {
+      this.props.mediaSaveStarted();
+    }
   },
 
   render: function() {
