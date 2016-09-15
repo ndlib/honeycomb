@@ -8,13 +8,8 @@ class SectionsController < ApplicationController
     check_user_edits!(showcase.collection)
     @section = SectionQuery.new(showcase.sections).build
 
-    # This is to translate from public item.unique_id to internal item.id
-    # Once we convert all of this to use the v1 api, we won't need to translate
-    id = params[:section].delete(:item_id)
-    # If there's no item id (eg. new text field) this id is NULL
-    if id
-      item = ItemQuery.new.public_find(id)
-      @section.item = item if item
+    if section_item_id
+      @section.item = ItemQuery.new.public_find(section_item_id)
     end
 
     respond_to do |format|
@@ -62,6 +57,12 @@ class SectionsController < ApplicationController
   end
 
   protected
+
+  def section_item_id
+    # This is to translate from public item.unique_id to internal item.id
+    # Once we convert all of this to use the v1 api, we won't need to translate
+    @section_item_id ||= params[:section].delete(:item_id)
+  end
 
   def section_params
     params.require(:section).permit(:name, :image, :item_id, :description, :order, :caption, :has_spacer)
