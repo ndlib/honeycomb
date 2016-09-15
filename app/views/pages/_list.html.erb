@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th><%= t('.name') %></th>
+      <th/>
       <th><%= t('.content') %></th>
       <th><%= t('.updated_at') %></th>
     </tr>
@@ -9,6 +10,9 @@
   <tbody>
     <% pages.each do |page| %>
       <tr>
+        <td class="image" >
+          <%= link_to Thumbnail.display(page.image, "page"), edit_page_path(page) %>
+        </td>
         <td>
           <h4 class="media-heading"><%= h link_to page.name, edit_page_path(page) %></h4>
         </td>

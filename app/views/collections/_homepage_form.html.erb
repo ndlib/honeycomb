@@ -2,7 +2,7 @@
 
 <%= f.input :short_intro, input_html: { class: 'honeycomb_redactor'  } %>
 
-<%= HoneypotThumbnail.display(f.object.image) %>
+<%= Thumbnail.display(f.object.image, "item") %>
 <%= f.input :uploaded_image, as: :file %>
 
 <%= f.input :show_page_title, as: :boolean, label: false, hint: "Select this box if your homepage image has your site title already embedded in it" do %>
