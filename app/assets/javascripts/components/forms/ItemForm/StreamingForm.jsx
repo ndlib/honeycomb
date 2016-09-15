@@ -10,15 +10,21 @@ var AppEventEmitter = require("../../../EventEmitter");
 var StreamingForm = React.createClass({
   propTypes: {
     item: React.PropTypes.object.isRequired,
+    creating: React.PropTypes.bool.isRequired,
     fileUploadStarted: React.PropTypes.func,
     fileUploadComplete: React.PropTypes.func
+  },
+
+  getDefaultProps: function() {
+    return {
+      creating: true
+    }
   },
 
   getInitialState: function() {
     return {
       processing: false,
       item: this.props.item,
-      creating: true,
       hasFile: false,
     }
   },
@@ -41,7 +47,7 @@ var StreamingForm = React.createClass({
   handleError: function() {
     this.setState({ processing: false });
     AppEventEmitter.emit("MessageCenterDisplay", "error", "Upload Error. Please try again if the problem persists please contact WSE unit.");
-    if (this.state.creating && this.state.item) {
+    if (this.props.creating && this.state.item) {
       ItemActions.delete(this.state.item.id, false)
     }
   },
@@ -64,7 +70,7 @@ var StreamingForm = React.createClass({
   },
 
   createNewItem: function(file) {
-    if (this.state.creating) {
+    if (this.props.creating) {
       ItemStore.on("ItemCreateFinished", this.createFinished);
       ItemActions.create(file.name)
     } else {
@@ -115,8 +121,8 @@ var StreamingForm = React.createClass({
       method: "put",
       success: (function(data) {
         this.setState({ processing: false, hasFile: false });
-        if (this.props.fileUploadComplete) {
-          this.props.fileUploadComplete(this.state.item);
+        if (this.props.fileUploadCompleted) {
+          this.props.fileUploadCompleted(this.state.item);
         }
       }.bind(this)),
       error: (function(xhr) {
@@ -124,13 +130,7 @@ var StreamingForm = React.createClass({
       }.bind(this)),
     });
   },
-
-  goToNewItem: function() {
-    if (this.state.creating) {
-      window.location.href = "/items/" + this.state.item.id + "/edit";
-    }
-  },
-
+  
   render: function() {
     if (this.state.processing) {
       var button = (<LoadingImage />);

@@ -46,7 +46,8 @@ var ReplaceMedia = React.createClass({
             <StreamingForm
               item={ this.props.item }
               type="video"
-              fileUploadComplete={ this.uploadComplete }
+              creating={ false }
+              fileUploadCompleted={ this.uploadComplete }
             />
             <hr />
             <h4>Add Video Image</h4>
