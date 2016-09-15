@@ -1,7 +1,6 @@
 var React = require("react");
 var mui = require("material-ui");
 var classNames = require("classnames");
-var Colors = require("material-ui/lib/styles/colors");
 
 var Thumbnail = React.createClass({
   propTypes: {
