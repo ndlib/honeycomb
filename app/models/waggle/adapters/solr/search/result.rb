@@ -39,23 +39,51 @@ module Waggle
           end
 
           def result
-            @result ||= connection.paginate(
-              page,
-              per_page,
-              "select",
-              params: solr_params,
-            )
+            if !@result
+              @result ||= connection.paginate(
+                page,
+                per_page,
+                "select",
+                params: solr_params,
+              )
+
+              @numResultsForRequestedTags ||= connection.paginate(
+                page,
+                0,
+                "select",
+                params: solr_params(false)
+              )
+              concatFacets
+            end
+
+            @result
           end
 
           private
 
-          def solr_params
+          # There are cases where the facets marked by the user are not returned with a count
+          # This function adds those counts back into the final list of facets returned
+          def concatFacets
+            queryCounts = @result["facet_counts"]["facet_fields"]
+            requestedCounts = @numResultsForRequestedTags["facet_counts"]["facet_fields"]
+
+            requestedCounts.each do |facet, tags|
+              tags.each_slice(2) { |tagWithVal|
+                # Since these are arrays, we'll only append the values ([tag, val]) if they're not present
+                if !queryCounts[facet].include? tagWithVal[0]
+                  queryCounts[facet] += tagWithVal
+                end
+              }
+            end
+          end
+
+          def solr_params(getOtherTags = true)
             {
               q: query.q,
               fl: "score *",
               qf: solr_query_fields,
               pf: solr_phrase_fields,
-              fq: solr_filters,
+              fq: solr_filters(getOtherTags),
               sort: solr_sort,
               facet: true,
               defType: "edismax",
@@ -107,14 +135,14 @@ module Waggle
             end
           end
 
-          def solr_filters
+          def solr_filters(getOtherTags = true)
             filters = []
             query.filters.each do |key, value|
               filters.push(format_filter("#{key}_s", value))
             end
             configuration.facets.each do |facet|
               if value = query.facet(facet.name)
-                filters.push(format_filter("#{facet.name}_facet", value, true))
+                filters.push(format_filter("#{facet.name}_facet", value, getOtherTags))
               end
             end
             filters
