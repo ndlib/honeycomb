@@ -39,7 +39,7 @@ module Waggle
           end
 
           def result
-            if !@result
+            unless @result
               @result ||= connection.paginate(
                 page,
                 per_page,
@@ -47,13 +47,13 @@ module Waggle
                 params: solr_params,
               )
 
-              @numResultsForRequestedTags ||= connection.paginate(
+              @requested_tags_results ||= connection.paginate(
                 page,
                 0,
                 "select",
                 params: solr_params(false)
               )
-              concatFacets
+              concat_facets
             end
 
             @result
@@ -63,27 +63,31 @@ module Waggle
 
           # There are cases where the facets marked by the user are not returned with a count
           # This function adds those counts back into the final list of facets returned
-          def concatFacets
-            queryCounts = @result["facet_counts"]["facet_fields"]
-            requestedCounts = @numResultsForRequestedTags["facet_counts"]["facet_fields"]
+          def concat_facets
+            if !@requested_tags_results 
+              return
+            end
+            
+            query_counts = @result["facet_counts"]["facet_fields"]
+            requested_counts = @requested_tags_results["facet_counts"]["facet_fields"]
 
-            requestedCounts.each do |facet, tags|
-              tags.each_slice(2) { |tagWithVal|
+            requested_counts.each do |facet, tags|
+              tags.each_slice(2) { |tag_with_val|
                 # Since these are arrays, we'll only append the values ([tag, val]) if they're not present
-                if !queryCounts[facet].include? tagWithVal[0]
-                  queryCounts[facet] += tagWithVal
+                unless query_counts[facet].include? tag_with_val[0]
+                  query_counts[facet] += tag_with_val
                 end
               }
             end
           end
 
-          def solr_params(getOtherTags = true)
+          def solr_params(get_other_tags=true)
             {
               q: query.q,
               fl: "score *",
               qf: solr_query_fields,
               pf: solr_phrase_fields,
-              fq: solr_filters(getOtherTags),
+              fq: solr_filters(get_other_tags),
               sort: solr_sort,
               facet: true,
               defType: "edismax",
@@ -135,14 +139,14 @@ module Waggle
             end
           end
 
-          def solr_filters(getOtherTags = true)
+          def solr_filters(get_other_tags=true)
             filters = []
             query.filters.each do |key, value|
               filters.push(format_filter("#{key}_s", value))
             end
             configuration.facets.each do |facet|
               if value = query.facet(facet.name)
-                filters.push(format_filter("#{facet.name}_facet", value, getOtherTags))
+                filters.push(format_filter("#{facet.name}_facet", value, get_other_tags))
               end
             end
             filters

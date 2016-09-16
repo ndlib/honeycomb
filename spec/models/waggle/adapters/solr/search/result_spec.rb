@@ -50,9 +50,9 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
 
   describe "result" do
     it "sends the expected arguments to solr" do
-      expect(subject).to receive(:page).and_return(2)
+      expect(subject).to receive(:page).exactly(2).times.and_return(2)
       expect(subject).to receive(:per_page).and_return(15)
-      expect(subject).to receive(:solr_params).and_return(q: "a query")
+      expect(subject).to receive(:solr_params).exactly(2).times.and_return(q: "a query")
       expect(subject.send(:connection)).to receive(:paginate).with(
         2,
         15,
@@ -61,6 +61,14 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
           q: "a query"
         },
       ).and_return("solr_response")
+      expect(subject.send(:connection)).to receive(:paginate).with(
+        2,
+        0,
+        "select",
+        params: {
+          q: "a query"
+        },
+      ).and_return(nil)
       expect(subject.result).to eq("solr_response")
     end
   end
