@@ -9,7 +9,7 @@ var AppEventEmitter = require("../../../EventEmitter");
 
 var StreamingForm = React.createClass({
   propTypes: {
-    item: React.PropTypes.object.isRequired,
+    item: React.PropTypes.object,
     creating: React.PropTypes.bool.isRequired,
     fileUploadStarted: React.PropTypes.func,
     fileUploadComplete: React.PropTypes.func
@@ -130,7 +130,7 @@ var StreamingForm = React.createClass({
       }.bind(this)),
     });
   },
-  
+
   render: function() {
     if (this.state.processing) {
       var button = (<LoadingImage />);
