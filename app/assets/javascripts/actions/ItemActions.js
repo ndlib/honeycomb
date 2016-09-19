@@ -10,7 +10,7 @@ var CollectionStore = require("../stores/Collection");
 
 
 class ItemActions extends NodeEventEmitter {
-  
+
   get(id) {
     $.ajax({
       url: this.url(id),
@@ -107,7 +107,10 @@ class ItemActions extends NodeEventEmitter {
       error: (function(xhr) {
         this.emit("ItemDeleteFailed", false, xhr);
         if (message) {
-          AppEventEmitter.emit("MessageCenterDisplay", "error", "Item Delete Failed.  Please try again if the problem persists please contact WSE unit.");
+          AppEventEmitter.emit("MessageCenterDisplay",
+                               "error",
+                               "Item Delete Failed.  Please try again if the problem persists please contact WSE unit."
+                             );
         }
       }).bind(this),
     });
