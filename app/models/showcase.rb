@@ -8,7 +8,7 @@ class Showcase < ActiveRecord::Base
 
   has_paper_trail
 
-  def slug(name = true)
+  def slug(name=true)
     name.to_s
     name_line_1
   end
