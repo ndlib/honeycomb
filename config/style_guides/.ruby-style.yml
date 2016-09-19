@@ -178,7 +178,7 @@ Style/PreferredHashMethods:
 
 Style/Documentation:
   Description: 'Document classes and non-namespace modules.'
-  Enabled: true
+  Enabled: false
   Exclude:
     - 'spec/**/*'
     - 'test/**/*'
@@ -768,7 +768,7 @@ Style/SpaceAroundEqualsInParameterDefault:
                  have or don't have surrounding space depending on
                  configuration.
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#spaces-around-equals'
-  Enabled: true
+  Enabled: false
 
 Style/SpaceAroundKeyword:
   Description: 'Use a space around keywords if appropriate.'
@@ -825,7 +825,7 @@ Style/StabbyLambdaParentheses:
 Style/StringLiterals:
   Description: 'Checks if uses of quotes match the configured preference.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#consistent-string-literals'
-  Enabled: true
+  Enabled: false
 
 Style/StringLiteralsInInterpolation:
   Description: >-
