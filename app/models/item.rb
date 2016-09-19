@@ -28,7 +28,7 @@ class Item < ActiveRecord::Base
   def metadata=(_values)
     raise "Use Metadata::Setter.call instead see SaveItem"
   end
-
+ 
   private
 
   def manuscript_url_is_valid_uri
