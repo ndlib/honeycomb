@@ -7,7 +7,8 @@ RSpec.describe SectionsController, type: :controller do
   let(:section) { double(Section, id: 1, destroy!: true, showcase: showcase, :order= => true, order: 1, collection: collection, "item=" => true) }
   let(:item) { instance_double(Item) }
   let(:relation) { Section.all }
-  let(:create_params) { { showcase_id: showcase.id, section: { name: "name", order: 1 } } }
+  let(:create_params_with_item) { { showcase_id: showcase.id, section: { name: "name", order: 1, item_id: 1 } } }
+  let(:create_params_no_item) { { showcase_id: showcase.id, section: { name: "name", order: 1 } } }
 
   let(:update_params) { { id: section.id, section: { name: "name" } } }
 
@@ -22,8 +23,8 @@ RSpec.describe SectionsController, type: :controller do
   end
 
   describe "POST #create" do
-    subject { post :create, create_params }
-
+    subject { post :create, create_params_with_item }
+    
     it "checks the editor permissions" do
       expect_any_instance_of(described_class).to receive(:check_user_edits!).with(collection)
       subject
@@ -38,6 +39,12 @@ RSpec.describe SectionsController, type: :controller do
       allow_any_instance_of(ItemQuery).to receive(:public_find).and_return(item)
       expect(section).to receive("item=").with(item)
       subject
+    end
+
+    it "doesn't query if no id" do
+      expect_any_instance_of(ItemQuery).to_not receive(:public_find)
+
+      post :create, create_params_no_item
     end
 
     it "redirects on success" do
