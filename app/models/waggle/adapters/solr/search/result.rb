@@ -64,20 +64,20 @@ module Waggle
           # There are cases where the facets marked by the user are not returned with a count
           # This function adds those counts back into the final list of facets returned
           def concat_facets
-            if !@requested_tags_results 
+            if !@requested_tags_results
               return
             end
-            
+
             query_counts = @result["facet_counts"]["facet_fields"]
             requested_counts = @requested_tags_results["facet_counts"]["facet_fields"]
 
             requested_counts.each do |facet, tags|
-              tags.each_slice(2) { |tag_with_val|
+              tags.each_slice(2) do |tag_with_val|
                 # Since these are arrays, we'll only append the values ([tag, val]) if they're not present
                 unless query_counts[facet].include? tag_with_val[0]
                   query_counts[facet] += tag_with_val
                 end
-              }
+              end
             end
           end
 

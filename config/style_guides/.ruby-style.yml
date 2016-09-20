@@ -140,3 +140,6 @@ Style/MethodDefParentheses:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/NegatedIf:
+  Enabled: false
