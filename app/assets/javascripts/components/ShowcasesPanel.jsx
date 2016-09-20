@@ -33,7 +33,7 @@ var ShowcasesPanel = React.createClass({
   },
 
   showcaseImageDiv: function (showcase) {
-    if(showcase.image) {
+    if(showcase.image && showcase.image.status == "ready") {
       return (
         <div className="image">
           <Avatar src={ showcase.image["thumbnail/small"]["contentUrl"] } />

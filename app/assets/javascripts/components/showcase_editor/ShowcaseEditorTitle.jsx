@@ -60,6 +60,19 @@ var ShowcaseEditorTitle = React.createClass({
     window.location = this.props.showcase.editUrl;
   },
 
+  image: function() {
+    if(this.props.showcase.image && this.props.showcase.image.status == "ready") {
+      return (
+        <div>
+          <h4>Background Image</h4>
+          <img src={ this.props.showcase.image["thumbnail/small"]["contentUrl"] } style={ this.imageStyle() } />
+        </div>
+      );
+    } else {
+      return null;
+    }
+  },
+
   render: function() {
     var description;
     if (this.props.showcase.description) {
@@ -73,10 +86,7 @@ var ShowcaseEditorTitle = React.createClass({
     return (
       <div className="showcase-title-page" style={this.style()} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
         <h2 style={this.titleStyle()}>{this.props.showcase.name_line_1} <small>{this.props.showcase.name_line_2}</small></h2>
-        <div>
-          <h4>Background Image</h4>
-          <img src={this.props.showcase.image } style={ this.imageStyle() } />
-        </div>
+        { this.image() }
         <EditLink clickHandler={this.editTitle} visible={this.state.hover} />
       </div>
     );

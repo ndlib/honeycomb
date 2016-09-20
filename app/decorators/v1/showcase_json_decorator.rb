@@ -40,11 +40,7 @@ module V1
     end
 
     def image
-      if object.image
-        object.image.json_response
-      else
-        nil
-      end
+      SerializeMedia.to_hash(media: object.image) if object.image
     end
 
     def display(json)

@@ -32,7 +32,7 @@ var PagesPanel = React.createClass({
   },
 
   pageImageDiv: function (page) {
-    if(page.image) {
+    if(page.image && page.image.status == "ready") {
       return (
         <div className="image">
           <Avatar src={ page.image["thumbnail/small"]["contentUrl"] } />
