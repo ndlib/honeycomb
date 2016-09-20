@@ -7,9 +7,9 @@ class CollectionImage
 
   def display
     if collection.image
-      Thumbnail.display(collection.image, "item")
+      Thumbnail.display(collection.image, "collection")
     elsif first_item_with_image
-      Thumbnail.display(first_item_with_image.media, "item")
+      Thumbnail.display(first_item_with_image.media, "collection")
     else
       ""
     end
