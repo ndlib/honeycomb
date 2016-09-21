@@ -40,9 +40,14 @@ class CreateMedia
       media.serializer = SerializeNewS3Media
       owner.media_id = media.id
       owner.save
+      index_item
     else
       media.serializer = SerializeMedia
     end
     media
+  end
+
+  def index_item
+    Index::Item.index!(owner) if owner.is_a?(Item)
   end
 end

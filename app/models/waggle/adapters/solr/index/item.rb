@@ -19,7 +19,7 @@ module Waggle
           end
 
           def as_solr
-            @as_solr ||= metadata.as_solr.clone.tap do |hash|
+            @as_solr = metadata.as_solr.clone.tap do |hash|
               hash[:id] = id
               hash[text_field_name(:title)] = hash.fetch(text_field_name(:name))
               hash.merge!(string_fields)
