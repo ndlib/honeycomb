@@ -31,5 +31,6 @@
 //= require menu-bar
 //= require flash
 //= require jquery.cookie
+//= require react_rails_img
 
 window.$ = window.jQuery = require('jquery');

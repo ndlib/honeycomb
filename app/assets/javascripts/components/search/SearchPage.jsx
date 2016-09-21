@@ -31,23 +31,6 @@ var Styles = {
       paddingRight: "24px",
       width: "97px",
     },
-    thumbnailImage: {
-      maxHeight: "100%",
-      maxWidth: "100%",
-      verticalAlign: "middle",
-      display: "inline-block",
-      height: "auto",
-      width: "auto",
-      opacity: "1",
-      padding: "4px",
-      backgroundColor: "white",
-      border: "1px solid #dddddd",
-      borderRadius: "4px",
-    },
-    textItemIcon: {
-      fontSize: "49px",
-      color: Colors.grey600
-    },
     itemName: {
       color: "#2c5882",
       fontSize: "18px"
@@ -111,15 +94,14 @@ var SearchPage = React.createClass({
   },
 
   getThumbnail: function(thumbnailUrl) {
-    if(thumbnailUrl == null || thumbnailUrl == ""){
-      return (<mui.FontIcon  className="material-icons" style={ Styles.cells.textItemIcon }>local_offer</mui.FontIcon>);
-    }
+    // This regex will always match as an array of 4
     var reg = new RegExp( '^(.*)(\/.*)([\/].*$)', 'i' );
+    
     var string = reg.exec(thumbnailUrl);
     if(string && string.length == 4) {
       thumbnailUrl = string[1] + "/small" + string[3];
     }
-    return (<img src={ thumbnailUrl } style={ Styles.cells.thumbnailImage }/>);
+    return (<Thumbnail thumbnailUrl={ thumbnailUrl } thumbType={ "item" } />);
   },
 
   openItem: function(rowNumber, columnId) {
@@ -181,7 +163,7 @@ var SearchPage = React.createClass({
                 </mui.TableHeaderColumn>
               </mui.TableRow>
             </mui.TableHeader>
-            <mui.TableBody displayRowCheckbox={false} showRowHover={true}>
+            <mui.TableBody displayRowCheckbox={false} showRowHover={true} className="item-list">
               { this.items() }
             </mui.TableBody>
           </mui.Table>

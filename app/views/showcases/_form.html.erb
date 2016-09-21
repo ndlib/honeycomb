@@ -6,4 +6,4 @@
 <%= f.input :description, hint: 'Please keep the description as short as possible', as: :string %>
 
 <%= f.input :uploaded_image, as: :file, required: true %>
-<%= HoneypotThumbnail.display(f.object.image) %>
+<%= Thumbnail.display(f.object.image, "showcase") %>

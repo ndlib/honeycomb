@@ -394,6 +394,8 @@ GEM
       execjs
       rails (>= 3.2)
       tilt
+    react-rails-img (0.1.5)
+      react-rails
     ref (1.0.5)
     request_store (1.1.0)
     responders (2.1.0)
@@ -585,6 +587,7 @@ DEPENDENCIES
   rake (< 11)
   rb-readline
   react-rails
+  react-rails-img
   responders (~> 2.0)
   rsolr
   rspec-collection_matchers
@@ -606,4 +609,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.12.5
+   1.13.0
