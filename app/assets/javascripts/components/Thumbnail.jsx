@@ -26,8 +26,11 @@ var Thumbnail = React.createClass({
           thumbUrl = Img.assetPath("no-showcase.png");
           break;
 
+        case 'collection':
+          return (<div></div>);
+
         default:
-          thumbUrl = Img.assetPath("meta-only-item.jpg");
+          throw new Error("Trying to show thumbnail for unknown type");
       }
     }
 
