@@ -8,12 +8,12 @@ RSpec.describe CollectionImage do
   let(:items) { instance_double(ActiveRecord::Associations::CollectionProxy, joins: image) }
   let(:item_with_image) { double(Item, media: honeypot_image) }
   let(:item_with_no_image) { double(Item, media: nil) }
-  let(:collection_image) { double(Image, json_response: { contentUrl: "http://collection.com/image.jpg" }) }
-  let(:honeypot_image) { double(Image, json_response: { contentUrl: "http://example.com/image.jpg" }) }
+  let(:collection_image) { double(Image, json_response: { "contentUrl" => "http://collection.com/image.jpg" }) }
+  let(:honeypot_image) { double(Image, json_response: { "contentUrl" => "http://example.com/image.jpg" }) }
 
   it "uses the item decorator to call the image display" do
     allow(image).to receive(:first).and_return(item_with_image)
-    expect_any_instance_of(HoneypotThumbnail).to receive(:display)
+    expect_any_instance_of(Thumbnail).to receive(:display)
     subject.display
   end
 
@@ -21,7 +21,7 @@ RSpec.describe CollectionImage do
     allow(collection).to receive(:image).and_return(nil)
     expect(subject.display).to eq("<div " \
       "data-react-class=\"Thumbnail\" " \
-      "data-react-props=\"{&quot;image&quot;:{&quot;contentUrl&quot;:&quot;http://example.com/image.jpg&quot;}}\">" \
+      "data-react-props=\"{&quot;thumbnailUrl&quot;:&quot;http://example.com/image.jpg&quot;,&quot;extraStyle&quot;:{},&quot;thumbType&quot;:&quot;collection&quot;}\">" \
       "</div>")
   end
 
@@ -29,7 +29,7 @@ RSpec.describe CollectionImage do
     allow(image).to receive(:first).and_return(item_with_image)
     expect(subject.display).to eq("<div " \
       "data-react-class=\"Thumbnail\" " \
-      "data-react-props=\"{&quot;image&quot;:{&quot;contentUrl&quot;:&quot;http://collection.com/image.jpg&quot;}}\">" \
+      "data-react-props=\"{&quot;thumbnailUrl&quot;:&quot;http://collection.com/image.jpg&quot;,&quot;extraStyle&quot;:{},&quot;thumbType&quot;:&quot;collection&quot;}\">" \
       "</div>")
   end
 

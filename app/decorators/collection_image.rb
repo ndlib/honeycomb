@@ -7,9 +7,9 @@ class CollectionImage
 
   def display
     if collection.image
-      HoneypotThumbnail.display(collection.image)
+      Thumbnail.display(collection.image, "collection")
     elsif first_item_with_image
-      HoneypotThumbnail.display(first_item_with_image.media)
+      Thumbnail.display(first_item_with_image.media, "collection")
     else
       ""
     end

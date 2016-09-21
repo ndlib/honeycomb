@@ -23,7 +23,7 @@
       <tr>
         <td>
           <% if collection.image %>
-            <a href="<%= raw collection.url %>"><%= HoneypotThumbnail.display(collection.image) %></a>
+            <a href="<%= raw collection.url %>"><%= Thumbnail.display(collection.image, "item") %></a>
           <% end %>
         </td>
         <td>
