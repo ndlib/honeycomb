@@ -15,19 +15,19 @@ var Thumbnail = React.createClass({
     if (!thumbUrl || thumbUrl == "") {
       switch (this.props.thumbType) {
         case 'item':
-          thumbUrl = "https://image.freepik.com/free-icon/black-paper-tag_318-33822.jpg";
+          thumbUrl = Img.assetPath("meta-only-item.jpg");
           break;
 
         case 'page':
-          thumbUrl = "http://c.dryicons.com/images/icon_sets/symbolize_icons_set/png/128x128/new_page.png";
+          thumbUrl = Img.assetPath("no-page.png");
           break;
 
         case 'showcase':
-          thumbUrl = "https://d30y9cdsu7xlg0.cloudfront.net/png/2248-200.png";
+          thumbUrl = Img.assetPath("no-showcase.png");
           break;
 
         default:
-          thumbUrl = "https://cdn4.iconfinder.com/data/icons/geomicons/32/672366-x-128.png";
+          thumbUrl = Img.assetPath("meta-only-item.jpg");
       }
     }
 
