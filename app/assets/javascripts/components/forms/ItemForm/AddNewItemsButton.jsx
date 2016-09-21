@@ -85,6 +85,7 @@ var AddNewItemsButton = React.createClass({
               <StreamingForm
                 item={null}
                 type="video"
+                creating={ true }
                 fileUploadStarted={ this.hasFiles }
                 fileUploadCompleted={ this.goToNewItem }
               />
@@ -94,6 +95,7 @@ var AddNewItemsButton = React.createClass({
               <StreamingForm
                 item={null}
                 type="audio"
+                creating={ true }
                 fileUploadStarted={ this.hasFiles }
                 fileUploadCompleted={ this.goToNewItem }
               />
