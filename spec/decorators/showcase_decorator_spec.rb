@@ -34,4 +34,19 @@ RSpec.describe ShowcaseDecorator do
       expect(subject.sections).to eq(["sections"])
     end
   end
+
+  describe "#image" do
+    let(:image) { instance_double(Image, status: "ready", json_response: {}) }
+
+    it "returns nil if there is no associated image" do
+      allow(showcase).to receive(:image).and_return(nil)
+      expect(subject.image).to eq(nil)
+    end
+
+    it "uses SerializeMedia to render the image from the showcase" do
+      allow(showcase).to receive(:image).and_return(image)
+      expect(SerializeMedia).to receive(:to_hash).with(media: image)
+      subject.image
+    end
+  end
 end

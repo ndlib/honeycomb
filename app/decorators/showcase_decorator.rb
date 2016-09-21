@@ -5,11 +5,7 @@ class ShowcaseDecorator < Draper::Decorator
     SectionQuery.new(object.sections).ordered
   end
 
-  def honeypot_image_url
-    if object.image
-      object.image.json_response["thumbnail/small"]["contentUrl"]
-    else
-      {}
-    end
+  def image
+    SerializeMedia.to_hash(media: object.image) if object.image
   end
 end

@@ -68,13 +68,8 @@ RSpec.describe V1::ShowcaseJSONDecorator do
     let(:showcase) { double(Showcase, image: image) }
     let(:image) { double(Image, json_response: "json_response") }
 
-    it "gets the image json_response" do
-      expect(image).to receive(:json_response).and_return("json_response")
-      expect(subject.image).to eq("json_response")
-    end
-
-    it "gets the image from the showcase" do
-      expect(showcase).to receive(:image).and_return(image)
+    it "uses SerializeMedia to render the image from the showcase" do
+      expect(SerializeMedia).to receive(:to_hash).with(media: image)
       subject.image
     end
 
