@@ -14,7 +14,7 @@ class SectionsController < ApplicationController
 
     respond_to do |format|
       if SaveSection.call(@section, section_params)
-        format.html { redirect_to edit_showcase_path(showcase.id), notice: t(".success") }
+        format.html { redirect_to edit_showcase_path(showcase.unique_id), notice: t(".success") }
         format.json { render json: {} }
       else
         format.html { render :new }
@@ -38,7 +38,7 @@ class SectionsController < ApplicationController
 
     respond_to do |format|
       if SaveSection.call(@section, section_params)
-        format.html { redirect_to edit_showcase_path(@section.showcase.id), notice: t(".success") }
+        format.html { redirect_to edit_showcase_path(@section.showcase.unique_id), notice: t(".success") }
         format.json { render json: {} }
       else
         format.html { render :edit }
@@ -53,7 +53,7 @@ class SectionsController < ApplicationController
     Destroy::Section.new.cascade!(section: @section)
 
     flash[:notice] = t(".success")
-    redirect_to edit_showcase_path(@section.showcase.id)
+    redirect_to edit_showcase_path(@section.showcase.unique_id)
   end
 
   protected

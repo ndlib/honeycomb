@@ -6,7 +6,7 @@
 <%= react_component 'ShowcaseEditor', {
       itemsJSONPath: v1_collection_items_path(@showcase.collection.unique_id),
       sectionsCreatePath: showcase_sections_path(@showcase, :json),
-      showcaseJSONPath: showcase_path(@showcase.id, :json),
+      showcaseJSONPath: showcase_path(@showcase.unique_id, :json),
     },
     {prerender: false }
 %>

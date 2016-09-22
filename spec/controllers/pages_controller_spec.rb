@@ -2,7 +2,7 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe PagesController, type: :controller do
-  let(:page) { instance_double(Page, id: 1, name: "name", collection: collection, items: [], destroy!: true) }
+  let(:page) { instance_double(Page, id: 1, unique_id: 1, name: "name", collection: collection, items: [], destroy!: true) }
   let(:collection) { instance_double(Collection, id: 1, name_line_1: "name_line_1", pages: relation) }
 
   let(:relation) { Page.all }
@@ -14,6 +14,7 @@ RSpec.describe PagesController, type: :controller do
 
     allow_any_instance_of(CollectionQuery).to receive(:find).and_return(collection)
     allow_any_instance_of(PageQuery).to receive(:find).and_return(page)
+    allow_any_instance_of(PageQuery).to receive(:public_find).and_return(page)
     allow_any_instance_of(PageQuery).to receive(:build).and_return(page)
     allow(SavePage).to receive(:call).and_return(true)
   end
@@ -161,7 +162,7 @@ RSpec.describe PagesController, type: :controller do
   end
 
   describe "GET #edit" do
-    subject { get :edit, id: page.id }
+    subject { get :edit, id: page.unique_id }
 
     it "checks the editor permissions" do
       expect_any_instance_of(described_class).to receive(:check_user_edits!).with(collection)
@@ -169,7 +170,7 @@ RSpec.describe PagesController, type: :controller do
     end
 
     it "uses page query " do
-      expect_any_instance_of(PageQuery).to receive(:find).with("1").and_return(page)
+      expect_any_instance_of(PageQuery).to receive(:public_find).with("1").and_return(page)
       subject
     end
 

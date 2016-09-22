@@ -61,9 +61,17 @@ var PagesPanel = React.createClass({
 
     return this.state.pages.map(function(page, index) {
       key = "page-" + page.id;
+      reg = new RegExp( '^(.*/)v1/(.*)$', 'i' );
+      strings = reg.exec(page["@id"]);
+
+      url = strings[0];
+      if(strings && strings.length == 3) {
+        url = strings[1] + strings[2] + "/edit";
+      }
+
       return (
         <div key={key} className="row">
-          <a href={page["@id"]}>
+          <a href={url}>
             { this.pageImageDiv(page) }
             { this.pageNameDiv(page) }
           </a>
