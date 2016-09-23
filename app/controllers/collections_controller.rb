@@ -5,6 +5,19 @@ class CollectionsController < ApplicationController
                                          action: "index",
                                          collections: @collections)
     fresh_when(etag: cache_key.generate)
+
+    @list_items = []
+    if @collections
+      @collections.each do |collection|
+        @list_items.push({
+          id: collection.id,
+          name: collection.name_line_1,
+          updated: collection.updated_at,
+          thumb: CollectionImage.url(collection),
+          count: collection.items.size,
+        })
+      end
+    end
   end
 
   def show

@@ -17,6 +17,14 @@ class Thumbnail < Draper::Decorator
     h.react_component("Thumbnail", thumbnailUrl: image_json, extraStyle: extraStyles, thumbType: thumbType)
   end
 
+  def self.url(honeypot_image)
+    new(honeypot_image, nil).url
+  end
+
+  def url
+    image_json
+  end
+
   private
 
   def image_json

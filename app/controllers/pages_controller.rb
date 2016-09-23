@@ -6,6 +6,19 @@ class PagesController < ApplicationController
                                          action: "index",
                                          collection: collection)
     fresh_when(etag: cache_key.generate)
+
+    @list_items = []
+    if @pages
+      @pages.each do |page|
+        thumb = page.image.json_response["contentUrl"] if (page.image && page.image.json_response)
+        @list_items.push({
+          id: page.id,
+          name: page.name,
+          updated: page.updated_at,
+          thumb: thumb,
+        })
+      end
+    end
   end
 
   def new
