@@ -12,34 +12,23 @@ var GoogleCreatorMixin = {
 
   oauthToken: null,
 
-  clientApiLoaded: false,
-
   loadCreator: function() {
-    if(this.clientApiLoaded && this.oauthToken){
+    if(this.oauthToken){
       this.createFile(this.fileCreated);
     } else {
-      gapi.load("auth", {"callback": this.onAuthApiLoad});
-      gapi.load("client", {"callback": this.onClientApiLoad});
+      gapi.load('client:auth2', this.onAuthApiInit);
     }
   },
 
-  onClientApiLoad: function() {
-    this.clientApiLoaded = true;
-    this.createFile(this.fileCreated);
-  },
-
-  onAuthApiLoad: function() {
-    gapi.auth.init(this.onAuthApiInit);
-  },
-
   onAuthApiInit: function(clientId) {
-    window.gapi.auth.authorize(
+    gapi.auth.authorize(
       {
         "client_id": this.props.clientId,
         "scope": "https://www.googleapis.com/auth/drive.file",
         "hd": "nd.edu"
       },
-      this.handleAuthResult);
+      this.handleAuthResult
+    );
   },
 
   handleAuthResult: function(authResult) {
@@ -50,7 +39,7 @@ var GoogleCreatorMixin = {
   },
 
   createFile: function(callback) {
-    if(this.clientApiLoaded && this.oauthToken){
+    if(this.oauthToken){
       var boundary = 'foo_bar_baz';
       var delimiter = "\r\n--" + boundary + "\r\n";
       var close_delim = "\r\n--" + boundary + "--";
