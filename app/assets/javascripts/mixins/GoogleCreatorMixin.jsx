@@ -21,18 +21,20 @@ var GoogleCreatorMixin = {
   },
 
   onAuthApiInit: function(clientId) {
-    gapi.auth.authorize(
-      {
-        "client_id": this.props.clientId,
-        "scope": "https://www.googleapis.com/auth/drive.file",
-        "hd": "nd.edu"
-      },
-      this.handleAuthResult
-    );
+    gapi.auth2.init({
+      "client_id": this.props.clientId,
+      "scope": "https://www.googleapis.com/auth/drive.file",
+      "hd": "nd.edu"
+    }).then(function() {
+      auth2 = gapi.auth2.getAuthInstance();
+      auth2.currentUser.listen(this.handleUserChanged);
+      auth2.signIn();
+    }.bind(this));
   },
 
-  handleAuthResult: function(authResult) {
-    if (authResult && !authResult.error) {
+  handleUserChanged: function(user) {
+    if (user) {
+      authResult = user.getAuthResponse()
       this.oauthToken = authResult.access_token;
       this.createFile(this.fileCreated);
     }
