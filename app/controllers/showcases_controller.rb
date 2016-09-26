@@ -7,18 +7,7 @@ class ShowcasesController < ApplicationController
                                          collection: collection)
     fresh_when(etag: cache_key.generate)
 
-    @list_items = []
-    if @showcases
-      @showcases.each do |showcase|
-        thumb = showcase.image.json_response["contentUrl"] if (showcase.image && showcase.image.json_response)
-        @list_items.push({
-          id: showcase.id,
-          name: showcase.name_line_1,
-          updated: showcase.updated_at,
-          thumb: thumb,
-        })
-      end
-    end
+    @list_items = ListEntryGenerator.showcase_entries(@showcases)
   end
 
   def new
