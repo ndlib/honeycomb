@@ -33,14 +33,23 @@ def main():
     collections = get_json_file("/v1/collections")
     for collection in collections:
         collection = get_json_file(collection["@id"])
-        items = get_json_file(collection["hasPart/items"])
-        showcases = get_json_file(collection["hasPart/showcases"])
         site_path = get_json_file(collection["@id"] + "/site_path")
-        for item in items["items"]:
-            item = get_json_file(item["@id"])
-            # for each child in item["children"]
-        for showcase in showcases["showcases"]:
-            showcase = get_json_file(showcase["@id"])
-            for section in showcase["showcases"]["sections"]:
-                section = get_json_file(section["@id"])
+
+        if "hasPart/items" in collection:
+            items = get_json_file(collection["hasPart/items"])
+            for item in items["items"]:
+                item = get_json_file(item["@id"])
+                # for each child in item["children"]
+
+        if "hasPart/showcases" in collection:
+            showcases = get_json_file(collection["hasPart/showcases"])
+            for showcase in showcases["showcases"]:
+                showcase = get_json_file(showcase["@id"])
+                for section in showcase["showcases"]["sections"]:
+                    section = get_json_file(section["@id"])
+
+        if "hasPart/pages" in collection:
+            pages = get_json_file(collection["hasPart/pages"])
+            for page in pages["pages"]:
+                page = get_json_file(page["@id"])
 main()
