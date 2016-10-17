@@ -53,7 +53,8 @@ class ItemDecorator < Draper::Decorator
       method: "put",
       data: meta_data,
       embedBaseUrl: CreateBeehiveURL.call(object.collection),
-      previewUrl: CreateBeehiveURL.call(object)
+      previewUrl: CreateBeehiveURL.call(object),
+      canDelete: can_delete?
     )
   end
 
@@ -119,5 +120,9 @@ class ItemDecorator < Draper::Decorator
 
   def children_query
     @children_query ||= ItemQuery.new(object.children)
+  end
+
+  def can_delete?
+    !object.showcases.any? && !object.pages.any? && !object.children.any?
   end
 end
