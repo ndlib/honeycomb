@@ -71,6 +71,7 @@ RSpec.describe ItemDecorator do
 
     it "renders the react component" do
       allow(subject.h).to receive(:form_authenticity_token).and_return("token")
+      allow(subject).to receive(:can_delete?).and_return(true)
       expect(subject.h).to receive(:react_component).with(
         "ItemForm",
         id: "unique_id",
@@ -79,7 +80,8 @@ RSpec.describe ItemDecorator do
         method: "put",
         data: { metadata: ["value"] },
         embedBaseUrl: "url",
-        previewUrl: "url"
+        previewUrl: "url",
+        canDelete: true
       )
 
       subject.item_meta_data_form
