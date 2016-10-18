@@ -277,7 +277,7 @@ Style/FrozenStringLiteralComment:
   Description: >-
                  Add the frozen_string_literal comment to the top of files
                  to help transition from Ruby 2.3.0 to Ruby 3.0.
-  Enabled: true
+  Enabled: false
 
 Style/InitialIndentation:
   Description: >-
@@ -497,7 +497,7 @@ Style/NegatedIf:
                  Favor unless over if for negative conditions
                  (or control flow or).
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#unless-for-negatives'
-  Enabled: true
+  Enabled: false
 
 Style/NegatedWhile:
   Description: 'Favor until over while for negative conditions.'
@@ -1498,9 +1498,3 @@ Rails/Validation:
 Security/JSONLoad:
   Description : 'Prefer usage of JSON.parse'
   Enabled: true
-
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
-Style/NegatedIf:
-  Enabled: false

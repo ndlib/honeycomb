@@ -2,17 +2,18 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe ShowcasesController, type: :controller do
-  let(:showcase) { instance_double(Showcase, id: 1, name_line_1: "name_line_1", collection: collection, sections: [], destroy!: true) }
+  let(:showcase) { instance_double(Showcase, id: 1, unique_id: 1, name_line_1: "name_line_1", collection: collection, sections: [], destroy!: true) }
   let(:collection) { instance_double(Collection, id: 1, name_line_1: "name_line_1", showcases: relation) }
 
   let(:relation) { Showcase.all }
   let(:create_params) { { collection_id: collection.id, showcase: { name_line_1: "name_line_1", description: "description" } } }
-  let(:update_params) { { id: showcase.id, showcase: { name_line_1: "name_line_1", description: "description" } } }
+  let(:update_params) { { id: showcase.unique_id, showcase: { name_line_1: "name_line_1", description: "description" } } }
 
   before(:each) do
     sign_in_admin
 
     allow_any_instance_of(CollectionQuery).to receive(:find).and_return(collection)
+    allow_any_instance_of(ShowcaseQuery).to receive(:public_find).and_return(showcase)
     allow_any_instance_of(ShowcaseQuery).to receive(:find).and_return(showcase)
     allow_any_instance_of(ShowcaseQuery).to receive(:build).and_return(showcase)
     allow(SaveShowcase).to receive(:call).and_return(true)
@@ -172,7 +173,7 @@ RSpec.describe ShowcasesController, type: :controller do
   end
 
   describe "GET #show" do
-    subject { get :show, id: showcase.id }
+    subject { get :show, id: showcase.unique_id }
 
     it "checks the editor permissions" do
       expect_any_instance_of(described_class).to receive(:check_user_edits!).with(collection)
@@ -180,7 +181,7 @@ RSpec.describe ShowcasesController, type: :controller do
     end
 
     it "uses showcase query " do
-      expect_any_instance_of(ShowcaseQuery).to receive(:find).with("1").and_return(showcase)
+      expect_any_instance_of(ShowcaseQuery).to receive(:public_find).with("1").and_return(showcase)
       subject
     end
 
@@ -197,7 +198,7 @@ RSpec.describe ShowcasesController, type: :controller do
     end
 
     it "renders json" do
-      get :show, id: showcase.id, format: :json
+      get :show, id: showcase.unique_id, format: :json
 
       expect(response).to be_success
     end
@@ -206,7 +207,7 @@ RSpec.describe ShowcasesController, type: :controller do
   end
 
   describe "GET #edit" do
-    subject { get :edit, id: showcase.id }
+    subject { get :edit, id: showcase.unique_id }
 
     it "checks the editor permissions" do
       expect_any_instance_of(described_class).to receive(:check_user_edits!).with(collection)
@@ -214,7 +215,7 @@ RSpec.describe ShowcasesController, type: :controller do
     end
 
     it "uses showcase query " do
-      expect_any_instance_of(ShowcaseQuery).to receive(:find).with("1").and_return(showcase)
+      expect_any_instance_of(ShowcaseQuery).to receive(:public_find).with("1").and_return(showcase)
       subject
     end
 
@@ -234,7 +235,7 @@ RSpec.describe ShowcasesController, type: :controller do
   end
 
   describe "GET #title" do
-    subject { get :title, id: showcase.id }
+    subject { get :title, id: showcase.unique_id }
 
     it "checks the editor permissions" do
       expect_any_instance_of(described_class).to receive(:check_user_edits!).with(collection)
@@ -242,7 +243,7 @@ RSpec.describe ShowcasesController, type: :controller do
     end
 
     it "uses showcase query " do
-      expect_any_instance_of(ShowcaseQuery).to receive(:find).with("1").and_return(showcase)
+      expect_any_instance_of(ShowcaseQuery).to receive(:public_find).with("1").and_return(showcase)
       subject
     end
 
@@ -296,7 +297,7 @@ RSpec.describe ShowcasesController, type: :controller do
   end
 
   describe "PUT #publish" do
-    subject { put :publish, id: showcase.id }
+    subject { put :publish, id: showcase.unique_id }
 
     it_behaves_like "a private content-based etag cacher" do
       before do
@@ -306,7 +307,7 @@ RSpec.describe ShowcasesController, type: :controller do
   end
 
   describe "PUT #unpublish" do
-    subject { put :unpublish, id: showcase.id }
+    subject { put :unpublish, id: showcase.unique_id }
 
     it_behaves_like "a private content-based etag cacher" do
       before do

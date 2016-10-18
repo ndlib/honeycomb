@@ -62,9 +62,17 @@ var ShowcasesPanel = React.createClass({
 
     return this.state.showcases.map(function(showcase, index) {
       key = "showcase-" + showcase.id;
+      reg = new RegExp( '^(.*/)v1/(.*)$', 'i' );
+      strings = reg.exec(showcase["@id"]);
+
+      url = strings[0];
+      if(strings && strings.length == 3) {
+        url = strings[1] + strings[2];
+      }
+
       return (
         <div key={key} className="row">
-          <a href={showcase["@id"]}>
+          <a href={url}>
             { this.showcaseImageDiv(showcase) }
             { this.showcaseNameDiv(showcase) }
           </a>
