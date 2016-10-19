@@ -10,7 +10,8 @@
     <% showcases.each do |showcase| %>
       <tr>
         <td class="image" >
-          <%= link_to Thumbnail.display(showcase.image, "showcase"), showcase_path(showcase.unique_id) %>
+          <%= link_to Thumbnail.display(showcase.image, "showcase", { maxHeight: "65px", display: "block", margin: "auto" }),
+           showcase_path(showcase.unique_id) %>
         </td>
         <td>
           <h4 class="media-heading"><%= h link_to showcase.name_line_1, showcase_path(showcase.unique_id) %></h4>
