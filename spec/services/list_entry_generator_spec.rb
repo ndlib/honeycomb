@@ -4,6 +4,7 @@ RSpec.describe ListEntryGenerator do
   let(:collection) do
     instance_double(Collection,
                     unique_id: 1,
+                    id: 1,
                     name_line_1: "COLLECTION",
                     destroy!: true,
                     collection_configuration: nil,
