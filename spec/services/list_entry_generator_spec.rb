@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.describe ListEntryGenerator do
   let(:collection) do
     instance_double(Collection,
-                    id: 1,
+                    unique_id: 1,
                     name_line_1: "COLLECTION",
                     destroy!: true,
                     collection_configuration: nil,
@@ -16,7 +16,7 @@ RSpec.describe ListEntryGenerator do
   end
   let(:showcase) do
     instance_double(Showcase,
-                    id: 1,
+                    unique_id: 1,
                     name_line_1: "name_line_1",
                     collection: collection,
                     sections: [],
@@ -26,7 +26,7 @@ RSpec.describe ListEntryGenerator do
   end
   let(:page) do
     instance_double(Page,
-                    id: 1,
+                    unique_id: 1,
                     name: "name",
                     collection: collection,
                     items: [],
@@ -56,7 +56,7 @@ RSpec.describe ListEntryGenerator do
     it "converts correctly" do
       returned = subject[0]
 
-      expect(returned[:id]).to eq(collection.id)
+      expect(returned[:id]).to eq(collection.unique_id)
       expect(returned[:name]).to eq(collection.name_line_1)
       expect(returned[:updated]).to eq(collection.updated_at)
       expect(returned[:thumb]).to eq("img")
@@ -80,7 +80,7 @@ RSpec.describe ListEntryGenerator do
     it "converts correctly" do
       returned = subject[0]
 
-      expect(returned[:id]).to eq(page.id)
+      expect(returned[:id]).to eq(page.unique_id)
       expect(returned[:name]).to eq(page.name)
       expect(returned[:updated]).to eq(page.updated_at)
       expect(returned[:thumb]).to eq(page.image)
@@ -103,7 +103,7 @@ RSpec.describe ListEntryGenerator do
     it "converts correctly" do
       returned = subject[0]
 
-      expect(returned[:id]).to eq(showcase.id)
+      expect(returned[:id]).to eq(showcase.unique_id)
       expect(returned[:name]).to eq(showcase.name_line_1)
       expect(returned[:updated]).to eq(showcase.updated_at)
       expect(returned[:thumb]).to eq(showcase.image)
