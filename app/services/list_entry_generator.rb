@@ -38,7 +38,7 @@ class ListEntryGenerator
 
   def collection_entry(entry)
     {
-      id: entry.unique_id,
+      id: entry.id,
       name: entry.name_line_1,
       updated: entry.updated_at,
       thumb: CollectionImage.url(entry),
