@@ -2,7 +2,7 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe SectionsController, type: :controller do
-  let(:showcase) { double(Showcase, id: 1, name: "name", sections: relation, collection: collection) }
+  let(:showcase) { double(Showcase, id: 1, unique_id: 1, name: "name", sections: relation, collection: collection) }
   let(:collection) { instance_double(Collection, id: 1, name_line_1: "name_line_1") }
   let(:section) { double(Section, id: 1, destroy!: true, showcase: showcase, :order= => true, order: 1, collection: collection, "item=" => true) }
   let(:item) { instance_double(Item) }
@@ -24,7 +24,7 @@ RSpec.describe SectionsController, type: :controller do
 
   describe "POST #create" do
     subject { post :create, create_params_with_item }
-    
+
     it "checks the editor permissions" do
       expect_any_instance_of(described_class).to receive(:check_user_edits!).with(collection)
       subject

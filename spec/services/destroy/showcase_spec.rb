@@ -30,7 +30,7 @@ describe Destroy::Showcase do
     let(:subject) { Destroy::Showcase.new(destroy_section: destroy_section) }
     let(:showcase) { FactoryGirl.create(:showcase) }
     let(:collection) { FactoryGirl.create(:collection) }
-    let(:sections) { [FactoryGirl.create(:section, id: 1, showcase_id: showcase.id), FactoryGirl.create(:section, id: 2, showcase_id: showcase.id)] }
+    let(:sections) { [FactoryGirl.create(:section, id: 1, showcase_id: showcase.unique_id, showcase: showcase), FactoryGirl.create(:section, id: 2, showcase_id: showcase.unique_id, showcase: showcase)] }
 
     before(:each) do
       collection

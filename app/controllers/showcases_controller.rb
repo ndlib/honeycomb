@@ -21,28 +21,28 @@ class ShowcasesController < ApplicationController
 
     if SaveShowcase.call(@showcase, save_params)
       flash[:html_safe] = t(".success", href: view_context.link_to("Site Setup", site_setup_form_collection_path(collection, form: :site_path))).html_safe
-      redirect_to showcase_path(@showcase)
+      redirect_to showcase_path(@showcase.unique_id)
     else
       render :new
     end
   end
 
   def show
-    showcase = ShowcaseQuery.new.find(params[:id])
+    showcase = ShowcaseQuery.new.public_find(params[:id])
     check_user_edits!(showcase.collection)
     @showcase = ShowcaseDecorator.new(showcase)
     if request.xhr?
       render format: :json
     else
       respond_to do |format|
-        format.html { redirect_to edit_showcase_path(showcase.id) }
+        format.html { redirect_to edit_showcase_path(showcase.unique_id) }
         format.json
       end
     end
   end
 
   def edit
-    @showcase = ShowcaseQuery.new.find(params[:id])
+    @showcase = ShowcaseQuery.new.public_find(params[:id])
     check_user_edits!(@showcase.collection)
     cache_key = CacheKeys::Generator.new(key_generator: CacheKeys::Custom::Showcases,
                                          action: "edit",
@@ -56,14 +56,14 @@ class ShowcasesController < ApplicationController
 
     if SaveShowcase.call(@showcase, save_params)
       flash[:notice] = t(".success")
-      redirect_to showcase_path(@showcase)
+      redirect_to showcase_path(@showcase.unique_id)
     else
       render :edit
     end
   end
 
   def title
-    @showcase = ShowcaseQuery.new.find(params[:id])
+    @showcase = ShowcaseQuery.new.public_find(params[:id])
     check_user_edits!(@showcase.collection)
     cache_key = CacheKeys::Generator.new(key_generator: CacheKeys::Custom::Showcases,
                                          action: "title",
@@ -81,7 +81,7 @@ class ShowcasesController < ApplicationController
   end
 
   def publish
-    @showcase = ShowcaseQuery.new.find(params[:id])
+    @showcase = ShowcaseQuery.new.public_find(params[:id])
     check_user_edits!(@showcase.collection)
 
     unless Publish.call(@showcase)
@@ -92,7 +92,7 @@ class ShowcasesController < ApplicationController
   end
 
   def unpublish
-    @showcase = ShowcaseQuery.new.find(params[:id])
+    @showcase = ShowcaseQuery.new.public_find(params[:id])
     check_user_edits!(@showcase.collection)
 
     unless Unpublish.call(@showcase)
@@ -115,7 +115,7 @@ class ShowcasesController < ApplicationController
   end
 
   def showcase
-    @showcase ||= ShowcaseQuery.new.find(params[:id])
+    @showcase ||= ShowcaseQuery.new.public_find(params[:id])
   end
 
   def collection

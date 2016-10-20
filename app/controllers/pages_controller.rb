@@ -21,14 +21,14 @@ class PagesController < ApplicationController
 
     if SavePage.call(@page, save_params)
       flash[:html_safe] = t(".success", href: view_context.link_to("Site Setup", site_setup_form_collection_path(collection, form: :site_path))).html_safe
-      redirect_to edit_page_path(@page)
+      redirect_to edit_page_path(@page.unique_id)
     else
       render :new
     end
   end
 
   def edit
-    @page = PageQuery.new.find(params[:id])
+    @page = PageQuery.new.public_find(params[:id])
     check_user_edits!(@page.collection)
     cache_key = CacheKeys::Generator.new(key_generator: CacheKeys::Custom::Pages,
                                          action: "edit",
@@ -42,7 +42,7 @@ class PagesController < ApplicationController
 
     if SavePage.call(@page, save_params)
       flash[:notice] = t(".success")
-      redirect_to edit_page_path(@page)
+      redirect_to edit_page_path(@page.unique_id)
     else
       render :edit
     end
@@ -65,10 +65,6 @@ class PagesController < ApplicationController
       :content,
       :uploaded_image
     ])
-  end
-
-  def page
-    @page ||= PageQuery.new.find(params[:id])
   end
 
   def collection

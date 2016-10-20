@@ -29,7 +29,7 @@ class ListEntryGenerator
 
   def showcase_entry(entry)
     {
-      id: entry.id,
+      id: entry.unique_id,
       name: entry.name_line_1,
       updated: entry.updated_at,
       thumb: get_thumb(entry),
@@ -38,7 +38,7 @@ class ListEntryGenerator
 
   def collection_entry(entry)
     {
-      id: entry.id,
+      id: entry.unique_id,
       name: entry.name_line_1,
       updated: entry.updated_at,
       thumb: CollectionImage.url(entry),
@@ -48,7 +48,7 @@ class ListEntryGenerator
 
   def page_entry(entry)
     {
-      id: entry.id,
+      id: entry.unique_id,
       name: entry.name,
       updated: entry.updated_at,
       thumb: get_thumb(entry),

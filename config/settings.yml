@@ -44,5 +44,5 @@ production:
   media_server_url: https://buzz.library.nd.edu
   aws:
     region: us-east-1
-    bucket: testlibnd-wse-honeycomb-prod
+    bucket: honeycomb-media-library-nd-edu
     profile: honeycomb

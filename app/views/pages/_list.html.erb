@@ -1,0 +1,28 @@
+<table class="table table-striped item-list">
+  <thead>
+    <tr>
+      <th><%= t('.name') %></th>
+      <th/>
+      <th><%= t('.content') %></th>
+      <th><%= t('.updated_at') %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% pages.each do |page| %>
+      <tr>
+        <td class="image" >
+          <%= link_to Thumbnail.display(page.image, "page"), edit_page_path(page.unique_id) %>
+        </td>
+        <td>
+          <h4 class="media-heading"><%= h link_to page.name, edit_page_path(page.unique_id) %></h4>
+        </td>
+        <td>
+          <%= truncate(strip_tags(page.content), length: 200, omission: '...') %>
+        </th>
+        <td>
+           <%= ListTime.display(page.updated_at) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
