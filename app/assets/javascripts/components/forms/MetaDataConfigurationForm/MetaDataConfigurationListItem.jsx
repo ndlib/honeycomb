@@ -43,7 +43,7 @@ var MetaDataConfigurationListItem = React.createClass({
           tooltipPosition="top-center"
           onTouchTap={function() { this.props.handleRightClick(field.name) }.bind(this) }
         >
-          field.active && <FontIcon className="material-icons" color={Colors.grey500} hoverColor={Colors.red500}>{icon}</FontIcon>
+          <FontIcon className="material-icons" color={Colors.grey500} hoverColor={Colors.red500}>{icon}</FontIcon> field.active &&
         </IconButton>
       );
     } else {
@@ -53,7 +53,7 @@ var MetaDataConfigurationListItem = React.createClass({
           tooltipPosition="top-center"
           onTouchTap={function() { this.props.handleRightClick(field.name) }.bind(this) }
         >
-          field.active && <FontIcon className="material-icons" color={Colors.grey500} hoverColor={Colors.green500}>undo</FontIcon>
+          <FontIcon className="material-icons" color={Colors.grey500} hoverColor={Colors.green500}>undo</FontIcon> field.active &&
         </IconButton>
       );
     }
