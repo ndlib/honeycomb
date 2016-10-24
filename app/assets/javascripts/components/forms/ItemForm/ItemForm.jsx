@@ -41,6 +41,7 @@ var ItemForm = React.createClass({
     objectType: React.PropTypes.string,
     embedBaseUrl: React.PropTypes.string.isRequired,
     previewUrl: React.PropTypes.string.isRequired,
+    canDelete: React.PropTypes.bool,
   },
 
   getInitialState: function() {
@@ -112,7 +113,7 @@ var ItemForm = React.createClass({
           <PagesPanel
             id={ this.props.id }
           />
-        <DeleteItemForm item={ this.state.item }/>
+        <DeleteItemForm item={ this.state.item } canDelete={ this.props.canDelete } />
         </div>
       );
     } else {

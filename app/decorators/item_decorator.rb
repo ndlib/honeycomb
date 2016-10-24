@@ -53,7 +53,8 @@ class ItemDecorator < Draper::Decorator
       method: "put",
       data: meta_data,
       embedBaseUrl: CreateBeehiveURL.call(object.collection),
-      previewUrl: CreateBeehiveURL.call(object)
+      previewUrl: CreateBeehiveURL.call(object),
+      canDelete: ItemQuery.can_delete_item?(object)
     )
   end
 
