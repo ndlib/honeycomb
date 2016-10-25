@@ -7,7 +7,7 @@
 Honeycomb provides basic collection and item administration, as well as serialization of your collections so they can be used by external applications.
 
 ## Dependencies
-Requires ruby v2.1.5
+Requires ruby v2.1.5, postgres 9.5.4+
 
 ## Installation Notes
 Honeycomb depends on other services for handling things like images, audio/video, and authentication. Some of these are configured in settings.yml, and others in secrets.yml. Ensure that the following keys are populated for your environment:
