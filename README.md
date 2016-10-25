@@ -58,3 +58,4 @@ When uploading audio and video files, honeycomb will put the files in an S3 buck
 aws_access_key_id = <user key id>
 aws_secret_access_key = <user secret>
 ```
+See http://docs.aws.amazon.com/sdkforruby/api/#Configuration for more info.
