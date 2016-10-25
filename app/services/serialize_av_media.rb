@@ -15,6 +15,8 @@ class SerializeAVMedia
     # (contained in json_response) can simply be added to the media object's attributes
     result = media.json_response.merge(result) if media.json_response
     result.merge!(media.errors.to_hash) if media.errors
+
+    result = result.with_indifferent_access
     unless result[:thumbnailUrl].present?
       result[:thumbnailUrl] = default_thumbnail(media: media)
     end

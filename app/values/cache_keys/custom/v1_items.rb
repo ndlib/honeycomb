@@ -7,15 +7,15 @@ module CacheKeys
       end
 
       def show(item:)
-        CacheKeys::ActiveRecord.new.generate(record: [item, item.collection, item.children, item.collection.collection_configuration])
+        CacheKeys::ActiveRecord.new.generate(record: [item, item.collection, item.children, item.media, item.collection.collection_configuration])
       end
 
       def showcases(item:)
-        CacheKeys::ActiveRecord.new.generate(record: [item, item.collection, item.showcases, item.collection.collection_configuration])
+        CacheKeys::ActiveRecord.new.generate(record: [item, item.collection, item.showcases, item.media, item.collection.collection_configuration])
       end
 
       def pages(item:)
-        CacheKeys::ActiveRecord.new.generate(record: [item, item.collection, item.pages, item.collection.collection_configuration])
+        CacheKeys::ActiveRecord.new.generate(record: [item, item.collection, item.pages, item.media, item.collection.collection_configuration])
       end
     end
   end
