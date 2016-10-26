@@ -630,5 +630,8 @@ div.dataTables_filter {
   }
 }
 
+.material-icons {
+  font-feature-settings: 'liga' 1;
+}
 
 @import "_material-design-overwrites.scss";
