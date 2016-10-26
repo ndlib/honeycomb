@@ -17,20 +17,12 @@ class BuzzMedia
 
   def create
     response = media_server_connection.post("/v1/media_files", create_json)
-    if response.success?
-      response.body["object"]
-    else
-      raise_exception(faraday_response: response)
-    end
+    response.body["object"]
   end
 
   def update
     response = media_server_connection.put("/v1/media_files/" + @media.json_response["@id"], update_json)
-    if response.success?
-      response.body["object"]
-    else
-      raise_exception(faraday_response: response)
-    end
+    response.body["object"]
   end
 
   private
@@ -52,17 +44,9 @@ class BuzzMedia
     }
   end
 
-  def raise_exception(faraday_response:)
-    case faraday_response.status
-    when 422
-      raise Buzz::UnprocessableEntity, faraday_response.body
-    else
-      raise Buzz::InternalServerError
-    end
-  end
-
   def media_server_connection
     @media_server_connection ||= Faraday.new(media_server_url) do |f|
+      f.use Buzz::RaiseFaradayException
       f.request :url_encoded
       f.adapter :net_http
       f.response :json, content_type: "application/json"
