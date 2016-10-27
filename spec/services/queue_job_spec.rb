@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe QueueJob do
-  let(:job) { double(ProcessImageJob) }
+  let(:job) { double(Object) }
   let(:args) { { test: "test" } }
 
   subject { described_class.new(job) }

@@ -110,7 +110,7 @@ RSpec.describe SaveItem, type: :model do
       params[:uploaded_image] = upload_image
       expect(FindOrCreateImage).to receive(:call).and_return(nil)
       allow(item).to receive(:save).and_return(true)
-      allow(QueueJob).to receive(:call).with(ProcessImageJob, object: item).and_return(true)
+      allow(QueueJob).to receive(:call).with(SaveHoneypotImage, object: item).and_return(true)
       subject
     end
 

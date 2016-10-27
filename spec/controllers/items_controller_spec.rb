@@ -105,6 +105,7 @@ RSpec.describe ItemsController, type: :controller do
     before(:each) do
       allow_any_instance_of(ItemDecorator).to receive(:recent_children).and_return(nil)
       allow_any_instance_of(ItemDecorator).to receive(:showcases).and_return(nil)
+      allow_any_instance_of(ItemDecorator).to receive(:media).and_return(nil)
       allow_any_instance_of(ItemQuery).to receive(:public_find).and_return(item)
     end
 
