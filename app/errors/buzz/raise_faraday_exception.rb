@@ -1,10 +1,10 @@
 require 'faraday'
-require File.expand_path('../errors', __FILE__)
 
 module Buzz
   class RaiseFaradayException < Faraday::Response::Middleware
     def on_complete(response)
       case response[:status]
+      when 200
       when 422
         raise Buzz::UnprocessableEntity, response.body
       else

@@ -1,5 +1,4 @@
 require 'faraday'
-require File.expand_path('../errors', __FILE__)
 
 module Honeypot
   class RaiseFaradayException < Faraday::Response::Middleware
