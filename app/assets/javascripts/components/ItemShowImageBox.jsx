@@ -38,14 +38,6 @@ var ItemShowImageBox = React.createClass({
     }
   },
 
-  thumbnailSrc: function() {
-    if (this.props.item.media.thumbnailUrl) {
-      return this.props.item.media.thumbnailUrl;
-    } else {
-      return '/images/blank.png';
-    }
-  },
-
   itemReadyHtml: function () {
     return (<Thumbnail thumbnailUrl={ this.props.item.media.thumbnailUrl } thumbType={ "item" } />);
   },
