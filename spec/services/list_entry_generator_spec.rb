@@ -110,5 +110,4 @@ RSpec.describe ListEntryGenerator do
       expect(returned[:thumb]).to eq(showcase.image)
     end
   end
-
 end

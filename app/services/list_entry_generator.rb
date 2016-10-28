@@ -19,7 +19,7 @@ class ListEntryGenerator
   def build(entry_fcn)
     if @to_convert
       @to_convert.each do |entry|
-        @list_entries.push(self.send(entry_fcn, entry))
+        @list_entries.push(send(entry_fcn, entry))
       end
     end
     @list_entries
