@@ -1220,7 +1220,6 @@ Lint/UnneededDisable:
                  It must be explicitly disabled.
   Enabled: true
 
-<<<<<<< HEAD
 Lint/UnneededSplatExpansion:
   Description: 'Checks for splat unnecessarily being called on literals'
   Enabled: true
