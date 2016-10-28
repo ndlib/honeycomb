@@ -42,6 +42,7 @@ RSpec.describe BuzzMedia do
 
     let(:unprocessable_media_connection) do
       Faraday.new do |builder|
+        builder.use Buzz::RaiseFaradayException
         builder.adapter :test do |stub|
           stub.post("/v1/media_files") { |_env| [422, { content_type: "application/json" }, "failed"] }
         end
@@ -50,6 +51,7 @@ RSpec.describe BuzzMedia do
 
     let(:failed_media_connection) do
       Faraday.new do |builder|
+        builder.use Buzz::RaiseFaradayException
         builder.adapter :test do |stub|
           stub.post("/v1/media_files") { |_env| [500, { content_type: "application/json" }, "failed"] }
         end
@@ -89,6 +91,7 @@ RSpec.describe BuzzMedia do
   describe "update" do
     let(:media_server_connection) do
       Faraday.new do |builder|
+        builder.use Buzz::RaiseFaradayException
         builder.adapter :test do |stub|
           stub.put("/v1/media_files/#{buzz_media_id}") do |_env|
             [
@@ -103,6 +106,7 @@ RSpec.describe BuzzMedia do
 
     let(:unprocessable_media_connection) do
       Faraday.new do |builder|
+        builder.use Buzz::RaiseFaradayException
         builder.adapter :test do |stub|
           stub.put("/v1/media_files/#{buzz_media_id}") { |_env| [422, { content_type: "application/json" }, "failed"] }
         end
@@ -111,6 +115,7 @@ RSpec.describe BuzzMedia do
 
     let(:failed_media_connection) do
       Faraday.new do |builder|
+        builder.use Buzz::RaiseFaradayException
         builder.adapter :test do |stub|
           stub.put("/v1/media_files/#{buzz_media_id}") { |_env| [500, { content_type: "application/json" }, "failed"] }
         end

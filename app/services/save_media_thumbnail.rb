@@ -47,6 +47,7 @@ class SaveMediaThumbnail
 
   def image_server_connection
     @image_server_connection ||= Faraday.new(image_server_url) do |f|
+      f.use Honeypot::RaiseFaradayException
       f.request :multipart
       f.request :url_encoded
       f.adapter :net_http

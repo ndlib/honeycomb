@@ -7,6 +7,7 @@ RSpec.describe SaveHoneypotImage do
 
   let(:connection) do
     Faraday.new do |builder|
+      builder.use Honeypot::RaiseFaradayException
       builder.adapter :test do |stub|
         stub.post("/api/images") { |_env| [200, { content_type: "application/json" }, honeypot_json] }
       end
@@ -15,6 +16,7 @@ RSpec.describe SaveHoneypotImage do
 
   let(:failed_connection) do
     Faraday.new do |builder|
+      builder.use Honeypot::RaiseFaradayException
       builder.adapter :test do |stub|
         stub.post("/api/images") { |_env| [500, { content_type: "application/json" }, "failed"] }
       end
@@ -91,9 +93,9 @@ RSpec.describe SaveHoneypotImage do
   end
 
   describe "failed request" do
-    it "returns false when the request fails" do
+    it "raises a custom honeypot internal server error when the request fails" do
       expect_any_instance_of(described_class).to receive(:connection).and_return(failed_connection)
-      expect(subject.save!).to eq(false)
+      expect { subject.save! }.to raise_error(Honeypot::InternalServerError)
     end
   end
 

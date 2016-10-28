@@ -42,10 +42,20 @@ RSpec.describe FindOrCreateImage do
     end
   end
 
-  it "returns an existing record for ones that exist" do
-    expect(FindOrCreateImage.call(file: 0, collection_id: 1)).to eq(images[0])
-    expect(FindOrCreateImage.call(file: 1, collection_id: 1)).to eq(images[1])
-    expect(FindOrCreateImage.call(file: 2, collection_id: 1)).to eq(images[2])
+  context "when an image already exists" do
+    it "returns the existing record" do
+      allow(QueueJob).to receive(:call).and_return(true)
+      expect(FindOrCreateImage.call(file: 0, collection_id: 1)).to eq(images[0])
+      expect(FindOrCreateImage.call(file: 1, collection_id: 1)).to eq(images[1])
+      expect(FindOrCreateImage.call(file: 2, collection_id: 1)).to eq(images[2])
+    end
+
+    it "Queues image processing if the image was updated" do
+      allow(new_images[3]).to receive(:processing!).and_return(true)
+      allow(new_images[3]).to receive(:save).and_return(true)
+      expect(QueueJob).to receive(:call).with(SaveHoneypotImageJob, object: images[0], image_field: "image").and_return(true)
+      FindOrCreateImage.call(file: 0, collection_id: 1)
+    end
   end
 
   context "when an image doesn't exist yet" do
@@ -69,7 +79,7 @@ RSpec.describe FindOrCreateImage do
     it "Queues image processing if the image was updated" do
       allow(new_images[3]).to receive(:processing!).and_return(true)
       allow(new_images[3]).to receive(:save).and_return(true)
-      expect(QueueJob).to receive(:call).with(ProcessImageJob, object: new_images[3]).and_return(true)
+      expect(QueueJob).to receive(:call).with(SaveHoneypotImageJob, object: new_images[3], image_field: "image").and_return(true)
       FindOrCreateImage.call(file: 3, collection_id: 1)
     end
   end

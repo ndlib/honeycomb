@@ -37,7 +37,7 @@ RSpec.describe SaveShowcase, type: :model do
       params[:uploaded_image] = upload_image
       expect(FindOrCreateImage).to receive(:call).and_return(nil)
       allow(showcase).to receive(:save).and_return(true)
-      allow(QueueJob).to receive(:call).with(ProcessImageJob, object: showcase).and_return(true)
+      allow(QueueJob).to receive(:call).with(SaveHoneypotImage, object: showcase).and_return(true)
       subject
     end
 

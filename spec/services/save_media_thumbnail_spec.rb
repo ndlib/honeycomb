@@ -9,6 +9,7 @@ RSpec.describe SaveMediaThumbnail do
 
   let(:image_server_connection) do
     Faraday.new do |builder|
+      builder.use Honeypot::RaiseFaradayException
       builder.adapter :test do |stub|
         stub.post("/api/images") { |_env| [200, { content_type: "application/json" }, image_server_json] }
       end
@@ -17,6 +18,7 @@ RSpec.describe SaveMediaThumbnail do
 
   let(:failed_image_connection) do
     Faraday.new do |builder|
+      builder.use Honeypot::RaiseFaradayException
       builder.adapter :test do |stub|
         stub.post("/api/images") { |_env| [500, { content_type: "application/json" }, "failed"] }
       end
@@ -89,7 +91,7 @@ RSpec.describe SaveMediaThumbnail do
     it "returns false when the image request fails" do
       expect_any_instance_of(described_class).to receive(:image_server_connection).and_return(failed_image_connection)
       allow(BuzzMedia).to receive(:call_update).and_return(false)
-      expect(subject.save!).to eq(false)
+      expect{ subject.save! }.to raise_error(Honeypot::InternalServerError)
     end
 
     it "returns false when the media request fails" do

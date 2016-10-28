@@ -23,12 +23,13 @@ class FindOrCreateImage
         false
       end
     else
+      process_image(image: found_image)
       found_image
     end
   end
 
   def process_image(image:)
-    QueueJob.call(ProcessImageJob, object: image)
+    QueueJob.call(SaveHoneypotImageJob, object: image, image_field: "image")
   rescue Bunny::TCPConnectionFailedForAllHosts
     image.unavailable!
   end
