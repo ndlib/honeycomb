@@ -5,6 +5,8 @@ class CollectionsController < ApplicationController
                                          action: "index",
                                          collections: @collections)
     fresh_when(etag: cache_key.generate)
+
+    @list_items = ListEntryGenerator.collection_entries(@collections)
   end
 
   def show

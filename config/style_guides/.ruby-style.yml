@@ -230,19 +230,19 @@ Style/EmptyLinesAroundAccessModifier:
 
 Style/EmptyLinesAroundBlockBody:
   Description: "Keeps track of empty lines around block bodies."
-  Enabled: true
+  Enabled: false
 
 Style/EmptyLinesAroundClassBody:
   Description: "Keeps track of empty lines around class bodies."
-  Enabled: true
+  Enabled: false
 
 Style/EmptyLinesAroundModuleBody:
   Description: "Keeps track of empty lines around module bodies."
-  Enabled: true
+  Enabled: false
 
 Style/EmptyLinesAroundMethodBody:
   Description: "Keeps track of empty lines around method bodies."
-  Enabled: true
+  Enabled: false
 
 Style/EmptyLiteral:
   Description: 'Prefer literals to Array.new/Hash.new/String.new.'
@@ -591,7 +591,7 @@ Style/ParenthesesAroundCondition:
                  Don't use parentheses around the condition of an
                  if/unless/while.
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-parens-if'
-  Enabled: true
+  Enabled: false
 
 Style/PercentLiteralDelimiters:
   Description: 'Use `%`-literal delimiters consistently'
@@ -863,12 +863,12 @@ Style/TrailingBlankLines:
 Style/TrailingCommaInArguments:
   Description: 'Checks for trailing comma in argument lists.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-params-comma'
-  Enabled: true
+  Enabled: false
 
 Style/TrailingCommaInLiteral:
   Description: 'Checks for trailing comma in array and hash literals.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
-  Enabled: true
+  Enabled: false
 
 Style/TrailingWhitespace:
   Description: 'Avoid trailing whitespace.'
@@ -980,7 +980,8 @@ Metrics/CyclomaticComplexity:
 Metrics/LineLength:
   Description: 'Limit lines to 80 characters.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#80-character-limits'
-  Enabled: true
+  Enabled: false
+  Max: 160
 
 Metrics/MethodLength:
   Description: 'Avoid methods longer than 10 lines of code.'
@@ -1220,7 +1221,6 @@ Lint/UnneededDisable:
                  It must be explicitly disabled.
   Enabled: true
 
-<<<<<<< HEAD
 Lint/UnneededSplatExpansion:
   Description: 'Checks for splat unnecessarily being called on literals'
   Enabled: true

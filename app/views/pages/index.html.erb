@@ -3,4 +3,10 @@
 
 <%= render partial: 'action_bar', locals: { collection: @collection } %>
 
-<%= render partial: 'list', locals: { pages: @pages } %>
+<%= react_component 'EntriesList', {
+    header: t(".title"),
+    entryType: "page",
+    entries: @list_items,
+    openUrl: "/pages/<id>/edit",
+  }
+%>

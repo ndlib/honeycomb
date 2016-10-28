@@ -47,6 +47,8 @@ ProgressOverlay = require("./components/ProgressOverlay");
 GoogleImportButton = require("./components/GoogleImportButton");
 GoogleExportButton = require("./components/GoogleExportButton");
 
+EntriesList = require("./components/EntriesList");
+
 // Item search
 SearchPage = require("./components/search/SearchPage");
 SearchPagination = require("./components/search/SearchPagination");

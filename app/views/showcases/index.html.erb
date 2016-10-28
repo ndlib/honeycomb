@@ -3,4 +3,10 @@
 
 <%= render partial: 'action_bar', locals: { collection: @collection } %>
 
-<%= render partial: 'list', locals: { showcases: @showcases } %>
+<%= react_component 'EntriesList', {
+    header: t(".title"),
+    entryType: "showcase",
+    entries: @list_items,
+    openUrl: "/showcases/<id>/edit",
+  }
+%>

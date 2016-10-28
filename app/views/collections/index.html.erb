@@ -13,4 +13,11 @@
     </p>
 </div>
 
-<%= render partial: 'list', locals: { collections: @collections } %>
+<%= react_component 'EntriesList', {
+    header: t('.page_title'),
+    entryType: "collection",
+    entries: @list_items,
+    openUrl: "/collections/<id>",
+    hasEntryCount: true,
+  }
+%>

@@ -6,6 +6,8 @@ class ShowcasesController < ApplicationController
                                          action: "index",
                                          collection: collection)
     fresh_when(etag: cache_key.generate)
+
+    @list_items = ListEntryGenerator.showcase_entries(@showcases)
   end
 
   def new

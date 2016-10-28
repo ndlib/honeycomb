@@ -6,6 +6,8 @@ class PagesController < ApplicationController
                                          action: "index",
                                          collection: collection)
     fresh_when(etag: cache_key.generate)
+
+    @list_items = ListEntryGenerator.page_entries(@pages)
   end
 
   def new
