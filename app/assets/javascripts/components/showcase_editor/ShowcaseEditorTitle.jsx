@@ -61,7 +61,7 @@ var ShowcaseEditorTitle = React.createClass({
   },
 
   image: function() {
-    if(this.props.showcase.image && this.props.showcase.image.status == "ready") {
+    if(this.props.showcase.image && this.props.showcase.image.status == "ready" && this.props.showcase.image["thumbnail/small"]) {
       return (
         <div>
           <h4>Background Image</h4>
