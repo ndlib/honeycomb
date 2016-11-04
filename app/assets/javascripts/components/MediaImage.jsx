@@ -15,12 +15,17 @@ var MediaImage = React.createClass({
   },
 
   image: function() {
-    switch(this.props.media["@type"]){
-      case "ImageObject":
-        return (<img src={this.honeypot_src()} style={this.props.cssStyle} title={this.props.title} alt={this.props.alt} />);
-      default:
-        return (<img src={this.props.media.thumbnailUrl} style={this.props.cssStyle} title={this.props.title} alt={this.props.alt} />);
+    var thumb = null;
+    if(this.props.media["@type"] == "ImageObject") {
+      thumb = this.honeypot_src();
+    } else {
+      thumb = this.props.media.thumbnailUrl;
     }
+
+    return (
+      <Thumbnail thumbnailUrl={thumb} extraStyle={this.props.cssStyle} thumbType="item"
+        mediaType={this.props.media["@type"]} />
+    );
   },
 
   buzz_src: function() {

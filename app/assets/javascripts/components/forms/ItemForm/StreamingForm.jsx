@@ -131,6 +131,16 @@ var StreamingForm = React.createClass({
     });
   },
 
+  accepted: function() {
+    if(this.props.type == "video") {
+      return "video/*";
+    } else if(this.props.type == "audio") {
+      return "audio/*";
+    } else {
+      return "image/*";
+    }
+  },
+
   render: function() {
     if (this.state.processing) {
       var button = (<LoadingImage />);
@@ -139,7 +149,7 @@ var StreamingForm = React.createClass({
     }
     return (
       <div style={{ marginTop: "14px" }}>
-        <input style={{ display: "inline" }} type="file" id="uploadFile" ref={ "uploadFile" } name="upload" onChange={ this.addFile }/>
+        <input style={{ display: "inline" }} type="file" id="uploadFile" ref={ "uploadFile" } name="upload" onChange={ this.addFile } accept={this.accepted()} />
         { button }
       </div>
     );
