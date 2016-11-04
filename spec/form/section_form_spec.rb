@@ -76,14 +76,14 @@ describe SectionForm do
 
     context "new_params" do
       before(:each) do
-        allow_any_instance_of(ShowcaseQuery).to receive(:find).with("20").and_return(showcase)
+        allow_any_instance_of(ShowcaseQuery).to receive(:public_find).with("20").and_return(showcase)
         allow_any_instance_of(SectionQuery).to receive(:build).and_return(section)
 
         allow(controller).to receive(:params).and_return(new_params)
       end
 
       it "finds the object from showcase" do
-        expect_any_instance_of(ShowcaseQuery).to receive(:find).with("20").and_return(showcase)
+        expect_any_instance_of(ShowcaseQuery).to receive(:public_find).with("20").and_return(showcase)
         subject
       end
 
