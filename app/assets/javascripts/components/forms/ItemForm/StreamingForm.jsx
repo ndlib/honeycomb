@@ -1,5 +1,6 @@
 var React = require('react');
 var mui = require("material-ui");
+var Dialog = mui.Dialog;
 var RaisedButton = mui.RaisedButton;
 var LoadingImage = require("../../LoadingImage");
 
@@ -8,6 +9,8 @@ var ItemStore = require("../../../stores/ItemStore");
 var AppEventEmitter = require("../../../EventEmitter");
 
 var StreamingForm = React.createClass({
+  mixins: [DialogMixin],
+
   propTypes: {
     item: React.PropTypes.object,
     creating: React.PropTypes.bool.isRequired,
@@ -131,7 +134,15 @@ var StreamingForm = React.createClass({
     });
   },
 
-  accepted: function() {
+  codecInformation: function() {
+    this.refs.showCodec.show();
+  },
+
+  dismissMessage: function() {
+    this.refs.showCodec.dismiss();
+  },
+
+  typeCompatability: function() {
     if(this.props.type == "video") {
       return "video/*";
     } else if(this.props.type == "audio") {
@@ -149,8 +160,50 @@ var StreamingForm = React.createClass({
     }
     return (
       <div style={{ marginTop: "14px" }}>
-        <input style={{ display: "inline" }} type="file" id="uploadFile" ref={ "uploadFile" } name="upload" onChange={ this.addFile } accept={this.accepted()} />
+        <input style={{ display: "inline" }} type="file" id="uploadFile" ref={ "uploadFile" } name="upload" onChange={ this.addFile } accept={this.typeCompatability()} />
         { button }
+        <RaisedButton label="Supported Playback" primary={true} onClick={this.codecInformation} style={{float: "right"}} />
+        <Dialog
+          ref="showCodec"
+          autoDetectWindowHeight={true}
+          autoScrollBodyContent={true}
+          modal={true}
+          title="Supported File Playback"
+          actions={[this.okDismiss()]}
+          openImmediately={false}
+          style={{zIndex: 10}}
+        >
+          <div>
+            <p>
+              Any file may be uploaded. However, we only support playback of these types.
+            </p>
+            <h3>Video</h3>
+            <ul>
+              <li>
+                MP4 encoded with H.264 video and AAC audio
+              </li>
+              <li>
+                FLV encoded with H.263 video and MP3 audio
+              </li>
+              <li>
+                WebM encoded with VP8 video and Vorbis audio.
+              </li>
+            </ul>
+
+            <h3>Audio</h3>
+            <ul>
+              <li>
+                AAC (.aac, .m4a, .f4a)
+              </li>
+              <li>
+                MP3 (.mp3)
+              </li>
+              <li>
+                Vorbis (.ogg, .oga)
+              </li>
+            </ul>
+          </div>
+        </Dialog>
       </div>
     );
   }

@@ -1,4 +1,5 @@
 var React = require('react');
+
 var SectionImage = React.createClass({
   propTypes: {
     section: React.PropTypes.object.isRequired
@@ -34,10 +35,19 @@ var SectionImage = React.createClass({
     if (this.props.section.caption) {
       caption = (<div className="section-caption" style={this.captionStyle()} dangerouslySetInnerHTML={{__html: this.props.section.caption}}/>)
     }
-    if(this.props.section.image) {
+
+    var imgUrl = null;
+    if(this.props.section.data && this.props.section.data.thumbnail_url) {
+      imgUrl = this.props.section.data.thumbnail_url;
+    } else if(this.props.section.image) {
+      imgUrl = this.props.section.image;
+    }
+
+    if(imgUrl) {
       return (
         <div className="section-container section-container-image" style={this.style()}>
-          <img src={this.props.section.image } style={this.imageStyle()} />
+          <img src={ imgUrl } style={this.imageStyle()} />
+          <MediaImageOverlay mediaType={this.props.section.data.json_response["@type"]} />
           { caption }
         </div>
       );

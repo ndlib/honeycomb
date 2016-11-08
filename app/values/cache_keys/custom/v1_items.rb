@@ -3,7 +3,7 @@ module CacheKeys
     # Generator for v1/items_controller
     class V1Items
       def index(collection:)
-        CacheKeys::ActiveRecord.new.generate(record: [collection, collection.items, collection.collection_configuration])
+        CacheKeys::ActiveRecord.new.generate(record: [collection, collection.items, collection.collection_configuration, Media.joins(:items).where(collection_id: collection.id)])
       end
 
       def show(item:)

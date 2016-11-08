@@ -43,6 +43,7 @@ AddNewItemsButton = require("./components/forms/ItemForm/AddNewItemsButton");
 ShowcasesPanel = require("./components/ShowcasesPanel");
 PagesPanel = require("./components/PagesPanel");
 Thumbnail = require("./components/Thumbnail");
+MediaImageOverlay = require("./components/MediaImageOverlay");
 ProgressOverlay = require("./components/ProgressOverlay");
 GoogleImportButton = require("./components/GoogleImportButton");
 GoogleExportButton = require("./components/GoogleExportButton");

@@ -3,6 +3,10 @@ json.name section.name
 json.description section.description
 if section.item && section.image
   json.image section.image
+
+  if section.item.media
+    json.data section.item.media.data
+  end
 end
 json.has_spacer section.has_spacer
 json.caption section.caption

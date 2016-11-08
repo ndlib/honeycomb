@@ -5,14 +5,24 @@ var injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
 
 var DialogMixin = {
+  cancelDismiss: function() {
+    return (
+        <FlatButton
+        label="Cacnel"
+        primary={true}
+        onTouchTap={this.dismissMessage}
+      />
+    );
+  },
+
   okDismiss: function() {
-    return [
+    return (
       <FlatButton
         label="OK"
         primary={true}
         onTouchTap={this.dismissMessage}
       />
-    ];
+    );
   },
 
 }

@@ -38,8 +38,15 @@ var SectionDragContent = React.createClass({
   },
 
   imageContent: function() {
+    var url;
+    if (this.props.section.data) {
+      url = this.props.section.data.thumbnail_url;
+    } else {
+      url = this.props.section.image;
+    }
+
     return (
-      <img src={this.props.section.image} style={this.imageStyle()} />
+      <img src={url} style={this.imageStyle()} />
     );
   },
 

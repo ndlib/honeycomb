@@ -134,9 +134,9 @@ class ShowcasesController < ApplicationController
   def showcase_save_html_success(showcase)
     flash[:notice] = t(".success")
     if params[:action] == "create"
-      redirect_to edit_showcase_path(showcase)
+      redirect_to edit_showcase_path(showcase.unique_id)
     else
-      redirect_to edit_showcase_path(showcase)
+      redirect_to edit_showcase_path(showcase.unique_id)
     end
   end
 
