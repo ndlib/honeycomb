@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe CacheKeys::Custom::V1Items do
   context "index" do
-    let(:collection) { instance_double(Collection, items: "items", collection_configuration: "config") }
+    let(:collection) { instance_double(Collection, id: 1, items: "items", collection_configuration: "config") }
 
     it "uses CacheKeys::ActiveRecord" do
       expect_any_instance_of(CacheKeys::ActiveRecord).to receive(:generate)
@@ -10,7 +10,7 @@ RSpec.describe CacheKeys::Custom::V1Items do
     end
 
     it "uses the correct data" do
-      expect_any_instance_of(CacheKeys::ActiveRecord).to receive(:generate).with(record: [collection, "items", "config"])
+      expect_any_instance_of(CacheKeys::ActiveRecord).to receive(:generate).with(record: [collection, "items", "config", ActiveRecord::Relation])
       subject.index(collection: collection)
     end
   end

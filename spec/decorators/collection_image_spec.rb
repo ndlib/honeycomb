@@ -21,7 +21,7 @@ RSpec.describe CollectionImage do
     allow(collection).to receive(:image).and_return(nil)
     expect(subject.display).to eq("<div " \
       "data-react-class=\"Thumbnail\" " \
-      "data-react-props=\"{&quot;thumbnailUrl&quot;:&quot;http://example.com/image.jpg&quot;,&quot;extraStyle&quot;:{},&quot;thumbType&quot;:&quot;collection&quot;}\">" \
+      "data-react-props=\"{&quot;thumbnailUrl&quot;:&quot;http://example.com/image.jpg&quot;,&quot;extraStyle&quot;:{},&quot;thumbType&quot;:&quot;collection&quot;,&quot;mediaType&quot;:null}\">" \
       "</div>")
   end
 
@@ -29,7 +29,7 @@ RSpec.describe CollectionImage do
     allow(image).to receive(:first).and_return(item_with_image)
     expect(subject.display).to eq("<div " \
       "data-react-class=\"Thumbnail\" " \
-      "data-react-props=\"{&quot;thumbnailUrl&quot;:&quot;http://collection.com/image.jpg&quot;,&quot;extraStyle&quot;:{},&quot;thumbType&quot;:&quot;collection&quot;}\">" \
+      "data-react-props=\"{&quot;thumbnailUrl&quot;:&quot;http://collection.com/image.jpg&quot;,&quot;extraStyle&quot;:{},&quot;thumbType&quot;:&quot;collection&quot;,&quot;mediaType&quot;:null}\">" \
       "</div>")
   end
 
