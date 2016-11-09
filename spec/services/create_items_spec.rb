@@ -28,8 +28,9 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
   let(:creator) { instance_double(FindOrCreateItem, using: item, new_record?: true, changed?: false, save: true, item: item) }
   let(:metadata_fields) { instance_double(Metadata::Fields, errors: item_errors) }
   let(:item) { instance_double(Item, valid?: true, changed?: false, new_record?: false, errors: item_errors, item_metadata: metadata_fields) }
+  let(:collection) { instance_double(Collection, id: 1) }
   let(:subject) do
-    described_class.call(collection_id: 1, find_by: [], items_hash: items, counts: counts, errors: errors)
+    described_class.call(collection: collection, find_by: [], items_hash: items, counts: counts, errors: errors)
   end
 
   before (:each) do
@@ -37,6 +38,7 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
     allow(Item).to receive(:find_or_create_by).and_return(item)
     allow(SaveItem).to receive(:call).and_return true
     allow(FindOrCreateItem).to receive(:new).and_return(creator)
+    allow(Index::Collection).to receive(:index!).and_return true
   end
 
   it "allows injecting a block to edit the properties before creating the item" do
@@ -44,14 +46,14 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
     expect(FindOrCreateItem).to receive(:new).with(props: { collection_id: 1, item_name: rewritten[0][:name] }).and_return(creator).ordered
     expect(FindOrCreateItem).to receive(:new).with(props: { collection_id: 1, item_name: rewritten[1][:name] }).and_return(creator).ordered
     expect(FindOrCreateItem).to receive(:new).with(props: { collection_id: 1, item_name: rewritten[2][:name] }).and_return(creator).ordered
-    described_class.call(collection_id: 1, find_by: [], items_hash: items, counts: counts, errors: errors) do |item_props, _rewrite_errors|
+    described_class.call(collection: collection, find_by: [], items_hash: items, counts: counts, errors: errors) do |item_props, _rewrite_errors|
       { item_name: item_props[:name] }
     end
   end
 
   context "when it receives errors from the injected block" do
     let(:subject) do
-      described_class.call(collection_id: 1, find_by: [], items_hash: items, counts: counts, errors: errors) do |item_props, rewrite_errors|
+      described_class.call(collection: collection, find_by: [], items_hash: items, counts: counts, errors: errors) do |item_props, rewrite_errors|
         rewrite_errors << ["Rewrite error 1 on #{item_props[:name]}", "Rewrite error 2 on #{item_props[:name]}"]
         item_props
       end

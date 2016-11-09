@@ -2,8 +2,8 @@
 # Allows injecting a block to change the item attributes before
 # attempting to create the item.
 class CreateItems
-  def self.call(collection_id:, find_by:, items_hash:, counts:, errors:)
-    new.create_or_update!(collection_id: collection_id,
+  def self.call(collection:, find_by:, items_hash:, counts:, errors:)
+    new.create_or_update!(collection: collection,
                           find_by: find_by,
                           items_hash: items_hash,
                           counts: counts,
@@ -24,13 +24,13 @@ class CreateItems
   #   valid_count    - Count of how many items passed validation
   #   error_count    - Count of how many items failed validation
   #   total_count    - Total number of items processed
-  def create_or_update!(collection_id:, find_by:, items_hash:, counts:, errors:)
+  def create_or_update!(collection:, find_by:, items_hash:, counts:, errors:)
     ActiveRecord::Base.transaction do
       items_hash.each.with_index do |item_props, index|
         rewrite_errors = []
         item_props = yield(item_props, rewrite_errors).symbolize_keys if block_given?
-        item_creator = FindOrCreateItem.call(props: { collection_id: collection_id, **item_props }, find_by: find_by)
-        saved = rewrite_errors.present? ? false : item_creator.save
+        item_creator = FindOrCreateItem.call(props: { collection_id: collection.id, **item_props }, find_by: find_by)
+        saved = rewrite_errors.present? ? false : item_creator.save(index: false)
         add_to_errors(
           errors: errors,
           index: index,
@@ -40,6 +40,7 @@ class CreateItems
         update_counts(save_successful: saved, item: item_creator, counts: counts)
       end
     end
+    Index::Collection.index!(collection)
   end
 
   private

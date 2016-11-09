@@ -31,8 +31,8 @@ class FindOrCreateItem
     is_valid
   end
 
-  def save
-    if is_valid && SaveItem.call(item, {})
+  def save(index: true)
+    if is_valid && SaveItem.call(item, {}, index: index)
       true
     else
       false

@@ -24,7 +24,7 @@ class ImportController < ApplicationController
 
     @results = GoogleCreateItems.call(auth_code: params[:code],
                                       callback_uri: import_google_sheet_callback_collections_url,
-                                      collection_id: state_hash[:collection_id],
+                                      collection: @collection,
                                       file: state_hash[:file],
                                       sheet: state_hash[:sheet])
   end
