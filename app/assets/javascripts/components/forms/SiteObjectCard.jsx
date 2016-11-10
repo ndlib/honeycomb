@@ -45,7 +45,7 @@ var SiteObjectCard = React.createClass({
 
   getAvatar: function() {
     var object = this.props.site_object;
-    if(object.image && object.image["@id"])
+    if(object.image && object.image["@id"] && object.image['thumbnail\/small'])
       return (<mui.Avatar src={ object.image['thumbnail\/small'].contentUrl } />);
     else {
       var letter = this.props.site_object.name.substring(0, 1);

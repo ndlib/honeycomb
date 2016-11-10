@@ -37,8 +37,10 @@ var SectionImage = React.createClass({
     }
 
     var imgUrl = null;
+    var type = "";
     if(this.props.section.data && this.props.section.data.thumbnail_url) {
       imgUrl = this.props.section.data.thumbnail_url;
+      type = this.props.section.data.json_response["@type"];
     } else if(this.props.section.image) {
       imgUrl = this.props.section.image;
     }
@@ -47,7 +49,7 @@ var SectionImage = React.createClass({
       return (
         <div className="section-container section-container-image" style={this.style()}>
           <img src={ imgUrl } style={this.imageStyle()} />
-          <MediaImageOverlay mediaType={this.props.section.data.json_response["@type"]} />
+          <MediaImageOverlay mediaType={type} />
           { caption }
         </div>
       );
