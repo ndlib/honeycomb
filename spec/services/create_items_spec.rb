@@ -90,10 +90,22 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
       subject
     end
 
-    it "uses FindOrCreateItem service to save all items" do
+    it "uses FindOrCreateItem service to save all items without indexing them" do
       allow(item).to receive(:assign_attributes).and_return(true)
       allow(CreateUniqueId).to receive(:call).and_return(true)
-      expect(creator).to receive(:save).exactly(3).and_return true
+      expect(creator).to receive(:save).with(index: false).exactly(3).and_return true
+      subject
+    end
+
+    it "indexes changed items" do
+      expect(Index::Collection).to receive(:index!).with(collection: collection, items: [item, item, item])
+      subject
+    end
+
+    it "does not index unchanged items" do
+      allow(creator).to receive(:changed?).and_return(false)
+      allow(creator).to receive(:new_record?).and_return(false)
+      expect(Index::Collection).not_to receive(:index!).with(collection: collection, items: [item, item, item])
       subject
     end
 
