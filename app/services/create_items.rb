@@ -25,6 +25,7 @@ class CreateItems
   #   error_count    - Count of how many items failed validation
   #   total_count    - Total number of items processed
   def create_or_update!(collection:, find_by:, items_hash:, counts:, errors:)
+    items_to_index = []
     ActiveRecord::Base.transaction do
       items_hash.each.with_index do |item_props, index|
         rewrite_errors = []
@@ -37,10 +38,11 @@ class CreateItems
           new_errors: rewrite_errors | item_creator.item.errors.full_messages | item_creator.item.item_metadata.errors.full_messages,
           item: item_creator.item
         )
+        items_to_index << item_creator.item if saved && (item_creator.changed? || item_creator.new_record?)
         update_counts(save_successful: saved, item: item_creator, counts: counts)
       end
     end
-    Index::Collection.index!(collection)
+    Index::Collection.index!(collection: collection, items: items_to_index)
   end
 
   private

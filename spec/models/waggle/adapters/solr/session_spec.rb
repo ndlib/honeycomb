@@ -45,7 +45,7 @@ RSpec.describe Waggle::Adapters::Solr::Session do
           expect(Waggle::Adapters::Solr::Index::Item).to receive(:new).with(waggle_item: waggle_item).and_call_original
         end
         allow_any_instance_of(Waggle::Adapters::Solr::Index::Item).to receive(:as_solr).and_return(test: "test")
-        expect(connection).to receive(:add).with(*[{ test: "test" }, { test: "test" }])
+        expect(connection).to receive(:add).with([{ test: "test" }, { test: "test" }])
         subject
       end
     end
@@ -67,7 +67,7 @@ RSpec.describe Waggle::Adapters::Solr::Session do
         items.each do |waggle_item|
           expect(Waggle::Adapters::Solr::Index::Item).to receive(:new).with(waggle_item: waggle_item).and_call_original
         end
-        expect(connection).to receive(:delete_by_id).with("item-1 Item", "item-2 Item")
+        expect(connection).to receive(:delete_by_id).with(["item-1 Item", "item-2 Item"])
         subject
       end
     end

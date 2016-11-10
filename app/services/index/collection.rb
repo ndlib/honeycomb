@@ -1,8 +1,9 @@
 module Index
   module Collection
-    def self.index!(collection)
+    def self.index!(collection:, items: collection.items)
+      return if items.count == 0 # purely for optimization to prevent unnecessary sql/http calls to solr
       Waggle.set_configuration(get_configuration(collection))
-      waggle_items = collection.items.map { |i| item_to_waggle_item(i) }
+      waggle_items = items.map { |i| item_to_waggle_item(i) }
 
       Waggle.index!(*waggle_items)
     rescue StandardError => exception
