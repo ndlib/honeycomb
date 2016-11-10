@@ -34,9 +34,10 @@
   <body>
 
 <header id="banner" role="banner" class="home">
-  <% if Rails.env == "pprd" %>
-    <div class="pprd">
-      TEST ENV
+
+  <% if Rails.env != "production" %>
+    <div class="environment">
+      <%= Rails.env.upcase %>
     </div>
   <% end %>
 
