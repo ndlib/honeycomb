@@ -18,7 +18,6 @@ var ItemList = React.createClass({
     if(this.props.items.length > 0) {
       return;
     }
-    console.log("setting from will recieve");
 
     var options = {}
     for(var i = 0; i < nextProps.items.length; ++i) {
@@ -50,7 +49,6 @@ var ItemList = React.createClass({
   },
 
   handleInput: function(input) {
-    console.log("handle " + input);
     var currentOptions = this.state.currentOptions;
     for(var i = 0; i < this.props.items.length; ++i) {
       var lowerKey = this.props.items[i].name.toLowerCase();
