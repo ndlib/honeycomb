@@ -49,10 +49,6 @@ var ItemList = React.createClass({
     };
   },
 
-  filter: function(searchText, key) {
-    return false;
-  },
-
   handleInput: function(input) {
     console.log("handle " + input);
     var currentOptions = this.state.currentOptions;
@@ -71,8 +67,6 @@ var ItemList = React.createClass({
   },
 
   render: function() {
-    var dataSource = this.props.items.map(function(item) { return item.name });
-
     var itemNodes, onDragStart, onDragStop, key;
     onDragStart = this.props.onDragStart;
     onDragStop = this.props.onDragStop;
@@ -91,9 +85,8 @@ var ItemList = React.createClass({
           <p>Click to Drag items into the showcase</p>
           <mui.AutoComplete
             hintText="Search Items"
-            dataSource={dataSource}
+            dataSource={[]}
             onUpdateInput={this.handleInput}
-            filter={this.filter}
           />
         </div>
         {itemNodes}
