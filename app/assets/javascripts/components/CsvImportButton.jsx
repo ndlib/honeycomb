@@ -3,6 +3,7 @@ var React = require('react');
 var mui = require("material-ui");
 var FlatButton = mui.FlatButton;
 var FontIcon = mui.FontIcon;
+var ImportResultsDialog = require("./ImportResultsDialog");
 
 var CsvImportButton = React.createClass({
   mixins: [MuiThemeMixin],
@@ -11,6 +12,12 @@ var CsvImportButton = React.createClass({
     postUri: React.PropTypes.string.isRequired,
   },
 
+  getInitialState: function() {
+    return {
+      uploaded: false,
+      response: {}
+    };
+  },
 
   uploadFile: function(media) {
     var xhr = new XMLHttpRequest();
@@ -18,7 +25,8 @@ var CsvImportButton = React.createClass({
     xhr.onreadystatechange = () => {
       if(xhr.readyState === 4) {
         if(xhr.status === 200) {
-          console.log(JSON.parse(xhr.responseText));
+console.log(JSON.parse(xhr.responseText));
+          this.setState({ uploaded: true, response: JSON.parse(xhr.responseText) });
         } else {
           console.log(xhr.responseText);
         }
@@ -41,7 +49,8 @@ var CsvImportButton = React.createClass({
     );
     return (
       <div>
-        <form ref={ "csvForm" } id="csvForm" action={ this.props.postUri } method="post" encType="multipart/form-data">
+        <ImportResultsDialog open={ this.state.uploaded } results={ this.state.response } />
+        <form action={ this.props.postUri } method="post" encType="multipart/form-data">
           <input ref={ "csvInput" } id="csvInput" type="file" name="csv_file" style={{ display: "none" }} onChange={ this.uploadFile } />
         </form>
         <FlatButton

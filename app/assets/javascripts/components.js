@@ -44,6 +44,7 @@ ShowcasesPanel = require("./components/ShowcasesPanel");
 PagesPanel = require("./components/PagesPanel");
 Thumbnail = require("./components/Thumbnail");
 ProgressOverlay = require("./components/ProgressOverlay");
+ImportResultsDialog = require("./components/ImportResultsDialog");
 CsvImportButton = require("./components/CsvImportButton");
 GoogleImportButton = require("./components/GoogleImportButton");
 GoogleExportButton = require("./components/GoogleExportButton");
