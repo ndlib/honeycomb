@@ -1,0 +1,57 @@
+/** @jsx React.DOM */
+var React = require('react');
+var mui = require("material-ui");
+var FlatButton = mui.FlatButton;
+var FontIcon = mui.FontIcon;
+
+var CsvImportButton = React.createClass({
+  mixins: [MuiThemeMixin],
+
+  propTypes: {
+    postUri: React.PropTypes.string.isRequired,
+  },
+
+
+  uploadFile: function(media) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', this.props.postUri);
+    xhr.onreadystatechange = () => {
+      if(xhr.readyState === 4) {
+        if(xhr.status === 200) {
+          console.log(JSON.parse(xhr.responseText));
+        } else {
+          console.log(xhr.responseText);
+        }
+      }
+    };
+
+    var f = this.refs.csvInput;
+    var formData = new FormData();
+    formData.append("csv_file", f.files[0], f.files[0].name);
+    xhr.send(formData);
+  },
+
+  render: function() {
+    var iconStyle = {fontSize: 14, marginRight: ".5em"};
+    var buttonLabel = (
+      <span>
+        <FontIcon className="glyphicon glyphicon-import" label="Upload" color="#000" style={iconStyle}/>
+        <span>Import CSV</span>
+      </span>
+    );
+    return (
+      <div>
+        <form ref={ "csvForm" } id="csvForm" action={ this.props.postUri } method="post" encType="multipart/form-data">
+          <input ref={ "csvInput" } id="csvInput" type="file" name="csv_file" style={{ display: "none" }} onChange={ this.uploadFile } />
+        </form>
+        <FlatButton
+          primary={false}
+          onTouchTap={ function() { this.refs.csvInput.click(); }.bind(this) }
+          label={buttonLabel}
+        />
+      </div>
+    );
+  }
+});
+
+module.exports = CsvImportButton;
