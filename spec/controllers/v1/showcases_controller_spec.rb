@@ -3,7 +3,7 @@ require "cache_spec_helper"
 
 RSpec.describe V1::ShowcasesController, type: :controller do
   let(:collection) { instance_double(Collection, id: "1", updated_at: nil, showcases: nil, collection_configuration: "collection_configuration") }
-  let(:showcase) { instance_double(Showcase, id: "1", updated_at: nil, sections: nil, items: nil, collection: collection) }
+  let(:showcase) { instance_double(Showcase, id: "1", updated_at: nil, sections: [], items: [], collection: collection, destroy!: true) }
 
   before(:each) do
     allow_any_instance_of(ShowcaseQuery).to receive(:public_find).and_return(showcase)
@@ -60,6 +60,30 @@ RSpec.describe V1::ShowcasesController, type: :controller do
 
     it "uses the V1Showcases#show to generate the cache key" do
       expect_any_instance_of(CacheKeys::Custom::V1Showcases).to receive(:show)
+      subject
+    end
+  end
+
+  describe "#destroy" do
+    subject { delete :destroy, id: showcase.id, format: :json }
+
+    before(:each) do
+      sign_in_admin
+    end
+
+    it "is successful" do
+      subject
+
+      expect(response).to be_success
+    end
+
+    it "uses showcase query " do
+      expect_any_instance_of(ShowcaseQuery).to receive(:public_find).with("1").and_return(showcase)
+      subject
+    end
+
+    it "uses the Destroy::Showcase.cascade method" do
+      expect_any_instance_of(Destroy::Showcase).to receive(:cascade!)
       subject
     end
   end

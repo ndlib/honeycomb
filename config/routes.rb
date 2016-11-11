@@ -105,8 +105,8 @@ Rails.application.routes.draw do
       put "finish_upload", to: "media#finish_upload"
     end
 
-    resources :showcases, only: [:show], defaults: { format: :json }
-    resources :pages, only: [:show], defaults: { format: :json }
+    resources :showcases, only: [:show, :destroy], defaults: { format: :json }
+    resources :pages, only: [:show, :destroy], defaults: { format: :json }
     resources :sections, only: [:show], defaults: { format: :json }
   end
 

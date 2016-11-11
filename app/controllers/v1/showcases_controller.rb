@@ -19,5 +19,16 @@ module V1
                                            showcase: @showcase)
       fresh_when(etag: cache_key.generate)
     end
+
+    def destroy
+      @showcase = ShowcaseQuery.new.public_find(params[:id])
+      return if rendered_forbidden?(@showcase.collection)
+
+      if Destroy::Showcase.new.cascade!(showcase: @showcase)
+        render json: { status: "Success" }
+      else
+        render json: { status: "Unable to delete item" }, status: :unprocessable_entity
+      end
+    end
   end
 end
