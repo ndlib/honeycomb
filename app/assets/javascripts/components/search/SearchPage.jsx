@@ -23,6 +23,10 @@ var Styles = {
   },
   paginationFooter: {},
   cells:{
+    deleteButton: {
+      fontSize: "18px",
+      width: "75px",
+    },
     thumbnail: {
       height: "80px",
       paddingTop: "8px",
@@ -40,6 +44,9 @@ var Styles = {
     },
   },
   headers: {
+    deleteButton: {
+      width: "75px",
+    },
     thumbnail: {
       height: "80px",
       paddingTop: "8px",
@@ -75,12 +82,7 @@ var SearchPage = React.createClass({
   componentWillMount: function() {
     EventEmitter.on("SearchExecutingQuery", function() { this.setState({ searching: true }); }.bind(this));
     EventEmitter.on("SearchQueryComplete", this.resultsAreIn);
-    SearchActions.executeQuery(this.props.searchUrl, {
-      searchTerm: this.props.searchTerm,
-      sortField: this.props.defaultSortField,
-      sortDirection: this.props.defaultSortDirection,
-      rowLimit: this.props.rows
-    });
+    this.executeQuery();
   },
 
   resultsAreIn: function(result, data){
@@ -105,11 +107,22 @@ var SearchPage = React.createClass({
   },
 
   openItem: function(rowNumber, columnId) {
-    var selectedId = SearchStore.hits[rowNumber]["@id"];
-    var reg = new RegExp( '^.*\/(.*)$', 'i' );
-    var string = reg.exec(selectedId);
-    var itemId = string[1];
-    window.location = "/items/" + itemId + "/edit";
+    if(columnId != 1) {
+      var selectedId = SearchStore.hits[rowNumber]["@id"];
+      var reg = new RegExp( '^.*\/(.*)$', 'i' );
+      var string = reg.exec(selectedId);
+      var itemId = string[1];
+      window.location = "/items/" + itemId + "/edit";
+    }
+  },
+
+  executeQuery: function() {
+    SearchActions.executeQuery(this.props.searchUrl, {
+      searchTerm: this.props.searchTerm,
+      sortField: this.props.defaultSortField,
+      sortDirection: this.props.defaultSortDirection,
+      rowLimit: this.props.rows
+    });
   },
 
   items: function(){
@@ -120,8 +133,14 @@ var SearchPage = React.createClass({
       if(dateString == todayString) {
         dateString = (new Date(hit.updated)).toLocaleTimeString("en-US");
       }
+      var atId = hit["@id"]
+      var atIdSplit = atId.split('/');
+      var itemId = atIdSplit[atIdSplit.length - 1];
       return (
-        <mui.TableRow key={ hit["@id"] } style={ Styles.row }>
+        <mui.TableRow key={ atId } style={ Styles.row }>
+            <mui.TableRowColumn style={ Styles.cells.deleteButton }>
+              <DeleteButton type="item" id={itemId} callback={this.executeQuery}/>
+            </mui.TableRowColumn>
             <mui.TableRowColumn style={ Styles.cells.thumbnail }>
               { this.getThumbnail(hit.thumbnailURL, hit.type) }
             </mui.TableRowColumn>
@@ -152,6 +171,7 @@ var SearchPage = React.createClass({
           <mui.Table selectable={false} fixedFooter={true} onCellClick={ this.openItem }>
             <mui.TableHeader displaySelectAll={false} adjustForCheckbox={false}>
               <mui.TableRow>
+                <mui.TableHeaderColumn style={Styles.headers.deleteButton}></mui.TableHeaderColumn>
                 <mui.TableHeaderColumn style={Styles.headers.thumbnail}></mui.TableHeaderColumn>
                 <mui.TableHeaderColumn style={Styles.headers.itemName}>
                   <SearchSortButton field="name" rows={this.props.rows} searchUrl={this.props.searchUrl} />

@@ -25,5 +25,15 @@ var DialogMixin = {
     );
   },
 
+  dialogConfirm: function() {
+    return (
+      <FlatButton
+        label="Yes"
+        primary={true}
+        onTouchTap={this.confirmMessage}
+      />
+    );
+  }
+
 }
 module.exports = DialogMixin;
