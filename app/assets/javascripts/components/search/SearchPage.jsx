@@ -75,6 +75,17 @@ var SearchPage = React.createClass({
   componentWillMount: function() {
     EventEmitter.on("SearchExecutingQuery", function() { this.setState({ searching: true }); }.bind(this));
     EventEmitter.on("SearchQueryComplete", this.resultsAreIn);
+    EventEmitter.on("ImportStarted", function() { this.setState({ searching: true }); }.bind(this));
+    EventEmitter.on("ImportFinished", this.requery);
+    SearchActions.executeQuery(this.props.searchUrl, {
+      searchTerm: this.props.searchTerm,
+      sortField: this.props.defaultSortField,
+      sortDirection: this.props.defaultSortDirection,
+      rowLimit: this.props.rows
+    });
+  },
+
+  requery: function() {
     SearchActions.executeQuery(this.props.searchUrl, {
       searchTerm: this.props.searchTerm,
       sortField: this.props.defaultSortField,
@@ -96,7 +107,7 @@ var SearchPage = React.createClass({
   getThumbnail: function(thumbnailUrl) {
     // This regex will always match as an array of 4
     var reg = new RegExp( '^(.*)(\/.*)([\/].*$)', 'i' );
-    
+
     var string = reg.exec(thumbnailUrl);
     if(string && string.length == 4) {
       thumbnailUrl = string[1] + "/small" + string[3];

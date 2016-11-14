@@ -4,6 +4,7 @@ var mui = require("material-ui");
 var FlatButton = mui.FlatButton;
 var FontIcon = mui.FontIcon;
 var ImportResultsDialog = require("./ImportResultsDialog");
+var EventEmitter = require("../EventEmitter");
 
 var CsvImportButton = React.createClass({
   mixins: [MuiThemeMixin],
@@ -14,7 +15,6 @@ var CsvImportButton = React.createClass({
 
   getInitialState: function() {
     return {
-      uploading: false,
       uploaded: false,
       response: {}
     };
@@ -27,7 +27,8 @@ var CsvImportButton = React.createClass({
       xhr.onreadystatechange = () => {
         if(xhr.readyState === 4) {
           if(xhr.status === 200) {
-            this.setState({ uploading: false, uploaded: true, response: JSON.parse(xhr.responseText) });
+            this.setState({ uploaded: true, response: JSON.parse(xhr.responseText) });
+            EventEmitter.emit("ImportFinished");
             this.refs.csvInput.value = '';
           } else {
             console.log(xhr.responseText);
@@ -35,12 +36,11 @@ var CsvImportButton = React.createClass({
         }
       };
 
-      this.setState({ uploading: true, uploaded: false }, function(){
-        var f = this.refs.csvInput;
-        var formData = new FormData();
-        formData.append("csv_file", f.files[0], f.files[0].name);
-        xhr.send(formData);
-      }.bind(this));
+      EventEmitter.emit("ImportStarted");
+      var f = this.refs.csvInput;
+      var formData = new FormData();
+      formData.append("csv_file", f.files[0], f.files[0].name);
+      xhr.send(formData);
     }
   },
 
@@ -49,7 +49,7 @@ var CsvImportButton = React.createClass({
     var buttonLabel = (
       <span>
         <FontIcon className="glyphicon glyphicon-import" label="Upload" color="#000" style={iconStyle}/>
-        <span>Import CSV</span>
+        <span>Import from CSV</span>
       </span>
     );
     return (
@@ -59,7 +59,6 @@ var CsvImportButton = React.createClass({
           <input ref={ "csvInput" } id="csvInput" type="file" name="csv_file" style={{ display: "none" }} onChange={ this.uploadFile } />
         </form>
         <FlatButton
-          disabled={ this.state.uploading }
           primary={false}
           onTouchTap={ function() { this.refs.csvInput.click(); }.bind(this) }
           label={buttonLabel}
