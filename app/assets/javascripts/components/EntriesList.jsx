@@ -66,8 +66,14 @@ var EntriesList = React.createClass({
     return { hasEntryCount: false };
   },
 
+  getInitialState: function() {
+    return {
+      deleteColumn: 4,
+    }
+  },
+
   openItem: function(rowNumber, columnId) {
-    if(columnId != 4) {
+    if(columnId != this.state.deleteColumn) {
       var selectedId = this.props.entries[rowNumber].id;
       window.location = this.props.openUrl.replace("<id>", selectedId);
     }

@@ -76,6 +76,7 @@ var SearchPage = React.createClass({
   getInitialState: function() {
     return {
       searching: false,
+      deleteColumn: 4,
     };
   },
 
@@ -107,7 +108,7 @@ var SearchPage = React.createClass({
   },
 
   openItem: function(rowNumber, columnId) {
-    if(columnId != 4) {
+    if(columnId != this.state.deleteColumn) {
       var selectedId = SearchStore.hits[rowNumber]["@id"];
       var reg = new RegExp( '^.*\/(.*)$', 'i' );
       var string = reg.exec(selectedId);
