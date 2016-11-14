@@ -39,7 +39,7 @@ var ItemShowImageBox = React.createClass({
   },
 
   itemReadyHtml: function () {
-    return (<Thumbnail thumbnailUrl={ this.props.item.media.thumbnailUrl } thumbType={ "item" } />);
+    return (<Thumbnail thumbnailUrl={ this.props.item.media.thumbnailUrl } thumbType={ "item" } mediaType={this.props.item.media["@type"]} />);
   },
 
   itemNoImageHtml: function () {

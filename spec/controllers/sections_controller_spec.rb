@@ -4,8 +4,8 @@ require "cache_spec_helper"
 RSpec.describe SectionsController, type: :controller do
   let(:showcase) { double(Showcase, id: 1, unique_id: 1, name: "name", sections: relation, collection: collection) }
   let(:collection) { instance_double(Collection, id: 1, name_line_1: "name_line_1") }
-  let(:section) { double(Section, id: 1, destroy!: true, showcase: showcase, :order= => true, order: 1, collection: collection, "item=" => true) }
-  let(:item) { instance_double(Item) }
+  let(:section) { double(Section, id: 1, destroy!: true, showcase: showcase, :order= => true, order: 1, collection: collection, "item=" => true, item: item) }
+  let(:item) { instance_double(Item, media: "media") }
   let(:relation) { Section.all }
   let(:create_params_with_item) { { showcase_id: showcase.id, section: { name: "name", order: 1, item_id: 1 } } }
   let(:create_params_no_item) { { showcase_id: showcase.id, section: { name: "name", order: 1 } } }

@@ -14,7 +14,8 @@ class Thumbnail < Draper::Decorator
   end
 
   def display
-    h.react_component("Thumbnail", thumbnailUrl: image_json, extraStyle: extraStyles, thumbType: thumbType)
+    h.react_component("Thumbnail", thumbnailUrl: image_json, extraStyle: extraStyles,
+                                   thumbType: thumbType, mediaType: media_type)
   end
 
   def self.url(honeypot_image)
@@ -29,9 +30,22 @@ class Thumbnail < Draper::Decorator
 
   def image_json
     if honeypot_image
-      honeypot_image.json_response["contentUrl"]
+      data = honeypot_image.json_response
+      if data["thumbnailUrl"]
+        data["thumbnailUrl"]
+      elsif data["contentUrl"]
+        data["contentUrl"]
+      end
     else
       ""
+    end
+  end
+
+  def media_type
+    if honeypot_image
+      honeypot_image.json_response["@type"]
+    else
+      nil
     end
   end
 end

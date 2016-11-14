@@ -1,5 +1,4 @@
 var React = require("react");
-var mui = require("material-ui");
 var classNames = require("classnames");
 
 var Thumbnail = React.createClass({
@@ -7,6 +6,7 @@ var Thumbnail = React.createClass({
     thumbnailUrl: React.PropTypes.string,
     thumbType: React.PropTypes.oneOf(['item', 'page', 'showcase', 'collection']).isRequired,
     extraStyle: React.PropTypes.object,
+    mediaType: React.PropTypes.string,
   },
 
   render: function() {
@@ -35,7 +35,10 @@ var Thumbnail = React.createClass({
     }
 
     return (
-      <img src={thumbUrl} className="hc-thumbnail-image" style={ this.props.extraStyle } />
+      <div style={{ position: "relative" }} >
+        <img src={thumbUrl} style={ this.props.extraStyle } className="hc-thumbnail-image"/>
+        <MediaImageOverlay mediaType={this.props.mediaType} />
+      </div>
     );
   }
 });

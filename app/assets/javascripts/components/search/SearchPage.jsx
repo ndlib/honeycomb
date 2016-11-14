@@ -93,15 +93,15 @@ var SearchPage = React.createClass({
     this.setState({ searching: false });
   },
 
-  getThumbnail: function(thumbnailUrl) {
+  getThumbnail: function(thumbnailUrl, mediaType) {
     // This regex will always match as an array of 4
     var reg = new RegExp( '^(.*)(\/.*)([\/].*$)', 'i' );
-    
+
     var string = reg.exec(thumbnailUrl);
     if(string && string.length == 4) {
       thumbnailUrl = string[1] + "/small" + string[3];
     }
-    return (<Thumbnail thumbnailUrl={ thumbnailUrl } thumbType={ "item" } />);
+    return (<Thumbnail thumbnailUrl={ thumbnailUrl } thumbType={ "item" } mediaType={mediaType} />);
   },
 
   openItem: function(rowNumber, columnId) {
@@ -123,7 +123,7 @@ var SearchPage = React.createClass({
       return (
         <mui.TableRow key={ hit["@id"] } style={ Styles.row }>
             <mui.TableRowColumn style={ Styles.cells.thumbnail }>
-              { this.getThumbnail(hit.thumbnailURL) }
+              { this.getThumbnail(hit.thumbnailURL, hit.type) }
             </mui.TableRowColumn>
             <mui.TableRowColumn style={ Styles.cells.itemName }>{ hit.name }</mui.TableRowColumn>
             <mui.TableRowColumn style={ Styles.cells.lastModifiedAt }>{ dateString }</mui.TableRowColumn>
