@@ -6,8 +6,6 @@ var ItemStore = require("../stores/ItemStore");
 var ItemActions = require('../actions/ItemActions');
 
 var DeleteButton = React.createClass({
-  mixins: [DialogMixin],
-
   propTypes: {
     type: React.PropTypes.oneOf(['item', 'showcase', 'page']).isRequired,
     id: React.PropTypes.string.isRequired,
@@ -97,6 +95,36 @@ var DeleteButton = React.createClass({
     } else {
       return([this.cancelDismiss(), this.dialogConfirm()]);
     }
+  },
+
+  cancelDismiss: function() {
+    return (
+        <mui.FlatButton
+        label="Cacnel"
+        primary={true}
+        onTouchTap={this.dismissMessage}
+      />
+    );
+  },
+
+  okDismiss: function() {
+    return (
+      <mui.FlatButton
+        label="OK"
+        primary={true}
+        onTouchTap={this.dismissMessage}
+      />
+    );
+  },
+
+  dialogConfirm: function() {
+    return (
+      <mui.FlatButton
+        label="Yes"
+        primary={true}
+        onTouchTap={this.confirmMessage}
+      />
+    );
   },
 
   render: function() {
