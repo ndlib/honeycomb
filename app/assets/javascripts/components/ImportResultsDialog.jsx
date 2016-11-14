@@ -19,11 +19,9 @@ var ImportResultsDialog = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    if(nextProps.open) {
-      this.setState({
-        open: nextProps.open,
-      });
-    }
+    this.setState({
+      open: nextProps.open,
+    });
   },
 
   componentDidMount: function() {
@@ -67,36 +65,49 @@ var ImportResultsDialog = React.createClass({
   },
 
   errors: function() {
-    return (null);
-/*
-    <% if @results[:summary][:error_count] > 0 %>
-      <div><%= @results[:summary][:error_count] %> rows were not imported due to the following errors:</div>
-      <table class="table table-striped">
-        <thead>
+
+    var summary = this.props.results.summary;
+    if (summary.error_count > 0) {
+      var errors = this.props.results.errors;
+      var tableRows = [];
+
+      for(rowIndex in errors){
+        var row = errors[rowIndex];
+        var errorDetails = [];
+        row.errors.forEach(function(error) {
+          errorDetails.push(<div>{ error }</div>);
+        });
+
+        tableRows.push((
           <tr>
-            <th>Row</th>
-            <th>Item Id</th>
-            <th>Item Name</th>
-            <th>Errors</th>
+            <td>{ parseInt(rowIndex) + 2 }</td>
+            <td>{ row.item.user_defined_id }</td>
+            <td>{ row.item.metadata.name[0] }</td>
+            <td>
+              { errorDetails }
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <% @results[:errors].each do |index, row| %>
+        ));
+      };
+
+      return [
+        <div>{ summary.error_count } rows were not imported due to the following errors:</div>,
+        <table className="table table-striped">
+          <thead>
             <tr>
-              <td><%= index + 2 %></td>
-              <td><%= row[:item].user_defined_id %></td>
-              <td><%= row[:item].name %></td>
-              <td>
-                <% row[:errors].each do |error| %>
-                  <div><%= error %></div>
-                <% end %>
-              </td>
+              <th>Row</th>
+              <th>Item Id</th>
+              <th>Item Name</th>
+              <th>Errors</th>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
-    <% end %>
-*/
+          </thead>
+          <tbody>
+            { tableRows }
+          </tbody>
+        </table>
+      ];
+    }
+    return null;
   },
 
   render: function() {
@@ -126,6 +137,7 @@ var ImportResultsDialog = React.createClass({
           modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose}
+          bodyStyle={ { overflowY: "auto", maxHeight: "70vh" } }
         >
           { dialogBody }
         </Dialog>
