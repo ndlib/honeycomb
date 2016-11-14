@@ -67,7 +67,7 @@ var EntriesList = React.createClass({
   },
 
   openItem: function(rowNumber, columnId) {
-    if(columnId != 1) {
+    if(columnId != 4) {
       var selectedId = this.props.entries[rowNumber].id;
       window.location = this.props.openUrl.replace("<id>", selectedId);
     }
@@ -122,13 +122,13 @@ var EntriesList = React.createClass({
       }
       return (
         <mui.TableRow key={ entry.id } style={ Styles.row }>
-            { this.deleteColumn(false, entry.id) }
             <mui.TableRowColumn style={ Styles.cells.thumbnail }>
               <Thumbnail thumbnailUrl={ entry.thumb } thumbType={ this.props.entryType } />
             </mui.TableRowColumn>
             <mui.TableRowColumn style={ Styles.cells.itemName }>{ entry.name }</mui.TableRowColumn>
             { this.entryCount(entry) }
             <mui.TableRowColumn style={ Styles.cells.lastModifiedAt }>{ dateString }</mui.TableRowColumn>
+            { this.deleteColumn(false, entry.id) }
         </mui.TableRow>
       );
     }.bind(this));
@@ -141,7 +141,6 @@ var EntriesList = React.createClass({
           <mui.Table selectable={false} fixedFooter={true} onCellClick={ this.openItem }>
             <mui.TableHeader displaySelectAll={false} adjustForCheckbox={false}>
               <mui.TableRow>
-                { this.deleteColumn(true) }
                 <mui.TableHeaderColumn style={Styles.headers.thumbnail}></mui.TableHeaderColumn>
                 <mui.TableHeaderColumn style={Styles.headers.itemName}>
                   <span>{this.props.header}</span>
@@ -150,6 +149,7 @@ var EntriesList = React.createClass({
                 <mui.TableHeaderColumn style={Styles.headers.lastModifiedAt}>
                   <span>Last Modified At</span>
                 </mui.TableHeaderColumn>
+                { this.deleteColumn(true) }
               </mui.TableRow>
             </mui.TableHeader>
             <mui.TableBody displayRowCheckbox={false} showRowHover={true} className="item-list">

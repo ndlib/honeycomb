@@ -107,7 +107,7 @@ var SearchPage = React.createClass({
   },
 
   openItem: function(rowNumber, columnId) {
-    if(columnId != 1) {
+    if(columnId != 4) {
       var selectedId = SearchStore.hits[rowNumber]["@id"];
       var reg = new RegExp( '^.*\/(.*)$', 'i' );
       var string = reg.exec(selectedId);
@@ -138,14 +138,14 @@ var SearchPage = React.createClass({
       var itemId = atIdSplit[atIdSplit.length - 1];
       return (
         <mui.TableRow key={ atId } style={ Styles.row }>
-            <mui.TableRowColumn style={ Styles.cells.deleteButton }>
-              <DeleteButton type="item" id={itemId} callback={this.executeQuery}/>
-            </mui.TableRowColumn>
             <mui.TableRowColumn style={ Styles.cells.thumbnail }>
               { this.getThumbnail(hit.thumbnailURL, hit.type) }
             </mui.TableRowColumn>
             <mui.TableRowColumn style={ Styles.cells.itemName }>{ hit.name }</mui.TableRowColumn>
             <mui.TableRowColumn style={ Styles.cells.lastModifiedAt }>{ dateString }</mui.TableRowColumn>
+            <mui.TableRowColumn style={ Styles.cells.deleteButton }>
+              <DeleteButton type="item" id={itemId} callback={this.executeQuery}/>
+            </mui.TableRowColumn>
         </mui.TableRow>
       );
     }.bind(this));
@@ -171,7 +171,6 @@ var SearchPage = React.createClass({
           <mui.Table selectable={false} fixedFooter={true} onCellClick={ this.openItem }>
             <mui.TableHeader displaySelectAll={false} adjustForCheckbox={false}>
               <mui.TableRow>
-                <mui.TableHeaderColumn style={Styles.headers.deleteButton}></mui.TableHeaderColumn>
                 <mui.TableHeaderColumn style={Styles.headers.thumbnail}></mui.TableHeaderColumn>
                 <mui.TableHeaderColumn style={Styles.headers.itemName}>
                   <SearchSortButton field="name" rows={this.props.rows} searchUrl={this.props.searchUrl} />
@@ -181,6 +180,7 @@ var SearchPage = React.createClass({
                   <SearchSortButton field="last_updated" rows={this.props.rows} searchUrl={this.props.searchUrl} />
                   <span>Last Modified At</span>
                 </mui.TableHeaderColumn>
+                <mui.TableHeaderColumn style={Styles.headers.deleteButton}></mui.TableHeaderColumn>
               </mui.TableRow>
             </mui.TableHeader>
             <mui.TableBody displayRowCheckbox={false} showRowHover={true} className="item-list">
