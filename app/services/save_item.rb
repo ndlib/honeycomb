@@ -11,11 +11,7 @@ class SaveItem
   end
 
   def save(index: true)
-    fix_params
-    item.attributes = params
-    check_user_defined_id
-    check_unique_id
-    pre_process_name
+    pre_process
 
     if item.save && process_uploaded_image
       index_item if index
@@ -27,6 +23,14 @@ class SaveItem
   end
 
   private
+
+  def pre_process
+    fix_params
+    item.attributes = params
+    check_user_defined_id
+    check_unique_id
+    pre_process_name
+  end
 
   def fix_params
     @params = params.with_indifferent_access
