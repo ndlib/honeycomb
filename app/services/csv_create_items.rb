@@ -36,7 +36,7 @@ class CsvCreateItems
         RewriteItemMetadata.call(item_hash: item_props, errors: rewrite_errors, configuration: collection_configuration)
       end
     else
-      errors = "File must be UTF-8. If saving from Excel, choose 'Windows Comma Separated (.csv)' format."
+      errors = "File must be UTF-8."
     end
 
     {

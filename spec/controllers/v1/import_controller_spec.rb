@@ -7,6 +7,7 @@ RSpec.describe V1::ImportController, type: :controller do
   subject { post :csv, collection_id: collection.id, csv_file: file }
 
   before(:each) do
+    sign_in_admin
     allow_any_instance_of(CollectionQuery).to receive(:any_find).and_return(collection)
   end
 
@@ -19,5 +20,11 @@ RSpec.describe V1::ImportController, type: :controller do
     allow(CsvCreateItems).to receive(:call).and_return("json response")
     subject
     expect(response.body).to eq("json response")
+  end
+
+  it "checks the editor permissions" do
+    allow(CsvCreateItems).to receive(:call).and_return("json response")
+    expect_any_instance_of(described_class).to receive(:rendered_forbidden?).with(collection)
+    subject
   end
 end
