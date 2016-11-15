@@ -32,7 +32,7 @@ GIT
       jettywrapper (~> 2.0.3)
 
 GIT
-  remote: git@github.com:/jonhartzler/react-rails-img.git
+  remote: https://github.com/jonhartzler/react-rails-img.git
   revision: cc5c4ea42829d8baf6b7815532279843eef651d0
   specs:
     react-rails-img (0.1.5)
