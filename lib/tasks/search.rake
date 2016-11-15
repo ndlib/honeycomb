@@ -1,7 +1,9 @@
 namespace :search do
   desc "reindex all content"
   task index_all: :environment do
-    Index::Item.index_all!(Item.all)
+    Collection.all.each do |collection|
+      Index::Collection.index!(collection: collection)
+    end
   end
 
   desc "remove all content"
