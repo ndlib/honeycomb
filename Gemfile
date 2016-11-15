@@ -72,7 +72,7 @@ gem "whenever", require: false
 # Use Uglifier as compressor for JavaScript assets
 gem "uglifier", ">= 1.3.0"
 gem "react-rails"
-gem "react-rails-img"
+gem "react-rails-img", git: "git@github.com:/jonhartzler/react-rails-img.git"
 gem "browserify-rails", "~>0.7.2"
 gem "underscore-rails"
 gem "showdown-rails"
