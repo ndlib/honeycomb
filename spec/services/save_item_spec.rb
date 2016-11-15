@@ -32,9 +32,9 @@ RSpec.describe SaveItem, type: :model do
   end
 
   it "skips indexing if passed index: false" do
-      allow(item).to receive(:save).and_return(true)
-      expect(Index::Item).not_to receive(:index!)
-      described_class.call(item, params, index: false)
+    allow(item).to receive(:save).and_return(true)
+    expect(Index::Item).not_to receive(:index!)
+    described_class.call(item, params, index: false)
   end
 
   it "uses the param cleaner before setting item attributes" do

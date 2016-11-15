@@ -13,9 +13,7 @@ module Index
 
     def self.notify_error(exception:, collection:, action:)
       NotifyError.call(exception: exception, parameters: { collection: collection }, component: to_s, action: action)
-      if Rails.env.development?
-        raise exception
-      end
+      fail exception if Rails.env.development?
     end
 
     def self.set_configuration(collection: collection)
