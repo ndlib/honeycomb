@@ -119,29 +119,29 @@ var ItemList = React.createClass({
     });
   },
 
+  pageButton: function(start, icon) {
+    return(
+      <div style={ Styles.pageButtonDiv }>
+        <mui.RaisedButton key="PreviousPageLink" style={ Styles.pageButton } onTouchTap={ function(){ this.setState({ start: start }) }.bind(this) }>
+          {icon}
+        </mui.RaisedButton>
+      </div>
+    );
+  },
+
   previous: function() {
     if(this.state.start > 0) {
       var start = Math.max(this.state.start - this.props.rows, 0);
-      return(
-        <div style={ Styles.pageButtonDiv }>
-          <mui.RaisedButton key="PreviousPageLink" style={ Styles.pageButton } onTouchTap={ function(){ this.setState({ start: start }) }.bind(this) }>
-            <i className="material-icons" style={ Styles.jumpArrows }>first_page</i>
-          </mui.RaisedButton>
-        </div>
-      );
+      var icon = <i className="material-icons" style={ Styles.jumpArrows }>first_page</i>
+      return this.pageButton(start, icon)
     }
   },
 
   next: function() {
     if(this.state.start + this.props.rows < this.state.currentCount) {
       var start = this.state.start + this.props.rows;
-      return (
-        <div style={ Styles.pageButtonDiv }>
-          <mui.RaisedButton key="NextPageLink" style={ Styles.pageButton } onTouchTap={ function(){ this.setState({ start: start }) }.bind(this) }>
-            <i className="material-icons" style={ Styles.jumpArrows }>last_page</i>
-          </mui.RaisedButton>
-        </div>
-      );
+      var icon = (<i className="material-icons" style={ Styles.jumpArrows }>last_page</i>);
+      return this.pageButton(start, icon);
     }
   },
 
@@ -167,12 +167,16 @@ var ItemList = React.createClass({
       if(this.state.currentOptions[lowerKey]) {
         if(currentIndex >= this.state.start) {
           key = "item-" + item["@id"];
-          var split = item["@id"].split('/');
-          item["id"] = split[split.length - 1];
+
+          // get just the item id instead of the full url
+          var idSplit = item["@id"].split('/');
+          item["id"] = idSplit[idSplit.length - 1];
+
+          // lower levels under Item require a media object with the thumbnail and @type
           item["media"] = {
             thumbnailUrl: item.thumbnailURL,
           }
-          item["media"]["@type"] = item["@type"]
+          item["media"]["@type"] = item["@type"];
 
           itemNodes.push(<Item item={item} key={key} onDragStart={onDragStart} onDragStop={onDragStop} />);
         }
