@@ -58,10 +58,9 @@ var Item = React.createClass({
   },
 
   render: function() {
-    var media = this.props.item.media;
-    if (media == null) {
-      return null;
-    }
+    var media = {}
+    media["@type"] = this.props.item["@type"];
+    media["thumbnailUrl"] = this.props.item["thumbnailURL"];
     var dragContent = (
       <MediaImage media={media} style="small" cssStyle={{height: '100px', margin: '5px'}} title={this.props.item.name} />
     );

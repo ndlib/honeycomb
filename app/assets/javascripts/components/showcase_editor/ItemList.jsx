@@ -1,84 +1,188 @@
 var React = require('react');
 var mui = require('material-ui')
 
+var EventEmitter = require("../../EventEmitter");
+var SearchStore = require('../../stores/SearchStore');
+var SearchActions = require('../../actions/SearchActions');
+
+var Styles = {
+  outerDiv: {
+    whiteSpace: 'nowrap',
+    width: '100%',
+    border: '1px solid #bed5cd',
+    overflowY: 'hidden',
+    padding: '14px',
+  },
+  title: {
+    display: 'inline-block',
+    marginRight: '5px',
+    verticalAlign: 'top',
+    float: 'left',
+  },
+  item: {
+    overflowX: 'scroll',
+  },
+  pageButtonDiv: {
+    display: 'inline-block',
+    height: '100px',
+    verticalAlign: 'top',
+    paddingTop: '35px',
+    paddingLeft: '2px',
+  },
+  pageButton: {
+    minWidth: "34px",
+    padding:'3px 5px',
+    marginRight:'2px',
+  },
+  jumpArrows: {
+    fontSize: '1.5em',
+    minWidth: "34px",
+    padding:'3px 5px',
+    marginRight:'2px',
+    verticalAlign:'top'
+  }
+};
+
 var ItemList = React.createClass({
   propTypes: {
-    items: React.PropTypes.array.isRequired,
+    itemSearchUrl: React.PropTypes.string.isRequired,
     onDragStart: React.PropTypes.func,
     onDragStop: React.PropTypes.func,
+    rows: React.PropTypes.number,
+  },
+
+  setItems: function(result) {
+    if(result == "success") {
+      var options = {}
+      var count = 0
+      for(var i = 0; i < SearchStore.found; ++i) {
+        options[SearchStore.hits[i].name.toLowerCase()] = true;
+        count += 1;
+      }
+      this.setState({
+        currentOptions: options,
+        currentCount: count,
+        haveItems: true,
+      });
+    }
+  },
+
+  componentWillMount: function() {
+    EventEmitter.on("SearchQueryComplete", this.setItems);
+    this.executeQuery();
+  },
+
+  executeQuery: function() {
+    var rows = 1000000;
+    SearchActions.executeQuery(this.props.itemSearchUrl, {
+      sortField: 'last_updated',
+      sortDirection: 'desc',
+      rowLimit: rows,
+    });
+  },
+
+  getDefaultProps: function() {
+    return {
+      rows: 40,
+    }
   },
 
   getInitialState: function() {
     return {
-      currentOptions: {}
+      start: 0,
+      currentOptions: {},
+      currentCount: 0,
+      haveItems: false,
     }
-  },
-
-  componentWillReceiveProps: function(nextProps) {
-    if(this.props.items.length > 0) {
-      return;
-    }
-
-    var options = {}
-    for(var i = 0; i < nextProps.items.length; ++i) {
-      lowerKey = nextProps.items[i].name.toLowerCase();
-      options[lowerKey] = true;
-    }
-    this.setState({
-      currentOptions: options
-    });
-  },
-
-  style: function() {
-    return {
-      whiteSpace: 'nowrap',
-      width: '100%',
-      border: '1px solid #bed5cd',
-      overflowX: 'scroll',
-      overflowY: 'hidden',
-      padding: '14px',
-    };
-  },
-
-  titleStyle: function() {
-    return {
-      display: 'inline-block',
-      marginRight: '5px',
-      verticalAlign: 'top',
-    };
   },
 
   handleInput: function(input) {
+    var items = SearchStore.hits;
+
+    var count = 0;
     var currentOptions = this.state.currentOptions;
-    for(var i = 0; i < this.props.items.length; ++i) {
-      var lowerKey = this.props.items[i].name.toLowerCase();
+    for(var i = 0; i < items.length; ++i) {
+      var lowerKey = items[i].name.toLowerCase();
       var valid = lowerKey.includes(input.toLowerCase());
 
       if (valid) {
         currentOptions[lowerKey] = true;
+        count += 1;
       } else if(currentOptions[lowerKey]) {
         delete currentOptions[lowerKey];
       }
     }
+    this.setState({
+      currentOptions: currentOptions,
+      currentCount: count,
+      start: 0,
+    });
+  },
 
-    this.setState({ currentOptions: currentOptions })
+  previous: function() {
+    if(this.state.start > 0) {
+      var start = Math.max(this.state.start - this.props.rows, 0);
+      return(
+        <div style={ Styles.pageButtonDiv }>
+          <mui.RaisedButton key="PreviousPageLink" style={ Styles.pageButton } onTouchTap={ function(){ this.setState({ start: start }) }.bind(this) }>
+            <i className="material-icons" style={ Styles.jumpArrows }>first_page</i>
+          </mui.RaisedButton>
+        </div>
+      );
+    }
+  },
+
+  next: function() {
+    if(this.state.start + this.props.rows < this.state.currentCount) {
+      var start = this.state.start + this.props.rows;
+      return (
+        <div style={ Styles.pageButtonDiv }>
+          <mui.RaisedButton key="NextPageLink" style={ Styles.pageButton } onTouchTap={ function(){ this.setState({ start: start }) }.bind(this) }>
+            <i className="material-icons" style={ Styles.jumpArrows }>last_page</i>
+          </mui.RaisedButton>
+        </div>
+      );
+    }
+  },
+
+  loading: function() {
+    if(!this.state.haveItems) {
+      return (
+        <mui.CircularProgress />
+      );
+    }
   },
 
   render: function() {
-    var itemNodes, onDragStart, onDragStop, key;
+    var onDragStart, onDragStop, key;
     onDragStart = this.props.onDragStart;
     onDragStop = this.props.onDragStop;
-    itemNodes = this.props.items.map(function(item, index) {
-      if(this.state.currentOptions[item.name.toLowerCase()]) {
-        key = "item-" + item.id
-        return <Item item={item} key={key} onDragStart={onDragStart} onDragStop={onDragStop} />
-      } else {
-        return null
+
+    var itemNodes = [];
+    var currentIndex = 0;
+    for(var i = 0; i < SearchStore.found && itemNodes.length < 25; ++i) {
+      var item = SearchStore.hits[i];
+      var lowerKey = item.name.toLowerCase();
+
+      if(this.state.currentOptions[lowerKey]) {
+        if(currentIndex >= this.state.start) {
+          key = "item-" + item["@id"];
+          var split = item["@id"].split('/');
+          item["id"] = split[split.length - 1];
+          item["media"] = {
+            thumbnailUrl: item.thumbnailURL,
+          }
+          item["media"]["@type"] = item["@type"]
+
+          itemNodes.push(<Item item={item} key={key} onDragStart={onDragStart} onDragStop={onDragStop} />);
+        }
+        currentIndex += 1;
       }
-    }.bind(this));
+    }
+
     return (
-      <div className="add-items-content-inner" style={this.style()}>
-        <div className="add-items-title" style={this.titleStyle()}>
+      <div className="add-items-content-inner" style={ Styles.outerDiv }>
+        <div className="add-items-title" style={ Styles.title }>
           <h2>Add Items</h2>
           <p>Click to Drag items into the showcase</p>
           <mui.AutoComplete
@@ -87,7 +191,12 @@ var ItemList = React.createClass({
             onUpdateInput={this.handleInput}
           />
         </div>
-        {itemNodes}
+        <div style={ Styles.item }>
+          { this.loading() }
+          { this.previous() }
+          {itemNodes}
+          { this.next() }
+        </div>
       </div>);
   }
 });

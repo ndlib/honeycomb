@@ -24,7 +24,7 @@ var MediaImage = React.createClass({
 
     return (
       <Thumbnail thumbnailUrl={thumb} extraStyle={this.props.cssStyle} thumbType="item"
-        mediaType={this.props.media["@type"]} />
+        mediaType={this.props.media["@type"]} title={this.props.title} alt={this.props.alt} />
     );
   },
 
