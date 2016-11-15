@@ -1,6 +1,10 @@
 class CollectionsController < ApplicationController
   def index
-    @collections = CollectionQuery.new.for_editor(current_user).order(created_at: :desc)
+    @collections = CollectionQuery.new.for_editor(current_user)
+    if @collections
+      @collections = @collections.order(created_at: :desc)
+    end
+
     cache_key = CacheKeys::Generator.new(key_generator: CacheKeys::Custom::Collections,
                                          action: "index",
                                          collections: @collections)
