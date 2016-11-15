@@ -20,7 +20,7 @@ RSpec.describe CsvCreateItems, helpers: :item_meta_helpers do
       item_meta_hash_remapped(item_id: 3),
     ]
   end
-  let(:file) { instance_double(ActionDispatch::Http::UploadedFile, path: "file path")}
+  let(:file) { instance_double(ActionDispatch::Http::UploadedFile, path: "file path") }
   let(:file_contents) { instance_double(String, valid_encoding?: true) }
   let(:errors) { instance_double(ActiveModel::Errors, full_messages: []) }
   let(:metadata_fields) { instance_double(Metadata::Fields, errors: errors) }
@@ -39,7 +39,7 @@ RSpec.describe CsvCreateItems, helpers: :item_meta_helpers do
   let(:collection) { instance_double(Collection, id: 1) }
   let(:subject) { described_class.call(param_hash) }
 
-  before (:each) do
+  before(:each) do
     allow(File).to receive(:read).and_return(file_contents)
     allow(FindOrCreateItem).to receive(:new).and_return(item_creator)
     allow(SaveItem).to receive(:call).and_return true
