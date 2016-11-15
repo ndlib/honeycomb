@@ -15,7 +15,7 @@ module Index
     end
     private_class_method :notify_error
 
-    def self.set_configuration(collection: collection)
+    def self.set_configuration(collection:)
       config = CollectionConfigurationQuery.new(collection).find
       Waggle.set_configuration(config)
     end
