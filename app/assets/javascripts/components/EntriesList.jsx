@@ -15,6 +15,10 @@ var Styles = {
     cursor: "pointer"
   },
   cells:{
+    deleteButton: {
+      fontSize: "18px",
+      width: "75px",
+    },
     thumbnail: {
       height: "80px",
       paddingTop: "8px",
@@ -32,6 +36,9 @@ var Styles = {
     },
   },
   headers: {
+    deleteButton: {
+      width: "75px",
+    },
     thumbnail: {
       height: "80px",
       paddingTop: "8px",
@@ -52,15 +59,24 @@ var EntriesList = React.createClass({
     entries: React.PropTypes.array.isRequired,
     openUrl: React.PropTypes.string.isRequired,
     hasEntryCount: React.PropTypes.bool,
+    deleteButtonType: React.PropTypes.string,
   },
 
   getDefaultProps: function() {
     return { hasEntryCount: false };
   },
 
-  openItem: function(rowNumber) {
-    var selectedId = this.props.entries[rowNumber].id;
-    window.location = this.props.openUrl.replace("<id>", selectedId);
+  getInitialState: function() {
+    return {
+      deleteColumn: 4,
+    }
+  },
+
+  openItem: function(rowNumber, columnId) {
+    if(columnId != this.state.deleteColumn) {
+      var selectedId = this.props.entries[rowNumber].id;
+      window.location = this.props.openUrl.replace("<id>", selectedId);
+    }
   },
 
   entryCountHeader: function() {
@@ -84,6 +100,24 @@ var EntriesList = React.createClass({
     }
   },
 
+  deleteCallback: function() {
+    window.location.reload();
+  },
+
+  deleteColumn: function(header, id) {
+    if(this.props.deleteButtonType) {
+      if(header) {
+        return(<mui.TableHeaderColumn style={Styles.headers.deleteButton}></mui.TableHeaderColumn>);
+      } else {
+        return(
+          <mui.TableRowColumn style={ Styles.cells.deleteButton }>
+            <DeleteButton type={this.props.deleteButtonType} id={id} callback={this.deleteCallback}/>
+          </mui.TableRowColumn>
+        );
+      }
+    }
+  },
+
   items: function() {
     return this.props.entries.map(function(entry) {
       var dateOptions = { year: "numeric", month: "short", day: "numeric" };
@@ -100,6 +134,7 @@ var EntriesList = React.createClass({
             <mui.TableRowColumn style={ Styles.cells.itemName }>{ entry.name }</mui.TableRowColumn>
             { this.entryCount(entry) }
             <mui.TableRowColumn style={ Styles.cells.lastModifiedAt }>{ dateString }</mui.TableRowColumn>
+            { this.deleteColumn(false, entry.id) }
         </mui.TableRow>
       );
     }.bind(this));
@@ -120,6 +155,7 @@ var EntriesList = React.createClass({
                 <mui.TableHeaderColumn style={Styles.headers.lastModifiedAt}>
                   <span>Last Modified At</span>
                 </mui.TableHeaderColumn>
+                { this.deleteColumn(true) }
               </mui.TableRow>
             </mui.TableHeader>
             <mui.TableBody displayRowCheckbox={false} showRowHover={true} className="item-list">

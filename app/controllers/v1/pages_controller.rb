@@ -19,5 +19,16 @@ module V1
                                            page: @page)
       fresh_when(etag: cache_key.generate)
     end
+
+    def destroy
+      @page = PageQuery.new.public_find(params[:id])
+      return if rendered_forbidden?(@page.collection)
+
+      if Destroy::Page.new.cascade!(page: @page)
+        render json: { status: "Success" }
+      else
+        render json: { status: "Unable to delete item" }, status: :unprocessable_entity
+      end
+    end
   end
 end

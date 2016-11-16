@@ -51,6 +51,7 @@ GoogleImportButton = require("./components/GoogleImportButton");
 GoogleExportButton = require("./components/GoogleExportButton");
 
 EntriesList = require("./components/EntriesList");
+DeleteButton = require("./components/DeleteButton");
 
 // Item search
 SearchPage = require("./components/search/SearchPage");

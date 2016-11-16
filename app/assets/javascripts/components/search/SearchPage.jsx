@@ -23,6 +23,10 @@ var Styles = {
   },
   paginationFooter: {},
   cells:{
+    deleteButton: {
+      fontSize: "18px",
+      width: "75px",
+    },
     thumbnail: {
       height: "80px",
       paddingTop: "8px",
@@ -40,6 +44,9 @@ var Styles = {
     },
   },
   headers: {
+    deleteButton: {
+      width: "75px",
+    },
     thumbnail: {
       height: "80px",
       paddingTop: "8px",
@@ -69,6 +76,7 @@ var SearchPage = React.createClass({
   getInitialState: function() {
     return {
       searching: false,
+      deleteColumn: 4,
     };
   },
 
@@ -76,22 +84,8 @@ var SearchPage = React.createClass({
     EventEmitter.on("SearchExecutingQuery", function() { this.setState({ searching: true }); }.bind(this));
     EventEmitter.on("SearchQueryComplete", this.resultsAreIn);
     EventEmitter.on("ImportStarted", function() { this.setState({ searching: true }); }.bind(this));
-    EventEmitter.on("ImportFinished", this.requery);
-    SearchActions.executeQuery(this.props.searchUrl, {
-      searchTerm: this.props.searchTerm,
-      sortField: this.props.defaultSortField,
-      sortDirection: this.props.defaultSortDirection,
-      rowLimit: this.props.rows
-    });
-  },
-
-  requery: function() {
-    SearchActions.executeQuery(this.props.searchUrl, {
-      searchTerm: this.props.searchTerm,
-      sortField: this.props.defaultSortField,
-      sortDirection: this.props.defaultSortDirection,
-      rowLimit: this.props.rows
-    });
+    EventEmitter.on("ImportFinished", this.executeQuery);
+    this.executeQuery();
   },
 
   resultsAreIn: function(result, data){
@@ -116,11 +110,22 @@ var SearchPage = React.createClass({
   },
 
   openItem: function(rowNumber, columnId) {
-    var selectedId = SearchStore.hits[rowNumber]["@id"];
-    var reg = new RegExp( '^.*\/(.*)$', 'i' );
-    var string = reg.exec(selectedId);
-    var itemId = string[1];
-    window.location = "/items/" + itemId + "/edit";
+    if(columnId != this.state.deleteColumn) {
+      var selectedId = SearchStore.hits[rowNumber]["@id"];
+      var reg = new RegExp( '^.*\/(.*)$', 'i' );
+      var string = reg.exec(selectedId);
+      var itemId = string[1];
+      window.location = "/items/" + itemId + "/edit";
+    }
+  },
+
+  executeQuery: function() {
+    SearchActions.executeQuery(this.props.searchUrl, {
+      searchTerm: this.props.searchTerm,
+      sortField: this.props.defaultSortField,
+      sortDirection: this.props.defaultSortDirection,
+      rowLimit: this.props.rows
+    });
   },
 
   items: function(){
@@ -131,13 +136,19 @@ var SearchPage = React.createClass({
       if(dateString == todayString) {
         dateString = (new Date(hit.updated)).toLocaleTimeString("en-US");
       }
+      var atId = hit["@id"]
+      var atIdSplit = atId.split('/');
+      var itemId = atIdSplit[atIdSplit.length - 1];
       return (
-        <mui.TableRow key={ hit["@id"] } style={ Styles.row }>
+        <mui.TableRow key={ atId } style={ Styles.row }>
             <mui.TableRowColumn style={ Styles.cells.thumbnail }>
               { this.getThumbnail(hit.thumbnailURL, hit.type) }
             </mui.TableRowColumn>
             <mui.TableRowColumn style={ Styles.cells.itemName }>{ hit.name }</mui.TableRowColumn>
             <mui.TableRowColumn style={ Styles.cells.lastModifiedAt }>{ dateString }</mui.TableRowColumn>
+            <mui.TableRowColumn style={ Styles.cells.deleteButton }>
+              <DeleteButton type="item" id={itemId} callback={this.executeQuery}/>
+            </mui.TableRowColumn>
         </mui.TableRow>
       );
     }.bind(this));
@@ -172,6 +183,7 @@ var SearchPage = React.createClass({
                   <SearchSortButton field="last_updated" rows={this.props.rows} searchUrl={this.props.searchUrl} />
                   <span>Last Modified At</span>
                 </mui.TableHeaderColumn>
+                <mui.TableHeaderColumn style={Styles.headers.deleteButton}></mui.TableHeaderColumn>
               </mui.TableRow>
             </mui.TableHeader>
             <mui.TableBody displayRowCheckbox={false} showRowHover={true} className="item-list">
