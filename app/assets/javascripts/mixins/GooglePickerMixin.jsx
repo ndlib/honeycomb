@@ -14,7 +14,10 @@ var GooglePickerMixin = {
 
   pickerApiLoaded: false,
 
-  loadPicker: function() {
+  filePickedCallback: null,
+
+  loadPicker: function(callback) {
+    filePickedCallback = callback;
     gapi.load("auth", {"callback": this.onAuthApiLoad});
     gapi.load("picker", {"callback": this.onPickerApiLoad});
   },
@@ -74,7 +77,7 @@ var GooglePickerMixin = {
         },
         method: "POST",
         success: (function(data, textStatus) {
-          window.location.href = data.auth_uri;
+          filePickedCallback(data.auth_uri);
         }),
         error: (function(xhr) {
           alert(xhr);

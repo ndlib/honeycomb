@@ -1,8 +1,8 @@
 class SaveItem
   attr_reader :params, :item, :uploaded_image
 
-  def self.call(item, params)
-    new(item, params).save
+  def self.call(item, params, index: true)
+    new(item, params).save(index: index)
   end
 
   def initialize(item, params)
@@ -10,15 +10,11 @@ class SaveItem
     @item = item
   end
 
-  def save
-    fix_params
-    item.attributes = params
-    check_user_defined_id
-    check_unique_id
-    pre_process_name
+  def save(index: true)
+    pre_process
 
     if item.save && process_uploaded_image
-      index_item
+      index_item if index
       fix_image_references
       item
     else
@@ -27,6 +23,14 @@ class SaveItem
   end
 
   private
+
+  def pre_process
+    fix_params
+    item.attributes = params
+    check_user_defined_id
+    check_unique_id
+    pre_process_name
+  end
 
   def fix_params
     @params = params.with_indifferent_access

@@ -83,6 +83,8 @@ var SearchPage = React.createClass({
   componentWillMount: function() {
     EventEmitter.on("SearchExecutingQuery", function() { this.setState({ searching: true }); }.bind(this));
     EventEmitter.on("SearchQueryComplete", this.resultsAreIn);
+    EventEmitter.on("ImportStarted", function() { this.setState({ searching: true }); }.bind(this));
+    EventEmitter.on("ImportFinished", this.executeQuery);
     this.executeQuery();
   },
 

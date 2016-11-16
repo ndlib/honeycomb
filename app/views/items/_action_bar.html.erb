@@ -22,6 +22,11 @@
       }) %>
     </div>
     <div style="float: left">
+      <%= react_component("CsvImportButton", {
+        postUri: v1_collection_import_csv_path(@collection.unique_id) })
+      %>
+    </div>
+    <div style="float: left">
       <%= react_component("GoogleExportButton", {
         developerKey: Rails.application.secrets.google["developer_key"],
         clientId: Rails.application.secrets.google["client_id"],

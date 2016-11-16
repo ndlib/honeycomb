@@ -96,7 +96,7 @@ describe FindOrCreateItem do
 
   context "when saving the created item" do
     it "uses SaveItem to save the item" do
-      expect(SaveItem).to receive(:call).with(item, {})
+      expect(SaveItem).to receive(:call).with(item, {}, index: true)
       subject.find_or_create_by(criteria: {})
       subject.save
     end

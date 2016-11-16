@@ -4,9 +4,9 @@ class GoogleCreateItems
   attr_reader :session
 
   # Simplified call to create_from_worksheet!
-  def self.call(auth_code:, callback_uri:, collection_id:, file:, sheet:)
+  def self.call(auth_code:, callback_uri:, collection:, file:, sheet:)
     instance = new(auth_code: auth_code, callback_uri: callback_uri)
-    instance.create_from_worksheet!(collection_id: collection_id, file: file, sheet: sheet)
+    instance.create_from_worksheet!(collection: collection, file: file, sheet: sheet)
   end
 
   def initialize(auth_code:, callback_uri:)
@@ -15,7 +15,7 @@ class GoogleCreateItems
   end
 
   # Adds new items to a collection for each row in a google spread sheet
-  def create_from_worksheet!(collection_id:, file:, sheet:)
+  def create_from_worksheet!(collection:, file:, sheet:)
     counts = {
       total_count: 0,
       valid_count: 0,
@@ -30,12 +30,12 @@ class GoogleCreateItems
     if worksheet.present?
       items = session.worksheet_to_hash(worksheet: worksheet)
 
-      CreateItems.call(collection_id: collection_id,
+      CreateItems.call(collection: collection,
                        find_by: [:collection_id, :user_defined_id],
                        items_hash: items,
                        counts: counts,
                        errors: errors) do |item_props, rewrite_errors|
-        RewriteItemMetadata.call(item_hash: item_props, errors: rewrite_errors, configuration: configuration(collection_id))
+        RewriteItemMetadata.call(item_hash: item_props, errors: rewrite_errors, configuration: configuration(collection))
       end
     end
     {
@@ -46,7 +46,7 @@ class GoogleCreateItems
 
   private
 
-  def configuration(collection_id)
-    @configuration ||= CollectionConfigurationQuery.new(CollectionQuery.new.find(collection_id)).find
+  def configuration(collection)
+    @configuration ||= CollectionConfigurationQuery.new(collection).find
   end
 end

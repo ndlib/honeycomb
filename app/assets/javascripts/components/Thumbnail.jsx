@@ -9,6 +9,13 @@ var Thumbnail = React.createClass({
     mediaType: React.PropTypes.string,
   },
 
+  getDefaultProps: function() {
+    return {
+      alt: "",
+      title: "",
+    }
+  },
+
   render: function() {
     var thumbUrl = this.props.thumbnailUrl
 
@@ -36,7 +43,7 @@ var Thumbnail = React.createClass({
 
     return (
       <div style={{ position: "relative" }} >
-        <img src={thumbUrl} style={ this.props.extraStyle } className="hc-thumbnail-image"/>
+        <img src={thumbUrl} style={ this.props.extraStyle } className="hc-thumbnail-image" alt={this.props.alt} title={this.props.title}/>
         <MediaImageOverlay mediaType={this.props.mediaType} />
       </div>
     );

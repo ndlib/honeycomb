@@ -180,13 +180,7 @@ var StreamingForm = React.createClass({
             <h3>Video</h3>
             <ul>
               <li>
-                MP4 encoded with H.264 video and AAC audio
-              </li>
-              <li>
-                FLV encoded with H.263 video and MP3 audio
-              </li>
-              <li>
-                WebM encoded with VP8 video and Vorbis audio.
+                MP4 encoded with Video: H.265, H.264, VP9 or VP8 video and AAC audio
               </li>
             </ul>
 

@@ -6,7 +6,7 @@ var ShowcaseEditor = React.createClass({
   propTypes: {
     sectionsCreatePath: React.PropTypes.string.isRequired,
     showcaseJSONPath: React.PropTypes.string.isRequired,
-    itemsJSONPath: React.PropTypes.string.isRequired
+    itemSearchUrl: React.PropTypes.string.isRequired
   },
   getInitialState: function() {
     return {
@@ -174,7 +174,7 @@ var ShowcaseEditor = React.createClass({
         <ShowcaseEditorTitle showcase={this.state.showcase} />
         <SectionList sections={this.state.showcase.sections} onSectionClick={this.sectionClick} currentDragItem={this.state.currentDragItem} onDrop={this.onDrop} onDragStart={this.onDragStart} onDragStop={this.onDragStop} />
       </div>
-      <AddItemsBar onDragStart={this.onDragStart} onDragStop={this.onDragStop} itemsJSONPath={this.props.itemsJSONPath} />
+      <AddItemsBar onDragStart={this.onDragStart} onDragStop={this.onDragStop} itemSearchUrl={this.props.itemSearchUrl} />
     </div>);
   }
 });

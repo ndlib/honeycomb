@@ -5,7 +5,7 @@ class SectionForm
     if controller.params[:id]
       section = SectionQuery.new.find(controller.params[:id])
     else
-      showcase = ShowcaseQuery.new.find(controller.params[:showcase_id])
+      showcase = ShowcaseQuery.new.public_find(controller.params[:showcase_id])
       section = SectionQuery.new(showcase.sections).build
       section.order = controller.params[:section][:order]
     end
