@@ -58,7 +58,7 @@ var DeleteButton = React.createClass({
       deleting: true,
     });
 
-    let id = this.props.id;
+    var id = this.props.id;
     switch(this.props.type) {
       case 'item':
         ItemStore.on("ItemDeleteFinished", this.deleteSuccess);
