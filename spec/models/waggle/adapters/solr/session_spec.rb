@@ -30,7 +30,7 @@ RSpec.describe Waggle::Adapters::Solr::Session do
   end
 
   context "indexing" do
-    let(:items) { [instance_double(Waggle::Item, id: "item-1", type: "Item"), instance_double(Waggle::Item, id: "item-2", type: "Item")] }
+    let(:items) { [instance_double(Waggle::Item, id: "item-1", type: "Item", collection_id: "collection-1"), instance_double(Waggle::Item, id: "item-2", type: "Item", collection_id: "collection-2")] }
     let(:connection) { instance_double(RSolr::Client) }
 
     before do
@@ -67,7 +67,7 @@ RSpec.describe Waggle::Adapters::Solr::Session do
         items.each do |waggle_item|
           expect(Waggle::Adapters::Solr::Index::Item).to receive(:new).with(waggle_item: waggle_item).and_call_original
         end
-        expect(connection).to receive(:delete_by_id).with(["item-1 Item", "item-2 Item"])
+        expect(connection).to receive(:delete_by_id).with(["collection-1 item-1", "collection-2 item-2"])
         subject
       end
     end
