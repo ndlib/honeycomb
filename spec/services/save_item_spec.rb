@@ -31,6 +31,12 @@ RSpec.describe SaveItem, type: :model do
     expect(subject).to be false
   end
 
+  it "skips indexing if passed index: false" do
+    allow(item).to receive(:save).and_return(true)
+    expect(Index::Item).not_to receive(:index!)
+    described_class.call(item, params, index: false)
+  end
+
   it "uses the param cleaner before setting item attributes" do
     expect(ParamCleaner).to receive(:call).with(hash: params).ordered
     expect(item).to receive(:attributes=).with("unique_id" => "ad").ordered

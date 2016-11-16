@@ -23,9 +23,9 @@ RSpec.describe GoogleCreateItems, helpers: :item_meta_helpers do
   let(:errors) { instance_double(ActiveModel::Errors, full_messages: []) }
   let(:metadata_fields) { instance_double(Metadata::Fields, errors: errors) }
   let(:item) { instance_double(Item, valid?: true, changed?: false, new_record?: false, errors: errors, item_metadata: metadata_fields, validate: true) }
-  let(:item_creator) { instance_double(FindOrCreateItem, using: item, save: true, new_record?: true, item: item) }
+  let(:item_creator) { instance_double(FindOrCreateItem, using: item, save: true, new_record?: true, changed?: false, item: item) }
   let(:worksheet) { instance_double(GoogleDrive::Worksheet) }
-  let(:param_hash) { { auth_code: "auth", callback_uri: "callback", collection_id: 1, file: "file", sheet: "sheet" } }
+  let(:param_hash) { { auth_code: "auth", callback_uri: "callback", collection: collection, file: "file", sheet: "sheet" } }
   let(:configuration) do
     double(
       Metadata::Configuration,
@@ -35,7 +35,7 @@ RSpec.describe GoogleCreateItems, helpers: :item_meta_helpers do
       label: double(name: :name, multiple: true, type: :string)
     )
   end
-
+  let(:collection) { instance_double(Collection, id: 1) }
   let(:subject) { described_class.call(param_hash) }
 
   before (:each) do
@@ -44,6 +44,7 @@ RSpec.describe GoogleCreateItems, helpers: :item_meta_helpers do
     allow_any_instance_of(GoogleSession).to receive(:worksheet_to_hash).and_return(items)
     allow(FindOrCreateItem).to receive(:new).and_return(item_creator)
     allow(SaveItem).to receive(:call).and_return true
+    allow(Index::Collection).to receive(:index!).and_return true
     allow_any_instance_of(described_class).to receive(:configuration).and_return(configuration)
   end
 
@@ -66,7 +67,7 @@ RSpec.describe GoogleCreateItems, helpers: :item_meta_helpers do
     allow_any_instance_of(GoogleSession).to receive(:worksheet_to_hash).and_return([{ item: "item" }])
     creator = GoogleCreateItems.new(auth_code: param_hash[:auth_code], callback_uri: param_hash[:callback_uri])
     expect(CreateItems).to receive(:call).with(hash_including(items_hash: [{ item: "item" }]))
-    creator.create_from_worksheet!(collection_id: param_hash[:collection_id], file: param_hash[:file], sheet: param_hash[:sheet])
+    creator.create_from_worksheet!(collection: collection, file: param_hash[:file], sheet: param_hash[:sheet])
   end
 
   context "worksheet has items" do
@@ -76,13 +77,13 @@ RSpec.describe GoogleCreateItems, helpers: :item_meta_helpers do
       expect(RewriteItemMetadata).to receive(:call).with(item_hash: items[0], errors: [], configuration: configuration).and_return({})
       expect(RewriteItemMetadata).to receive(:call).with(item_hash: items[1], errors: [], configuration: configuration).and_return({})
       expect(RewriteItemMetadata).to receive(:call).with(item_hash: items[2], errors: [], configuration: configuration).and_return({})
-      creator.create_from_worksheet!(collection_id: param_hash[:collection_id], file: param_hash[:file], sheet: param_hash[:sheet])
+      creator.create_from_worksheet!(collection: collection, file: param_hash[:file], sheet: param_hash[:sheet])
     end
 
     it "returns a hash with summary" do
       allow_any_instance_of(GoogleSession).to receive(:worksheet_to_hash).and_return(items)
       creator = GoogleCreateItems.new(auth_code: param_hash[:auth_code], callback_uri: param_hash[:callback_uri])
-      results = creator.create_from_worksheet!(collection_id: param_hash[:collection_id], file: param_hash[:file], sheet: param_hash[:sheet])
+      results = creator.create_from_worksheet!(collection: collection, file: param_hash[:file], sheet: param_hash[:sheet])
       expected = { summary: { total_count: 3, valid_count: 3, new_count: 3, error_count: 0, changed_count: 0, unchanged_count: 0 } }
       expect(results).to include(expected)
     end
@@ -90,7 +91,7 @@ RSpec.describe GoogleCreateItems, helpers: :item_meta_helpers do
     it "returns a hash with errors" do
       allow_any_instance_of(GoogleSession).to receive(:worksheet_to_hash).and_return(items)
       creator = GoogleCreateItems.new(auth_code: param_hash[:auth_code], callback_uri: param_hash[:callback_uri])
-      results = creator.create_from_worksheet!(collection_id: param_hash[:collection_id], file: param_hash[:file], sheet: param_hash[:sheet])
+      results = creator.create_from_worksheet!(collection: collection, file: param_hash[:file], sheet: param_hash[:sheet])
       expect(results).to include(:errors)
     end
   end
@@ -99,7 +100,7 @@ RSpec.describe GoogleCreateItems, helpers: :item_meta_helpers do
     it "returns a hash with summary" do
       allow_any_instance_of(GoogleSession).to receive(:worksheet_to_hash).and_return([])
       creator = GoogleCreateItems.new(auth_code: param_hash[:auth_code], callback_uri: param_hash[:callback_uri])
-      results = creator.create_from_worksheet!(collection_id: param_hash[:collection_id], file: param_hash[:file], sheet: param_hash[:sheet])
+      results = creator.create_from_worksheet!(collection: collection, file: param_hash[:file], sheet: param_hash[:sheet])
       expected = { summary: { total_count: 0, valid_count: 0, new_count: 0, error_count: 0, changed_count: 0, unchanged_count: 0 } }
       expect(results).to include(expected)
     end
@@ -107,7 +108,7 @@ RSpec.describe GoogleCreateItems, helpers: :item_meta_helpers do
     it "returns a hash with errors" do
       allow_any_instance_of(GoogleSession).to receive(:worksheet_to_hash).and_return([])
       creator = GoogleCreateItems.new(auth_code: param_hash[:auth_code], callback_uri: param_hash[:callback_uri])
-      results = creator.create_from_worksheet!(collection_id: param_hash[:collection_id], file: param_hash[:file], sheet: param_hash[:sheet])
+      results = creator.create_from_worksheet!(collection: collection, file: param_hash[:file], sheet: param_hash[:sheet])
       expect(results).to include(errors: [])
     end
   end
