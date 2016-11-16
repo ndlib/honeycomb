@@ -6,6 +6,10 @@ describe Destroy::Showcase do
   let(:destroy_section) { instance_double(Destroy::Section, cascade!: nil) }
   let(:subject) { Destroy::Showcase.new(destroy_section: destroy_section) }
 
+  before (:each) do
+    allow_any_instance_of(SiteObjectsQuery).to receive(:exists?).and_return(false)
+  end
+
   describe "#destroy" do
     it "destroys the Showcase" do
       expect(showcase).to receive(:destroy!)

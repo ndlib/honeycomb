@@ -27,7 +27,11 @@ class ShowcaseQuery
     relation.find_by!(unique_id: id)
   end
 
+  def self.can_delete_showcase?(showcase)
+    !SiteObjectsQuery.new.exists?(collection_object: showcase)
+  end
+
   def can_delete?
-    !SiteObjectsQuery.new.exists?(collection_object: relation)
+    ShowcaseQuery.can_delete_showcase?(relation)
   end
 end

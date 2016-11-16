@@ -3,6 +3,10 @@ require "rails_helper"
 describe Destroy::Page do
   let(:page) { instance_double(Page, id: 1) }
 
+  before (:each) do
+    allow_any_instance_of(SiteObjectsQuery).to receive(:exists?).and_return(false)
+  end
+
   describe "#destroy" do
     it "destroys the Page" do
       expect(page).to receive(:destroy!)
