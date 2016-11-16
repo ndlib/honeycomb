@@ -11,7 +11,7 @@ module Waggle
           end
 
           def id
-            "#{waggle_item.id} #{waggle_item.type}"
+            "#{waggle_item.collection_id} #{waggle_item.id}"
           end
 
           def metadata
