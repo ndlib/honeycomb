@@ -175,8 +175,9 @@ var ItemList = React.createClass({
           // lower levels under Item require a media object with the thumbnail and @type
           item["media"] = {
             thumbnailUrl: item.thumbnailURL,
+            contentUrl: item.thumbnailURL,
           }
-          item["media"]["@type"] = item["@type"];
+          item["media"]["@type"] = item.type;
 
           itemNodes.push(<Item item={item} key={key} onDragStart={onDragStart} onDragStop={onDragStop} />);
         }
