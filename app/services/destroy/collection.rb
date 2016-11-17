@@ -22,13 +22,13 @@ module Destroy
           destroy_collection_user.cascade!(collection_user: child)
         end
         collection.showcases.each do |child|
-          destroy_showcase.cascade!(showcase: child)
+          destroy_showcase.force_cascade!(showcase: child)
         end
         collection.items.each do |child|
           destroy_item.cascade!(item: child)
         end
         collection.pages.each do |child|
-          @destroy_page.cascade!(page: child)
+          @destroy_page.force_cascade!(page: child)
         end
         if collection.collection_configuration
           @destroy_collection_configuration.cascade!(collection_configuration: collection.collection_configuration)

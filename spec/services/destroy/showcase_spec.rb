@@ -15,6 +15,12 @@ describe Destroy::Showcase do
       expect(showcase).to receive(:destroy!)
       subject.destroy!(showcase: showcase)
     end
+
+    it "does not destroy the Showcase if CanDelete fails" do
+      expect(CanDelete).to receive(:showcase?).and_return(false)
+      expect(showcase).not_to receive(:destroy!)
+      subject.destroy!(showcase: showcase)
+    end
   end
 
   describe "#cascade" do
@@ -26,6 +32,22 @@ describe Destroy::Showcase do
     it "destroys the Section" do
       expect(showcase).to receive(:destroy!)
       subject.cascade!(showcase: showcase)
+    end
+
+    it "does not destroy the Section if CanDelete fails" do
+      expect(CanDelete).to receive(:showcase?).and_return(false)
+      expect(showcase).not_to receive(:destroy!)
+      subject.cascade!(showcase: showcase)
+    end
+
+    it "returns nil if CanDelete fails" do
+      expect(CanDelete).to receive(:showcase?).and_return(false)
+      expect(subject.cascade!(showcase: showcase)).to be(nil)
+    end
+
+    it "can force destroy the showcase" do
+      expect(showcase).to receive(:destroy!)
+      subject.force_cascade!(showcase: showcase)
     end
   end
 
