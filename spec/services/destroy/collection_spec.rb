@@ -3,8 +3,8 @@ require "rails_helper"
 describe Destroy::Collection do
   describe "#cascade" do
     let(:destroy_item) { instance_double(Destroy::Item, cascade!: nil) }
-    let(:destroy_showcase) { instance_double(Destroy::Showcase, cascade!: nil) }
-    let(:destroy_page) { instance_double(Destroy::Page, cascade!: nil) }
+    let(:destroy_showcase) { instance_double(Destroy::Showcase, force_cascade!: nil) }
+    let(:destroy_page) { instance_double(Destroy::Page, force_cascade!: nil) }
     let(:destroy_collection_user) { instance_double(Destroy::CollectionUser, cascade!: nil) }
     let(:destroy_collection_configuration) { instance_double(Destroy::CollectionConfiguration, cascade!: nil) }
     let(:subject) do
@@ -35,17 +35,17 @@ describe Destroy::Collection do
     end
 
     it "calls DestroyShowcase.cascade on all associated showcases" do
-      expect(destroy_showcase).to receive(:cascade!).with(showcase: showcase).twice
+      expect(destroy_showcase).to receive(:force_cascade!).with(showcase: showcase).twice
       subject.cascade!(collection: collection)
     end
 
     it "calls DestroyPage.cascade on all associated pages" do
-      expect(destroy_page).to receive(:cascade!).with(page: page).twice
+      expect(destroy_page).to receive(:force_cascade!).with(page: page).twice
       subject.cascade!(collection: collection)
     end
 
     it "calls DestroyShowcase then DestroyItem to prevent FK constraints on Item->Section" do
-      expect(destroy_showcase).to receive(:cascade!).with(showcase: showcase).at_least(:once).ordered
+      expect(destroy_showcase).to receive(:force_cascade!).with(showcase: showcase).at_least(:once).ordered
       expect(destroy_item).to receive(:cascade!).with(item: item).at_least(:once).ordered
       subject.cascade!(collection: collection)
     end
@@ -152,7 +152,7 @@ describe Destroy::Collection do
     end
 
     it "rolls back if an error occurs with Destroy::Showcase" do
-      allow(destroy_showcase).to receive(:cascade!).with(showcase: showcase).and_raise("error")
+      allow(destroy_showcase).to receive(:force_cascade!).with(showcase: showcase).and_raise("error")
       expect { subject.cascade!(collection: collection) }.to raise_error("error")
       data_still_exists!
     end

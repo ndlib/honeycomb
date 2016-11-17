@@ -24,6 +24,6 @@ class PageQuery
   end
 
   def can_delete?
-    !SiteObjectsQuery.new.exists?(collection_object: relation)
+    CanDelete.page?(relation)
   end
 end

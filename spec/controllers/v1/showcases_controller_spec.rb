@@ -69,6 +69,7 @@ RSpec.describe V1::ShowcasesController, type: :controller do
 
     before(:each) do
       sign_in_admin
+      allow_any_instance_of(SiteObjectsQuery).to receive(:exists?).and_return(false)
     end
 
     it "is successful" do

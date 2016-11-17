@@ -6,9 +6,19 @@ describe Destroy::Showcase do
   let(:destroy_section) { instance_double(Destroy::Section, cascade!: nil) }
   let(:subject) { Destroy::Showcase.new(destroy_section: destroy_section) }
 
+  before (:each) do
+    allow_any_instance_of(SiteObjectsQuery).to receive(:exists?).and_return(false)
+  end
+
   describe "#destroy" do
     it "destroys the Showcase" do
       expect(showcase).to receive(:destroy!)
+      subject.destroy!(showcase: showcase)
+    end
+
+    it "does not destroy the Showcase if CanDelete fails" do
+      expect(CanDelete).to receive(:showcase?).and_return(false)
+      expect(showcase).not_to receive(:destroy!)
       subject.destroy!(showcase: showcase)
     end
   end
@@ -22,6 +32,22 @@ describe Destroy::Showcase do
     it "destroys the Section" do
       expect(showcase).to receive(:destroy!)
       subject.cascade!(showcase: showcase)
+    end
+
+    it "does not destroy the Section if CanDelete fails" do
+      expect(CanDelete).to receive(:showcase?).and_return(false)
+      expect(showcase).not_to receive(:destroy!)
+      subject.cascade!(showcase: showcase)
+    end
+
+    it "returns nil if CanDelete fails" do
+      expect(CanDelete).to receive(:showcase?).and_return(false)
+      expect(subject.cascade!(showcase: showcase)).to be(nil)
+    end
+
+    it "can force destroy the showcase" do
+      expect(showcase).to receive(:destroy!)
+      subject.force_cascade!(showcase: showcase)
     end
   end
 

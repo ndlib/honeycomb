@@ -28,6 +28,6 @@ class ShowcaseQuery
   end
 
   def can_delete?
-    !SiteObjectsQuery.new.exists?(collection_object: relation)
+    CanDelete.showcase?(relation)
   end
 end

@@ -2,7 +2,7 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe ShowcasesController, type: :controller do
-  let(:showcase) { instance_double(Showcase, id: 1, unique_id: 1, name_line_1: "name_line_1", collection: collection, sections: [], destroy!: true) }
+  let(:showcase) { instance_double(Showcase, id: 1, unique_id: 1, name_line_1: "name_line_1", collection: collection, collection_id: collection.id, sections: [], destroy!: true) }
   let(:collection) { instance_double(Collection, id: 1, name_line_1: "name_line_1", showcases: relation) }
 
   let(:relation) { Showcase.all }
@@ -264,6 +264,10 @@ RSpec.describe ShowcasesController, type: :controller do
 
   describe "DELETE #destroy" do
     subject { delete :destroy, id: showcase.id }
+
+    before (:each) do
+      allow_any_instance_of(SiteObjectsQuery).to receive(:exists?).and_return(false)
+    end
 
     it "on success, redirects, and flashes " do
       subject

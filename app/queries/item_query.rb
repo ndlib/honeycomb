@@ -27,11 +27,7 @@ class ItemQuery
     relation.find_by!(unique_id: id)
   end
 
-  def self.can_delete_item?(item)
-    !item.showcases.any? && !item.pages.any? && !item.children.any?
-  end
-
   def can_delete?
-    ItemQuery.can_delete_item?(relation)
+    CanDelete.item?(relation)
   end
 end

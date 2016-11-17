@@ -192,6 +192,7 @@ RSpec.describe PagesController, type: :controller do
 
     before(:each) do
       allow(DestroyPageItemAssociations).to receive(:call).and_return(1)
+      allow_any_instance_of(SiteObjectsQuery).to receive(:exists?).and_return(false)
     end
 
     it "on success, redirects" do
