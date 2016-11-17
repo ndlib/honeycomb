@@ -4,15 +4,15 @@ describe Destroy::Item do
   let(:section) { instance_double(Section, destroy!: true) }
   let(:page) { instance_double(Page, destroy!: true) }
   let(:showcase) { instance_double(Showcase) }
-  let(:child) { instance_double(Item, pages: [], sections: [], children: [child2], destroy!: true) }
-  let(:child2) { instance_double(Item, pages: [], sections: [], children: [], destroy!: true) }
+  let(:child) { instance_double(Item, pages: [], showcases: [], sections: [], children: [child2], destroy!: true) }
+  let(:child2) { instance_double(Item, pages: [], showcases: [], sections: [], children: [], destroy!: true) }
   let(:item) do
     instance_double(
-      Item, pages: [page, page, page], sections: [section, section], children: [child, child], destroy!: true, item_metadata: double(valid?: true)
+      Item, pages: [page, page, page], showcases: [], sections: [section, section], children: [child, child], destroy!: true, item_metadata: double(valid?: true)
     )
   end
-  let(:item2) { instance_double(Item, pages: [], sections: [], children: [], destroy!: true, item_metadata: double(valid?: true)) }
-  let(:item3) { instance_double(Item, pages: [], sections: [section, section], children: [child, child], destroy!: true, item_metadata: double(valid?: true)) }
+  let(:item2) { instance_double(Item, pages: [], showcases: [], sections: [], children: [], destroy!: true, item_metadata: double(valid?: true)) }
+  let(:item3) { instance_double(Item, pages: [], showcases: [], sections: [section, section], children: [child, child], destroy!: true, item_metadata: double(valid?: true)) }
 
   let(:destroy_section) { instance_double(Destroy::Section, cascade!: nil) }
   let(:subject) { Destroy::Item.new(destroy_section: destroy_section) }
@@ -76,14 +76,16 @@ describe Destroy::Item do
       # it out will cause it to never call cascade on the child objects. Instead,
       # it tests to see that it calls destroy on the item's children, and it's
       # childrens' children, implying that cascade was properly called.
-      expect(child).to receive(:destroy!).twice
-      expect(child2).to receive(:destroy!).twice
+      allow(CanDelete).to receive(:item?)
+      expect(CanDelete).to receive(:item?).with(child).twice
+      expect(CanDelete).to receive(:item?).with(child2).twice
       subject.cascade!(item: item)
     end
 
     it "destroys sections before children to prevent FK constraints on Item->Section" do
       expect(destroy_section).to receive(:cascade!).with(section: section).at_least(:once).ordered
-      expect(child).to receive(:destroy!).at_least(:once).ordered
+      allow(CanDelete).to receive(:item?)
+      expect(CanDelete).to receive(:item?).with(child).at_least(:once)
       subject.cascade!(item: item)
     end
 

@@ -9,14 +9,14 @@ module Destroy
 
     # Destroy the object only
     def destroy!(showcase:)
-      if ShowcaseQuery.can_delete_showcase?(showcase)
+      if CanDelete.showcase?(showcase)
         showcase.destroy!
       end
     end
 
     # Destroys this object and all associated objects.
     def cascade!(showcase: showcase)
-      if ShowcaseQuery.can_delete_showcase?(showcase)
+      if CanDelete.showcase?(showcase)
         ActiveRecord::Base.transaction do
           showcase.sections.each do |child|
             @destroy_section.cascade!(section: child)

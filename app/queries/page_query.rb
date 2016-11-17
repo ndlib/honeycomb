@@ -23,11 +23,7 @@ class PageQuery
     relation.find_by!(unique_id: id)
   end
 
-  def self.can_delete_page?(page)
-    !SiteObjectsQuery.new.exists?(collection_object: page)
-  end
-
   def can_delete?
-    PageQuery.can_delete_page?(relation)
+    CanDelete.page?(relation)
   end
 end
