@@ -15,7 +15,7 @@ module Destroy
     end
 
     # Destroys this object and all associated objects.
-    def force_cascade!(showcase: showcase)
+    def force_cascade!(showcase:)
       ActiveRecord::Base.transaction do
         showcase.sections.each do |child|
           @destroy_section.cascade!(section: child)
@@ -24,7 +24,7 @@ module Destroy
       end
     end
 
-    def cascade!(showcase: showcase)
+    def cascade!(showcase:)
       if CanDelete.showcase?(showcase)
         force_cascade!(showcase: showcase)
       end
