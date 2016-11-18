@@ -29,6 +29,13 @@ class ReplacePageItem
   end
 
   def new_image_uri
-    @item.media.json_response["thumbnail/medium"]["contentUrl"]
+    case @item.media.type
+    when "Video", "Audio"
+      @item.media.thumbnail_url
+    when "Image"
+      @item.media.json_response["thumbnail/medium"]["contentUrl"]
+    else
+      ""
+    end
   end
 end

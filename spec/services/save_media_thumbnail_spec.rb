@@ -38,7 +38,8 @@ RSpec.describe SaveMediaThumbnail do
                     data: { object: "test" },
                     save!: true,
                     uuid: "xxxx-yyyy-zzzz",
-                    items: [item])
+                    items: [item],
+                    type: "type")
   end
 
   let(:collection) { double(Collection, id: 100, image: image_file, save: true) }
