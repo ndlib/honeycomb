@@ -12,6 +12,7 @@ module CacheKeys
                                                       showcase.collection.collection_configuration,
                                                       showcase.sections,
                                                       showcase.items,
+                                                      showcase.items_media,
                                                       showcase.next])
       end
     end

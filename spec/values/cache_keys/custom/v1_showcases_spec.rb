@@ -23,6 +23,7 @@ RSpec.describe CacheKeys::Custom::V1Showcases do
                       collection: collection,
                       sections: "sections",
                       items: "items",
+                      items_media: "items.media",
                       next: "next",
                       object: showcase)
     end
@@ -33,9 +34,16 @@ RSpec.describe CacheKeys::Custom::V1Showcases do
     end
 
     it "uses the correct data" do
+      record = [showcase,
+                showcase_json.collection,
+                collection.collection_configuration,
+                showcase_json.sections,
+                showcase_json.items,
+                showcase_json.items_media,
+                showcase_json.next]
       expect_any_instance_of(CacheKeys::ActiveRecord).
         to receive(:generate).
-        with(record: [showcase, showcase_json.collection, collection.collection_configuration, showcase_json.sections, showcase_json.items, showcase_json.next])
+        with(record: record)
       subject.show(showcase: showcase_json)
     end
   end

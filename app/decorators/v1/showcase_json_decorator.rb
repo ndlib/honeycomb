@@ -1,7 +1,7 @@
 
 module V1
   class ShowcaseJSONDecorator < Draper::Decorator
-    delegate :id, :description, :collection, :unique_id, :updated_at, :name, :name_line_1, :name_line_2, :items
+    delegate :id, :description, :collection, :unique_id, :updated_at, :name, :name_line_1, :name_line_2, :items, :items_media
 
     def self.display(showcase, json)
       new(showcase).display(json)
