@@ -38,9 +38,14 @@ var SectionImage = React.createClass({
 
     var imgUrl = null;
     var type = "";
-    if(this.props.section.data && this.props.section.data.thumbnail_url) {
-      imgUrl = this.props.section.data.thumbnail_url;
-      type = this.props.section.data.json_response["@type"];
+    var data = this.props.section.data;
+    if(data) {
+      type = data.json_response["@type"];
+      if(data.thumbnail_url) {
+        imgUrl = data.thumbnail_url;
+      } else if(type == "ImageObject") {
+        imgUrl = data.json_response.contentUrl;
+      }
     } else if(this.props.section.image) {
       imgUrl = this.props.section.image;
     }
