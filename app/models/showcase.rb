@@ -3,7 +3,7 @@ class Showcase < ActiveRecord::Base
   has_many :sections
   has_many :items, through: :sections
   belongs_to :image, class_name: "Image", foreign_key: :media_id
-
+  has_many :items_media, through: :items, class_name: "Media", source: :media
   validates :name_line_1, :collection, :unique_id, presence: true
 
   has_paper_trail
