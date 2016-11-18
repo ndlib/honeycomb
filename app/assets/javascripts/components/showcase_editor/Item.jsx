@@ -58,17 +58,14 @@ var Item = React.createClass({
   },
 
   render: function() {
-    var media = {}
-    media["@type"] = this.props.item["@type"];
-    media["thumbnailUrl"] = this.props.item["thumbnailURL"];
     var dragContent = (
-      <MediaImage media={media} style="small" cssStyle={{height: '100px', margin: '5px'}} title={this.props.item.name} />
+      <MediaImage media={this.props.item.media} style="small" cssStyle={{height: '100px', margin: '5px'}} title={this.props.item.name} />
     );
     return (
       <div className='cursor-grab' onMouseDown={this.onMouseDown} style={this.style()}>
         <DragContent content={dragContent} dragging={this.state.dragging} left={this.state.left} top={this.state.top} />
         {this.title()}
-        <MediaImage media={media} style="small" cssStyle={{height: '100px', margin: '5px'}} title={this.props.item.name} />
+        <MediaImage media={this.props.item.media} style="small" cssStyle={{height: '100px', margin: '5px'}} title={this.props.item.name} />
       </div>
     );
   }
