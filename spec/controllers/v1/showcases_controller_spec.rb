@@ -3,7 +3,7 @@ require "cache_spec_helper"
 
 RSpec.describe V1::ShowcasesController, type: :controller do
   let(:collection) { instance_double(Collection, id: "1", updated_at: nil, showcases: nil, collection_configuration: "collection_configuration") }
-  let(:showcase) { instance_double(Showcase, id: "1", updated_at: nil, sections: [], items: [], collection: collection, destroy!: true) }
+  let(:showcase) { instance_double(Showcase, id: "1", updated_at: nil, sections: [], items: [], items_media: [], collection: collection, destroy!: true) }
 
   before(:each) do
     allow_any_instance_of(ShowcaseQuery).to receive(:public_find).and_return(showcase)
