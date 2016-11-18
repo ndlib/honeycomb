@@ -60,7 +60,7 @@ var ItemForm = React.createClass({
     var item = ItemStore.get(this.props.id);
     this.setState({ item: ItemStore.get(this.props.id)})
 
-    if (item.media && item.media.status == "processing") {
+    if (item.media && item.media.status == "not ready") {
       setTimeout(this.loadItem, 4000);
     }
   },
