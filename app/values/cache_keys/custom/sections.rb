@@ -3,7 +3,8 @@ module CacheKeys
     # Generator for sections_controller
     class Sections
       def edit(section:)
-        CacheKeys::ActiveRecord.new.generate(record: [section, section.collection, section.item.media])
+        media = section.item.media if section.item else ""
+        CacheKeys::ActiveRecord.new.generate(record: [section, section.collection, media])
       end
     end
   end
