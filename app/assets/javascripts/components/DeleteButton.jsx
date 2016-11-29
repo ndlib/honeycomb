@@ -100,7 +100,7 @@ var DeleteButton = React.createClass({
   cancelDismiss: function() {
     return (
         <mui.FlatButton
-        label="Cacnel"
+        label="Cancel"
         primary={true}
         onTouchTap={this.dismissMessage}
       />

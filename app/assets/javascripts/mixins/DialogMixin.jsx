@@ -8,7 +8,7 @@ var DialogMixin = {
   cancelDismiss: function() {
     return (
         <FlatButton
-        label="Cacnel"
+        label="Cancel"
         primary={true}
         onTouchTap={this.dismissMessage}
       />
