@@ -3,7 +3,10 @@ require "rails_helper"
 describe ReplacePageItem do
   let(:page_content) { File.read(Rails.root.join("spec/fixtures/sample_page_content.txt")) }
   let(:collection) { Collection.new(id: 1) }
-  let(:page) { Page.new(id: 1, content: page_content, collection: collection, collection_id: collection.id) }
+  let(:page) { Page.new(id: 1, content: page_content, collection: collection, collection_id: collection.id, ) }
+  let(:image) { instance_double(Image, type: "Image") }
+  let(:video) { instance_double(Video, type: "Video") }
+  let(:audio) { instance_double(Audio, type: "Audio") }
   let(:item) { Item.new(unique_id: "ec625c51db", pages: [page]) }
   subject { described_class.call(page, item) }
 
@@ -28,11 +31,29 @@ describe ReplacePageItem do
     end
   end
 
-  it "correctly retrieves the url from item media" do
+  it "correctly retrieves the url from item image" do
     data = { "thumbnail/medium" => { "contentUrl" => "http://no.where" }}
-    expect(page).to receive(:json_response).exactly(2).times.and_return(data)
-    expect(page).to receive(:save!).and_return(true)
-    expect(item).to receive(:media).exactly(2).times.and_return(page)
+    allow(page).to receive(:save!).and_return(true)
+    allow(item).to receive(:media).and_return(image)
+    expect(image).to receive(:json_response).exactly(2).times.and_return(data)
+
+    subject
+  end
+
+  it "correctly retrieves the url from item video" do
+    data = { "thumbnail/medium" => { "contentUrl" => "http://no.where" }}
+    allow(page).to receive(:save!).and_return(true)
+    allow(item).to receive(:media).and_return(video)
+    expect(video).to receive(:thumbnail_url).exactly(2).times.and_return(data)
+
+    subject
+  end
+
+  it "correctly retrieves the url from item audio" do
+    data = { "thumbnail/medium" => { "contentUrl" => "http://no.where" }}
+    allow(page).to receive(:save!).and_return(true)
+    allow(item).to receive(:media).and_return(audio)
+    expect(audio).to receive(:thumbnail_url).exactly(2).times.and_return(data)
 
     subject
   end
