@@ -1,5 +1,21 @@
 # Change Log
 
+## [3.5.0](https://github.com/ndlib/honeycomb/tree/v3.5.0) (2016-11-30)
+[Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.4.0...v3.5.0)
+
+###New features/enhancements:###
+  - Most Recently created collections are now listed at the top of the collection page. [DEC-1302](https://jira.library.nd.edu/browse/DEC-1302)
+  - Items, Pages, and Showcases now have a quick-delete button on their listing pages. [DEC-450](https://jira.library.nd.edu/browse/DEC-450)
+  - Importing items is now possible thorugh CSV files as well as google sheets. [DEC-535](https://jira.library.nd.edu/browse/DEC-535)
+  - Icons accross the website are now visible in IE [DEC-977](https://jira.library.nd.edu/browse/DEC-977)
+  - Media (Audio/Video) items are now creatable and their thumbnail is customizable ([DEC-1156](https://jira.library.nd.edu/browse/DEC-1156), [DEC-1151](https://jira.library.nd.edu/browse/DEC-1151), [DEC-1115](https://jira.library.nd.edu/browse/DEC-1115))
+  - Images and Media are placable in Showcases and Pages [DEC-1109](https://jira.library.nd.edu/browse/DEC-1109)
+  - Showcase editor handle large collections more easily by paginating the item list and allowing users to search for those items they'd like to add [DEC-1299](https://jira.library.nd.edu/browse/DEC-1299)
+
+###Bug fixes:###
+  - Fixed a bug where an images could be stuck "uploading" forever. [DEC-1127](https://jira.library.nd.edu/browse/DEC-1127)
+  - When browsing a collection it was possible to get into a state where a selected search facet would dissapear from the list but remain selected. This is fixed and now selected facets are always visible. [DEC-1133](https://jira.library.nd.edu/browse/DEC-1133)
+
 ## [3.4.0](https://github.com/ndlib/honeycomb/tree/v3.4.0) (2016-07-15)
 [Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.3.2...v3.4.0)
 
@@ -27,7 +43,7 @@
   - Fixed broken preview links ([DEC-1101](https://jira.library.nd.edu/browse/DEC-1101), [#405](https://github.com/ndlib/honeycomb/pull/405))
   - Added missing Apple touch icons ([DEC-865](https://jira.library.nd.edu/browse/DEC-865), [#406](https://github.com/ndlib/honeycomb/pull/406))
   - Users can now preview a collection that has a custom url ([DEC-1140](https://jira.library.nd.edu/browse/DEC-1140), [#409](https://github.com/ndlib/honeycomb/pull/409))
-  
+
 ## [3.3.2](https://github.com/ndlib/honeycomb/tree/v3.3.2) (2016-06-27)
 [Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.3.1...v3.3.2)
 
@@ -148,7 +164,7 @@
   - Merge handling of description fields ([DEC-617](https://jira.library.nd.edu/browse/DEC-617), [#273](https://github.com/ndlib/honeycomb/pull/273))
   - Merge exhibit name into collection name_line_1, name_line_2 ([DEC-615](https://jira.library.nd.edu/browse/DEC-615), [#268](https://github.com/ndlib/honeycomb/pull/268))
   - Merge URL field into collection model ([DEC-616](https://jira.library.nd.edu/browse/DEC-616), [#267](https://github.com/ndlib/honeycomb/pull/267))
-  
+
 ###Bug fixes:###
 - Images are broken in a few places ([DEC-839](https://jira.library.nd.edu/browse/DEC-839), [#341](https://github.com/ndlib/honeycomb/pull/341))
 - Search and Browse Stretched Images ([DEC-774](https://jira.library.nd.edu/browse/DEC-774), [#314](https://github.com/ndlib/honeycomb/pull/314))
