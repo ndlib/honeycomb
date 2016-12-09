@@ -93,6 +93,9 @@
      <lib path="../a-jar-that-does-not-exist.jar" />
   -->
 
+  <lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lib" />
+  <lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs" />
+
   <!-- Data Directory
 
        Used to specify an alternate directory to hold all index data
@@ -765,7 +768,7 @@
 
   <initParams path="/update/**,/query,/select,/tvrh,/elevate,/spell,/browse">
     <lst name="defaults">
-      <str name="df">_text_</str>
+      <str name="df">text</str>
     </lst>
   </initParams>
 
