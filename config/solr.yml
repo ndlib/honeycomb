@@ -4,7 +4,7 @@ default: &default
   path: /solr/default
 development:
   <<: *default
-  path: /solr/development
+  path: /solr/honeycomb
 test:
   <<: *default
   port: 8981

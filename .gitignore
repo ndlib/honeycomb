@@ -27,7 +27,6 @@ config/secrets.yml
 
 # Ignore solr data directories
 /solr/*/data
-managed-schema
 /solr/development
 
 # Ignore all logfiles and tempfiles.
