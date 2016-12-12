@@ -72,6 +72,7 @@
        The examples below can be used to load some solr-contribs along
        with their external dependencies.
     -->
+  <!--
   <lib dir="${solr.install.dir:../../../..}/contrib/extraction/lib" regex=".*\.jar" />
   <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-cell-\d.*\.jar" />
 
@@ -82,9 +83,12 @@
   <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-langid-\d.*\.jar" />
 
   <lib dir="${solr.install.dir:../../../..}/contrib/velocity/lib" regex=".*\.jar" />
+  -->
   <!-- browse-resources must come before solr-velocity JAR in order to override localized resources -->
+  <!--
   <lib path="${solr.install.dir:../../../..}/example/files/browse-resources"/>
   <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-velocity-\d.*\.jar" />
+  -->
   <!-- an exact 'path' can be used instead of a 'dir' to specify a
        specific jar file.  This will cause a serious error to be logged
        if it can't be loaded.
@@ -95,6 +99,10 @@
 
   <lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lib" />
   <lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs" />
+
+  <!-- brew install solr adds an additional subdir of libexec for some reason -->
+  <lib dir="${solr.install.dir:../../../..}/libexec/contrib/analysis-extras/lib" />
+  <lib dir="${solr.install.dir:../../../..}/libexec/contrib/analysis-extras/lucene-libs" />
 
   <!-- Data Directory
 
