@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!--
   IMPORTANT:
-  Rename this file to schema.xml, delete managed-schema, then reload
-  the core or restart solr in order to make changes.
+  Delete managed-schema, then reload the core or restart solr in order
+  to make changes.
 -->
 
 
