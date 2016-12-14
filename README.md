@@ -7,7 +7,7 @@
 Honeycomb provides basic collection and item administration, as well as serialization of your collections so they can be used by external applications.
 
 ## Dependencies
-Requires ruby v2.1.5, postgres 9.5.4+
+Requires ruby v2.1.5, postgres 9.5.4+, solr 6.3.0
 
 ## Installation Notes
 Honeycomb depends on other services for handling things like images, audio/video, and authentication. Some of these are configured in settings.yml, and others in secrets.yml. Ensure that the following keys are populated for your environment:
@@ -59,3 +59,9 @@ aws_access_key_id = <user key id>
 aws_secret_access_key = <user secret>
 ```
 See http://docs.aws.amazon.com/sdkforruby/api/#Configuration for more info.
+
+### solr
+Start solr and point it's home to your cloned copy's solr directory. See config/solr.yml for ports and core names that honeycomb will expect to use within each environment. Here's an example of how to start in development:
+```
+solr start -p 8982 -Dsolr.solr.home=/path/to/honeycomb/solr
+```
