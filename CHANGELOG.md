@@ -1,5 +1,12 @@
 # Change Log
 
+## [3.6.0](https://github.com/ndlib/honeycomb/tree/v3.6.0) (2016-12-14)
+[Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.5.0...v3.6.0)
+
+
+###New features/enhancements:###
+- Updated to SOLR 6.3.0 to support upcoming parent/child relationships ([DEC-1323](https://jira.library.nd.edu/browse/DEC-1323), [#477](https://github.com/ndlib/honeycomb/pull/477))
+
 ## [3.5.0](https://github.com/ndlib/honeycomb/tree/v3.5.0) (2016-11-30)
 [Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.4.0...v3.5.0)
 
