@@ -24,6 +24,38 @@ Television, Televisions, TV, TVs
 #notice we use "gib" instead of "GiB" so any WordDelimiterFilter coming
 #after us won't split it into two words.
 
-# Synonym mappings can be used for spelling correction too
-pixima => pixma
-
+# actual synonyms
+accused, alleged, criminal, defendant, suspect
+lgbt, bisexual, gay, homosexual, lesbian, transgender, lgbti
+ngo, nongovernmental
+pow, captive, prisoner
+abortion, termination
+business, organization, corporation
+daughter, son, baby, child, children, offspring, infant, kid, progeny, stepchild
+court, justice, appeals, appellate, law, criminal, federal, supreme, tribunal
+disabled, handicapped, disabilities
+old, aged, elderly, senior
+boss, employer
+cultural, ethnic, racial
+family, house, household, husband, wife, married, couple
+dad, daddy, father, male parent
+baby, fetus, foetus, unborn
+government, regime, state, authorities, empire, federal, government-in-exile
+indigenous, native
+itinerant, gipsy, gypsy
+military, armed, forces, reserve
+mother, mom, mommy
+offender, convict, culprit, delinquent, juvenile, perpetrator, criminal, wrongdoer
+parent, adoptive, father, female parent, mother, stepparent
+poor, homeless, needy, vulnerable
+prisoner, imprisoned, captive, detained, detainee, inmate
+religious, friar, mendicant, monk, nun, spiritual
+school, educational, institution, elementary, graduate
+sick, wounded
+state, body, city-state, commonwealth, country, origin, fatherland, foreign, government, homeland, nation, native, land, province
+united, nations, un
+victim, injured, sufferer
+woman, female, girl, lady, matriarch, matron, mistress, widow, wife
+worker, employee, workmate
+wounded, hurt, maimed
+youth, children, minor, child, juvenile, young
