@@ -1203,6 +1203,7 @@
         <str>yyyy-MM-dd</str>
       </arr>
     </processor>
+    <!--
     <processor class="solr.AddSchemaFieldsUpdateProcessorFactory">
       <str name="defaultFieldType">strings</str>
       <lst name="typeMapping">
@@ -1223,7 +1224,7 @@
         <str name="fieldType">tdoubles</str>
       </lst>
     </processor>
-
+    -->
     <processor class="solr.RunUpdateProcessorFactory"/>
   </updateRequestProcessorChain>
 
