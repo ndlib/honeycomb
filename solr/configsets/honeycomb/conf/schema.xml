@@ -418,7 +418,15 @@
          http://wiki.apache.org/solr/AnalyzersTokenizersTokenFilters
      -->
      <fieldType name="text" class="solr.TextField" positionIncrementGap="100">
-       <analyzer>
+       <analyzer type="index">
+         <tokenizer class="solr.StandardTokenizerFactory"/>
+         <filter class="solr.ICUFoldingFilterFactory" />
+         <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
+         <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+         <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
+         <filter class="solr.SnowballPorterFilterFactory" language="English" />
+       </analyzer>
+       <analyzer type="query">
          <tokenizer class="solr.StandardTokenizerFactory"/>
          <filter class="solr.ICUFoldingFilterFactory" />
          <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
@@ -436,15 +444,13 @@
       <analyzer type="index">
         <tokenizer class="solr.StandardTokenizerFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
-        <!-- in this example, we will only use synonyms at query time
-        <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/>
-        -->
+        <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
         <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
       </analyzer>
       <analyzer type="query">
         <tokenizer class="solr.StandardTokenizerFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" />
-        <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
         <filter class="solr.LowerCaseFilterFactory"/>
       </analyzer>
     </fieldType>
