@@ -10,8 +10,20 @@ module V1
       h.v1_item_url(object.unique_id)
     end
 
+    def parent_url
+      if object.parent
+        h.v1_item_parent_url(object.unique_id)
+      end
+    end
+
     def collection_url
       h.v1_collection_url(collection_id)
+    end
+
+    def children_url
+      if object.children && !object.children.empty?
+        h.v1_item_children_url(object.unique_id)
+      end
     end
 
     def showcases_url
@@ -74,7 +86,9 @@ module V1
       json.set! "@context", "http://schema.org"
       json.set! "@type", "CreativeWork"
       json.set! "@id", at_id
+      json.set! "isPartOf/parent", parent_url
       json.set! "isPartOf/collection", collection_url
+      json.set! "hasPart/children", children_url
       json.set! "hasPart/showcases", showcases_url
       json.set! "hasPart/pages", pages_url
       json.set! "additionalType", additional_type
