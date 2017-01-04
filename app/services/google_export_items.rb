@@ -18,7 +18,9 @@ class GoogleExportItems
     worksheet = session.get_worksheet(file: file, sheet: sheet)
     if worksheet.present?
       item_hashes = items.map do |item|
+        parent_user_defined_id = item.parent ? item.parent.user_defined_id : nil
         meta_hash = RewriteItemMetadataForExport.call(user_defined_id: item.user_defined_id,
+                                                      parent_user_defined_id: parent_user_defined_id,
                                                       item_hash: item.metadata,
                                                       configuration: configuration(item.collection))
         # Prefix all values with ' to force google to treat all values as text, otherwise it will reformat things like dates/numbers
