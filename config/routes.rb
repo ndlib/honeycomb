@@ -98,6 +98,7 @@ Rails.application.routes.draw do
       resource :metadata, only: [:update]
       post "media", to: "media#create_for_item"
 
+      get :children, defaults: { format: :json }
       get :showcases, defaults: { format: :json }
       get :pages, defaults: { format: :json }
     end

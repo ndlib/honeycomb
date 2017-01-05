@@ -40,6 +40,35 @@ RSpec.describe V1::ItemJSONDecorator do
     end
   end
 
+  describe "#children" do
+    it "returns the path to the children" do
+      item = instance_double(Item, unique_id: "adsf", name: "name", children: ["a"])
+
+      expect(described_class.new(item).children_url).to eq("http://test.host/v1/items/adsf/children")
+    end
+
+    it "returns null if no children" do
+      item = instance_double(Item, unique_id: "adsf", name: "name", children: [])
+
+      expect(described_class.new(item).children_url).to be_nil
+    end
+  end
+
+  describe "#parent" do
+    it "returns the path to the parent" do
+      parent = instance_double(Item, unique_id: "parent_id", name: "name", parent: nil)
+      item = instance_double(Item, unique_id: "adsf", name: "name", parent: parent)
+
+      expect(described_class.new(item).parent_url).to eq("http://test.host/v1/items/parent_id")
+    end
+
+    it "returns the path to the parent" do
+      item = instance_double(Item, unique_id: "adsf", name: "name", parent: nil)
+
+      expect(described_class.new(item).parent_url).to be_nil
+    end
+  end
+
   context "collection" do
     let(:item) { instance_double(Item, collection: collection) }
     let(:collection) { double(Collection, unique_id: "colasdf") }
@@ -93,6 +122,8 @@ RSpec.describe V1::ItemJSONDecorator do
     let(:item) do
       instance_double(
         Item,
+        parent: nil,
+        children: nil,
         name: "name",
         description: "description",
         unique_id: "test-item",
@@ -119,7 +150,9 @@ RSpec.describe V1::ItemJSONDecorator do
         "@context",
         "@type",
         "@id",
+        "isPartOf/parent",
         "isPartOf/collection",
+        "hasPart/children",
         "hasPart/showcases",
         "hasPart/pages",
         "additionalType",

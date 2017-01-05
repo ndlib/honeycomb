@@ -4,7 +4,7 @@ require "cache_spec_helper"
 RSpec.describe V1::ItemsController, type: :controller do
   let(:collection_configuration) { CollectionConfiguration.new }
   let(:collection) { instance_double(Collection, id: "1", updated_at: nil, items: nil, collection_configuration: collection_configuration) }
-  let(:item) { instance_double(Item, id: "1", collection: collection, children: nil, media: nil) }
+  let(:item) { instance_double(Item, id: "1", collection: collection, parent: nil, children: nil, media: nil) }
 
   before(:each) do
     allow_any_instance_of(ItemQuery).to receive(:public_find).and_return(item)
@@ -218,6 +218,27 @@ RSpec.describe V1::ItemsController, type: :controller do
       expect_any_instance_of(Destroy::Item).to receive(:destroy!)
       subject
     end
+  end
+
+  describe "#children" do
+    let(:child) { instance_double(Item, id: "2", collection: collection, parent: "1", children: nil, media: nil) }
+    let(:item) { instance_double(Item, id: "1", collection: collection, parent: nil, children: [child], media: nil) }
+    subject { get :children, item_id: "id", format: :json }
+    it "calls ItemQuery" do
+      expect_any_instance_of(ItemQuery).to receive(:public_find).with("id").and_return(item)
+
+      subject
+    end
+
+    it "is successful" do
+      subject
+
+      expect(response).to be_success
+      expect(assigns(:item)).to be_present
+      expect(subject).to render_template("v1/items/children")
+    end
+
+    it_behaves_like "a private basic custom etag cacher"
   end
 
   describe "#showcases" do
