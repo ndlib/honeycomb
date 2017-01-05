@@ -56,17 +56,6 @@ module V1
       end
     end
 
-    # show the items parent
-    def parent
-      @item = ItemQuery.new.public_find(params[:item_id])
-
-      cache_key = CacheKeys::Generator.new(key_generator: CacheKeys::Custom::V1Items,
-                                           action: "show",
-                                           item: @item)
-
-      fresh_when(etag: cache_key.generate)
-    end
-
     # show item children
     def children
       @item = ItemQuery.new.public_find(params[:item_id])

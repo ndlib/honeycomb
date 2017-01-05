@@ -41,18 +41,31 @@ RSpec.describe V1::ItemJSONDecorator do
   end
 
   describe "#children" do
-    let(:item) { instance_double(Item, unique_id: "adsf", name: "name", children: ["a"]) }
-
     it "returns the path to the children" do
-      expect(subject.children_url).to eq("http://test.host/v1/items/adsf/children")
+      item = instance_double(Item, unique_id: "adsf", name: "name", children: ["a"])
+
+      expect(described_class.new(item).children_url).to eq("http://test.host/v1/items/adsf/children")
+    end
+
+    it "returns null if no children" do
+      item = instance_double(Item, unique_id: "adsf", name: "name", children: [])
+
+      expect(described_class.new(item).children_url).to be_nil
     end
   end
 
   describe "#parent" do
-    let(:item) { instance_double(Item, unique_id: "adsf", name: "name", parent: "a") }
+    it "returns the path to the parent" do
+      parent = instance_double(Item, unique_id: "parent_id", name: "name", parent: nil)
+      item = instance_double(Item, unique_id: "adsf", name: "name", parent: parent)
+
+      expect(described_class.new(item).parent_url).to eq("http://test.host/v1/items/parent_id")
+    end
 
     it "returns the path to the parent" do
-      expect(subject.parent_url).to eq("http://test.host/v1/items/adsf/parent")
+      item = instance_double(Item, unique_id: "adsf", name: "name", parent: nil)
+
+      expect(described_class.new(item).parent_url).to be_nil
     end
   end
 

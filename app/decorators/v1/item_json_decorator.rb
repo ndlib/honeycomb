@@ -12,7 +12,7 @@ module V1
 
     def parent_url
       if object.parent
-        h.v1_item_parent_url(object.unique_id)
+        h.v1_item_url(object.parent.unique_id)
       end
     end
 
