@@ -221,7 +221,7 @@ RSpec.describe V1::ItemsController, type: :controller do
   end
 
   describe "#children" do
-    let(:child) { instance_double(Item, id: "2", collection: collection, parent: "1", children: nil, media: nil)}
+    let(:child) { instance_double(Item, id: "2", collection: collection, parent: "1", children: nil, media: nil) }
     let(:item) { instance_double(Item, id: "1", collection: collection, parent: nil, children: [child], media: nil) }
     subject { get :children, item_id: "id", format: :json }
     it "calls ItemQuery" do
