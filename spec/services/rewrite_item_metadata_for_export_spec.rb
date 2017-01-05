@@ -17,7 +17,7 @@ RSpec.describe RewriteItemMetadataForExport, helpers: :item_meta_helpers do
   let(:field) { double(name: "name", label: "Name", multiple: false, type: :string) }
   let(:date_field) { double(name: "date_created", label: "Date Created", multiple: false, type: :date) }
   let(:multiple_field) { double(name: "alternate_name", label: "Alternate Name", multiple: true, type: :string) }
-  let(:subject) { described_class.call(item_hash: item, configuration: configuration, user_defined_id: "user_defined_id") }
+  let(:subject) { described_class.call(item_hash: item, configuration: configuration, user_defined_id: "user_defined_id", parent_user_defined_id: "parent_user_defined_id") }
 
   before(:each) do
     allow(configuration).to receive(:field?).and_return(false)
@@ -26,6 +26,10 @@ RSpec.describe RewriteItemMetadataForExport, helpers: :item_meta_helpers do
 
   it "adds the user defined id" do
     expect(subject).to include("Identifier" => "user_defined_id")
+  end
+
+  it "adds the parent's user defined id" do
+    expect(subject).to include("Parent Identifier" => "parent_user_defined_id")
   end
 
   it "adds all fields, even when there is no metadata assigned" do
