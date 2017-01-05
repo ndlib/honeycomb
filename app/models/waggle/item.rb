@@ -3,16 +3,16 @@ module Waggle
     attr_reader :data, :decoratedItem
 
     def self.from_item(item)
-      jsonItem = V1::ItemJSONDecorator.new(item)
-      new(jsonItem, jsonItem.to_hash)
+      json_item = V1::ItemJSONDecorator.new(item)
+      new(json_item, json_item.to_hash)
     end
 
     def self.from_hash(hash)
       new(nil, hash)
     end
 
-    def initialize(jsonItem, hash)
-      @decoratedItem = jsonItem
+    def initialize(json_item, hash)
+      @decoratedItem = json_item
       @data = hash
     end
 
@@ -46,7 +46,7 @@ module Waggle
     end
 
     def is_parent
-      parent == nil
+      parent.nil?
     end
 
     def parent

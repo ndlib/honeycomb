@@ -37,47 +37,47 @@ RSpec.describe Waggle::Item do
   end
 
   describe "children" do
-    let(:decoratorWithChild) { instance_double(V1::ItemJSONDecorator, parent: nil, children: ["child1"]) }
-    let(:decoratorManyChild) { instance_double(V1::ItemJSONDecorator, parent: nil, children: ["child1", "child2", "child3"]) }
-    let(:decoratorBarren) { instance_double(V1::ItemJSONDecorator, parent: data.fetch("id"), children: []) }
+    let(:decorator_with_child) { instance_double(V1::ItemJSONDecorator, parent: nil, children: ["child1"]) }
+    let(:decorator_many_child) { instance_double(V1::ItemJSONDecorator, parent: nil, children: ["child1", "child2", "child3"]) }
+    let(:decorator_barren) { instance_double(V1::ItemJSONDecorator, parent: data.fetch("id"), children: []) }
 
     it "returns empy array with no chlidren" do
-      testItem = described_class.new(decoratorBarren, data)
+      testItem = described_class.new(decorator_barren, data)
       expect(testItem.children).to eq([])
     end
 
     it "returns children when present" do
-      testItem = described_class.new(decoratorWithChild, data)
+      testItem = described_class.new(decorator_with_child, data)
       expect(testItem.children).to eq(["child1"])
     end
 
     it "returns children when present" do
-      testItem = described_class.new(decoratorManyChild, data)
+      testItem = described_class.new(decorator_many_child, data)
       expect(testItem.children).to eq(["child1", "child2", "child3"])
     end
   end
 
   describe "parent" do
-    let(:decoratorParent) { instance_double(V1::ItemJSONDecorator, parent: nil, children: []) }
-    let(:decoratorChild) { instance_double(V1::ItemJSONDecorator, parent: data.fetch("id"), children: []) }
+    let(:decorator_parent) { instance_double(V1::ItemJSONDecorator, parent: nil, children: []) }
+    let(:decorator_child) { instance_double(V1::ItemJSONDecorator, parent: data.fetch("id"), children: []) }
 
     it "is a parent when it has no parent" do
-      testItem = described_class.new(decoratorParent, data)
+      testItem = described_class.new(decorator_parent, data)
       expect(testItem.is_parent).to be_truthy
     end
 
     it "returns nil parent when no parent" do
-      testItem = described_class.new(decoratorParent, data)
+      testItem = described_class.new(decorator_parent, data)
       expect(testItem.is_parent).to be_truthy
     end
 
     it "returns parent when present" do
-      testItem = described_class.new(decoratorChild, data)
+      testItem = described_class.new(decorator_child, data)
       expect(testItem.is_parent).to be_falsy
     end
 
     it "is not a parent if it has one" do
-      testItem = described_class.new(decoratorChild, data)
+      testItem = described_class.new(decorator_child, data)
       expect(testItem.parent).to eq(data.fetch("id"))
     end
   end

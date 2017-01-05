@@ -37,7 +37,7 @@ module Waggle
         private
 
         def parent_objects_as_solr(*objects)
-          objects_as_solr(*objects.select { |item| item.is_parent })
+          objects_as_solr(*objects.select(&:is_parent))
         end
 
         def objects_as_solr(*objects)
