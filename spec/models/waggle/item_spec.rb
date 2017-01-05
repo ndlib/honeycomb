@@ -36,6 +36,52 @@ RSpec.describe Waggle::Item do
     end
   end
 
+  describe "children" do
+    let(:decoratorWithChild) { instance_double(V1::ItemJSONDecorator, parent: nil, children: ["child1"]) }
+    let(:decoratorManyChild) { instance_double(V1::ItemJSONDecorator, parent: nil, children: ["child1", "child2", "child3"]) }
+    let(:decoratorBarren) { instance_double(V1::ItemJSONDecorator, parent: data.fetch("id"), children: []) }
+
+    it "returns empy array with no chlidren" do
+      testItem = described_class.new(decoratorBarren, data)
+      expect(testItem.children).to eq([])
+    end
+
+    it "returns children when present" do
+      testItem = described_class.new(decoratorWithChild, data)
+      expect(testItem.children).to eq(["child1"])
+    end
+
+    it "returns children when present" do
+      testItem = described_class.new(decoratorManyChild, data)
+      expect(testItem.children).to eq(["child1", "child2", "child3"])
+    end
+  end
+
+  describe "parent" do
+    let(:decoratorParent) { instance_double(V1::ItemJSONDecorator, parent: nil, children: []) }
+    let(:decoratorChild) { instance_double(V1::ItemJSONDecorator, parent: data.fetch("id"), children: []) }
+
+    it "is a parent when it has no parent" do
+      testItem = described_class.new(decoratorParent, data)
+      expect(testItem.is_parent).to be_truthy
+    end
+
+    it "returns nil parent when no parent" do
+      testItem = described_class.new(decoratorParent, data)
+      expect(testItem.is_parent).to be_truthy
+    end
+
+    it "returns parent when present" do
+      testItem = described_class.new(decoratorChild, data)
+      expect(testItem.is_parent).to be_falsy
+    end
+
+    it "is not a parent if it has one" do
+      testItem = described_class.new(decoratorChild, data)
+      expect(testItem.parent).to eq(data.fetch("id"))
+    end
+  end
+
   describe "thumbnail_url" do
     it "is the media's medium thumbnail contentUrl when the media is an ImageObject" do
       data["media"]["@type"] = "ImageObject"
