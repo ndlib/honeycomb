@@ -4,7 +4,7 @@ RSpec.describe Waggle::Item do
   let(:item_id) { "pig-in-mud" }
   let(:raw_data) { File.read(Rails.root.join("spec/fixtures/v1/items/#{item_id}.json")) }
   let(:data) { JSON.parse(raw_data).fetch("items") }
-  let(:subject) { described_class.new(data) }
+  let(:subject) { described_class.from_hash(data) }
 
   describe "id" do
     it "is the id" do
@@ -80,7 +80,7 @@ RSpec.describe Waggle::Item do
 
     it "converts an item to its api hash and instantiates a new waggle item" do
       expect(V1::ItemJSONDecorator).to receive(:new).with(item).and_return(decorator)
-      expect(described_class).to receive(:new).with(decorator.to_hash).and_return("waggle item")
+      expect(described_class).to receive(:new).with(decorator, decorator.to_hash).and_return("waggle item")
       expect(subject).to eq("waggle item")
     end
   end

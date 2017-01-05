@@ -4,7 +4,7 @@ RSpec.describe Waggle::Adapters::Solr::Index::Item do
   let(:item_id) { "pig-in-mud" }
   let(:raw_data) { File.read(Rails.root.join("spec/fixtures/v1/items/#{item_id}.json")) }
   let(:data) { JSON.parse(raw_data).fetch("items") }
-  let(:waggle_item) { Waggle::Item.new(data) }
+  let(:waggle_item) { Waggle::Item.from_hash(data) }
   let(:configuration) { double(Metadata::Configuration, fields: [], facets: [], sorts: []) }
   let(:metadata) do
     double(
@@ -35,6 +35,7 @@ RSpec.describe Waggle::Adapters::Solr::Index::Item do
   describe "as_solr" do
     it "is the hash to send to solr" do
       expect(subject.as_solr).to eq(
+        is_parent_s: "true",
         name_t: ["pig-in-mud"],
         creator_t: ["Bob"],
         description_t: ["Source"],

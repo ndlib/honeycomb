@@ -13,7 +13,7 @@ module Waggle
         end
 
         def index(*objects)
-          connection.add(objects_as_solr(*objects))
+          connection.add(parent_objects_as_solr(*objects))
         end
 
         def index!(*objects)
@@ -35,6 +35,10 @@ module Waggle
         end
 
         private
+
+        def parent_objects_as_solr(*objects)
+          objects_as_solr(*objects.select { |item| item.is_parent })
+        end
 
         def objects_as_solr(*objects)
           solr_objects(*objects).map(&:as_solr)
