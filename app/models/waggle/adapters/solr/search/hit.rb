@@ -26,6 +26,10 @@ module Waggle
             fetch_string(:unique_id)
           end
 
+          def part_parent
+            fetch_string(:part_parent)
+          end
+
           def collection_id
             fetch_string(:collection_id)
           end

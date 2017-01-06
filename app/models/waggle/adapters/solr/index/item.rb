@@ -51,7 +51,7 @@ module Waggle
                 :collection_id,
                 :type,
                 :thumbnail_url,
-                :is_parent,
+                :part_parent,
               ].each do |field|
                 hash[string_field_name(field)] = string_as_solr(waggle_item.send(field))
               end

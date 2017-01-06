@@ -43,7 +43,8 @@ RSpec.describe Waggle::Adapters::Solr::Session do
       it "maps objects to solr objects and indexes their as_solr values" do
         items.each do |waggle_item|
           expect(Waggle::Adapters::Solr::Index::Item).to receive(:new).with(waggle_item: waggle_item).and_call_original
-          expect(waggle_item).to receive(:is_parent).and_return(true)
+          expect(waggle_item).to receive(:parent).and_return(nil)
+          expect(waggle_item).to receive(:unique_id).and_return(waggle_item.id)
         end
         allow_any_instance_of(Waggle::Adapters::Solr::Index::Item).to receive(:as_solr).and_return(test: "test")
         expect(connection).to receive(:add).with([{ test: "test" }, { test: "test" }])

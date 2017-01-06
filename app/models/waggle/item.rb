@@ -49,6 +49,10 @@ module Waggle
       parent.nil?
     end
 
+    def part_parent
+      parent.nil? ? "_is_parent_" : data.fetch("isPartOf/parent")
+    end
+
     def parent
       return nil if !decoratedItem
       decoratedItem.parent

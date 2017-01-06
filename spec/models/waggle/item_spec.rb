@@ -58,27 +58,28 @@ RSpec.describe Waggle::Item do
   end
 
   describe "parent" do
+    let(:parent) { instance_double(Item, unique_id: "parent_id") }
     let(:decorator_parent) { instance_double(V1::ItemJSONDecorator, parent: nil, children: []) }
-    let(:decorator_child) { instance_double(V1::ItemJSONDecorator, parent: data.fetch("id"), children: []) }
+    let(:decorator_child) { instance_double(V1::ItemJSONDecorator, parent: parent, children: []) }
 
     it "is a parent when it has no parent" do
       testItem = described_class.new(decorator_parent, data)
-      expect(testItem.is_parent).to be_truthy
+      expect(testItem.part_parent).to eq("_is_parent_")
     end
 
     it "returns nil parent when no parent" do
       testItem = described_class.new(decorator_parent, data)
-      expect(testItem.is_parent).to be_truthy
+      expect(testItem.part_parent).to eq("_is_parent_")
     end
 
     it "returns parent when present" do
       testItem = described_class.new(decorator_child, data)
-      expect(testItem.is_parent).to be_falsy
+      expect(testItem.part_parent).to eq("http://localhost:3017/v1/item/parent_id")
     end
 
     it "is not a parent if it has one" do
       testItem = described_class.new(decorator_child, data)
-      expect(testItem.parent).to eq(data.fetch("id"))
+      expect(testItem.parent).to eq(parent)
     end
   end
 

@@ -35,7 +35,7 @@ RSpec.describe Waggle::Adapters::Solr::Index::Item do
   describe "as_solr" do
     it "is the hash to send to solr" do
       expect(subject.as_solr).to eq(
-        is_parent_s: "true",
+        part_parent_s: "_is_parent_",
         name_t: ["pig-in-mud"],
         creator_t: ["Bob"],
         description_t: ["Source"],
