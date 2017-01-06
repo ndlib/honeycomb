@@ -42,18 +42,18 @@ RSpec.describe Waggle::Item do
     let(:decorator_barren) { instance_double(V1::ItemJSONDecorator, parent: data.fetch("id"), children: []) }
 
     it "returns empy array with no chlidren" do
-      testItem = described_class.new(decorator_barren, data)
-      expect(testItem.children).to eq([])
+      test_item = described_class.new(decorator_barren, data)
+      expect(test_item.children).to eq([])
     end
 
     it "returns children when present" do
-      testItem = described_class.new(decorator_with_child, data)
-      expect(testItem.children).to eq(["child1"])
+      test_item = described_class.new(decorator_with_child, data)
+      expect(test_item.children).to eq(["child1"])
     end
 
     it "returns children when present" do
-      testItem = described_class.new(decorator_many_child, data)
-      expect(testItem.children).to eq(["child1", "child2", "child3"])
+      test_item = described_class.new(decorator_many_child, data)
+      expect(test_item.children).to eq(["child1", "child2", "child3"])
     end
   end
 
@@ -63,23 +63,23 @@ RSpec.describe Waggle::Item do
     let(:decorator_child) { instance_double(V1::ItemJSONDecorator, parent: parent, children: []) }
 
     it "is a parent when it has no parent" do
-      testItem = described_class.new(decorator_parent, data)
-      expect(testItem.part_parent).to eq("_is_parent_")
+      test_item = described_class.new(decorator_parent, data)
+      expect(test_item.part_parent).to eq("_is_parent_")
     end
 
     it "returns nil parent when no parent" do
-      testItem = described_class.new(decorator_parent, data)
-      expect(testItem.part_parent).to eq("_is_parent_")
+      test_item = described_class.new(decorator_parent, data)
+      expect(test_item.part_parent).to eq("_is_parent_")
     end
 
     it "returns parent when present" do
-      testItem = described_class.new(decorator_child, data)
-      expect(testItem.part_parent).to eq("http://localhost:3017/v1/item/parent_id")
+      test_item = described_class.new(decorator_child, data)
+      expect(test_item.part_parent).to eq("http://localhost:3017/v1/item/parent_id")
     end
 
     it "is not a parent if it has one" do
-      testItem = described_class.new(decorator_child, data)
-      expect(testItem.parent).to eq(parent)
+      test_item = described_class.new(decorator_child, data)
+      expect(test_item.parent).to eq(parent)
     end
   end
 

@@ -37,9 +37,11 @@ module Waggle
         private
 
         def parent_objects_as_solr(*objects)
-          objects_as_solr(*objects
-            .map { |waggle_item| waggle_item.parent ? Waggle::Item.from_item(waggle_item.parent) : waggle_item }
-            .uniq { |item| item.unique_id })
+          # we only want to index parent objects, so if we're changing children make sure we get their parents
+          # and only index them one time
+          objects_as_solr(*objects.
+            map { |waggle_item| waggle_item.parent ? Waggle::Item.from_item(waggle_item.parent) : waggle_item }.
+            uniq(&:unique_id))
         end
 
         def objects_as_solr(*objects)
