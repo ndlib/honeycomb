@@ -16,7 +16,21 @@ class RewriteItemMetadata
     result = Hash.new
     metadata = Hash.new
     item_hash.each do |k, v|
-      if k == "Identifier"
+      case k
+      when "Parent Identifier"
+        if v.present?
+          parent = Item.where(user_defined_id: v).take
+          if parent.present?
+            result[:parent_id] = parent.id
+          else
+            errors << "Unable to find parent item '#{v}'"
+          end
+        else
+          # Since this label was explicitly defined with a nil value, we have to
+          # insert a parent_id of nil to clear any existing association
+          result[:parent_id] = nil
+        end
+      when "Identifier"
         result[:user_defined_id] = v
       else
         new_pair = rewrite_pair(key: k, value: v)

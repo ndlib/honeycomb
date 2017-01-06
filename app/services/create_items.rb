@@ -27,9 +27,10 @@ class CreateItems
   def create_or_update!(collection:, find_by:, items_hash:, counts:, errors:)
     items_to_index = []
     ActiveRecord::Base.transaction do
-      items_hash.each.with_index do |item_props, index|
+      items_hash.each do |item_props|
         rewrite_errors = []
-        item_props = yield(item_props, rewrite_errors).symbolize_keys if block_given?
+        index = item_props[:original_index]
+        item_props = yield(item_props[:item_hash], rewrite_errors).symbolize_keys if block_given?
         item_creator = FindOrCreateItem.call(props: { collection_id: collection.id, **item_props }, find_by: find_by)
         saved = rewrite_errors.present? ? false : item_creator.save(index: false)
         add_to_errors(

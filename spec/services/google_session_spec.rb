@@ -85,7 +85,7 @@ RSpec.describe GoogleSession do
   describe "worksheet_to_hash", helpers: :item_meta_helpers do
     let(:rows) do
       [
-        ["Identifier", "Name", "Alternate Name", "Description", "Date Created", "Creator", "Subject", "Original Language"],
+        ["Identifier", "Name", "Alternate Name", "Description", "Date Created", "Creator", "Subject", "Original Language", "Parent Identifier"],
         item_meta_array(item_id: 1),
         item_meta_array(item_id: 2),
         item_meta_array(item_id: 3)
@@ -116,6 +116,26 @@ RSpec.describe GoogleSession do
       items[0].delete("Description")
       result = subject.worksheet_to_hash(worksheet: worksheet)
       expect(result).to eq(items)
+    end
+
+    it "returns Parent Identifier even if the column has no value" do
+      rows[1][8] = nil
+      rows[2][8] = nil
+      rows[3][8] = nil
+      results = subject.worksheet_to_hash(worksheet: worksheet)
+      results.each do |result|
+        expect(result).to include("Parent Identifier" => nil)
+      end
+    end
+
+    it "returns Identifier even if the column has no value" do
+      rows[1][0] = nil
+      rows[2][0] = nil
+      rows[3][0] = nil
+      results = subject.worksheet_to_hash(worksheet: worksheet)
+      results.each do |result|
+        expect(result).to include("Identifier" => nil)
+      end
     end
   end
 
