@@ -18,6 +18,11 @@ class CreateItems
 
   # Attempts to create/update items given in the items_hash. Increments keys in
   # counts and appends any errors to the given errors array.
+  #
+  # Entries within the items_hash array are expected to be of format:
+  #   { index: index, item_hash: item }
+  # where item_hash is the items' new properties, and index will be used when populating errors
+  #
   # Count hash keys are defined as:
   #   new_count      - Count of how many new records were created
   #   changed_count  - Count of how many items already existed but were changed
@@ -29,7 +34,7 @@ class CreateItems
     ActiveRecord::Base.transaction do
       items_hash.each do |item_props|
         rewrite_errors = []
-        index = item_props[:original_index]
+        index = item_props[:index]
         item_props = yield(item_props[:item_hash], rewrite_errors).symbolize_keys if block_given?
         item_creator = FindOrCreateItem.call(props: { collection_id: collection.id, **item_props }, find_by: find_by)
         saved = rewrite_errors.present? ? false : item_creator.save(index: false)

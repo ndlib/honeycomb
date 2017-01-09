@@ -52,9 +52,9 @@ class GoogleCreateItems
     children = []
     items.each.with_index do |item, index|
       if item["Parent Identifier"].present?
-        parents << { original_index: index, item_hash: item }
+        parents << { index: index, item_hash: item }
       else
-        children << { original_index: index, item_hash: item }
+        children << { index: index, item_hash: item }
       end
     end
     [parents, children]

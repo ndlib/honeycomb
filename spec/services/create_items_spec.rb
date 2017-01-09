@@ -8,13 +8,13 @@ end
 RSpec.describe CreateItems, helpers: :item_meta_helpers do
   let(:items) do
     [
-      { original_index: 10, item_hash: item_meta_hash_remapped(item_id: 1) },
-      { original_index: 11, item_hash: item_meta_hash_remapped(item_id: 2) },
-      { original_index: 12, item_hash: item_meta_hash_remapped(item_id: 3) }
+      { index: 10, item_hash: item_meta_hash_remapped(item_id: 1) },
+      { index: 11, item_hash: item_meta_hash_remapped(item_id: 2) },
+      { index: 12, item_hash: item_meta_hash_remapped(item_id: 3) }
     ]
   end
   let(:item_errors) { instance_double(ActiveModel::Errors, full_messages: ["Item validation error"]) }
-  let(:errors) { [] }
+  let(:errors) { {} }
   let(:counts) do
     {
       total_count: 0,
@@ -59,12 +59,12 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
       end
     end
 
-    it "adds these errors to the items" do
-      expected_errors = [
-        { errors: [["Rewrite error 1 on name1", "Rewrite error 2 on name1"], "Item validation error"], item: item },
-        { errors: [["Rewrite error 1 on name2", "Rewrite error 2 on name2"], "Item validation error"], item: item },
-        { errors: [["Rewrite error 1 on name3", "Rewrite error 2 on name3"], "Item validation error"], item: item }
-      ]
+    it "adds these errors to the items", :focus => true do
+      expected_errors = {
+        10 => { errors: [["Rewrite error 1 on name1", "Rewrite error 2 on name1"], "Item validation error"], item: item },
+        11 => { errors: [["Rewrite error 1 on name2", "Rewrite error 2 on name2"], "Item validation error"], item: item },
+        12 => { errors: [["Rewrite error 1 on name3", "Rewrite error 2 on name3"], "Item validation error"], item: item }
+      }
       subject
       expect(errors).to eq(expected_errors)
     end
@@ -124,7 +124,7 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
 
       it "returns no errors" do
         subject
-        expect(errors).to eq([])
+        expect(errors).to eq({})
       end
     end
 
@@ -144,7 +144,7 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
 
       it "returns no errors" do
         subject
-        expect(errors).to eq([])
+        expect(errors).to eq({})
       end
     end
 
@@ -164,7 +164,7 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
 
       it "returns no errors" do
         subject
-        expect(errors).to eq([])
+        expect(errors).to eq({})
       end
     end
 
@@ -181,11 +181,11 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
       end
 
       it "returns a hash with errors" do
-        expected = [
-          { errors: ["Item validation error"], item: item },
-          { errors: ["Item validation error"], item: item },
-          { errors: ["Item validation error"], item: item }
-        ]
+        expected = {
+          10 => { errors: ["Item validation error"], item: item },
+          11 => { errors: ["Item validation error"], item: item },
+          12 => { errors: ["Item validation error"], item: item }
+        }
         subject
         expect(errors).to eq(expected)
       end
@@ -203,7 +203,7 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
 
     it "returns a hash with errors" do
       subject
-      expect(errors).to eq([])
+      expect(errors).to eq({})
     end
   end
 end

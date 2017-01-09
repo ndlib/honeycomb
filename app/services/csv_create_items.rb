@@ -28,12 +28,15 @@ class CsvCreateItems
     file = File.read(@file.path)
     if file.valid_encoding?
       items = csv_to_hash(file: file)
-      CreateItems.call(collection: @collection,
-                       find_by: [:collection_id, :user_defined_id],
-                       items_hash: items,
-                       counts: counts,
-                       errors: errors) do |item_props, rewrite_errors|
-        RewriteItemMetadata.call(item_hash: item_props, errors: rewrite_errors, configuration: collection_configuration)
+
+      parents_then_children(items: items).each do |items_hash|
+        CreateItems.call(collection: @collection,
+                         find_by: [:collection_id, :user_defined_id],
+                         items_hash: items_hash,
+                         counts: counts,
+                         errors: errors) do |item_props, rewrite_errors|
+          RewriteItemMetadata.call(item_hash: item_props, errors: rewrite_errors, configuration: collection_configuration)
+        end
       end
     else
       errors = "File must be UTF-8."
@@ -55,6 +58,19 @@ class CsvCreateItems
   end
 
   private
+
+  def parents_then_children(items:)
+    parents = []
+    children = []
+    items.each.with_index do |item, index|
+      if item["Parent Identifier"].present?
+        parents << { index: index, item_hash: item }
+      else
+        children << { index: index, item_hash: item }
+      end
+    end
+    [parents, children]
+  end
 
   def collection_configuration
     @configuration ||= CollectionConfigurationQuery.new(@collection).find
