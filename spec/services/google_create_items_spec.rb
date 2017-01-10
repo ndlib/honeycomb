@@ -63,10 +63,11 @@ RSpec.describe GoogleCreateItems, helpers: :item_meta_helpers do
     subject
   end
 
-  it "calls CreateItems with the hash read from the worksheet" do
-    allow_any_instance_of(GoogleSession).to receive(:worksheet_to_hash).and_return([{ item: "item" }])
+  it "calls CreateItems with the hash read from the worksheet, parent items first" do
+    allow_any_instance_of(GoogleSession).to receive(:worksheet_to_hash).and_return([{ item: "child item" }, { "Parent Identifier" => 1, item: "parent item" }])
     creator = GoogleCreateItems.new(auth_code: param_hash[:auth_code], callback_uri: param_hash[:callback_uri])
-    expect(CreateItems).to receive(:call).with(hash_including(items_hash: [{ item: "item" }]))
+    expect(CreateItems).to receive(:call).with(hash_including(items_hash: [{ index: 1, item_hash: { "Parent Identifier" => 1, item: "parent item" } }])).ordered
+    expect(CreateItems).to receive(:call).with(hash_including(items_hash: [{ index: 0, item_hash: { item: "child item" } }])).ordered
     creator.create_from_worksheet!(collection: collection, file: param_hash[:file], sheet: param_hash[:sheet])
   end
 

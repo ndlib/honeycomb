@@ -53,9 +53,10 @@ RSpec.describe CsvCreateItems, helpers: :item_meta_helpers do
     expect(subject).to include(:errors)
   end
 
-  it "calls CreateItems with the hash read from the csv" do
-    allow(CSV).to receive(:parse).and_return([{ item: "item" }])
-    expect(CreateItems).to receive(:call).with(hash_including(items_hash: [{ item: "item" }]))
+  it "calls CreateItems with the hash read from the csv, parent items first" do
+    allow(CSV).to receive(:parse).and_return([{ item: "child item" }, { "Parent Identifier" => 1, item: "parent item" }])
+    expect(CreateItems).to receive(:call).with(hash_including(items_hash: [{ index: 1, item_hash: { "Parent Identifier" => 1, item: "parent item" } }])).ordered
+    expect(CreateItems).to receive(:call).with(hash_including(items_hash: [{ index: 0, item_hash: { item: "child item" } }])).ordered
     subject
   end
 

@@ -29,13 +29,14 @@ class GoogleCreateItems
     worksheet = session.get_worksheet(file: file, sheet: sheet)
     if worksheet.present?
       items = session.worksheet_to_hash(worksheet: worksheet)
-
-      CreateItems.call(collection: collection,
-                       find_by: [:collection_id, :user_defined_id],
-                       items_hash: items,
-                       counts: counts,
-                       errors: errors) do |item_props, rewrite_errors|
-        RewriteItemMetadata.call(item_hash: item_props, errors: rewrite_errors, configuration: configuration(collection))
+      parents_then_children(items: items).each do |items_hash|
+        CreateItems.call(collection: collection,
+                         find_by: [:collection_id, :user_defined_id],
+                         items_hash: items_hash,
+                         counts: counts,
+                         errors: errors) do |item_props, rewrite_errors|
+          RewriteItemMetadata.call(item_hash: item_props, errors: rewrite_errors, configuration: configuration(collection))
+        end
       end
     end
     {
@@ -45,6 +46,19 @@ class GoogleCreateItems
   end
 
   private
+
+  def parents_then_children(items:)
+    parents = []
+    children = []
+    items.each.with_index do |item, index|
+      if item["Parent Identifier"].present?
+        parents << { index: index, item_hash: item }
+      else
+        children << { index: index, item_hash: item }
+      end
+    end
+    [parents, children]
+  end
 
   def configuration(collection)
     @configuration ||= CollectionConfigurationQuery.new(collection).find
