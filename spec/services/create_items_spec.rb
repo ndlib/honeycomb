@@ -59,7 +59,7 @@ RSpec.describe CreateItems, helpers: :item_meta_helpers do
       end
     end
 
-    it "adds these errors to the items", :focus => true do
+    it "adds these errors to the items" do
       expected_errors = {
         10 => { errors: [["Rewrite error 1 on name1", "Rewrite error 2 on name1"], "Item validation error"], item: item },
         11 => { errors: [["Rewrite error 1 on name2", "Rewrite error 2 on name2"], "Item validation error"], item: item },
