@@ -13,6 +13,10 @@ module Waggle
             @hits ||= solr_docs.map { |solr_doc| Waggle::Adapters::Solr::Search::Hit.new(solr_doc) }
           end
 
+          def groups
+            @groups ||= solr_groups
+          end
+
           def facets
             if @facets.nil?
               @facets = configuration.facets.map do |facet|
@@ -35,7 +39,11 @@ module Waggle
           end
 
           def total
-            solr_response.fetch("numFound", 0)
+            if query.group_by
+              solr_response.fetch("matches", 0)
+            else
+              solr_response.fetch("numFound", 0)
+            end
           end
 
           def result
@@ -57,6 +65,10 @@ module Waggle
             end
 
             @result
+          end
+
+          def is_grouped
+            query.group_by ? true : false
           end
 
           private
@@ -93,7 +105,7 @@ module Waggle
               defType: "edismax",
               :"facet.field" => facet_fields,
               mm: 1,
-            }.merge(facet_limits)
+            }.merge(facet_limits).merge(group)
           end
 
           def solr_query_fields
@@ -127,6 +139,16 @@ module Waggle
             result = {}
             configuration.facets.each do |facet|
               result[:"f.#{facet.name}_facet.facet.limit"] = facet.limit if facet.limit.present?
+            end
+            result
+          end
+
+          def group
+            result = {}
+            if query.group_by
+              result[:group] = true
+              result[:"group.field"] = query.group_by
+              result[:"group.limit"] = 99999
             end
             result
           end
@@ -168,8 +190,26 @@ module Waggle
             solr_response.fetch("docs", [])
           end
 
+          def solr_groups
+            groups = []
+            solr_response.fetch("groups", []).each do |group|
+              groups << {
+                id: group.fetch("groupValue", ""),
+                hits: group.
+                      fetch("doclist", {}).
+                      fetch("docs", []).
+                      map { |solr_doc| Waggle::Adapters::Solr::Search::Hit.new(solr_doc) },
+              }
+            end
+            groups
+          end
+
           def solr_response
-            result.fetch("response", {})
+            if is_grouped
+              result.fetch("grouped", {}).fetch(query.group_by, {})
+            else
+              result.fetch("response", {})
+            end
           end
 
           def solr_facets

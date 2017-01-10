@@ -80,7 +80,8 @@ Rails.application.routes.draw do
       get :site_path, defaults: { format: :json }
       put :site_path, to: "collections#site_path_update", defaults: { format: :json }
       post :import_csv, to: "import#csv"
-      resources :search, only: [:index], defaults: { format: :json }
+      get :search, to: "search#index", defaults: { format: :json }
+      get :children, path: "search/children", to: "search#children", defaults: { format: :json }
       resources :items, only: [:index, :create], defaults: { format: :json }
       resources :showcases, only: [:index], defaults: { format: :json }
       resources :pages, only: [:index], defaults: { format: :json }
