@@ -1,14 +1,19 @@
 module Waggle
   class Item
-    attr_reader :data
+    attr_reader :data, :decoratedItem
 
     def self.from_item(item)
-      api_data = V1::ItemJSONDecorator.new(item).to_hash
-      new(api_data)
+      json_item = V1::ItemJSONDecorator.new(item)
+      new(json_item, json_item.to_hash)
     end
 
-    def initialize(data)
-      @data = data
+    def self.from_hash(hash)
+      new(nil, hash)
+    end
+
+    def initialize(json_item, hash)
+      @decoratedItem = json_item
+      @data = hash
     end
 
     def id
@@ -33,6 +38,24 @@ module Waggle
       else
         "Metadata Only"
       end
+    end
+
+    def children
+      return [] if !decoratedItem
+      decoratedItem.children
+    end
+
+    def is_parent
+      parent.nil?
+    end
+
+    def part_parent
+      parent.nil? ? "_is_parent_" : data.fetch("isPartOf/parent")
+    end
+
+    def parent
+      return nil if !decoratedItem
+      decoratedItem.parent
     end
 
     def last_updated

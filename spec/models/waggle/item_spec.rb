@@ -4,7 +4,7 @@ RSpec.describe Waggle::Item do
   let(:item_id) { "pig-in-mud" }
   let(:raw_data) { File.read(Rails.root.join("spec/fixtures/v1/items/#{item_id}.json")) }
   let(:data) { JSON.parse(raw_data).fetch("items") }
-  let(:subject) { described_class.new(data) }
+  let(:subject) { described_class.from_hash(data) }
 
   describe "id" do
     it "is the id" do
@@ -33,6 +33,53 @@ RSpec.describe Waggle::Item do
   describe "type" do
     it "is Item" do
       expect(subject.type).to eq("ImageObject")
+    end
+  end
+
+  describe "children" do
+    let(:decorator_with_child) { instance_double(V1::ItemJSONDecorator, parent: nil, children: ["child1"]) }
+    let(:decorator_many_child) { instance_double(V1::ItemJSONDecorator, parent: nil, children: ["child1", "child2", "child3"]) }
+    let(:decorator_barren) { instance_double(V1::ItemJSONDecorator, parent: data.fetch("id"), children: []) }
+
+    it "returns empy array with no chlidren" do
+      test_item = described_class.new(decorator_barren, data)
+      expect(test_item.children).to eq([])
+    end
+
+    it "returns children when present" do
+      test_item = described_class.new(decorator_with_child, data)
+      expect(test_item.children).to eq(["child1"])
+    end
+
+    it "returns children when present" do
+      test_item = described_class.new(decorator_many_child, data)
+      expect(test_item.children).to eq(["child1", "child2", "child3"])
+    end
+  end
+
+  describe "parent" do
+    let(:parent) { instance_double(Item, unique_id: "parent_id") }
+    let(:decorator_parent) { instance_double(V1::ItemJSONDecorator, parent: nil, children: []) }
+    let(:decorator_child) { instance_double(V1::ItemJSONDecorator, parent: parent, children: []) }
+
+    it "is a parent when it has no parent" do
+      test_item = described_class.new(decorator_parent, data)
+      expect(test_item.part_parent).to eq("_is_parent_")
+    end
+
+    it "returns nil parent when no parent" do
+      test_item = described_class.new(decorator_parent, data)
+      expect(test_item.part_parent).to eq("_is_parent_")
+    end
+
+    it "returns parent when present" do
+      test_item = described_class.new(decorator_child, data)
+      expect(test_item.part_parent).to eq("http://localhost:3017/v1/item/parent_id")
+    end
+
+    it "is not a parent if it has one" do
+      test_item = described_class.new(decorator_child, data)
+      expect(test_item.parent).to eq(parent)
     end
   end
 
@@ -80,7 +127,7 @@ RSpec.describe Waggle::Item do
 
     it "converts an item to its api hash and instantiates a new waggle item" do
       expect(V1::ItemJSONDecorator).to receive(:new).with(item).and_return(decorator)
-      expect(described_class).to receive(:new).with(decorator.to_hash).and_return("waggle item")
+      expect(described_class).to receive(:new).with(decorator, decorator.to_hash).and_return("waggle item")
       expect(subject).to eq("waggle item")
     end
   end
