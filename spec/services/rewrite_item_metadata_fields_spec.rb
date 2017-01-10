@@ -97,7 +97,7 @@ RSpec.describe RewriteItemMetadata, helpers: :item_meta_helpers do
 
     it "adds an error if the parent item does not exist" do
       subject
-      expected = item_hash.keys.map { |attribute| "Unable to find parent item 'parent id'" }
+      expected = item_hash.keys.map { "Unable to find parent item 'parent id'" }
       expect(errors).to eq(expected)
     end
   end
@@ -124,7 +124,7 @@ RSpec.describe RewriteItemMetadata, helpers: :item_meta_helpers do
     end
 
     it "does not add a parent_id field to the hash, so that it's associations do not change" do
-      expect(subject.has_key?(:parent_id)).to eq(false)
+      expect(subject.key?(:parent_id)).to eq(false)
     end
   end
 end
