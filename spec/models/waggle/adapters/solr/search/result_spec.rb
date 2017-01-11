@@ -79,7 +79,8 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
         q: "-part_parent_s:_is_parent_ AND a query",
         group: true,
         :"group.field" => "part_parent_s",
-        :"group.limit" => 99999)
+        :"group.limit" => 99999
+      )
 
       expect(subject.send(:connection)).to receive(:paginate).with(
         2,
@@ -114,7 +115,7 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
     it "returns the expected params" do
       allow(instance).to receive(:solr_phrase_fields).and_return("phrase_fields")
       allow(instance).to receive(:solr_query_fields).and_return("query_fields")
-      allow(instance).to receive(:group).and_return({group: "group_info"})
+      allow(instance).to receive(:group).and_return(group: "group_info")
       expect(subject).to eq(
         q: "query",
         fl: "score *",
