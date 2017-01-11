@@ -24,6 +24,18 @@ RSpec.describe Waggle::Search::Result do
     end
   end
 
+  describe "groups" do
+    it "returns grouped state" do
+      expect(adapter_result).to receive(:is_grouped).and_return(true)
+      expect(subject.is_grouped).to eq(true)
+    end
+
+    it "is the results groups" do
+      expect(adapter_result).to receive(:groups).and_return([{ id: 0, hits: [] }])
+      expect(subject.groups).to eq([{ id: 0, hits: [] }])
+    end
+  end
+
   describe "rows" do
     it "is the query rows" do
       expect(query).to receive(:rows).and_return(15)

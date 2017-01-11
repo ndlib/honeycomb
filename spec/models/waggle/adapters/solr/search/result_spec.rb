@@ -71,6 +71,39 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
       ).and_return(nil)
       expect(subject.result).to eq("solr_response")
     end
+
+    it "sends the expected arguments to solr for children" do
+      expect(subject).to receive(:page).exactly(2).times.and_return(2)
+      expect(subject).to receive(:per_page).and_return(15)
+      expect(subject).to receive(:solr_params).exactly(2).times.and_return(q: "-part_parent_s:_is_parent_ AND a query",
+        group: true,
+        :"group.field" => "part_parent_s",
+        :"group.limit" => 99999)
+
+      expect(subject.send(:connection)).to receive(:paginate).with(
+        2,
+        15,
+        "select",
+        params: {
+          q: "-part_parent_s:_is_parent_ AND a query",
+          group: true,
+          :"group.field" => "part_parent_s",
+          :"group.limit" => 99999,
+        },
+      ).and_return("solr_response")
+      expect(subject.send(:connection)).to receive(:paginate).with(
+        2,
+        0,
+        "select",
+        params: {
+          q: "-part_parent_s:_is_parent_ AND a query",
+          group: true,
+          :"group.field" => "part_parent_s",
+          :"group.limit" => 99999,
+        },
+      ).and_return(nil)
+      expect(subject.result).to eq("solr_response")
+    end
   end
 
   describe "solr_params" do
@@ -80,6 +113,7 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
     it "returns the expected params" do
       allow(instance).to receive(:solr_phrase_fields).and_return("phrase_fields")
       allow(instance).to receive(:solr_query_fields).and_return("query_fields")
+      allow(instance).to receive(:group).and_return({group: "group_info"})
       expect(subject).to eq(
         q: "query",
         fl: "score *",
@@ -92,7 +126,8 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
         defType: "edismax",
         :"facet.field" => [
           "{!ex=creator_facet}creator_facet",
-        ]
+        ],
+        group: "group_info",
       )
     end
 
@@ -154,6 +189,19 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
       it "can be set to another configured sort" do
         allow(query).to receive(:sort).and_return("name asc")
         expect(subject).to eq("name_sort asc")
+      end
+    end
+
+    describe "group" do
+      it "defaults to nothing" do
+        expect(subject.fetch("group", nil)).to be_nil
+      end
+
+      it "returns group by correct field" do
+        allow(query).to receive(:group_by).and_return("group_field")
+        expect(subject.fetch(:group, nil)).to be_truthy
+        expect(subject.fetch(:"group.field", nil)).to eq("group_field")
+        expect(subject.fetch(:"group.limit", nil)).to eq(99999)
       end
     end
 

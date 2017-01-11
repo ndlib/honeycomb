@@ -6,7 +6,8 @@ RSpec.describe Waggle::Search::Query do
       sort: "sort",
       rows: 20,
       start: 40,
-      filters: { collection_id: "collection_id" }
+      filters: { collection_id: "collection_id" },
+      group_by: "group_field",
     }
   end
   let(:configuration) { double(Metadata::Configuration, fields: [], facets: [facet], sort: sort) }
