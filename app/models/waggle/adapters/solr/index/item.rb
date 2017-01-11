@@ -25,23 +25,11 @@ module Waggle
               hash.merge!(string_fields)
               hash.merge!(datetime_fields)
             end
-            if waggle_item.children && !waggle_item.children.empty?
-              @as_solr[:_childDocuments_] = children_field
-            end
             @as_solr[:last_updated_sort] = datetime_as_solr(waggle_item.send(:last_updated))
             @as_solr
           end
 
           private
-
-          def children_field
-            children = []
-            waggle_item.children.each do |child|
-              waggle_child = Waggle::Adapters::Solr::Index::Item.new(waggle_item: Waggle::Item.from_item(child))
-              children << waggle_child.as_solr
-            end
-            children
-          end
 
           def string_fields
             {}.tap do |hash|
