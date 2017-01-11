@@ -3,6 +3,10 @@ require "rails_helper"
 RSpec.describe Waggle::Adapters::Solr::Search::Result do
   let(:raw_response) { File.read(Rails.root.join("spec/fixtures/waggle/solr_response.json")) }
   let(:response) { JSON.parse(raw_response) }
+
+  let(:raw_grouped_response) { File.read(Rails.root.join("spec/fixtures/waggle/solr_grouped_response.json")) }
+  let(:grouped_response) { JSON.parse(raw_grouped_response) }
+
   let(:query) do
     Waggle::Search::Query.new(
       q: "query",
@@ -33,6 +37,12 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
       end
     end
 
+    describe "grouped" do
+      it "is grouped" do
+        expect(subject.grouped?).to be_falsy
+      end
+    end
+
     describe "hits" do
       it "returns an array of hits" do
         expect(subject.hits).to be_kind_of(Array)
@@ -44,6 +54,43 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
       it "returns an array of facets" do
         expect(subject.facets).to be_kind_of(Array)
         expect(subject.facets.first).to be_kind_of(Waggle::Adapters::Solr::Search::Facet)
+      end
+    end
+  end
+
+  context "grouped response" do
+    let(:group_query) do
+      Waggle::Search::Query.new(
+        q: "query",
+        start: 0,
+        rows: 20,
+        filters: {},
+        group_by: "part_parent_s",
+      )
+    end
+    let(:group_instance) { described_class.new(query: group_query) }
+    subject { group_instance }
+
+    before do
+      allow(subject.send(:connection)).to receive(:paginate).and_return(grouped_response)
+    end
+
+    describe "total" do
+      it "is the total number of results" do
+        expect(subject.total).to eq(2)
+      end
+    end
+
+    describe "grouped" do
+      it "is grouped" do
+        expect(subject.grouped?).to be_truthy
+      end
+    end
+
+    describe "groups" do
+      it "returns an array of groups" do
+        expect(subject.groups).to be_kind_of(Array)
+        expect(subject.groups.first).to be_kind_of(Hash)
       end
     end
   end
