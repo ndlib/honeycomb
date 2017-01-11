@@ -26,8 +26,8 @@ RSpec.describe Waggle::Search::Result do
 
   describe "groups" do
     it "returns grouped state" do
-      expect(adapter_result).to receive(:is_grouped).and_return(true)
-      expect(subject.is_grouped).to eq(true)
+      expect(adapter_result).to receive(:grouped?).and_return(true)
+      expect(subject.grouped?).to eq(true)
     end
 
     it "is the results groups" do

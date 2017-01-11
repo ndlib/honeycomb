@@ -2,7 +2,7 @@ json.set! "@type", "SearchResult"
 json.hits do
   json.found @search.total
   json.start @search.start
-  if @search.is_grouped
+  if @search.grouped?
     json.group @search.groups do |group|
       json.partial! "v1/search/group", group: group
     end

@@ -67,7 +67,7 @@ module Waggle
             @result
           end
 
-          def is_grouped
+          def grouped?
             query.group_by ? true : false
           end
 
@@ -205,7 +205,7 @@ module Waggle
           end
 
           def solr_response
-            if is_grouped
+            if grouped?
               result.fetch("grouped", {}).fetch(query.group_by, {})
             else
               result.fetch("response", {})

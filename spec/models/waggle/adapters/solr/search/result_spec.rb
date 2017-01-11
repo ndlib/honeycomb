@@ -75,7 +75,8 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
     it "sends the expected arguments to solr for children" do
       expect(subject).to receive(:page).exactly(2).times.and_return(2)
       expect(subject).to receive(:per_page).and_return(15)
-      expect(subject).to receive(:solr_params).exactly(2).times.and_return(q: "-part_parent_s:_is_parent_ AND a query",
+      expect(subject).to receive(:solr_params).exactly(2).times.and_return(
+        q: "-part_parent_s:_is_parent_ AND a query",
         group: true,
         :"group.field" => "part_parent_s",
         :"group.limit" => 99999)

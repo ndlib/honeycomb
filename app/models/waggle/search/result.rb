@@ -42,8 +42,8 @@ module Waggle
         end
       end
 
-      def is_grouped
-        adapter_result.is_grouped
+      def grouped?
+        adapter_result.grouped?
       end
 
       private
