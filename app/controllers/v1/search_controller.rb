@@ -32,9 +32,7 @@ module V1
     private
 
     def collection
-      if params[:collection_id]
-        CollectionQuery.new.any_find(params[:collection_id])
-      end
+      @collection ||= params[:collection_id] ? CollectionQuery.new.any_find(params[:collection_id]) : nil
     end
   end
 end
