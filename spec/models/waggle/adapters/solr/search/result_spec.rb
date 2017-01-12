@@ -92,6 +92,12 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
         expect(subject.groups).to be_kind_of(Array)
         expect(subject.groups.first).to be_kind_of(Hash)
       end
+
+      it "has the correct grouped keys" do
+        expect(subject.groups.first).to have_key(:id)
+        expect(subject.groups.first).to have_key(:hits)
+        expect(subject.groups.first.fetch(:hits)).to be_kind_of(Array)
+      end
     end
   end
 
