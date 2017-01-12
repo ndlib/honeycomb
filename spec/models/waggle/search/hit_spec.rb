@@ -5,6 +5,7 @@ RSpec.describe Waggle::Search::Hit do
       at_id: "at_id",
       type: "Item",
       description: "Description",
+      short_description: "short_description",
       date_created: "date_created",
       creator: "creator",
       thumbnail_url: "thumbnail",
@@ -18,6 +19,7 @@ RSpec.describe Waggle::Search::Hit do
     :at_id,
     :type,
     :description,
+    :short_description,
     :date_created,
     :creator,
     :thumbnail_url,
@@ -32,18 +34,6 @@ RSpec.describe Waggle::Search::Hit do
       it "returns the data from the adapter_hit" do
         expect(subject.send(field)).to eq(adapter_hit.send(field))
       end
-    end
-  end
-
-  describe "#short_description" do
-    it "calls the appropriate methods on the adapter_hit" do
-      expect(adapter_hit).to receive(:creator)
-      expect(adapter_hit).to receive(:date_created)
-      subject.short_description
-    end
-
-    it "returns the data from the adapter_hit creator and date_created" do
-      expect(subject.short_description).to eq("#{adapter_hit.creator} #{adapter_hit.date_created}")
     end
   end
 end
