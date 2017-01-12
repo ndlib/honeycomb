@@ -545,7 +545,7 @@ Style/NumericLiterals:
                  Add underscores to large numeric literals to improve their
                  readability.
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#underscores-in-numerics'
-  Enabled: true
+  Enabled: false
 
 Style/NumericLiteralPrefix:
   Description: 'Use smallcase prefixes for numeric literals.'

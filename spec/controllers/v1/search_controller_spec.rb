@@ -10,27 +10,28 @@ RSpec.describe V1::SearchController, type: :controller do
   end
 
   describe "#index" do
-    let(:expected) do {
-      collection: collection,
-      filters: { collection_id: collection.unique_id },
-      q: "query",
-      facets: "none",
-      sort: "score desc",
-      rows: 30,
-      start: 0,
-    }
+    let(:expected) do
+      {
+        collection: collection,
+        filters: { collection_id: collection.unique_id },
+        q: "query",
+        facets: "none",
+        sort: "score desc",
+        rows: 30,
+        start: 0,
+      }
     end
 
-    subject {
+    subject do
       get :index,
-      collection_id: collection.id,
-      q: "query",
-      facets: "none",
-      sort: "score desc",
-      rows: 30,
-      start: 0,
-      format: :json
-    }
+          collection_id: collection.id,
+          q: "query",
+          facets: "none",
+          sort: "score desc",
+          rows: 30,
+          start: 0,
+          format: :json
+    end
 
     it "calls CollectionQuery" do
       expect_any_instance_of(CollectionQuery).to receive(:any_find).with(collection.id).and_return(collection)
@@ -49,29 +50,30 @@ RSpec.describe V1::SearchController, type: :controller do
     let(:group_field) { "part_parent_s" }
 
     describe "all arguments defined" do
-      let(:expected) do {
-        collection: collection,
-        filters: { collection_id: collection.unique_id },
-        q: "-" + group_field + ":_is_parent_ AND query",
-        facets: "none",
-        sort: "score desc",
-        rows: 30,
-        start: 0,
-        group_by: nil
-      }
+      let(:expected) do
+        {
+          collection: collection,
+          filters: { collection_id: collection.unique_id },
+          q: "-" + group_field + ":_is_parent_ AND query",
+          facets: "none",
+          sort: "score desc",
+          rows: 30,
+          start: 0,
+          group_by: nil
+        }
       end
 
-      subject {
+      subject do
         get :children,
-        collection_id: collection.id,
-        q: "query",
-        facets: "none",
-        sort: "score desc",
-        rows: 30,
-        start: 0,
-        no_group: true,
-        format: :json
-      }
+            collection_id: collection.id,
+            q: "query",
+            facets: "none",
+            sort: "score desc",
+            rows: 30,
+            start: 0,
+            no_group: true,
+            format: :json
+      end
 
       it "calls CollectionQuery" do
         expect_any_instance_of(CollectionQuery).to receive(:any_find).with(collection.id).and_return(collection)
@@ -87,27 +89,28 @@ RSpec.describe V1::SearchController, type: :controller do
     end
 
     describe "groups with no query" do
-      let(:expected) do {
-        collection: collection,
-        filters: { collection_id: collection.unique_id },
-        q: "-" + group_field + ":_is_parent_ ",
-        facets: "none",
-        sort: "score desc",
-        rows: 30,
-        start: 0,
-        group_by: group_field
-      }
+      let(:expected) do
+        {
+          collection: collection,
+          filters: { collection_id: collection.unique_id },
+          q: "-" + group_field + ":_is_parent_ ",
+          facets: "none",
+          sort: "score desc",
+          rows: 30,
+          start: 0,
+          group_by: group_field
+        }
       end
 
-      subject {
+      subject do
         get :children,
-        collection_id: collection.id,
-        facets: "none",
-        sort: "score desc",
-        rows: 30,
-        start: 0,
-        format: :json
-      }
+            collection_id: collection.id,
+            facets: "none",
+            sort: "score desc",
+            rows: 30,
+            start: 0,
+            format: :json
+      end
 
       it "passes arguments correctly" do
         expect(Waggle).to receive(:search).with(expected)
