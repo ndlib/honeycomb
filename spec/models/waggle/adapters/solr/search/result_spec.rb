@@ -3,6 +3,10 @@ require "rails_helper"
 RSpec.describe Waggle::Adapters::Solr::Search::Result do
   let(:raw_response) { File.read(Rails.root.join("spec/fixtures/waggle/solr_response.json")) }
   let(:response) { JSON.parse(raw_response) }
+
+  let(:raw_grouped_response) { File.read(Rails.root.join("spec/fixtures/waggle/solr_grouped_response.json")) }
+  let(:grouped_response) { JSON.parse(raw_grouped_response) }
+
   let(:query) do
     Waggle::Search::Query.new(
       q: "query",
@@ -33,6 +37,12 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
       end
     end
 
+    describe "grouped" do
+      it "is grouped" do
+        expect(subject.grouped?).to be_falsy
+      end
+    end
+
     describe "hits" do
       it "returns an array of hits" do
         expect(subject.hits).to be_kind_of(Array)
@@ -44,6 +54,49 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
       it "returns an array of facets" do
         expect(subject.facets).to be_kind_of(Array)
         expect(subject.facets.first).to be_kind_of(Waggle::Adapters::Solr::Search::Facet)
+      end
+    end
+  end
+
+  context "grouped response" do
+    let(:group_query) do
+      Waggle::Search::Query.new(
+        q: "query",
+        start: 0,
+        rows: 20,
+        filters: {},
+        group_by: "part_parent_s",
+      )
+    end
+    let(:group_instance) { described_class.new(query: group_query) }
+    subject { group_instance }
+
+    before do
+      allow(subject.send(:connection)).to receive(:paginate).and_return(grouped_response)
+    end
+
+    describe "total" do
+      it "is the total number of results" do
+        expect(subject.total).to eq(2)
+      end
+    end
+
+    describe "grouped" do
+      it "is grouped" do
+        expect(subject.grouped?).to be_truthy
+      end
+    end
+
+    describe "groups" do
+      it "returns an array of groups" do
+        expect(subject.groups).to be_kind_of(Array)
+        expect(subject.groups.first).to be_kind_of(Hash)
+      end
+
+      it "has the correct grouped keys" do
+        expect(subject.groups.first).to have_key(:id)
+        expect(subject.groups.first).to have_key(:hits)
+        expect(subject.groups.first.fetch(:hits)).to be_kind_of(Array)
       end
     end
   end
@@ -71,6 +124,41 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
       ).and_return(nil)
       expect(subject.result).to eq("solr_response")
     end
+
+    it "sends the expected arguments to solr for children" do
+      expect(subject).to receive(:page).exactly(2).times.and_return(2)
+      expect(subject).to receive(:per_page).and_return(15)
+      expect(subject).to receive(:solr_params).exactly(2).times.and_return(
+        q: "-part_parent_s:_is_parent_ AND a query",
+        group: true,
+        :"group.field" => "part_parent_s",
+        :"group.limit" => 99999
+      )
+
+      expect(subject.send(:connection)).to receive(:paginate).with(
+        2,
+        15,
+        "select",
+        params: {
+          q: "-part_parent_s:_is_parent_ AND a query",
+          group: true,
+          :"group.field" => "part_parent_s",
+          :"group.limit" => 99999,
+        },
+      ).and_return("solr_response")
+      expect(subject.send(:connection)).to receive(:paginate).with(
+        2,
+        0,
+        "select",
+        params: {
+          q: "-part_parent_s:_is_parent_ AND a query",
+          group: true,
+          :"group.field" => "part_parent_s",
+          :"group.limit" => 99999,
+        },
+      ).and_return(nil)
+      expect(subject.result).to eq("solr_response")
+    end
   end
 
   describe "solr_params" do
@@ -80,6 +168,7 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
     it "returns the expected params" do
       allow(instance).to receive(:solr_phrase_fields).and_return("phrase_fields")
       allow(instance).to receive(:solr_query_fields).and_return("query_fields")
+      allow(instance).to receive(:group).and_return(group: "group_info")
       expect(subject).to eq(
         q: "query",
         fl: "score *",
@@ -92,7 +181,8 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
         defType: "edismax",
         :"facet.field" => [
           "{!ex=creator_facet}creator_facet",
-        ]
+        ],
+        group: "group_info",
       )
     end
 
@@ -154,6 +244,19 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
       it "can be set to another configured sort" do
         allow(query).to receive(:sort).and_return("name asc")
         expect(subject).to eq("name_sort asc")
+      end
+    end
+
+    describe "group" do
+      it "defaults to nothing" do
+        expect(subject.fetch("group", nil)).to be_nil
+      end
+
+      it "returns group by correct field" do
+        allow(query).to receive(:group_by).and_return("group_field")
+        expect(subject.fetch(:group, nil)).to be_truthy
+        expect(subject.fetch(:"group.field", nil)).to eq("group_field")
+        expect(subject.fetch(:"group.limit", nil)).to eq(99999)
       end
     end
 

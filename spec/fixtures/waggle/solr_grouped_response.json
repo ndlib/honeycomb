@@ -1,0 +1,104 @@
+{
+  "responseHeader": {
+    "status": 0,
+    "QTime": 1,
+    "params": {
+      "q": "-part_parent_s:_is_parent_ AND test",
+      "defType": "edismax",
+      "facet.field": "{!ex=creator_facet}creator_facet, {!ex=language_facet}language_facet",
+      "indent": "on",
+      "fl": "score *",
+      "fq": "collection_id_s:b18c4efca0",
+      "sort": "score desc",
+      "facet": "on",
+      "wt": "json",
+      "group.field": "part_parent_s",
+      "group": "true"
+    }
+  },
+  "grouped": {
+    "part_parent_s": {
+      "matches": 2,
+      "groups": [
+        {
+          "groupValue": "http://localhost:3017/v1/items/43d48988c4",
+          "doclist": {
+            "numFound": 1,
+            "start": 0,
+            "maxScore": 9.3233795,
+            "docs": [
+              {
+                "name_t": [
+                  "metaonly"
+                ],
+                "description_t": [
+                  "coffee"
+                ],
+                "b5d95b26-c8b2-4f34-bea0-b47af22dd921_t": [
+                  "test"
+                ],
+                "id": "b18c4efca0 a4acc9ccf7",
+                "title_t": [
+                  "metaonly"
+                ],
+                "at_id_s": "http://localhost:3017/v1/items/a4acc9ccf7",
+                "unique_id_s": "a4acc9ccf7",
+                "collection_id_s": "b18c4efca0",
+                "type_s": "Metadata Only",
+                "part_parent_s": "http://localhost:3017/v1/items/43d48988c4",
+                "last_updated_dt": "2017-01-06T18:06:02Z",
+                "last_updated_sort": "2017-01-06T18:06:02Z",
+                "_version_": 1556237965715308500,
+                "score": 9.3233795
+              }
+            ]
+          }
+        },
+        {
+          "groupValue": "http://localhost:3017/v1/items/37d40eefdf",
+          "doclist": {
+            "numFound": 1,
+            "start": 0,
+            "maxScore": 8.415446,
+            "docs": [
+              {
+                "name_t": [
+                  "Paint on a Drum Slow Mo"
+                ],
+                "b5d95b26-c8b2-4f34-bea0-b47af22dd921_t": [
+                  "test"
+                ],
+                "c0d8ceb4-1c19-4e81-b6cc-8ecdb1bb3c8b_t": [
+                  "The Slow Mo Guys"
+                ],
+                "id": "b18c4efca0 e43f31ab38",
+                "title_t": [
+                  "Paint on a Drum Slow Mo"
+                ],
+                "at_id_s": "http://localhost:3017/v1/items/e43f31ab38",
+                "unique_id_s": "e43f31ab38",
+                "collection_id_s": "b18c4efca0",
+                "type_s": "VideoObject",
+                "thumbnail_url_s": "http://localhost:3019/images/honeycomb/000/029/031/473/medium/RackMultipart20161118-39665-i1oua4.jpg",
+                "part_parent_s": "http://localhost:3017/v1/items/37d40eefdf",
+                "last_updated_dt": "2017-01-06T20:37:14Z",
+                "last_updated_sort": "2017-01-06T20:37:14Z",
+                "_version_": 1556237965714260000,
+                "score": 8.415446
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "facet_counts": {
+    "facet_queries": {},
+    "facet_fields": {
+      "creator_facet": [], "language_facet": []
+    },
+    "facet_ranges": {},
+    "facet_intervals": {},
+    "facet_heatmaps": {}
+  }
+}

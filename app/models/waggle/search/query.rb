@@ -3,15 +3,16 @@ module Waggle
     class Query
       DEFAULT_ROWS = 12
 
-      attr_reader :q, :facets, :sort, :rows, :start, :filters
+      attr_reader :q, :facets, :sort, :rows, :start, :filters, :group_by
 
-      def initialize(q:, facets: nil, sort: nil, rows: nil, start: nil, filters: {})
+      def initialize(q:, facets: nil, sort: nil, rows: nil, start: nil, filters: {}, group_by: nil)
         @q = q
         @facets = facets || {}
         @sort = sort
         @rows = (rows || DEFAULT_ROWS).to_i
         @start = (start || 0).to_i
         @filters = filters
+        @group_by = group_by
       end
 
       def configuration

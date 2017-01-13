@@ -11,6 +11,10 @@ module Waggle
         @hits ||= adapter_result.hits.map { |adapter_hit| Waggle::Search::Hit.new(adapter_hit) }
       end
 
+      def groups
+        @groups ||= convert_groups
+      end
+
       def start
         query.start
       end
@@ -38,7 +42,22 @@ module Waggle
         end
       end
 
+      def grouped?
+        adapter_result.grouped?
+      end
+
       private
+
+      def convert_groups
+        groups = []
+        adapter_result.groups.each do |group|
+          groups << {
+            id: group.fetch(:id, ""),
+            hits: group.fetch(:hits, []).map { |adapter_hit| Waggle::Search::Hit.new(adapter_hit) },
+          }
+        end
+        groups
+      end
 
       # The relevancy sort is purely for display purposes, since the default search sort is score.
       def relevancy_sort
