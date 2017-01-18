@@ -12,6 +12,7 @@ class Item < ActiveRecord::Base
 
   validates :collection, :unique_id, :user_defined_id, presence: true
   validate :manuscript_url_is_valid_uri
+  validate :relation_depth_of_1
 
   def name
     item_metadata.name
@@ -30,6 +31,12 @@ class Item < ActiveRecord::Base
   end
 
   private
+
+  def relation_depth_of_1
+    if parent.present? && parent.parent.present?
+      errors.add(:parent, "Must be depth of 1, parent can't have a parent")
+    end
+  end
 
   def manuscript_url_is_valid_uri
     if manuscript_url.present? && !URIParser.valid?(manuscript_url)
