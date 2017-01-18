@@ -50,7 +50,7 @@ module Waggle
     end
 
     def part_parent
-      parent.nil? ? "_is_parent_" : data.fetch("isPartOf/parent")
+      parent.nil? ? "_is_parent_" : data.fetch("isPartOf/item")
     end
 
     def parent

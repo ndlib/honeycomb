@@ -19,7 +19,7 @@
     "@context":"http://schema.org",
     "@type":"ImageObject",
     "@id":"http://localhost:3017/v1/items/pig-in-mud",
-    "isPartOf/parent":"http://localhost:3017/v1/item/parent_id",
+    "isPartOf/item":"http://localhost:3017/v1/item/parent_id",
     "isPartOf/collection":"http://localhost:3017/v1/collections/animals",
     "id":"pig-in-mud",
     "collection_id":"animals",
