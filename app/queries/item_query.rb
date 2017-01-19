@@ -27,6 +27,10 @@ class ItemQuery
     relation.find_by!(unique_id: id)
   end
 
+  def parent(id)
+    relation.where(id: relation.select(:parent_id).where(unique_id: id)).take!
+  end
+
   def can_delete?
     CanDelete.item?(relation)
   end

@@ -100,6 +100,7 @@ Rails.application.routes.draw do
       post "media", to: "media#create_for_item"
 
       get :children, defaults: { format: :json }
+      get :parent_and_children, defaults: { format: :json }
       get :showcases, defaults: { format: :json }
       get :pages, defaults: { format: :json }
     end

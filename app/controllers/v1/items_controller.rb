@@ -67,6 +67,18 @@ module V1
       fresh_when(etag: cache_key.generate)
     end
 
+    # show parent of an item and all of its children
+    def parent_and_children
+      @item = ItemQuery.new.parent(params[:item_id])
+
+      cache_key = CacheKeys::Generator.new(key_generator: CacheKeys::Custom::V1Items,
+                                           action: "show",
+                                           item: @item)
+
+      fresh_when(etag: cache_key.generate)
+      render :children
+    end
+
     # get all showcases that use the given item
     def showcases
       @item = ItemQuery.new.public_find(params[:item_id])
