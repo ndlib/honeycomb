@@ -34,7 +34,7 @@ class Item < ActiveRecord::Base
 
   def relation_depth_of_1
     if parent.present? && parent.parent.present?
-      errors.add(:parent, "Must be depth of 1, parent can't have a parent")
+      errors.add(:parent, "This item is a child of a child, which is not supported. Please ensure that item relationships are only one level deep.")
     end
   end
 
