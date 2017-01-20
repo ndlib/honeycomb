@@ -1,5 +1,15 @@
 # Change Log
 
+## [3.7.0](https://github.com/ndlib/honeycomb/tree/v3.7.0) (2017-01-20)
+[Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.6.0...v3.7.0)
+
+**New features/enhancements:**
+- Import now allows creation of a parent/child relationship by including a "Parent Identifier" field. ([DEC-1243](https://jira.library.nd.edu/browse/DEC-1243), [#483](https://github.com/ndlib/honeycomb/pull/483))
+- Export now exports the "Parent Identifier" of a child item's parent when it has one ([DEC-1244](https://jira.library.nd.edu/browse/DEC-1244), [#481](https://github.com/ndlib/honeycomb/pull/481))
+- Changed item validation to only allow an item to have a single parent, no grandparents ([DEC-1261](https://jira.library.nd.edu/browse/DEC-1261), [#486](https://github.com/ndlib/honeycomb/pull/486))
+- Changed search to allow querying children, grouped by parent ([DEC-1342](https://jira.library.nd.edu/browse/DEC-1342), [#488](https://github.com/ndlib/honeycomb/pull/488))
+
+
 ## [3.6.0](https://github.com/ndlib/honeycomb/tree/v3.6.0) (2016-12-14)
 [Full Changelog](https://github.com/ndlib/honeycomb/compare/v3.5.0...v3.6.0)
 
