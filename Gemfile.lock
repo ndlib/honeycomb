@@ -18,14 +18,6 @@ GIT
       rails
 
 GIT
-  remote: git://github.com/ndlib/rsolr.git
-  revision: 9276b7d359f4807e5acc187968d0754af32f40ff
-  specs:
-    rsolr (2.0.0.pre1)
-      builder (>= 2.1.2)
-      faraday
-
-GIT
   remote: https://github.com/jonhartzler/react-rails-img.git
   revision: cc5c4ea42829d8baf6b7815532279843eef651d0
   specs:
@@ -394,6 +386,8 @@ GEM
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
     retriable (1.4.1)
+    rsolr (1.1.2)
+      builder (>= 2.1.2)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
@@ -574,7 +568,7 @@ DEPENDENCIES
   react-rails
   react-rails-img!
   responders (~> 2.0)
-  rsolr!
+  rsolr
   rspec-collection_matchers
   rspec-rails
   rubocop (~> 0.36.0)
