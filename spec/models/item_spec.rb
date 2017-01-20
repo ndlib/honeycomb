@@ -71,6 +71,13 @@ RSpec.describe Item do
     expect(subject.parent).to be_nil
   end
 
+  it "doesn't allow a relation depth greater than 1" do
+    FactoryGirl.create(:collection)
+    FactoryGirl.create(:item, user_defined_id: "one", unique_id: 1, id: 1)
+    FactoryGirl.create(:item, id: 2, unique_id: 2, user_defined_id: 'two', parent_id: 1)
+    expect { FactoryGirl.create(:item, id: 3, unique_id: 3, user_defined_id: 'three', parent_id: 2) }.to raise_error
+  end
+
   it "has children" do
     expect(subject).to respond_to(:children)
     expect(subject.children).to eq([])
