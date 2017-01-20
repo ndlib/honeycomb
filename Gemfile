@@ -53,7 +53,7 @@ gem "paper_trail", "~> 4.0.0.beta2"
 gem "faraday"
 gem "faraday_middleware"
 
-gem "rsolr", github: "ndlib/rsolr"
+gem "rsolr"
 
 gem "sanitize"
 
