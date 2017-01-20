@@ -86,7 +86,7 @@ module V1
       json.set! "@context", "http://schema.org"
       json.set! "@type", "CreativeWork"
       json.set! "@id", at_id
-      json.set! "isPartOf/parent", parent_url
+      json.set! "isPartOf/item", parent_url
       json.set! "isPartOf/collection", collection_url
       json.set! "hasPart/children", children_url
       json.set! "hasPart/showcases", showcases_url

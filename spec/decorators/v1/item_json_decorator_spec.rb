@@ -150,7 +150,7 @@ RSpec.describe V1::ItemJSONDecorator do
         "@context",
         "@type",
         "@id",
-        "isPartOf/parent",
+        "isPartOf/item",
         "isPartOf/collection",
         "hasPart/children",
         "hasPart/showcases",
