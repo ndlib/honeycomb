@@ -50,6 +50,10 @@ module Waggle
             fetch_text(:description)
           end
 
+          def short_description
+            fetch_text(:short_description)
+          end
+
           def creator
             fetch_text(:creator)
           end
