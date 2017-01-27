@@ -1,4 +1,6 @@
+require 'new_relic/agent/method_tracer'
 class FindOrCreateItem
+include ::NewRelic::Agent::MethodTracer
   attr_reader :props, :item, :is_new_record, :is_changed, :is_valid
   private :is_new_record, :is_changed, :is_valid
 
@@ -68,4 +70,10 @@ class FindOrCreateItem
     CreateUniqueId.call(item)
     @is_valid = item.valid? && item.item_metadata.valid?
   end
+
+add_method_tracer :using, 'FindOrCreateItem/using'
+add_method_tracer :valid, 'FindOrCreateItem/valid'
+add_method_tracer :save, 'FindOrCreateItem/save'
+add_method_tracer :find_or_create_by, 'FindOrCreateItem/find_or_create_by'
+add_method_tracer :update_props, 'FindOrCreateItem/update_props'
 end

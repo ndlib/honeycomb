@@ -1,4 +1,6 @@
+require 'new_relic/agent/method_tracer'
 module Metadata
+include ::NewRelic::Agent::MethodTracer
   class Setter
     attr_reader :item
 
@@ -20,9 +22,9 @@ module Metadata
     private
 
     def set(field, value)
-      if field?(field)
+      #if field?(field)
         item.metadata[field.to_s] = value
-      end
+      #end
     end
 
     def field?(field)
@@ -32,5 +34,11 @@ module Metadata
     def configuration
       @configuration ||= CollectionConfigurationQuery.new(item.collection).find
     end
+
+
+add_method_tracer :set_metadata, 'Metadata::Setter/set_metadata'
+add_method_tracer :set, 'Metadata::Setter/set'
+add_method_tracer :field?, 'Metadata::Setter/field?'
+add_method_tracer :configuration, 'Metadata::Setter/configuration'
   end
 end

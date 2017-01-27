@@ -1,7 +1,10 @@
+require 'new_relic/agent/method_tracer'
+
 # Performs batch creation of items from an array of item hashes.
 # Allows injecting a block to change the item attributes before
 # attempting to create the item.
 class CreateItems
+include ::NewRelic::Agent::MethodTracer
   def self.call(collection:, find_by:, items_hash:, counts:, errors:)
     new.create_or_update!(collection: collection,
                           find_by: find_by,
@@ -32,27 +35,23 @@ class CreateItems
   def create_or_update!(collection:, find_by:, items_hash:, counts:, errors:)
     items_to_index = []
 
-rewrite_block_bm = Benchmark::Tms.new
-find_or_create_bm = Benchmark::Tms.new
-save_item_bm = Benchmark::Tms.new
-other_bm = Benchmark::Tms.new
-
+self.class.trace_execution_scoped(['CreateItems/create_or_update/outer_loop']) do
     ActiveRecord::Base.transaction do
       items_hash.each do |item_props|
         rewrite_errors = []
         index = item_props[:index]
-rewrite_block_bm.add!() do
+self.class.trace_execution_scoped(['CreateItems/create_or_update/rewrite_block']) do
         item_props = yield(item_props[:item_hash], rewrite_errors).symbolize_keys if block_given?
 end
 item_creator = nil
-find_or_create_bm.add!() do
+self.class.trace_execution_scoped(['CreateItems/create_or_update/find_or_create']) do
         item_creator = FindOrCreateItem.call(props: { collection_id: collection.id, **item_props }, find_by: find_by)
 end
 saved = nil
-save_item_bm.add!() do
+self.class.trace_execution_scoped(['CreateItems/create_or_update/save_item']) do
         saved = rewrite_errors.present? ? false : item_creator.save(index: false)
 end
-other_bm.add!() do
+self.class.trace_execution_scoped(['CreateItems/create_or_update/other']) do
         add_to_errors(
           errors: errors,
           index: index,
@@ -64,20 +63,10 @@ other_bm.add!() do
 end
       end
     end
-
-index_bm = Benchmark.measure(label: "Index") do
+end
+self.class.trace_execution_scoped(['CreateItems/create_or_update/index']) do
     Index::Collection.index!(collection: collection, items: items_to_index)
 end
-
-total_bm = rewrite_block_bm + find_or_create_bm + save_item_bm + other_bm + index_bm
-puts "Count: #{items_hash.count}"
-puts                         ("               user     system      total        real")
-puts rewrite_block_bm.format ("Rewrite block  %U %y %t %r")
-puts find_or_create_bm.format("Find or create %U %y %t %r")
-puts save_item_bm.format     ("Save item      %U %y %t %r")
-puts other_bm.format         ("Other          %U %y %t %r")
-puts index_bm.format         ("Index          %U %y %t %r")
-puts total_bm.format         ("Total          %U %y %t %r")
   end
 
   private

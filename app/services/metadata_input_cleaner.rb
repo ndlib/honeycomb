@@ -1,4 +1,7 @@
+require 'new_relic/agent/method_tracer'
+
 class MetadataInputCleaner
+include ::NewRelic::Agent::MethodTracer
   attr_reader :item
 
   def self.call(item)
@@ -39,4 +42,8 @@ class MetadataInputCleaner
       value
     end
   end
+
+add_method_tracer :clean!, 'MetadataInputCleaner/clean!'
+add_method_tracer :ensure_value_is_array, 'MetadataInputCleaner/ensure_value_is_array'
+add_method_tracer :ensure_hash, 'MetadataInputCleaner/ensure_hash'
 end
