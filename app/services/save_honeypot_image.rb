@@ -42,7 +42,12 @@ class SaveHoneypotImage
   end
 
   def send_request
-    response = connection.post("/api/images", post)
+    response = connection.post do |req|
+      req.url "/api/images"
+      req.body = post
+      req.options.timeout = 600
+    end
+
     if response.success?
       response
     else

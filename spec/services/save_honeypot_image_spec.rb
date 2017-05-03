@@ -55,12 +55,15 @@ RSpec.describe SaveHoneypotImage do
     end
 
     it "sends a request to the json api" do
-      expect(connection).to receive(:post).with("/api/images",
-                                                application_id: "honeycomb",
+      mock = double.as_null_object
+      expect(mock).to receive(:url).with("/api/images")
+      expect(mock).to receive(:body=).with( application_id: "honeycomb",
                                                 group_id: 100,
                                                 item_id: 10,
-                                                image: kind_of(Faraday::UploadIO)).
-        and_return(faraday_response)
+                                                image: kind_of(Faraday::UploadIO))
+
+      expect(connection).to receive(:post).and_return(faraday_response).and_yield(mock)
+
 
       subject.save!
     end
@@ -128,7 +131,15 @@ RSpec.describe SaveHoneypotImage do
   it "uses the collection id as the group id" do
     allow_any_instance_of(described_class).to receive(:connection).and_return(connection)
     subject = described_class.new(image: image)
-    expect(connection).to receive(:post).with("/api/images", hash_including(group_id: collection.id)).and_return(faraday_response)
+
+    mock = double.as_null_object
+    expect(mock).to receive(:url).with("/api/images")
+    expect(mock).to receive(:body=).with( application_id: "honeycomb",
+                                              group_id: collection.id,
+                                              item_id: 10,
+                                              image: kind_of(Faraday::UploadIO))
+
+    expect(connection).to receive(:post).and_return(faraday_response).and_yield(mock)
     subject.save!
   end
 end
