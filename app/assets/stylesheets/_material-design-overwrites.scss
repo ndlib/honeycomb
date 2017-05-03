@@ -75,15 +75,6 @@ a, a:hover, a:focus {
   }
 }
 
-.redactor-modal-tab label.checkbox input[type=checkbox] {
-  opacity: 1;
-  margin-left: -20px;
-  margin-top: 4px;
-  height: inherit;
-  width: inherit;
-  pointer-events: all;
-}
-
 
 fieldset[disabled] .form-control:not(textarea):not(select), .form-control-wrapper .form-control:not(textarea):not(select), .form-control:not(textarea):not(select), fieldset[disabled] .form-control:focus:not(textarea):not(select), .form-control-wrapper .form-control:focus:not(textarea):not(select), .form-control:focus:not(textarea):not(select), fieldset[disabled] .form-control.focus:not(textarea):not(select), .form-control-wrapper .form-control.focus:not(textarea):not(select), .form-control.focus:not(textarea):not(select) {
   height: 20px;

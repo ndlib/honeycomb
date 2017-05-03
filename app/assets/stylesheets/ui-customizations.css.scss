@@ -635,4 +635,13 @@ div.dataTables_filter {
   font-feature-settings: 'liga' 1;
 }
 
+.redactor-modal-tab label.checkbox input[type=checkbox] {
+  opacity: 1;
+  margin-left: -20px;
+  margin-top: 4px;
+  height: inherit;
+  width: inherit;
+  pointer-events: all;
+}
+
 @import "_material-design-overwrites.scss";
