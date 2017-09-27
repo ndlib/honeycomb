@@ -13,7 +13,8 @@ var ShowcaseEditor = React.createClass({
       currentDragItem: null,
       currentDragType: null,
       showcase: {sections: []},
-      scroll: false
+      scroll: false,
+      updating: false,
     };
   },
   loadSectionsFromServer: function() {
@@ -49,8 +50,9 @@ var ShowcaseEditor = React.createClass({
     };
     sections = this.state.showcase.sections;
     sections.splice(index, 0, section);
+    var self = this
     return this.setState({
-      sections: sections
+      updating: true
     }, function() {
       $.ajax({
         url: this.props.sectionsCreatePath,
@@ -60,6 +62,10 @@ var ShowcaseEditor = React.createClass({
           section: section
         },
         success: (function(data) {
+          self.setState({
+            sections: sections,
+            updating: false,
+          })
           this.loadSectionsFromServer();
         }).bind(this),
         error: (function(xhr, status, err) {
