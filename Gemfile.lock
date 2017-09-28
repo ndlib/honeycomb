@@ -1,23 +1,4 @@
 GIT
-  remote: git://github.com/ndlib/hesburgh_api.git
-  revision: 7e65d334a0e3262ad51c02670792da44aaa98c3b
-  specs:
-    hesburgh_api (0.0.3)
-      excon
-      faraday
-      faraday_middleware
-      multi_xml
-      rails (~> 4.0)
-      typhoeus
-
-GIT
-  remote: git://github.com/ndlib/hesburgh_infrastructure.git
-  revision: a15169f644f52a230a8c8c4b4a67574015132588
-  specs:
-    hesburgh_infrastructure (0.2.5)
-      rails
-
-GIT
   remote: https://github.com/jonhartzler/react-rails-img.git
   revision: cc5c4ea42829d8baf6b7815532279843eef651d0
   specs:
@@ -34,6 +15,25 @@ GIT
       nokogiri (>= 1.4.4, != 1.5.2, != 1.5.1)
       oauth (>= 0.3.6)
       oauth2 (>= 0.5.0)
+
+GIT
+  remote: https://github.com/ndlib/hesburgh_api.git
+  revision: ecff95532186162e27affc092ac64cdbb6cce97f
+  specs:
+    hesburgh_api (0.0.3)
+      excon
+      faraday
+      faraday_middleware
+      multi_xml
+      rails (~> 4.0)
+      typhoeus
+
+GIT
+  remote: https://github.com/ndlib/hesburgh_infrastructure.git
+  revision: 3ca3bc3b9df36b9bfb2abed248ea5e79773346f2
+  specs:
+    hesburgh_infrastructure (0.2.5)
+      rails
 
 GEM
   remote: https://rubygems.org/
@@ -73,7 +73,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    addressable (2.4.0)
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
     airbrake (4.1.0)
       builder
       multi_json
@@ -183,9 +184,9 @@ GEM
       activesupport (>= 3.0)
       request_store (~> 1.0)
     erubis (2.7.0)
-    ethon (0.7.3)
+    ethon (0.10.1)
       ffi (>= 1.3.0)
-    excon (0.45.3)
+    excon (0.59.0)
     execjs (2.6.0)
     extlib (0.9.16)
     factory_girl (4.2.0)
@@ -203,8 +204,8 @@ GEM
     formatador (0.2.5)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
-    google-api-client (0.8.6)
-      activesupport (>= 3.2)
+    google-api-client (0.8.7)
+      activesupport (>= 3.2, < 5.0)
       addressable (~> 2.3)
       autoparse (~> 0.3)
       extlib (~> 0.9)
@@ -246,7 +247,7 @@ GEM
       spring
     hike (1.2.3)
     hitimes (1.2.4)
-    i18n (0.7.0)
+    i18n (0.8.6)
     jbuilder (2.5.0)
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
@@ -261,8 +262,8 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (5.0.2)
       railties (>= 3.2.16)
-    json (1.8.3)
-    jwt (1.5.1)
+    json (1.8.6)
+    jwt (1.5.6)
     launchy (2.4.3)
       addressable (~> 2.3)
     libv8 (3.16.14.15)
@@ -271,7 +272,7 @@ GEM
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
     little-plugger (1.1.4)
-    logging (2.1.0)
+    logging (2.2.2)
       little-plugger (~> 1.1)
       multi_json (~> 1.10)
     loofah (2.0.3)
@@ -279,28 +280,27 @@ GEM
     lumberjack (1.0.9)
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
-    memoist (0.14.0)
+    memoist (0.16.0)
     method_source (0.8.2)
     mime-types (2.6.2)
-    mini_portile2 (2.1.0)
-    minitest (5.9.0)
-    multi_json (1.12.1)
-    multi_xml (0.5.5)
+    mini_portile (0.6.2)
+    minitest (5.10.3)
+    multi_json (1.12.2)
+    multi_xml (0.6.0)
     multipart-post (2.0.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.2.0)
     netrc (0.10.1)
     newrelic_rpm (3.9.6.257)
-    nokogiri (1.6.8)
-      mini_portile2 (~> 2.1.0)
-      pkg-config (~> 1.1.7)
+    nokogiri (1.6.6.4)
+      mini_portile (~> 0.6.0)
     nokogumbo (1.4.1)
       nokogiri
-    oauth (0.5.1)
-    oauth2 (1.1.0)
-      faraday (>= 0.8, < 0.10)
-      jwt (~> 1.0, < 1.5.2)
+    oauth (0.5.3)
+    oauth2 (1.4.0)
+      faraday (>= 0.8, < 0.13)
+      jwt (~> 1.0)
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
@@ -319,7 +319,6 @@ GEM
     parser (2.3.0.1)
       ast (~> 2.2)
     pg (0.18.4)
-    pkg-config (1.1.7)
     powerpack (0.1.1)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -327,9 +326,10 @@ GEM
       slop (~> 3.4)
     pry-nav (0.2.4)
       pry (>= 0.9.10, < 0.11.0)
+    public_suffix (3.0.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
-    rack (1.6.4)
+    rack (1.6.8)
     rack-cache (1.2)
       rack (>= 0.4)
     rack-test (0.6.3)
@@ -438,7 +438,7 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
     sigdump (0.2.2)
-    signet (0.7.2)
+    signet (0.7.3)
       addressable (~> 2.3)
       faraday (~> 0.9)
       jwt (~> 1.5)
@@ -482,14 +482,14 @@ GEM
       ref
     thor (0.19.1)
     thread (0.1.7)
-    thread_safe (0.3.5)
+    thread_safe (0.3.6)
     tilt (1.4.1)
     timers (4.0.1)
       hitimes
     tins (1.3.3)
-    typhoeus (0.7.1)
-      ethon (>= 0.7.1)
-    tzinfo (1.2.2)
+    typhoeus (1.3.0)
+      ethon (>= 0.9.0)
+    tzinfo (1.2.3)
       thread_safe (~> 0.1)
     uglifier (2.5.3)
       execjs (>= 0.3.0)
@@ -588,4 +588,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-   1.13.1
+   1.13.6

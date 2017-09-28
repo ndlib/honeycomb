@@ -23,8 +23,8 @@ gem "sdoc", "~> 0.4.0", group: :doc
 gem "paperclip"
 gem "paperclip-meta"
 
-gem "hesburgh_infrastructure", github: "ndlib/hesburgh_infrastructure"
-gem "hesburgh_api", github: "ndlib/hesburgh_api"
+gem "hesburgh_infrastructure", git: "https://github.com/ndlib/hesburgh_infrastructure.git"
+gem "hesburgh_api", git: "https://github.com/ndlib/hesburgh_api.git"
 
 gem "simple_form", "~> 3.1.0"
 
