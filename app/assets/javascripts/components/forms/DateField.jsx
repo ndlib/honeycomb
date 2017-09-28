@@ -1,6 +1,6 @@
 //app/assets/javascripts/components/forms/TextField.jsx
 var React = require('react');
-
+var ReactDOM = require('react-dom');
 var DateField = React.createClass({
 
   propTypes: {
@@ -62,16 +62,16 @@ var DateField = React.createClass({
   },
 
   handleChange: function(event) {
-    var year = this.refs.year.getDOMNode().value;
-    var month = this.refs.month.getDOMNode().value;
-    var day = this.refs.day.getDOMNode().value;
-    var bc = this.refs.bc.getDOMNode().checked;
+    var year = ReactDOM.findDOMNode(this.refs.year).value;
+    var month = ReactDOM.findDOMNode(this.refs.month).value;
+    var day = ReactDOM.findDOMNode(this.refs.day).value;
+    var bc = ReactDOM.findDOMNode(this.refs.bc).checked;
     var displayText = "";
     var stateDisplayText = this.state.displayText;
     var newValue = null;
 
     if (this.state.chooseDisplayText) {
-      displayText = this.refs.displayText.getDOMNode().value;
+      displayText = ReactDOM.findDOMNode(this.refs.displayText).value;
       stateDisplayText = displayText;
     }
 

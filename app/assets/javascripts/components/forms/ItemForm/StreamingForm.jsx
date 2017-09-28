@@ -170,7 +170,7 @@ var StreamingForm = React.createClass({
           modal={true}
           title="Supported File Playback"
           actions={[this.okDismiss()]}
-          openImmediately={false}
+          defaultOpen={false}
           style={{zIndex: 10}}
         >
           <div>

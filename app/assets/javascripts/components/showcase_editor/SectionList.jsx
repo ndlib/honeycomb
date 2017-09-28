@@ -30,7 +30,7 @@ var SectionList = React.createClass({
     }
   },
   section_tag: function(section) {
-    var key = section.id + '-' + section.id
+    var key = section.id + '-' + section.order
     return (<Section  onDragStart={this.props.onDragStart} onDragStop={this.props.onDragStop} section={section} key={key} onSectionClick={this.props.onSectionClick} />)
   },
   dropzone_tag: function(order, expanded) {

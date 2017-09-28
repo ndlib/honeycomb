@@ -64,8 +64,8 @@ var AddNewItemsButton = React.createClass({
           modal={true}
           title="Add New Items"
           actions={[this.cancelDismiss(), this.okDismiss()]}
-          openImmediately={false}
-          onDismiss={this.closeCallback}
+          defaultOpen={false}
+          onRequestClose={this.closeCallback}
           style={{zIndex: 100}}
         >
           <Tabs style={ { marginBottom: "10px"} }>

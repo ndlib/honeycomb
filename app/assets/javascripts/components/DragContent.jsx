@@ -1,9 +1,11 @@
 var React = require('react');
+var ReactDOM = require('react-dom')
 
 var DragContent = React.createClass({
   getInitialState: function() {
     return {
       mounted: false,
+      box: null
     };
   },
 
@@ -12,7 +14,7 @@ var DragContent = React.createClass({
     var top = this.props.top;
 
     if (this.state.mounted) {
-      var box = this.getDOMNode().getBoundingClientRect();
+      var box = this.state.box;
       top = top - (box.height / 2);
       left = left - (box.width / 2);
     }
@@ -33,6 +35,7 @@ var DragContent = React.createClass({
   componentDidMount: function() {
     this.setState({
       mounted: true,
+      box: ReactDOM.findDOMNode(this).getBoundingClientRect()
     });
   },
 

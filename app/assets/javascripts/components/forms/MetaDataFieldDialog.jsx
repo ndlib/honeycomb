@@ -186,7 +186,7 @@ var MetaDataFieldDialog = React.createClass({
           bodyStyle={{ margin: "0 auto 0 auto" }}
           contentStyle={{ width: "35%" }}
           style={{ zIndex: 100 }}
-          openImmediately={this.props.open}
+          defaultOpen={this.props.open}
         >
           { this.state.open && this.getFieldProps() }
         </Dialog>

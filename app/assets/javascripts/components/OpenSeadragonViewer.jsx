@@ -1,5 +1,6 @@
 //app/assets/javascripts/components/OpenSeadragonViewer.jsx
 var React = require("react");
+var ReactDOM = require("react-dom");
 var OpenSeadragon = require("../openseadragon.js");
 var OpenSeadragonViewer = React.createClass({
   propTypes: {
@@ -68,7 +69,7 @@ var OpenSeadragonViewer = React.createClass({
   baseOptions: function() {
     return {
       id: this.props.containerID,
-      element: this.getDOMNode(),
+      element: ReactDOM.findDOMNode(this),
       prefixUrl: "/openseadragon/",
       showNavigator: false,
       showRotationControl: true,

@@ -30,7 +30,7 @@ var DraggableMixin = {
       event.stopPropagation();
       event.preventDefault();
       this.addEvents();
-      pageOffset = this.getDOMNode().getBoundingClientRect();
+      pageOffset = ReactDOM.findDOMNode(this).getBoundingClientRect();
       return this.setState({
         mouseDown: true,
         viewportOriginX: event.pageX - document.body.scrollLeft,
