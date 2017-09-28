@@ -23,8 +23,8 @@ gem "sdoc", "~> 0.4.0", group: :doc
 gem "paperclip"
 gem "paperclip-meta"
 
-gem "hesburgh_infrastructure", github: "ndlib/hesburgh_infrastructure"
-gem "hesburgh_api", github: "ndlib/hesburgh_api"
+gem "hesburgh_infrastructure", git: "https://github.com/ndlib/hesburgh_infrastructure.git"
+gem "hesburgh_api", git: "https://github.com/ndlib/hesburgh_api.git"
 
 gem "simple_form", "~> 3.1.0"
 
@@ -90,7 +90,7 @@ gem "bootstrap-sass", "~> 3.3.1"
 gem "bootstrap-material-design"
 gem "autoprefixer-rails"
 
-gem "google_drive"
+gem "google_drive", git: "https://github.com/ndlib/google-drive-ruby.git", branch: "DEC-1008-Speedup-update-cells"
 
 group :development, :test do
   gem "rubocop", "~> 0.36.0", require: false

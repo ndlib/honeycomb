@@ -1,6 +1,24 @@
 GIT
-  remote: git://github.com/ndlib/hesburgh_api.git
-  revision: 7e65d334a0e3262ad51c02670792da44aaa98c3b
+  remote: https://github.com/jonhartzler/react-rails-img.git
+  revision: cc5c4ea42829d8baf6b7815532279843eef651d0
+  specs:
+    react-rails-img (0.1.5)
+      react-rails
+
+GIT
+  remote: https://github.com/ndlib/google-drive-ruby.git
+  revision: 263a978cb4a2fafcc33822aeda011ca37aac9019
+  branch: DEC-1008-Speedup-update-cells
+  specs:
+    google_drive (1.0.6)
+      google-api-client (>= 0.7.0, < 0.9)
+      nokogiri (>= 1.4.4, != 1.5.2, != 1.5.1)
+      oauth (>= 0.3.6)
+      oauth2 (>= 0.5.0)
+
+GIT
+  remote: https://github.com/ndlib/hesburgh_api.git
+  revision: ecff95532186162e27affc092ac64cdbb6cce97f
   specs:
     hesburgh_api (0.0.3)
       excon
@@ -11,18 +29,11 @@ GIT
       typhoeus
 
 GIT
-  remote: git://github.com/ndlib/hesburgh_infrastructure.git
-  revision: a15169f644f52a230a8c8c4b4a67574015132588
+  remote: https://github.com/ndlib/hesburgh_infrastructure.git
+  revision: 3ca3bc3b9df36b9bfb2abed248ea5e79773346f2
   specs:
     hesburgh_infrastructure (0.2.5)
       rails
-
-GIT
-  remote: https://github.com/jonhartzler/react-rails-img.git
-  revision: cc5c4ea42829d8baf6b7815532279843eef651d0
-  specs:
-    react-rails-img (0.1.5)
-      react-rails
 
 GEM
   remote: https://rubygems.org/
@@ -73,6 +84,10 @@ GEM
     amq-protocol (1.9.2)
     arel (6.0.3)
     ast (2.2.0)
+    autoparse (0.3.3)
+      addressable (>= 2.3.1)
+      extlib (>= 0.9.15)
+      multi_json (>= 1.0.0)
     autoprefixer-rails (5.1.11)
       execjs
       json
@@ -151,8 +166,6 @@ GEM
     crass (1.0.2)
     dalli (2.7.4)
     debug_inspector (0.0.2)
-    declarative (0.0.10)
-    declarative-option (0.1.0)
     devise (3.4.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -171,10 +184,11 @@ GEM
       activesupport (>= 3.0)
       request_store (~> 1.0)
     erubis (2.7.0)
-    ethon (0.7.3)
+    ethon (0.10.1)
       ffi (>= 1.3.0)
-    excon (0.45.3)
+    excon (0.59.0)
     execjs (2.6.0)
+    extlib (0.9.16)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.2.1)
@@ -190,20 +204,17 @@ GEM
     formatador (0.2.5)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
-    google-api-client (0.10.3)
+    google-api-client (0.8.7)
+      activesupport (>= 3.2, < 5.0)
       addressable (~> 2.3)
-      googleauth (~> 0.5)
-      httpclient (~> 2.7)
-      hurley (~> 0.1)
-      memoist (~> 0.11)
-      mime-types (>= 1.6)
-      representable (~> 3.0)
-      retriable (>= 2.0, < 4.0)
-    google_drive (1.0.1)
-      google-api-client (>= 0.7.0)
-      nokogiri (>= 1.4.4, != 1.5.2, != 1.5.1)
-      oauth (>= 0.3.6)
-      oauth2 (>= 0.5.0)
+      autoparse (~> 0.3)
+      extlib (~> 0.9)
+      faraday (~> 0.9)
+      googleauth (~> 0.3)
+      launchy (~> 2.4)
+      multi_json (~> 1.10)
+      retriable (~> 1.4)
+      signet (~> 0.6)
     googleauth (0.5.1)
       faraday (~> 0.9)
       jwt (~> 1.4)
@@ -236,8 +247,6 @@ GEM
       spring
     hike (1.2.3)
     hitimes (1.2.4)
-    httpclient (2.8.3)
-    hurley (0.2)
     i18n (0.8.6)
     jbuilder (2.5.0)
       activesupport (>= 3.0.0, < 5.1)
@@ -255,6 +264,8 @@ GEM
       railties (>= 3.2.16)
     json (1.8.6)
     jwt (1.5.6)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     libv8 (3.16.14.15)
     listen (2.7.11)
       celluloid (>= 0.15.2)
@@ -368,17 +379,13 @@ GEM
       rails (>= 3.2)
       tilt
     ref (1.0.5)
-    representable (3.0.4)
-      declarative (< 0.1.0)
-      declarative-option (< 0.2.0)
-      uber (< 0.2.0)
     request_store (1.1.0)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     rest-client (1.7.2)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    retriable (3.1.1)
+    retriable (1.4.1)
     rsolr (1.1.2)
       builder (>= 2.1.2)
     rspec (3.1.0)
@@ -480,11 +487,10 @@ GEM
     timers (4.0.1)
       hitimes
     tins (1.3.3)
-    typhoeus (0.7.1)
-      ethon (>= 0.7.1)
+    typhoeus (1.3.0)
+      ethon (>= 0.9.0)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
-    uber (0.1.0)
     uglifier (2.5.3)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -530,7 +536,7 @@ DEPENDENCIES
   faker
   faraday
   faraday_middleware
-  google_drive
+  google_drive!
   guard
   guard-bundler
   guard-coffeescript
