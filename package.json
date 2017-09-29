@@ -4,7 +4,7 @@
   "repository": "git@github.com:ndlib/honeycomb.git",
   "dependencies": {
     "axios": "0.7.0",
-    "browserify": "6.3.4",
+    "browserify": "14.4.0",
     "browserify-incremental": "1.5.0",
     "classnames": "2.2.3",
     "es6-promise": "^3.1.2",
