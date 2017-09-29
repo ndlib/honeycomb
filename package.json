@@ -28,9 +28,6 @@
     "react-tap-event-plugin": "1.0",
     "reactify": "0.17.1"
   },
-  "devDependencies": {
-    "react-tools": "0.12.2"
-  },
   "engines": {
     "node": ">=5.5.0"
   },
