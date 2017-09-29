@@ -30,28 +30,5 @@
   },
   "engines": {
     "node": ">=5.5.0"
-  },
-  "scripts": {
-    "test": "node ./node_modules/jest-cli/bin/jest.js"
-  },
-  "jest": {
-    "rootDir": "./app/assets/javascripts/components",
-    "scriptPreprocessor": "<rootDir>/__tests__/preprocessor.js",
-    "collectCoverage": true,
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ],
-    "unmockedModulePathPatterns": [
-      "react",
-      "jquery"
-    ],
-    "testFileExtensions": [
-      "js",
-      "jsx"
-    ],
-    "testPathIgnorePatterns": [
-      "preprocessor.js"
-    ]
   }
 }
