@@ -29,6 +29,7 @@ var StreamingForm = React.createClass({
       processing: false,
       item: this.props.item,
       hasFile: false,
+      open: false
     }
   },
 
@@ -135,11 +136,11 @@ var StreamingForm = React.createClass({
   },
 
   codecInformation: function() {
-    this.refs.showCodec.show();
+    this.setState({open: true});
   },
 
   dismissMessage: function() {
-    this.refs.showCodec.dismiss();
+    this.setState({open: false});
   },
 
   typeCompatability: function() {
@@ -167,10 +168,9 @@ var StreamingForm = React.createClass({
           ref="showCodec"
           autoDetectWindowHeight={true}
           autoScrollBodyContent={true}
-          modal={true}
           title="Supported File Playback"
           actions={[this.okDismiss()]}
-          defaultOpen={false}
+          open={this.state.open}
           style={{zIndex: 10}}
         >
           <div>

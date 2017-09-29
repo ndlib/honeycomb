@@ -126,7 +126,7 @@ var ItemForm = React.createClass({
     if (this.state.item.media) {
       return (<Tab label="Media" style={TabStyle} value="media" />);
     }
-    return (<div />);
+    return (<Tab label="Media" style={{display: "none"}} value="media" />);
   },
 
   render: function() {

@@ -3,7 +3,7 @@ var classNames = require("classnames");
 
 var Thumbnail = React.createClass({
   propTypes: {
-    thumbnailUrl: React.PropTypes.string,
+    thumbnailUrl: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.array]),
     thumbType: React.PropTypes.oneOf(['item', 'page', 'showcase', 'collection']).isRequired,
     extraStyle: React.PropTypes.object,
     mediaType: React.PropTypes.string,

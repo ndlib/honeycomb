@@ -24,41 +24,25 @@ var ImportResultsDialog = React.createClass({
     });
   },
 
-  componentDidMount: function() {
-    if(this.state.open){
-      this.refs.ResultsDialog.show();
-    } else {
-      this.refs.ResultsDialog.dismiss();
-    }
-  },
-
-  componentDidUpdate: function(prevProps, prevState) {
-    if(this.state.open){
-      this.refs.ResultsDialog.show();
-    } else {
-      this.refs.ResultsDialog.dismiss();
-    }
-  },
-
   handleClose: function() {
     this.setState({ open: false });
   },
 
   summary: function() {
     var summary = this.props.results.summary;
-    var totals = (<div>Of { summary.total_count } total rows:</div>);
+    var totals = (<div key={'rows'}>Of { summary.total_count } total rows:</div>);
 
     var newCount = null;
     if (summary.new_count > 0) {
-      newCount = (<div>{ summary.new_count } items were created.</div>);
+      newCount = (<div key={'new'}>{ summary.new_count } items were created.</div>);
     }
     var changedCount = null;
     if (summary.changed_count > 0) {
-      changedCount = (<div>{ summary.changed_count } items were updated.</div>);
+      changedCount = (<div key={'changed'}>{ summary.changed_count } items were updated.</div>);
     }
     var unchangedCount = null;
     if (summary.unchanged_count > 0) {
-      unchangedCount = (<div>{ summary.unchanged_count } items had no changes.</div>);
+      unchangedCount = (<div key={'unchanged'}>{ summary.unchanged_count } items had no changes.</div>);
     }
 
     return [totals, newCount, changedCount, unchangedCount];
@@ -75,11 +59,11 @@ var ImportResultsDialog = React.createClass({
         var row = errors[rowIndex];
         var errorDetails = [];
         row.errors.forEach(function(error) {
-          errorDetails.push(<div>{ error }</div>);
+          errorDetails.push(<div key={error}>{ error }</div>);
         });
 
         tableRows.push((
-          <tr>
+          <tr key={rowIndex}>
             <td>{ parseInt(rowIndex) + 2 }</td>
             <td>{ row.item.user_defined_id }</td>
             <td>{ row.item.metadata.name[0] }</td>
@@ -113,6 +97,7 @@ var ImportResultsDialog = React.createClass({
   render: function() {
     const actions = [
       <FlatButton
+        key="Ok"
         label="OK"
         primary={true}
         onTouchTap={this.handleClose}
@@ -134,7 +119,6 @@ var ImportResultsDialog = React.createClass({
           ref={ "ResultsDialog" }
           title="Import Results"
           actions={actions}
-          modal={false}
           open={this.state.open}
           onRequestClose={this.handleClose}
           bodyStyle={ { overflowY: "auto", maxHeight: "70vh" } }

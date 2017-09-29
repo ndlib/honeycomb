@@ -82,13 +82,6 @@ var MetaDataFieldDialog = React.createClass({
     }
   },
 
-  componentDidUpdate: function(prevProps, prevState) {
-    if(this.state.open){
-      this.refs.EditMetaDialog.show();
-    } else {
-      this.refs.EditMetaDialog.dismiss();
-    }
-  },
 
   handleSave: function() {
     if(this.state.createForm){
@@ -123,27 +116,27 @@ var MetaDataFieldDialog = React.createClass({
 
   getFieldProps: function() {
     return [
-      <mui.TextField style={{ width: "100%" }} floatingLabelText="Label" valueLink={ this.linkFieldState('label') } />,
+      <mui.TextField style={{ width: "100%" }} floatingLabelText="Label" valueLink={ this.linkFieldState('label') } key="label"/>,
       this.selectField(),
-      <hr />,
+      <hr key="hr"/>,
       this.allowMultipleCheckbox(),
-      <mui.Checkbox style={{ width: "100%" }} label="Require presence on all items?" checkedLink={ this.linkFieldState('required') } />,
+      <mui.Checkbox style={{ width: "100%" }} label="Require presence on all items?" checkedLink={ this.linkFieldState('required') } key="require"/>,
       this.defaultFormFieldCheckbox(),
     ];
   },
 
   selectField: function() {
     if (this.state.createForm) {
-      return (<mui.SelectField style={{ width: "100%" }} floatingLabelText="Type" menuItems={ this.getTypeOptions() } valueLink={ this.linkFieldState('type') } />);
+      return (<mui.SelectField style={{ width: "100%" }} floatingLabelText="Type" menuItems={ this.getTypeOptions() } valueLink={ this.linkFieldState('type') } key="selectfield" />);
     }
-    return "";
+    return null;
   },
 
   allowMultipleCheckbox: function() {
     if (this.state.fieldValues["type"] == "string") {
-      return (<mui.Checkbox style={{ width: "100%" }} label="Allow multiple values?" checkedLink={ this.linkFieldState('multiple') } />);
+      return (<mui.Checkbox style={{ width: "100%" }} label="Allow multiple values?" checkedLink={ this.linkFieldState('multiple') } key="multiple"/>);
     }
-    return "";
+    return null;
   },
 
   defaultFormFieldCheckbox: function() {
@@ -152,7 +145,7 @@ var MetaDataFieldDialog = React.createClass({
       disabled = true;
     }
 
-    return (<mui.Checkbox style={{ width: "100%" }} disabled={disabled} label="Always show on the item form?" checkedLink={ this.linkFieldState('defaultFormField') } />);
+    return (<mui.Checkbox style={{ width: "100%" }} disabled={disabled} label="Always show on the item form?" checkedLink={ this.linkFieldState('defaultFormField') } key="default" />);
   },
 
   title: function() {
@@ -162,6 +155,7 @@ var MetaDataFieldDialog = React.createClass({
   render: function() {
     var actions = [
       <FlatButton
+        key="Save"
         label="Save"
         primary={true}
         disabled={this.state.saving}
@@ -169,6 +163,7 @@ var MetaDataFieldDialog = React.createClass({
         onTouchTap={this.handleSave}
       />,
       <FlatButton
+        key="Close"
         label="Close"
         primary={false}
         disabled={this.state.saving}
@@ -177,20 +172,18 @@ var MetaDataFieldDialog = React.createClass({
       />,
     ];
     return (
-      <div>
         <Dialog
           ref="EditMetaDialog"
           title={this.title()}
           actions={actions}
-          modal={true}
           bodyStyle={{ margin: "0 auto 0 auto" }}
           contentStyle={{ width: "35%" }}
           style={{ zIndex: 100 }}
           defaultOpen={this.props.open}
+          open={this.state.open}
         >
           { this.state.open && this.getFieldProps() }
         </Dialog>
-      </div>
     );
   }
 });

@@ -18,6 +18,7 @@ var ItemImageZoomButton = React.createClass({
     return {
       image: null,
       zoomClicked: null,
+      open: false
     };
   },
 
@@ -28,11 +29,11 @@ var ItemImageZoomButton = React.createClass({
   },
 
   showModal: function() {
-    this.refs.imageZoom.show();
+    this.setState({open: true});
   },
 
   dismissMessage: function() {
-    this.refs.imageZoom.dismiss();
+    this.setState({open: false});
   },
 
   render: function() {
@@ -56,6 +57,7 @@ var ItemImageZoomButton = React.createClass({
             ref="imageZoom"
             actions={this.props.dismiss_func(this.dismissMessage)}
             defaultOpen={false}
+            open={this.state.open}
             style={{zIndex: 100}}
           >
             <OpenSeadragonViewer key="viewer" image={this.props.image} containerID={zoomID} height={600} />

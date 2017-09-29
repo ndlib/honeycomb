@@ -8,6 +8,7 @@ var DialogMixin = {
   cancelDismiss: function() {
     return (
         <FlatButton
+        key={'cancel'}
         label="Cancel"
         primary={true}
         onTouchTap={this.dismissMessage}
@@ -18,6 +19,7 @@ var DialogMixin = {
   okDismiss: function() {
     return (
       <FlatButton
+        key={'ok'}
         label="OK"
         primary={true}
         onTouchTap={this.dismissMessage}

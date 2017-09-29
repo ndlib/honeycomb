@@ -15,21 +15,26 @@ var DeleteButton = React.createClass({
   getInitialState: function() {
     return {
       deleting: false,
+      open: false,
+      failOpen: false,
     }
   },
 
   dismissConfirm: function() {
     ItemStore.removeListener("ItemDeleteFinished", this.deleteSuccess);
     ItemActions.removeListener("ItemDeleteFailed", this.deleteFailed);
-    this.refs.deleteConfirm.dismiss();
     this.setState({
       deleting: false,
+      open: false,
     });
   },
 
   deleteFailed: function() {
     this.dismissConfirm();
-    this.refs.failedConfirm.show();
+    this.setState({
+      open: false,
+      failOpen: true,
+    })
   },
 
   deleteSuccess: function() {
@@ -77,12 +82,14 @@ var DeleteButton = React.createClass({
   },
 
   confirmDelete: function() {
-    this.refs.deleteConfirm.show();
+    this.setState({ open: true })
   },
 
   dismissMessage: function() {
-    this.refs.deleteConfirm.dismiss();
-    this.refs.failedConfirm.dismiss();
+    this.setState({
+      open: false,
+      failOpen: false
+    })
   },
 
   confirmMessage: function() {
@@ -91,7 +98,7 @@ var DeleteButton = React.createClass({
 
   confirmActions: function() {
     if(this.state.deleting) {
-      return ([<mui.CircularProgress mode="indeterminate" size={0.5} />]);
+      return ([<mui.CircularProgress key="progress" mode="indeterminate" size={0.5} />]);
     } else {
       return([this.cancelDismiss(), this.dialogConfirm()]);
     }
@@ -100,6 +107,7 @@ var DeleteButton = React.createClass({
   cancelDismiss: function() {
     return (
         <mui.FlatButton
+        key={'cancel'}
         label="Cancel"
         primary={true}
         onTouchTap={this.dismissMessage}
@@ -110,6 +118,7 @@ var DeleteButton = React.createClass({
   okDismiss: function() {
     return (
       <mui.FlatButton
+        key={'dismiss'}
         label="OK"
         primary={true}
         onTouchTap={this.dismissMessage}
@@ -120,6 +129,7 @@ var DeleteButton = React.createClass({
   dialogConfirm: function() {
     return (
       <mui.FlatButton
+        key={'confirm'}
         label="Yes"
         primary={true}
         onTouchTap={this.confirmMessage}
@@ -135,18 +145,18 @@ var DeleteButton = React.createClass({
         </mui.IconButton>
         <mui.Dialog
           ref="deleteConfirm"
-          modal={true}
           title="Delete"
           defaultOpen={false}
+          open={this.state.open}
           actions={this.confirmActions()}
         >
           <p>Are you sure you want to delete this entry?</p>
         </mui.Dialog>
         <mui.Dialog
           ref="failedConfirm"
-          modal={true}
           title="Delete Failed"
           defaultOpen={false}
+          open={this.state.failOpen}
           actions={[this.okDismiss()]}
         >
           <p>Delete failed, check entry detail view for more information.</p>

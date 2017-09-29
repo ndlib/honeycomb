@@ -36,7 +36,7 @@ function source_collect(connect, monitor) {
 
 var MetaDataConfigurationReorderItem = React.createClass({
   propTypes: {
-    id: React.PropTypes.number.isRequired,
+    id: React.PropTypes.number,
     field: React.PropTypes.object.isRequired,
     index: React.PropTypes.number.isRequired,
   },

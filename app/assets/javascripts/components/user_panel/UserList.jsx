@@ -10,9 +10,11 @@ var UserList = React.createClass({
     return (
       <table className="table table-hover user-list">
         <thead>
-          <th>Name</th>
-          <th>NetID</th>
-          <th></th>
+          <tr>
+            <th>Name</th>
+            <th>NetID</th>
+            <th></th>
+          </tr>
         </thead>
         <tbody>
           {userRows}

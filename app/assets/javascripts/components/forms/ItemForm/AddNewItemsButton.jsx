@@ -17,18 +17,18 @@ var AddNewItemsButton = React.createClass({
 
   getInitialState: function() {
     return {
-      closed: false,
+      open: false,
       hasFiles: false,
     };
   },
 
   closeCallback: function() {
-    this.setState({closed: true});
+    this.setState({open: true});
     window.location.reload();
   },
 
   dismissMessage: function() {
-    this.refs.addItems.dismiss();
+    this.setState({open: false})
   },
 
   completeCallback: function() {
@@ -38,7 +38,7 @@ var AddNewItemsButton = React.createClass({
   },
 
   showModal: function() {
-    this.refs.addItems.show();
+    this.setState({open: true})
   },
 
   setHasFiles: function() {
@@ -58,13 +58,12 @@ var AddNewItemsButton = React.createClass({
           label="Add New Items"
           />
         <Dialog
+          open={this.state.open}
           ref="addItems"
           autoDetectWindowHeight={true}
           autoScrollBodyContent={true}
-          modal={true}
           title="Add New Items"
           actions={[this.cancelDismiss(), this.okDismiss()]}
-          defaultOpen={false}
           onRequestClose={this.closeCallback}
           style={{zIndex: 100}}
         >
