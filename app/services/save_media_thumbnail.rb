@@ -38,6 +38,8 @@ class SaveMediaThumbnail
     if @media_response
       @media.data["json_response"] = @media_response
       save_return = @media.save!
+      # fix images on pages
+      SaveItem.new(item, nil).fix_image_references
       Index::Item.index!(@item)
       save_return
     else

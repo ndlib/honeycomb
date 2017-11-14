@@ -22,6 +22,12 @@ class SaveItem
     end
   end
 
+  def fix_image_references
+    @item.pages.each do |page|
+      ReplacePageItem.call(page, @item)
+    end
+  end
+
   private
 
   def pre_process
@@ -80,11 +86,5 @@ class SaveItem
 
   def index_item
     Index::Item.index!(item)
-  end
-
-  def fix_image_references
-    @item.pages.each do |page|
-      ReplacePageItem.call(page, @item)
-    end
   end
 end
