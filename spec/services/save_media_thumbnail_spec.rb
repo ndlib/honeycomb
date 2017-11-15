@@ -25,7 +25,7 @@ RSpec.describe SaveMediaThumbnail do
     end
   end
 
-  let(:item) { instance_double(Item, id: 1, collection: collection) }
+  let(:item) { instance_double(Item, id: 1, collection: collection, pages: []) }
 
   let(:video) do
     instance_double(Video,
@@ -49,6 +49,9 @@ RSpec.describe SaveMediaThumbnail do
     before(:each) do
       expect_any_instance_of(described_class).to receive(:image_server_connection).and_return(image_server_connection)
       allow(BuzzMedia).to receive(:call_update).and_return(media_server_json)
+      saveItemInstance = SaveItem.new(item, nil)
+      expect(SaveItem).to receive(:new).and_return(saveItemInstance)
+      expect(saveItemInstance).to receive(:fix_image_references)
       allow(Index::Item).to receive(:index!).and_return(true)
     end
 
@@ -74,6 +77,9 @@ RSpec.describe SaveMediaThumbnail do
     before(:each) do
       expect_any_instance_of(described_class).to receive(:image_server_connection).and_return(image_server_connection)
       expect(BuzzMedia).to receive(:call_update).and_return(media_server_json)
+      saveItemInstance = SaveItem.new(item, nil)
+      expect(SaveItem).to receive(:new).and_return(saveItemInstance)
+      expect(saveItemInstance).to receive(:fix_image_references)
       allow(Index::Item).to receive(:index!).and_return(true)
     end
 
@@ -125,6 +131,9 @@ RSpec.describe SaveMediaThumbnail do
     it "uses the collection id as the group id" do
       allow_any_instance_of(described_class).to receive(:image_server_connection).and_return(image_server_connection)
       expect(BuzzMedia).to receive(:call_update).and_return(true)
+      saveItemInstance = SaveItem.new(item, nil)
+      expect(SaveItem).to receive(:new).and_return(saveItemInstance)
+      expect(saveItemInstance).to receive(:fix_image_references)
       allow(Index::Item).to receive(:index!).and_return(true)
       subject = described_class.new(image: image, item: item, media: video)
       expect(image_server_connection).to receive(:post).with(
