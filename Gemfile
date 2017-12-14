@@ -20,7 +20,7 @@ gem "jbuilder", "~> 2.0"
 # bundle exec rake doc:rails generates the API under doc/api.
 gem "sdoc", "~> 0.4.0", group: :doc
 
-gem "paperclip"
+gem "paperclip", "~> 4.2.0"
 gem "paperclip-meta"
 
 gem "hesburgh_infrastructure", git: "https://github.com/ndlib/hesburgh_infrastructure.git"
