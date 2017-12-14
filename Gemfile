@@ -20,7 +20,7 @@ gem "jbuilder", "~> 2.0"
 # bundle exec rake doc:rails generates the API under doc/api.
 gem "sdoc", "~> 0.4.0", group: :doc
 
-gem "paperclip"
+gem "paperclip", "~> 4.2.0"
 gem "paperclip-meta"
 
 gem "hesburgh_infrastructure", git: "https://github.com/ndlib/hesburgh_infrastructure.git"
@@ -93,7 +93,7 @@ gem "autoprefixer-rails"
 gem "google_drive", git: "https://github.com/ndlib/google-drive-ruby.git", branch: "DEC-1008-Speedup-update-cells"
 
 group :development, :test do
-  gem "rubocop", "~> 0.36.0", require: false
+  gem "rubocop", "~> 0.49.0", require: false
 
   # gem "i18n-debug"
   gem "pry"
