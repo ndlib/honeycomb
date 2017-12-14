@@ -32,7 +32,7 @@ class CreateBeehiveURL
   end
 
   def item_url
-    "#{collection_url(object.collection)}/#{object.class.name.pluralize.downcase}/search?q=&view=grid&item=#{object.unique_id}"
+    "#{collection_url(object.collection)}/#{object.class.name.pluralize.downcase}/#{object.unique_id}"
   end
 
   def object_url
