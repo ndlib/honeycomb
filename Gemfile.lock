@@ -249,11 +249,8 @@ GEM
       spring
     hike (1.2.3)
     hitimes (1.2.4)
-<<<<<<< HEAD
-=======
     http-cookie (1.0.3)
       domain_name (~> 0.5)
->>>>>>> update-gems
     i18n (0.9.1)
       concurrent-ruby (~> 1.0)
     jbuilder (2.5.0)
