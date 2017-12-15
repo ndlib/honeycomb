@@ -1,99 +1,107 @@
 source "https://rubygems.org"
 
-# Don't load all mime types
-gem "mime-types", "~> 2.6.1", require: "mime/types/columnar"
+group :application do
 
-# Bundle edge Rails instead: gem "rails", github: "rails/rails"
-gem "rails", "~> 4.2.0"
+  # Don't load all mime types
+  gem "mime-types", "~> 2.6.1", require: "mime/types/columnar"
 
-gem "responders", "~> 2.0"
+  # Bundle edge Rails instead: gem "rails", github: "rails/rails"
+  gem "rails", "~> 4.2.0"
 
-# See https://github.com/sstephenson/execjs#readme for more supported runtimes
-# gem "therubyracer",  platforms: :ruby
+  gem "responders", "~> 2.0"
 
-gem "pg"
+  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+  # gem "therubyracer",  platforms: :ruby
 
-gem "aws-sdk", "~> 2"
+  gem "pg"
 
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem "jbuilder", "~> 2.0"
-# bundle exec rake doc:rails generates the API under doc/api.
-gem "sdoc", "~> 0.4.0", group: :doc
+  gem "aws-sdk", "~> 2"
 
-gem "paperclip", "~> 4.2.0"
-gem "paperclip-meta"
+  # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+  gem "jbuilder", "~> 2.0"
+  # bundle exec rake doc:rails generates the API under doc/api.
+  gem "sdoc", "~> 0.4.0", group: :doc
 
-gem "hesburgh_infrastructure", git: "https://github.com/ndlib/hesburgh_infrastructure.git"
-gem "hesburgh_api", git: "https://github.com/ndlib/hesburgh_api.git"
+  gem "paperclip", "~> 4.2.0"
+  gem "paperclip-meta"
 
-gem "simple_form", "~> 3.1.0"
+  gem "hesburgh_infrastructure", git: "https://github.com/ndlib/hesburgh_infrastructure.git"
+  gem "hesburgh_api", git: "https://github.com/ndlib/hesburgh_api.git"
 
-gem "draper"
+  gem "simple_form", "~> 3.1.0"
 
-gem "nokogiri"
+  gem "draper"
 
-# used to normaize the characters in a title sort
-gem "sort_alphabetical"
+  gem "nokogiri"
 
-# To support m/d/y formats
-gem "american_date"
+  # used to normaize the characters in a title sort
+  gem "sort_alphabetical"
 
-gem "rb-readline"
+  # To support m/d/y formats
+  gem "american_date"
 
-gem "devise"
-gem "devise_cas_authenticatable"
+  gem "rb-readline"
 
-gem "addressable"
+  gem "devise"
+  gem "devise_cas_authenticatable"
 
-# Server monitoring
-gem "newrelic_rpm"
+  gem "addressable"
 
-gem "paper_trail", "~> 4.0.0.beta2"
+  # Server monitoring
+  gem "newrelic_rpm"
 
-gem "faraday"
-gem "faraday_middleware"
+  gem "paper_trail", "~> 4.0.0.beta2"
 
-gem "rsolr"
+  gem "faraday"
+  gem "faraday_middleware"
 
-gem "sanitize"
+  gem "rsolr"
 
-# Background processing
-gem "sneakers"
+  gem "sanitize"
 
-# For Errbit
-gem "airbrake"
+  # Background processing
+  gem "sneakers"
 
-# For cron tasks
-gem "whenever", require: false
+  # For Errbit
+  gem "airbrake"
 
-# Javascript assets
-# Use Uglifier as compressor for JavaScript assets
-gem "uglifier", ">= 1.3.0"
-gem "react-rails"
-gem "react-rails-img", git: "https://github.com/jonhartzler/react-rails-img.git"
-gem "browserify-rails", "~>0.7.2"
-gem "underscore-rails"
-gem "showdown-rails"
-gem "therubyracer"
-# Use jquery as the JavaScript library
-gem "jquery-rails", "3.1.2"
-gem "jquery-ui-rails", "5.0.2"
-gem "jquery-datatables-rails", "~> 3.3.0"
-gem "coffee-rails", "~> 4.0.0"
-# Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-# gem "turbolinks"
+  # For cron tasks
+  gem "whenever", require: false
 
-# CSS
-# Use SCSS for stylesheets
-gem "sass-rails", "~> 4.0.3"
-gem "bootstrap-sass", "~> 3.3.1"
-gem "bootstrap-material-design"
-gem "autoprefixer-rails"
+  # Javascript assets
+  # Use Uglifier as compressor for JavaScript assets
+  gem "uglifier", ">= 1.3.0"
+  gem "react-rails"
+  gem "react-rails-img", git: "https://github.com/jonhartzler/react-rails-img.git"
+  gem "browserify-rails", "~>0.7.2"
+  gem "underscore-rails"
+  gem "showdown-rails"
+  gem "therubyracer"
+  # Use jquery as the JavaScript library
+  gem "jquery-rails", "3.1.2"
+  gem "jquery-ui-rails", "5.0.2"
+  gem "jquery-datatables-rails", "~> 3.3.0"
+  gem "coffee-rails", "~> 4.0.0"
+  # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
+  # gem "turbolinks"
 
-gem "google_drive", git: "https://github.com/ndlib/google-drive-ruby.git", branch: "DEC-1008-Speedup-update-cells"
+  # CSS
+  # Use SCSS for stylesheets
+  gem "sass-rails", "~> 4.0.3"
+  gem "bootstrap-sass", "~> 3.3.1"
+  gem "bootstrap-material-design"
+  gem "autoprefixer-rails"
+
+  gem "google_drive", git: "https://github.com/ndlib/google-drive-ruby.git", branch: "DEC-1008-Speedup-update-cells"
+
+  # Dalli Caching
+  gem "rack-cache"
+  gem "dalli"
+  gem 'cacheable_flash'
+end
 
 group :development, :test do
-  gem "rubocop", "~> 0.49.0", require: false
+  gem "rubocop", "~> 0.36.0", require: false
 
   # gem "i18n-debug"
   gem "pry"
@@ -130,10 +138,6 @@ end
 
 gem "codeclimate-test-reporter", group: :test, require: nil
 
-# Dalli Caching
-gem "rack-cache"
-gem "dalli"
-gem 'cacheable_flash'
 
 # Use ActiveModel has_secure_password
 # gem "bcrypt", "~> 3.1.7"
