@@ -2,7 +2,7 @@
 defaults: &defaults
   cas_base: 'https://cas.library.nd.edu/cas'
   background_processing: true
-  export_batch_size: 1000
+  export_batch_size: 750
 
 local: &local
   <<: *defaults
