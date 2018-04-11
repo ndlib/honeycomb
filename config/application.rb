@@ -45,5 +45,7 @@ module ItemAdmin
     config.active_job.queue_adapter = :sneakers
 
     config.middleware.swap ActionDispatch::Flash, CacheableFlash::Middleware
+
+    config.web_console.development_only = false
   end
 end
