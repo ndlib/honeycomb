@@ -1,6 +1,6 @@
 # Store non-sensitive configuration settings here.  Acessible from Rails.configuration.settings
 defaults: &defaults
-  cas_base: 'https://cas.library.nd.edu/cas'
+  cas_base: 'https://login-test.cc.nd.edu/cas'
   background_processing: true
   export_batch_size: 1000
 
