@@ -41,3 +41,6 @@ config/secrets.yml
 /node_modules
 
 /.rubocop.yml
+
+# Ignore junk
+.DS_Store
