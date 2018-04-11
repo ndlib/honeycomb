@@ -28,7 +28,7 @@ module ApplicationHelper
     if path == "#"
       link_to(
         raw("<i class=\"glyphicon glyphicon-education\"></i> SUBMIT FEEDBACK"),
-        "https://docs.google.com/a/nd.edu/forms/d/1PH99cRyKzhZ6rV-dCJjrfkzdThA2n1GvoE9PT6kCkSk/viewform?entry.1268925684=#{request.original_url}",
+        "https://nd.service-now.com/nd_portal?id=sc_cat_item&sys_id=1198d67ddb4a7240de73f5161d961936&URL=https://honeycomb.library.nd.edu&lib_list_problem=lib_list_web_content",
         class: "",
         target: "blank"
       )
