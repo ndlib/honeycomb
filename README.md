@@ -65,3 +65,9 @@ Start solr and point it's home to your cloned copy's solr directory. See config/
 ```
 solr start -p 8982 -Dsolr.solr.home=/path/to/honeycomb/solr
 ```
+
+### start application
+
+```
+SSL=true bundle exec rails s
+```
