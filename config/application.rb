@@ -46,6 +46,6 @@ module ItemAdmin
 
     config.middleware.swap ActionDispatch::Flash, CacheableFlash::Middleware
 
-    config.web_console.development_only = true
+    # config.web_console.development_only = true
   end
 end
