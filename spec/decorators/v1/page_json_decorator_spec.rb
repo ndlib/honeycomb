@@ -31,7 +31,7 @@ RSpec.describe V1::PageJSONDecorator do
     let(:page) { double(Page, unique_id: "page_id") }
 
     it "returns the path to the id" do
-      expect(subject.at_id).to eq("http://test.host/v1/pages/page_id")
+      expect(subject.at_id).to eq("http://localhost:3017/v1/pages/page_id")
     end
   end
 
@@ -40,7 +40,7 @@ RSpec.describe V1::PageJSONDecorator do
     let(:page) { double(Page, collection: collection) }
 
     it "returns the path to the items" do
-      expect(subject.collection_url).to eq("http://test.host/v1/collections/collection_id")
+      expect(subject.collection_url).to eq("http://localhost:3017/v1/collections/collection_id")
     end
   end
 

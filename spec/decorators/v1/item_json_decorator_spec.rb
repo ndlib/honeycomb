@@ -36,7 +36,7 @@ RSpec.describe V1::ItemJSONDecorator do
     let(:item) { instance_double(Item, unique_id: "adsf", name: "name") }
 
     it "returns the path to the id" do
-      expect(subject.at_id).to eq("http://test.host/v1/items/adsf")
+      expect(subject.at_id).to eq("http://localhost:3017/v1/items/adsf")
     end
   end
 
@@ -44,7 +44,7 @@ RSpec.describe V1::ItemJSONDecorator do
     it "returns the path to the children" do
       item = instance_double(Item, unique_id: "adsf", name: "name", children: ["a"])
 
-      expect(described_class.new(item).children_url).to eq("http://test.host/v1/items/adsf/children")
+      expect(described_class.new(item).children_url).to eq("http://localhost:3017/v1/items/adsf/children")
     end
 
     it "returns null if no children" do
@@ -59,7 +59,7 @@ RSpec.describe V1::ItemJSONDecorator do
       parent = instance_double(Item, unique_id: "parent_id", name: "name", parent: nil)
       item = instance_double(Item, unique_id: "adsf", name: "name", parent: parent)
 
-      expect(described_class.new(item).parent_url).to eq("http://test.host/v1/items/parent_id")
+      expect(described_class.new(item).parent_url).to eq("http://localhost:3017/v1/items/parent_id")
     end
 
     it "returns the path to the parent" do
@@ -81,7 +81,7 @@ RSpec.describe V1::ItemJSONDecorator do
 
     describe "#collection_url" do
       it "returns the path to the items" do
-        expect(subject.collection_url).to eq("http://test.host/v1/collections/colasdf")
+        expect(subject.collection_url).to eq("http://localhost:3017/v1/collections/colasdf")
       end
     end
   end

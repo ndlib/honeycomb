@@ -44,7 +44,7 @@
         "opensearch_display":[
           "Honeycreeper on Flower"
         ],
-        "at_id_s":"http://localhost:3017/v1/items/honeycreeper-on-flower",
+        "at_id_s":"https://localhost:3017/v1/items/honeycreeper-on-flower",
         "unique_id_s":"honeycreeper-on-flower",
         "collection_id_s":"animals",
         "type_s":"ImageObject",
@@ -76,7 +76,7 @@
         "opensearch_display":[
           "Butterfly on Flower"
         ],
-        "at_id_s":"http://localhost:3017/v1/items/butterfly-on-flower",
+        "at_id_s":"https://localhost:3017/v1/items/butterfly-on-flower",
         "unique_id_s":"butterfly-on-flower",
         "collection_id_s":"animals",
         "type_s":"Item",

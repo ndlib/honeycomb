@@ -74,7 +74,7 @@ RSpec.describe Waggle::Item do
 
     it "returns parent when present" do
       test_item = described_class.new(decorator_child, data)
-      expect(test_item.part_parent).to eq("http://localhost:3017/v1/item/parent_id")
+      expect(test_item.part_parent).to eq("https://localhost:3017/v1/item/parent_id")
     end
 
     it "is not a parent if it has one" do

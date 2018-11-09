@@ -3,6 +3,7 @@ RSpec.describe Waggle::Search::Hit do
     double(
       name: "name",
       at_id: "at_id",
+      unique_id: "unique_id",
       type: "Item",
       description: "Description",
       short_description: "short_description",
@@ -17,6 +18,7 @@ RSpec.describe Waggle::Search::Hit do
   [
     :name,
     :at_id,
+    :unique_id,
     :type,
     :description,
     :short_description,

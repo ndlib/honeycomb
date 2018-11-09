@@ -1,6 +1,7 @@
 json.set! "@type", "SearchHit"
 json.set! "@id", hit.at_id
 json.set! "isPartOf/item", hit.part_parent
+json.id hit.unique_id
 json.type hit.type
 json.name hit.name
 json.shortDescription hit.short_description

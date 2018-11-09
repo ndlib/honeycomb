@@ -9,7 +9,7 @@ RSpec.describe ShowcaseJSONDecorator do
     let(:showcase) { double(Showcase, id: "showcase_id") }
 
     it "returns the path to the id" do
-      expect(subject.at_id).to eq("http://test.host/showcases/showcase_id")
+      expect(subject.at_id).to eq("http://localhost:3017/showcases/showcase_id")
     end
   end
 
@@ -18,7 +18,7 @@ RSpec.describe ShowcaseJSONDecorator do
     let(:showcase) { double(Showcase, collection: collection) }
 
     it "returns the path to the items" do
-      expect(subject.collection_url).to eq("http://test.host/collections/collection_id")
+      expect(subject.collection_url).to eq("http://localhost:3017/collections/collection_id")
     end
   end
 end

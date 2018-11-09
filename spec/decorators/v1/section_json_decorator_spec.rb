@@ -26,7 +26,7 @@ RSpec.describe V1::SectionJSONDecorator do
     let(:section) { double(Section, unique_id: "adsf") }
 
     it "returns the path to the id" do
-      expect(subject.at_id).to eq("http://test.host/v1/sections/adsf")
+      expect(subject.at_id).to eq("http://localhost:3017/v1/sections/adsf")
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.describe V1::SectionJSONDecorator do
     let(:collection) { double(Collection, unique_id: "coladsf") }
 
     it "returns the path to the items" do
-      expect(subject.collection_url).to eq("http://test.host/v1/collections/coladsf")
+      expect(subject.collection_url).to eq("http://localhost:3017/v1/collections/coladsf")
     end
   end
 
@@ -44,7 +44,7 @@ RSpec.describe V1::SectionJSONDecorator do
     let(:showcase) { double(Showcase, unique_id: "showadsf") }
 
     it "returns the path to the items" do
-      expect(subject.showcase_url).to eq("http://test.host/v1/showcases/showadsf")
+      expect(subject.showcase_url).to eq("http://localhost:3017/v1/showcases/showadsf")
     end
   end
 

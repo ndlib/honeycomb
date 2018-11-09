@@ -44,7 +44,7 @@ RSpec.describe Waggle::Adapters::Solr::Index::Item do
         name_sort: "pig-in-mud",
         creator_sort: "Bob",
         id: "animals pig-in-mud",
-        at_id_s: "http://localhost:3017/v1/items/pig-in-mud",
+        at_id_s: "https://localhost:3017/v1/items/pig-in-mud",
         unique_id_s: "pig-in-mud",
         collection_id_s: "animals",
         type_s: "ImageObject",
