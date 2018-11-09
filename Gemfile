@@ -100,6 +100,10 @@ group :application do
   gem 'cacheable_flash'
 end
 
+group :development do
+  gem "web-console", "~> 2.0"
+end
+
 group :development, :test do
   gem "rubocop", "~> 0.36.0", require: false
 
