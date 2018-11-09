@@ -97,7 +97,7 @@ RSpec.describe V1::CollectionJSONDecorator do
     let(:collection) { double(Collection, unique_id: "adsf") }
 
     it "returns the path to the id" do
-      expect(subject.at_id).to eq("http://test.host/v1/collections/adsf")
+      expect(subject.at_id).to eq("http://localhost:3017/v1/collections/adsf")
     end
   end
 
@@ -105,7 +105,7 @@ RSpec.describe V1::CollectionJSONDecorator do
     let(:collection) { double(Collection, unique_id: "adsf") }
 
     it "returns the path to the items" do
-      expect(subject.items_url).to eq("http://test.host/v1/collections/adsf/items")
+      expect(subject.items_url).to eq("http://localhost:3017/v1/collections/adsf/items")
     end
   end
 
@@ -113,7 +113,7 @@ RSpec.describe V1::CollectionJSONDecorator do
     let(:collection) { double(Collection, unique_id: "adsf") }
 
     it "returns the path to the items" do
-      expect(subject.metadata_configuration_url).to eq("http://test.host/v1/collections/adsf/configurations")
+      expect(subject.metadata_configuration_url).to eq("http://localhost:3017/v1/collections/adsf/configurations")
     end
   end
 

@@ -45,17 +45,17 @@ RSpec.describe SerializeAVMedia do
 
     it "includes the default medium thumbnailUrl when there is none in the json response" do
       media.json_response.delete(:thumbnailUrl)
-      expect(subject).to include(thumbnailUrl: "http://test.host/images/medium/default-type-thumbnail.jpg")
+      expect(subject).to include(thumbnailUrl: "http://localhost:3017/images/medium/default-type-thumbnail.jpg")
     end
 
     it "includes the default medium thumbnailUrl when there is a nil one in the json response" do
       media.json_response[:thumbnailUrl] = nil
-      expect(subject).to include(thumbnailUrl: "http://test.host/images/medium/default-type-thumbnail.jpg")
+      expect(subject).to include(thumbnailUrl: "http://localhost:3017/images/medium/default-type-thumbnail.jpg")
     end
 
     it "includes the default medium thumbnailUrl when there is an empty string one in the json response" do
       media.json_response[:thumbnailUrl] = ""
-      expect(subject).to include(thumbnailUrl: "http://test.host/images/medium/default-type-thumbnail.jpg")
+      expect(subject).to include(thumbnailUrl: "http://localhost:3017/images/medium/default-type-thumbnail.jpg")
     end
 
     it "includes the given thumbnailUrl when one is present in the json response" do
