@@ -42,5 +42,8 @@ config/secrets.yml
 
 /.rubocop.yml
 
+# Ignore coveralls
+/coverage
+
 # Ignore junk
 .DS_Store
