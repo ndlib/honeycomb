@@ -5,7 +5,7 @@ module Metadata
       TYPES = [:string, :html, :date]
 
       attr_accessor :name, :active, :type, :label, :multiple, :required, :default_form_field,
-                    :optional_form_field, :order, :placeholder, :help, :boost, :immutable
+                    :optional_form_field, :order, :hidden, :placeholder, :help, :boost, :immutable
 
       validates :name, :type, :label, :order, presence: true
       validates :order, :boost, numericality: { only_integer: true }
@@ -20,18 +20,23 @@ module Metadata
         optional_form_field: false,
         boost: 1,
         order: 0,
+        hidden: false,
         help: "",
         placeholder: "",
         multiple: false,
         required: false,
         immutable: ["name"]
       )
+        if hidden.nil?
+          hidden = false
+        end
         @name = name.to_sym
         @active = active
         @type = type.to_sym
         @label = label
         @multiple = multiple
         @required = required
+        @hidden = hidden
         @default_form_field = default_form_field
         @optional_form_field = optional_form_field
         @order = order
@@ -60,6 +65,7 @@ module Metadata
           default_form_field: default_form_field,
           optional_form_field: optional_form_field,
           order: order,
+          hidden: hidden,
           placeholder: placeholder,
           help: help,
           boost: boost,
