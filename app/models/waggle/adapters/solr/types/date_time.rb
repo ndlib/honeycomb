@@ -11,7 +11,12 @@ module Waggle
             if value.is_a?(Array)
               as_solr(value.first)
             else
-              if value.is_a?(String)
+              if value.respond_to?(:to_str)
+                value = value.to_s
+                # If day and month are missing, append them so we have a valid date
+                while value.count('-') < 2 do
+                  value = value + "-01"
+                end
                 value = ::DateTime.parse(value)
               elsif value.respond_to?(:to_datetime)
                 value = value.to_datetime
