@@ -8,9 +8,9 @@ RSpec.describe Waggle::Adapters::Solr::Index::Metadata do
     double(
       Metadata::Configuration,
       field?: true,
-      fields: [double(name: "name")],
+      fields: [double(name: "name", type: "string")],
       facet: double(field_name: "creator"),
-      facets: [double(name: "creator")],
+      facets: [double(name: "creator", type: "string")],
       sorts: [double(field_name: "name", name: "name")],
       sort: double(field_name: "name")
     )
