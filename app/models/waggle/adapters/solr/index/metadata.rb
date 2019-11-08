@@ -27,7 +27,11 @@ module Waggle
               configuration.fields.each do |field|
                 field_value = value(field.name)
                 if field_value.present?
-                  hash[text_field_name(field.name)] = text_as_solr(field_value)
+                  if field.type.to_s == "date"
+                    hash[datetime_field_name(field.name)] = datetime_as_solr(field_value)
+                  else
+                    hash[text_field_name(field.name)] = text_as_solr(field_value)
+                  end
                 end
               end
             end
@@ -53,6 +57,14 @@ module Waggle
                 end
               end
             end
+          end
+
+          def datetime_field_name(name)
+            Waggle::Adapters::Solr::Types::DateTime.field_name(name)
+          end
+
+          def datetime_as_solr(value)
+            Waggle::Adapters::Solr::Types::DateTime.as_solr(value)
           end
 
           def text_field_name(name)

@@ -233,6 +233,7 @@ RSpec.describe Metadata::Configuration::Field do
         order: 1,
         placeholder: "placeholder",
         help: "help",
+        hidden: false,
         boost: 1,
         immutable: []
       )
