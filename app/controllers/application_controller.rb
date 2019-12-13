@@ -3,7 +3,15 @@ class ApplicationController < ActionController::Base
   include ErrorHelper
 
   before_action :store_location
-  before_action :redirect_to_sign_in, unless: :user_signed_in?, except: [:catch_500, :catch_404]
+  #before_action :redirect_to_sign_in, unless: :user_signed_in?, except: [:catch_500, :catch_404]
+  before_filter :store_location, :authenticate_user!, except: [:oktaoauth]
+
+  # Okta
+  def authenticate_user!
+    if !session[:netid]
+      redirect_to user_omniauth_authorize_path(:oktaoauth)
+    end
+  end
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -72,7 +80,12 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def redirect_to_sign_in
-    redirect_to new_user_session_path
+  # def redirect_to_sign_in
+  #   redirect_to new_user_session_path
+  # end
+
+  # Overwriting the sign_out redirect path method
+  def after_sign_out_path_for(resource_or_scope)
+    Rails.application.secrets.okta["logout_url"]
   end
 end

@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   has_many :collection_users
   has_many :collections, through: :collection_users
 
-  devise :cas_authenticatable, :trackable
+  devise :omniauthable, omniauth_providers: [:oktaoauth]
 
   before_validation :map_user
 

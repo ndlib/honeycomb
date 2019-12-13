@@ -43,7 +43,7 @@ group :application do
   gem "rb-readline"
 
   gem "devise"
-  gem "devise_cas_authenticatable"
+  gem 'omniauth-oktaoauth'
 
   gem "addressable"
 
@@ -76,7 +76,7 @@ group :application do
   gem "browserify-rails", "~>0.7.2"
   gem "underscore-rails"
   gem "showdown-rails"
-  gem "therubyracer"
+  gem "therubyracer", "0.12.3"
   # Use jquery as the JavaScript library
   gem "jquery-rails", "3.1.2"
   gem "jquery-ui-rails", "5.0.2"
