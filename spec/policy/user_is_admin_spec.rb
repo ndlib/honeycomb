@@ -11,4 +11,8 @@ describe UserIsAdmin do
     expect(user).to receive(:admin?).and_return(false)
     expect(subject).to be(false)
   end
+
+  it "returns false when there is no User" do
+    expect(described_class.call(nil)).to be(false)
+  end
 end

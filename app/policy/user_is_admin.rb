@@ -8,6 +8,7 @@ class UserIsAdmin
   end
 
   def is_admin?
+    return false unless @user
     @user.admin?
   end
 end
