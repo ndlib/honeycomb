@@ -7,7 +7,7 @@
 Honeycomb provides basic collection and item administration, as well as serialization of your collections so they can be used by external applications.
 
 ## Dependencies
-Requires ruby v2.1.5, postgres 9.5.4+, solr 6.3.0
+Requires ruby v2.1.9, postgres 9.5.4+, solr 6.3.0
 
 ## Installation Notes
 Honeycomb depends on other services for handling things like images, audio/video, and authentication. Some of these are configured in settings.yml, and others in secrets.yml. Ensure that the following keys are populated for your environment:
@@ -16,7 +16,6 @@ Honeycomb depends on other services for handling things like images, audio/video
 <rails environment>
   background_processing: <true|false to enqueue jobs to rabbitmq>
   export_batch_size: <number of rows to batch when writing to google>
-  cas_base: <cas url (https)>
   image_server_url: <honeypot url (https)>
   beehive_url: <beehive url (https)>
   media_server_url: <buzz url (https)>
@@ -37,6 +36,13 @@ Honeycomb depends on other services for handling things like images, audio/video
     client_secret: <The secret key in "APIs & Auth/Credentials/OAuth 2.0 client IDs">
     developer_key: <The API key in "APIs & Auth/Credentials/API keys">
     app_id: <app id>  <The project number shown in the overview of the application>
+  okta:
+    client_id:
+    client_secret:
+    redirect-url:
+    base_auth_url:
+    logout_url:
+    auth_server_id:
 ```
 ### config/database.yml
 ```

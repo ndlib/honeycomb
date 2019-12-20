@@ -27,7 +27,7 @@ Rails.application.configure do
   config.action_controller.allow_forgery_protection = false
 
   default_url_options = {
-    host: "localhost:3017",
+    host: "localhost:3000",
   }
   config.action_mailer.default_url_options = default_url_options
   Rails.application.routes.default_url_options = default_url_options

@@ -1,7 +1,27 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
+
+require 'omniauth-oktaoauth'
+
 Devise.setup do |config|
-  config.cas_base_url = Rails.configuration.settings.cas_base
+
+  # Okta
+  require 'omniauth-oktaoauth'
+  okta_issuer = Rails.application.secrets.okta['base_auth_url'] + Rails.application.secrets.okta['auth_server_id']
+  config.omniauth(:oktaoauth,
+                  Rails.application.secrets.okta["client_id"],
+                  Rails.application.secrets.okta["client_secret"],
+                  :scope => 'openid profile email netid',
+                  :fields => ['profile', 'email', 'netid'],
+                  :client_options => {
+                    site: okta_issuer,
+                    authorize_url: okta_issuer + "/v1/authorize",
+                    token_url: okta_issuer + "/v1/token",
+                  },
+                  :redirect_uri => Rails.application.secrets.okta["redirect_url"],
+                  :auth_server_id => Rails.application.secrets.okta["auth_server_id"],
+                  :issuer => okta_issuer,
+                  :strategy_class => OmniAuth::Strategies::Oktaoauth)
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,

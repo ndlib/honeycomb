@@ -1,6 +1,6 @@
 # Store non-sensitive configuration settings here.  Acessible from Rails.configuration.settings
 defaults: &defaults
-  cas_base: 'https://login-test.cc.nd.edu/cas'
+  # cas_base: 'https://login-test.cc.nd.edu/cas'
   background_processing: true
   export_batch_size: 750
 
@@ -27,7 +27,7 @@ test:
 
 pre_production:
   <<: *vm
-  cas_base: https://login.nd.edu/cas
+  # cas_base: https://login.nd.edu/cas
   image_server_url: https://honeypotpprd.library.nd.edu
   beehive_url: https://collections-pprd.library.nd.edu
   media_server_url: https://buzz-pprd.library.nd.edu
@@ -38,7 +38,7 @@ pre_production:
 
 production:
   <<: *vm
-  cas_base: https://login.nd.edu/cas
+#  cas_base: https://login.nd.edu/cas
   image_server_url: https://honeypot.library.nd.edu
   beehive_url: https://collections.library.nd.edu
   media_server_url: https://buzz.library.nd.edu

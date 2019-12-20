@@ -29,7 +29,7 @@ set :linked_files, %w{config/database.yml config/secrets.yml config/hesburgh_api
 
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets public/system node_modules}
 
-set :default_env, path: "/opt/ruby/current/bin:$PATH"
+set :default_env, path: "/opt/bin:/opt/ruby/current/bin:$PATH"
 
 namespace :deploy do
   desc "Restart application"

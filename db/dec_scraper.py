@@ -2,7 +2,7 @@ import urllib
 import json
 import re
 
-host_url = "https://localhost:3017"
+host_url = "https://localhost:3000"
 
 # Gets the json data at the requested uri, writes it to a file named by the uri,
 # and returns the json data for further processing.
