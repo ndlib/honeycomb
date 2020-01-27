@@ -23,7 +23,7 @@ docker pull postman/newman
 Clone the API Repository ( **Note: this is only required if you do not have a copy of the repository on your machine.** ):
 
  ``` console
-git clone git@github.com:ndlib/api.git
+git clone git@github.com:ndlib/honeycomb.git
 ```
 
 Run the Newman collection against the desired RabbitMQ server:
