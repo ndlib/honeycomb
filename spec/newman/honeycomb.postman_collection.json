@@ -1,0 +1,508 @@
+{
+	"info": {
+		"_postman_id": "aad4cac6-8b96-4be3-8c06-12fac1fb20b3",
+		"name": "Honeycomb",
+		"description": "## Honeycomb\n\n* These API tests are designed to ensure that Honeycomb is accessible from outside sources.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Items",
+			"item": [
+				{
+					"name": "Get Item Information",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "16cc9808-d5d4-4507-b92b-1d5a7c9d7f90",
+								"exec": [
+									"pm.test(\"Check for Slug Name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var slug = jsonData.slug;",
+									"    pm.expect(slug).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{HoneycombURL}}/v1/items/{{HoneycombItemID}}",
+							"protocol": "https",
+							"host": [
+								"{{HoneycombURL}}"
+							],
+							"path": [
+								"v1",
+								"items",
+								"{{HoneycombItemID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Item Showcase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0c6a7ca7-9c7f-446d-b1c4-08271a046b16",
+								"exec": [
+									"pm.test(\"Check for Slug Name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var slug = jsonData.slug;",
+									"    pm.expect(slug).to.exist;",
+									"});",
+									"pm.test(\"Check for Showcases\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var showcase = jsonData.items.showcases;",
+									"    pm.expect(showcase).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{HoneycombURL}}/v1/items/{{HoneycombItemID}}/showcases",
+							"protocol": "https",
+							"host": [
+								"{{HoneycombURL}}"
+							],
+							"path": [
+								"v1",
+								"items",
+								"{{HoneycombItemID}}",
+								"showcases"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Item Children",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fb5eda92-a37b-4471-9f3b-318c504105ff",
+								"exec": [
+									"pm.test(\"Check for Slug Name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var slug = jsonData.slug;",
+									"    pm.expect(slug).to.exist;",
+									"});",
+									"pm.test(\"Check for Children\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var children = jsonData.items.children;",
+									"    pm.expect(children).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{HoneycombURL}}/v1/items/{{HoneycombItemID}}/children",
+							"protocol": "https",
+							"host": [
+								"{{HoneycombURL}}"
+							],
+							"path": [
+								"v1",
+								"items",
+								"{{HoneycombItemID}}",
+								"children"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Item Pages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ac4f95b3-130a-4a6c-8a3d-bac20919bf1e",
+								"exec": [
+									"pm.test(\"Check for Slug Name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var slug = jsonData.slug;",
+									"    pm.expect(slug).to.exist;",
+									"});",
+									"pm.test(\"Check for Children\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var pages = jsonData.items.pages;",
+									"    pm.expect(pages).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{HoneycombURL}}/v1/items/{{HoneycombItemID}}/pages",
+							"protocol": "https",
+							"host": [
+								"{{HoneycombURL}}"
+							],
+							"path": [
+								"v1",
+								"items",
+								"{{HoneycombItemID}}",
+								"pages"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Collections",
+			"item": [
+				{
+					"name": "Get Collection Information",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4953605a-e977-4b05-90db-1c3190fd883b",
+								"exec": [
+									"pm.test(\"Check for Slug Name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var slug = jsonData.slug;",
+									"    pm.expect(slug).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{HoneycombURL}}/v1/collections/{{HoneycombCollectionsID}}",
+							"protocol": "https",
+							"host": [
+								"{{HoneycombURL}}"
+							],
+							"path": [
+								"v1",
+								"collections",
+								"{{HoneycombCollectionsID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Collection Site Path",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4953605a-e977-4b05-90db-1c3190fd883b",
+								"exec": [
+									"pm.test(\"Check for Slug Name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var slug = jsonData.slug;",
+									"    pm.expect(slug).to.exist;",
+									"});",
+									"pm.test(\"Check for Site Path\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var site_path = jsonData.site_path;",
+									"    pm.expect(site_path).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{HoneycombURL}}/v1/collections/{{HoneycombCollectionsID}}/site_path",
+							"protocol": "https",
+							"host": [
+								"{{HoneycombURL}}"
+							],
+							"path": [
+								"v1",
+								"collections",
+								"{{HoneycombCollectionsID}}",
+								"site_path"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Collection Search Results",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4953605a-e977-4b05-90db-1c3190fd883b",
+								"exec": [
+									"pm.test(\"Check for Search Hits\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var hits = jsonData.hits;",
+									"    pm.expect(hits).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{HoneycombURL}}/v1/collections/{{HoneycombCollectionsID}}/search",
+							"protocol": "https",
+							"host": [
+								"{{HoneycombURL}}"
+							],
+							"path": [
+								"v1",
+								"collections",
+								"{{HoneycombCollectionsID}}",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Collection Configurations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4953605a-e977-4b05-90db-1c3190fd883b",
+								"exec": [
+									"pm.test(\"Check for Fields\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var fields = jsonData.fields;",
+									"    pm.expect(fields).to.exist;",
+									"});",
+									"pm.test(\"Check for Facets\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var facets = jsonData.facets;",
+									"    pm.expect(facets).to.exist;",
+									"});",
+									"pm.test(\"Check for Sorts\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var sorts = jsonData.sorts;",
+									"    pm.expect(sorts).to.exist;",
+									"});",
+									"pm.test(\"Check for About Page\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var hasAboutPage = jsonData.hasAboutPage;",
+									"    pm.expect(hasAboutPage).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{HoneycombURL}}/v1/collections/{{HoneycombCollectionsID}}/configurations",
+							"protocol": "https",
+							"host": [
+								"{{HoneycombURL}}"
+							],
+							"path": [
+								"v1",
+								"collections",
+								"{{HoneycombCollectionsID}}",
+								"configurations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Collection Pages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4953605a-e977-4b05-90db-1c3190fd883b",
+								"exec": [
+									"pm.test(\"Check for Slug Name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var slug = jsonData.slug;",
+									"    pm.expect(slug).to.exist;",
+									"});",
+									"pm.test(\"Check for Pages\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var pages = jsonData.pages;",
+									"    pm.expect(pages).to.exist;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{HoneycombURL}}/v1/collections/{{HoneycombCollectionsID}}/pages",
+							"protocol": "https",
+							"host": [
+								"{{HoneycombURL}}"
+							],
+							"path": [
+								"v1",
+								"collections",
+								"{{HoneycombCollectionsID}}",
+								"pages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Collection Showcases",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4953605a-e977-4b05-90db-1c3190fd883b",
+								"exec": [
+									"pm.test(\"Check for Slug Name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var slug = jsonData.slug;",
+									"    pm.expect(slug).to.exist;",
+									"});",
+									"pm.test(\"Check for Showcases\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var showcases = jsonData.showcases;",
+									"    pm.expect(showcases).to.exist;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{HoneycombURL}}/v1/collections/{{HoneycombCollectionsID}}/showcases",
+							"protocol": "https",
+							"host": [
+								"{{HoneycombURL}}"
+							],
+							"path": [
+								"v1",
+								"collections",
+								"{{HoneycombCollectionsID}}",
+								"showcases"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Collection Items",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4953605a-e977-4b05-90db-1c3190fd883b",
+								"exec": [
+									"pm.test(\"Check for Slug Name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var slug = jsonData.slug;",
+									"    pm.expect(slug).to.exist;",
+									"});",
+									"pm.test(\"Check for Items\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    var items = jsonData.items;",
+									"    pm.expect(items).to.exist;",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{HoneycombURL}}/v1/collections/{{HoneycombCollectionsID}}/items",
+							"protocol": "https",
+							"host": [
+								"{{HoneycombURL}}"
+							],
+							"path": [
+								"v1",
+								"collections",
+								"{{HoneycombCollectionsID}}",
+								"items"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "1e2f92ab-08ab-401a-9ba0-848efc46fbcd",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "4b7bae86-ba1a-43cb-89e2-5f5436b7f634",
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});",
+					"pm.test(\"Response time is less than 1000ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+					"});"
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
