@@ -36,14 +36,13 @@ namespace :adhoc do
   end
 
   def local_upload(collection_id:, file_path:)
-    file = open(file_path)
+    file = URI.parse(file_path)
     file_name = File.basename(file.respond_to?(:base_uri) ? file.base_uri.path : file.path)
 
     item = get_item(collection_id: collection_id, file_name: file_name)
-    save_params = { uploaded_image: file, metadata: { name: file_name } }
-    result = SaveItem.call(item, save_params)
+    Metadata::Setter.call(item, { name: file_name })
+    result = SaveItem.call(item, { uploaded_image: file })
     Index::Item.index!(item)
-    file.close
     result
   end
 
