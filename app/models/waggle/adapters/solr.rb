@@ -21,6 +21,10 @@ module Waggle
         session.remove!(*objects)
       end
 
+      def self.remove_all()
+        session.remove_all()
+      end
+
       def self.commit
         session.commit
       end

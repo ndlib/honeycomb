@@ -19,6 +19,10 @@ module Waggle
     adapter.remove!(*objects)
   end
 
+  def self.remove_all()
+    adapter.remove_all()
+  end
+
   def self.commit
     adapter.commit
   end
