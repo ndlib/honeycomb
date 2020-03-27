@@ -138,7 +138,7 @@ module Waggle
           def facet_limits
             result = {}
             configuration.facets.each do |facet|
-              result[:"f.#{facet.name}_facet.facet.limit"] = facet.limit if facet.limit.present?
+              result[:"f.#{facet.name}_facet.facet.limit"] = 9999
             end
             result
           end
