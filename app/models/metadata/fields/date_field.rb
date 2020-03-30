@@ -79,12 +79,14 @@ module Metadata
         date_and_display = string.split(":")
         if !date_and_display.empty?
           date_array = date_and_display[0].split("/")
-          # Validate year is 1-4 digits
-          /^\d{1,4}$/.match(date_array[0]) && (
-            date_array.length < 2 || /^\d{1,2}$/.match(date_array[1]) # validate no month or 1-2 digits
-          ) && (
-            date_array.length < 3 || /^\d{1,2}$/.match(date_array[2]) # validate no day or 1-2 digits
-          ) && date_array.length < 4 # validate nothing in string after day
+          (
+            # Validate year is 1-4 digits (with optional - for BC)
+            /^-?\d{1,4}$/.match(date_array[0].tr("'", "")) && (
+              date_array.length < 2 || /^\d{1,2}$/.match(date_array[1]) # validate no month or 1-2 digits
+            ) && (
+              date_array.length < 3 || /^\d{1,2}$/.match(date_array[2]) # validate no day or 1-2 digits
+            ) && date_array.length < 4 # validate nothing in string after day
+          ).present?
         else
           false
         end

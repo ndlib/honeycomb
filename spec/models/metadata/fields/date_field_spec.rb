@@ -344,6 +344,97 @@ RSpec.describe Metadata::Fields::DateField do
     end
   end
 
+  describe "can_parse?" do
+    it "handles valid date without leading zeros" do
+      result = Metadata::Fields::DateField.can_parse?("1995/2/3")
+      expect(result).to eq(true)
+    end
+
+    it "accepts small years" do
+      result = Metadata::Fields::DateField.can_parse?("9/2/3")
+      expect(result).to eq(true)
+    end
+
+    it "accepts date with no day" do
+      result = Metadata::Fields::DateField.can_parse?("9/2")
+      expect(result).to eq(true)
+    end
+
+    it "accepts date with no month or day" do
+      result = Metadata::Fields::DateField.can_parse?("1995")
+      expect(result).to eq(true)
+    end
+
+    context "with display text" do
+      it "considers date with display text parseable" do
+        result = Metadata::Fields::DateField.can_parse?("1995/2/3:display text")
+        expect(result).to eq(true)
+      end
+    end
+
+    context "bc dates" do
+      it "treats BC date as parseable" do
+        result = Metadata::Fields::DateField.can_parse?("-200/01/01")
+        expect(result).to eq(true)
+      end
+    end
+
+    context "format validation" do
+      it "does not allow more slashes after date" do
+        result = Metadata::Fields::DateField.can_parse?("2000/01/01/13")
+        expect(result).to eq(false)
+      end
+
+      describe "years" do
+        it "does not allow special characters" do
+          result = Metadata::Fields::DateField.can_parse?("200.0/01/01")
+          expect(result).to eq(false)
+          result = Metadata::Fields::DateField.can_parse?("200e/01/01")
+          expect(result).to eq(false)
+          result = Metadata::Fields::DateField.can_parse?("2000+/01/01")
+          expect(result).to eq(false)
+        end
+
+        it "does not allow more than 4 digits" do
+          result = Metadata::Fields::DateField.can_parse?("10001/01/01")
+          expect(result).to eq(false)
+        end
+      end
+
+      describe "months" do
+        it "does not allow special characters" do
+          result = Metadata::Fields::DateField.can_parse?("2000/0.1/01")
+          expect(result).to eq(false)
+          result = Metadata::Fields::DateField.can_parse?("200/e1/01")
+          expect(result).to eq(false)
+          result = Metadata::Fields::DateField.can_parse?("2000/1+/01")
+          expect(result).to eq(false)
+        end
+
+        it "does not allow more than 2 digits" do
+          result = Metadata::Fields::DateField.can_parse?("2000/012/01")
+          expect(result).to eq(false)
+        end
+      end
+
+      describe "days" do
+        it "does not allow special characters" do
+          result = Metadata::Fields::DateField.can_parse?("2000/01/0.1")
+          expect(result).to eq(false)
+          result = Metadata::Fields::DateField.can_parse?("2000/01/e1")
+          expect(result).to eq(false)
+          result = Metadata::Fields::DateField.can_parse?("2000/01/1+")
+          expect(result).to eq(false)
+        end
+
+        it "does not allow more than 2 digits" do
+          result = Metadata::Fields::DateField.can_parse?("2000/01/012")
+          expect(result).to eq(false)
+        end
+      end
+    end
+  end
+
   describe "to_string" do
     it "adds :display_text when available" do
       date = Metadata::Fields::DateField.new(year: "2001", month: nil, day: nil, bc: false, display_text: "display this instead")
