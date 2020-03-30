@@ -31,7 +31,7 @@ namespace :search do
     Index::Collection.remove!(collection: collection, progress_bar: progress_bar)
   end
 
-  desc "reindex items foro a collection"
+  desc "reindex items for a collection"
   task :reindex, [:collection_id] => :environment do |task, args|
     Rake::Task["search:remove"].invoke(args.collection_id)
     Rake::Task["search:index"].invoke(args.collection_id)
