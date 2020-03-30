@@ -34,6 +34,11 @@ module Waggle
           commit
         end
 
+        def remove_all()
+          connection.delete_by_query('*:*')
+          commit
+        end
+
         private
 
         def objects_as_solr(*objects)

@@ -4,8 +4,9 @@ module Brood
   class Set
     attr_reader :base_path
 
-    def initialize(base_path)
+    def initialize(base_path, config = load_configuration)
       @base_path = base_path
+      @config = config
     end
 
     def data
@@ -31,8 +32,16 @@ module Brood
       File.join(base_path, path_segment)
     end
 
+    def load_configuration
+      YAML.load_file(File.join(Rails.root, "config", "solr.yml")).fetch(Rails.env)
+    end
+
+    def solr_url
+      "http://#{config.fetch('hostname')}:#{config.fetch('port')}#{config.fetch('path')}"
+    end
+
     def reset_solr!
-      url = URI.parse("http://localhost:8982/solr/development/update?commit=true --data '<delete><query>*:*</query></delete>' -H 'Content-type:text/xml; charset=utf-8'")
+      url = URI.parse("#{solr_url}/update?commit=true --data '<delete><query>*:*</query></delete>' -H 'Content-type:text/xml; charset=utf-8'")
       Net::HTTP::Get.new(url.to_s)
 
       commit_solr!
@@ -41,7 +50,7 @@ module Brood
     end
 
     def commit_solr!
-      url = URI.parse("http://localhost:8982/solr/development/update?commit=true")
+      url = URI.parse("#{solr_url}/update?commit=true")
       Net::HTTP::Get.new(url.to_s)
     end
   end

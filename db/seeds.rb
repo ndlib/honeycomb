@@ -14,7 +14,7 @@
   "awetheri",
   "jgondron",
   "lrobins5",
-  "hbeachey"
+  "mkirkpa2"
 ].each do |username|
   u = User.where(username: username).first || User.new(username: username)
   u.admin = true

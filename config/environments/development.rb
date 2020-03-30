@@ -16,7 +16,7 @@ Rails.application.configure do
 
   default_url_options = {
     host: "localhost",
-    port: 3000,
+    port: 3017,
     protocol: "https",
   }
   config.action_mailer.default_url_options = default_url_options

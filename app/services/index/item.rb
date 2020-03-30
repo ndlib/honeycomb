@@ -15,15 +15,14 @@ module Index
       notify_error(exception: exception, item: item, action: "remove!")
     end
 
-    def self.remove_all!(items)
-      items.each do |item|
-        remove!(item)
-      end
+    def self.remove_all()
+      Waggle.remove_all()
     end
 
-    def self.index_all!(items)
+    def self.index_all!(items, progress_bar)
       items.each do |item|
         index!(item)
+        progress_bar.increment
       end
     end
 
