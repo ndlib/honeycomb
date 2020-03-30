@@ -1,24 +1,28 @@
 module Index
   module Collection
-    def self.index!(collection:, items: collection.items, progress_bar:)
+    def self.index!(collection:, items: collection.items, progress_bar: nil)
       return if items.count.zero? # purely for optimization to prevent unnecessary sql/http calls to solr
       set_configuration(collection: collection)
       waggle_items = items.map { |i| Waggle::Item.from_item(i) }
       waggle_items.each do |item|
         Waggle.index!(item)
-        progress_bar.increment
+        if !progress_bar.nil?
+          progress_bar.increment
+        end
       end
     rescue StandardError => exception
       notify_error(exception: exception, collection: collection, action: "index!")
     end
 
-    def self.remove!(collection:, items: collection.items, progress_bar:)
+    def self.remove!(collection:, items: collection.items, progress_bar: nil)
       return if items.count.zero? # purely for optimization to prevent unnecessary sql/http calls to solr
       set_configuration(collection: collection)
       waggle_items = items.map { |i| Waggle::Item.from_item(i) }
       waggle_items.each do |item|
         Waggle.remove!(item)
-        progress_bar.increment
+        if !progress_bar.nil?
+          progress_bar.increment
+        end
       end
     rescue StandardError => exception
       notify_error(exception: exception, collection: collection, action: "remove!")

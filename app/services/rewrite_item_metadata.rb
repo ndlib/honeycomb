@@ -33,7 +33,7 @@ class RewriteItemMetadata
       when "Identifier"
         result[:user_defined_id] = v
       else
-        new_pair = rewrite_pair(key: k, value: v)
+        new_pair = rewrite_pair(key: k, value: v, errors: errors)
         if configuration.field?(new_pair.key) || new_pair.key == "user_defined_id"
           metadata[new_pair.key] = new_pair.value
         else
@@ -49,25 +49,30 @@ class RewriteItemMetadata
 
   # Maps labels to field names and rewrites some value types
   # such as multiple value fields and date fields
-  def rewrite_pair(key:, value:)
+  def rewrite_pair(key:, value:, errors:)
     result = OpenStruct.new(key: key.to_sym, value: value)
     if configuration.label?(key)
       field = configuration.label(key)
       result.key = field.name
       if result.value.present?
-        rewrite_values(field: field, pair: result)
+        rewrite_values(field: field, pair: result, errors: errors)
       end
     end
     result
   end
 
-  def rewrite_values(field:, pair:)
+  def rewrite_values(field:, pair:, errors:)
     if field.multiple
       pair.value = pair.value.split("||")
     end
 
     if field.type == :date
-      pair.value = Metadata::Fields::DateField.parse(pair.value).to_params
+      if (Metadata::Fields::DateField.can_parse?(pair.value))
+        pair.value = Metadata::Fields::DateField.parse(pair.value).to_params
+      else
+        pair.value = nil
+        errors << "Invalid date format for '#{field.label}'"
+      end
     end
   end
 end
