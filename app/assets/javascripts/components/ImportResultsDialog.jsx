@@ -82,7 +82,7 @@ var ImportResultsDialog = React.createClass({
           <tr>
             <td>{ parseInt(rowIndex) + 2 }</td>
             <td>{ row.item.user_defined_id }</td>
-            <td>{ row.item.metadata.name[0] }</td>
+            <td>{ row.item.metadata.name ? row.item.metadata.name[0] : '' }</td>
             <td>
               { errorDetails }
             </td>
