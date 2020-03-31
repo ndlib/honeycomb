@@ -81,7 +81,7 @@ describe Destroy::Collection do
     end
     let(:collection) { FactoryGirl.create(:collection) }
     let(:showcase) { FactoryGirl.create(:showcase, collection_id: collection.id) }
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryGirl.create(:default_user) }
     let(:collection_configuration) { FactoryGirl.create(:collection_configuration, id: 1, collection_id: collection.id) }
     let(:collection_users) do
       [FactoryGirl.create(:collection_user, id: 1, collection_id: collection.id),

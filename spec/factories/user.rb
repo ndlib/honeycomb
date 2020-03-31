@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :user, class: 'User' do |u|
-    u.id { 2 }
+  factory :default_user, class: 'User' do |u|
+    u.id { 1 }
     u.first_name { "One" }
     u.last_name { "User" }
     u.display_name { "User One" }
@@ -10,7 +10,7 @@ FactoryGirl.define do
     u.admin { false }
   end
 
-  factory :admin_user, class: 'User' do |u|
+  factory :default_admin_user, class: 'User' do |u|
     u.id { 1 }
     u.first_name { "One" }
     u.last_name { "User" }
