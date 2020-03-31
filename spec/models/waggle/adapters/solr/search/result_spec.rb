@@ -182,6 +182,7 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
         :"facet.field" => [
           "{!ex=creator_facet}creator_facet",
         ],
+        :"f.creator_facet.facet.limit" => 9999,
         group: "group_info",
       )
     end
@@ -223,14 +224,9 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
     end
 
     describe "facet.limit" do
-      it "creates a f.facet_field.facet.limit param when a limit is present in the facet" do
-        allow(facet).to receive(:limit).and_return(462)
-        expect(subject).to include(:"f.creator_facet.facet.limit" => 462)
-      end
-
-      it "does not create a f.facet_field.facet.limit param when limit is not present in the facet" do
-        allow(facet).to receive(:limit).and_return(nil)
-        expect(subject).not_to include(:"f.creator_facet.facet.limit")
+      it "always sets facet limit to 9999" do
+        allow(facet).to receive(:limit).and_return(9999)
+        expect(subject).to include(:"f.creator_facet.facet.limit" => 9999)
       end
     end
 
