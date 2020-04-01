@@ -268,10 +268,16 @@ RSpec.describe Waggle::Adapters::Solr::Search::Result do
         expect(subject).to eq(["collection_id_s:\"animals\""])
       end
 
-      it "sets fq values for selected facets and tags the filter" do
+      it "sets fq values for selected facets and tags the filter (single value)" do
         allow(query).to receive(:facet)
         expect(query).to receive(:facet).with("creator").and_return("Steve")
         expect(subject).to eq(["{!tag=creator_facet}creator_facet:\"Steve\""])
+      end
+
+      it "sets fq values for selected facets and tags the filter (array of phrases)" do
+        allow(query).to receive(:facet)
+        expect(query).to receive(:facet).with("creator").and_return(["Steve","Bob","Betty Jane"])
+        expect(subject).to eq(["{!tag=creator_facet}creator_facet:(\"Steve\" OR \"Bob\" OR \"Betty Jane\")"])
       end
     end
 
