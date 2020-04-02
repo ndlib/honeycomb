@@ -30,7 +30,7 @@ describe Destroy::User do
     let(:destroy_collection_user) { Destroy::CollectionUser.new }
     let(:subject) { Destroy::User.new(destroy_collection_user: destroy_collection_user) }
     let(:collection) { FactoryGirl.create(:collection) }
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryGirl.create(:default_user) }
     let(:collection_users) do
       [FactoryGirl.create(:collection_user, id: 1, collection_id: collection.id),
        FactoryGirl.create(:collection_user, id: 2, collection_id: collection.id)]

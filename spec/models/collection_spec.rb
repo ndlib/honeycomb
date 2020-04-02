@@ -61,7 +61,7 @@ RSpec.describe Collection do
 
     describe "#destroy" do
       it "fails if a CollectionUser references it" do
-        FactoryGirl.create(:user)
+        FactoryGirl.create(:default_user)
         subject = FactoryGirl.create(:collection)
         FactoryGirl.create(:collection_user)
         expect { subject.destroy }.to raise_error

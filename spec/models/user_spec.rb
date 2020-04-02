@@ -37,7 +37,7 @@ RSpec.describe User do
   context "foreign key constraints" do
     describe "#destroy" do
       it "fails if a collection_user references it" do
-        subject = FactoryGirl.create(:user)
+        subject = FactoryGirl.create(:default_user)
         FactoryGirl.create(:collection)
         FactoryGirl.create(:collection_user, user_id: 1)
         expect { subject.destroy }.to raise_error

@@ -18,7 +18,7 @@ describe Destroy::CollectionUser do
   end
 
   context "cascade transaction" do
-    let(:user) { FactoryGirl.create(:user) }
+    let(:user) { FactoryGirl.create(:default_user) }
     let(:collection) { FactoryGirl.create(:collection) }
     let(:collection_user) { FactoryGirl.create(:collection_user) }
 
