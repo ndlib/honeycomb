@@ -38,7 +38,7 @@ class PersonAPISearch
 
   def query_search_string
     if encoded_query.present?
-      encoded_query + "*"
+      encoded_query
     end
   end
 
