@@ -175,7 +175,11 @@ module Waggle
           end
 
           def format_filter(field, value, tag = false)
-            filter = "#{field}:\"#{value}\""
+            if value.is_a?(Array)
+              filter = "#{field}:(" + value.map{|val| "\"#{val}\""}.join(" OR ") + ")"
+            else
+              filter = "#{field}:\"#{value}\""
+            end
             if tag
               filter = "{!tag=#{field}}#{filter}"
             end
