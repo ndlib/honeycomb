@@ -25,6 +25,9 @@ config/database.yml
 # ignore secrets
 config/secrets.yml
 
+# Ignore api config
+config/hesburgh_api.yml
+
 # Ignore solr data directories
 /solr/*/data
 /solr/development
