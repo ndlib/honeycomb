@@ -72,6 +72,7 @@ var PeopleSearch = React.createClass({
                         currentValue={this.state.currentSearch}
                         setActivePerson={this.setActivePerson}
                         activePersonId={this.state.activePersonId} />
+                    <i>* For best results, search using netid.</i>
                     <PeopleSearchList
                         people={this.state.peopleList}
                         setActivePerson={this.setActivePerson}
