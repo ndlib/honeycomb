@@ -14,6 +14,13 @@
   color: #302205;
 }
 
+.navbar-default .collection-title {
+  max-width: 500px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 footer {
   padding-top: 5em;
   color: #999999;
