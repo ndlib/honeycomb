@@ -39,7 +39,7 @@ Honeycomb depends on other services for handling things like images, audio/video
   okta:
     client_id:
     client_secret:
-    redirect-url:
+    redirect_url:
     base_auth_url:
     logout_url:
     auth_server_id:
