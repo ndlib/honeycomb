@@ -1,1 +1,5 @@
-<%= react_component("MetaDataConfigurationForm", baseUpdateUrl: v1_collection_configurations_metadata_fields_path(@collection.unique_id)) %>
+<%= react_component(
+  "MetaDataConfigurationForm",
+  baseUpdateUrl: v1_collection_configurations_metadata_fields_path(@collection.unique_id),
+  facetUpdateUrl: v1_collection_configurations_facets_path(@collection.unique_id),
+) %>

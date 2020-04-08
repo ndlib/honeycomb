@@ -45,7 +45,7 @@ module Metadata
     end
 
     def ensure_int_values
-      [:order, :boost].each do |key|
+      [:order, :boost, :limit].each do |key|
         if data.has_key?(key)
           begin
             data[key] = Integer(data[key])

@@ -6,6 +6,7 @@ var DragDropContext = require('react-dnd').DragDropContext;
 
 var MetaDataConfigurationList = require("./MetaDataConfigurationList");
 var MetaDataConfigurationReorder = require("./MetaDataConfigurationReorder");
+var MetaDataConfigurationFacets = require("./MetaDataConfigurationFacets");
 var MetaDataConfigurationUndelete = require("./MetaDataConfigurationUndelete");
 
 var Tabs = mui.Tabs;
@@ -19,6 +20,7 @@ var TabsStyle = {
 var MetaDataConfigurationForm = React.createClass({
   propTypes: {
     baseUpdateUrl: React.PropTypes.string.isRequired,
+    facetUpdateUrl: React.PropTypes.string.isRequired,
   },
 
   render: function(){
@@ -29,6 +31,9 @@ var MetaDataConfigurationForm = React.createClass({
         </Tab>
         <Tab label="Reorder" style={TabStyle}>
           <MetaDataConfigurationReorder baseUpdateUrl={this.props.baseUpdateUrl} />
+        </Tab>
+        <Tab label="Facets" style={TabStyle}>
+          <MetaDataConfigurationFacets baseUpdateUrl={this.props.facetUpdateUrl} />
         </Tab>
         <Tab label="Undelete" style={TabStyle}>
           <MetaDataConfigurationUndelete baseUpdateUrl={this.props.baseUpdateUrl} />

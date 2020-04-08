@@ -1,0 +1,31 @@
+.facet-list-item {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  overflow: hidden;
+  position: relative;
+}
+
+.facet-list-item:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
+
+.facet-list-item:active {
+  background-color: rgba(0, 0, 0, 0.25);
+  transition: all 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
+
+.facet-list-item .left-side {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  margin-left: 12px;
+  font-size: 15px;
+  font-family: Roboto, sans-serif;
+}
+
+.facet-list-item .left-side span {
+  vertical-align: middle;
+}

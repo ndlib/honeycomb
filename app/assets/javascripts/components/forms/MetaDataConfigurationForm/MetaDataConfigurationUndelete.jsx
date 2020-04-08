@@ -71,13 +71,11 @@ var MetaDataConfigurationUndelete = React.createClass({
     if (this.state.fields.length == 0) {
       return <p>There are no fields to undelete.</p>
     } else {
-      return this.state.fields.map(function(field, index) {
+      return this.state.fields.map(function(field) {
         return [
         <MetaDataConfigurationListItem
           key={ field.name }
-          id={ field.id }
           field={ field }
-          index={ index }
           handleEditClick={ this.handleEditClick }
           handleRightClick={ this.handleRestore } />,
         ];
