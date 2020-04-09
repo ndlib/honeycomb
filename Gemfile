@@ -62,9 +62,6 @@ group :application do
   # Background processing
   gem "sneakers"
 
-  # For Errbit
-  gem "airbrake"
-
   # Javascript assets
   # Use Uglifier as compressor for JavaScript assets
   gem "uglifier", ">= 1.3.0"
@@ -144,11 +141,17 @@ gem "codeclimate-test-reporter", group: :test, require: nil
 # Use unicorn as the app server
 # gem "unicorn"
 
-# Use Capistrano for deployment
-gem "capistrano", "~> 3.1"
-gem "capistrano-rails", "~> 1.1"
-gem "capistrano-npm"
+# For cron tasks
 gem "whenever", require: false
+
+# Use Capistrano for deployment
+group :deployment do
+  gem "capistrano", "~> 3.1"
+  gem "capistrano-rails", "~> 1.1"
+  gem "capistrano-npm"
+  # For Errbit
+  gem "airbrake"
+end
 
 # Use debugger
 # gem "debugger", group: [:development, :test]
