@@ -65,9 +65,6 @@ group :application do
   # For Errbit
   gem "airbrake"
 
-  # For cron tasks
-  gem "whenever", require: false
-
   # Javascript assets
   # Use Uglifier as compressor for JavaScript assets
   gem "uglifier", ">= 1.3.0"
@@ -151,6 +148,7 @@ gem "codeclimate-test-reporter", group: :test, require: nil
 gem "capistrano", "~> 3.1"
 gem "capistrano-rails", "~> 1.1"
 gem "capistrano-npm"
+gem "whenever", require: false
 
 # Use debugger
 # gem "debugger", group: [:development, :test]
