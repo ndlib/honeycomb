@@ -61,6 +61,9 @@ group :application do
 
   # Background processing
   gem "sneakers"
+  
+  # For Errbit
+  gem "airbrake"
 
   # Javascript assets
   # Use Uglifier as compressor for JavaScript assets
