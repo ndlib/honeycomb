@@ -17,4 +17,4 @@ set :rack_env, :production
 # used to set extended properties on the server.
 
 # server 'example.com', user: 'deploy', roles: %w{web app}, my_property: :my_value
-server "honeycombprod-vm.library.nd.edu", user: "app", roles: %w{web app db}
+server "honeycombprod-vm.lc.nd.edu", user: "app", roles: %w{web app db}
