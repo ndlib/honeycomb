@@ -13,6 +13,8 @@ require "capistrano/npm"
 # Update the whenever crontab on deploy
 require "whenever/capistrano"
 
+require "new_relic/recipes"
+
 # Include tasks from other gems included in your Gemfile
 #
 # For documentation on these, see for example:
