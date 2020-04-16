@@ -1,18 +1,13 @@
-<ul class="nav navbar-nav">
-  <li class="">
-      <div class="btn-group collections"> <%= link_to(nav.collection.name_line_1, collection_path(nav.collection), class: "btn collection-title") %> <button data-toggle="dropdown" class="btn dropdown-toggle btn-primary" type="button"><span class="caret"></span></button>
-
-
-    <ul class="dropdown-menu" role="menu">
-      <li class="dropdown-header"><%= t('collection_top_nav.recent_collections') %></li>
-      <% nav.recent_collections.each do | collection | %>
-        <li><%= link_to(collection.name_line_1, collection_path(collection)) %></li>
-      <% end %>
-    </ul>
-      </div>
-
-  </li>
-</ul>
+<div class="navbar-left btn-group collections">
+  <%= link_to(nav.collection.name_line_1, collection_path(nav.collection), class: "btn collection-title") %>
+  <button data-toggle="dropdown" class="btn dropdown-toggle btn-primary" type="button"><span class="caret"></span></button>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header"><%= t('collection_top_nav.recent_collections') %></li>
+    <% nav.recent_collections.each do | collection | %>
+      <li><%= link_to(collection.name_line_1, collection_path(collection)) %></li>
+    <% end %>
+  </ul>
+</div>
 
 <%= react_component "CollectionStoreInitializer", {
       collection: nav.collection

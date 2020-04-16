@@ -43,66 +43,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d9a500', end
 
 }
 
-.navbar-collapse {
-	position: relative;
-}
-
-.navbar-nav {
-	position: absolute;
-	bottom:0;
-	left: 75px;
-}
-
-.navbar-right {
-	right:0;
-	left:auto;
-}
-
-.navbar-brand {
-	height:0;
-	width:250px;
-	overflow: hidden;
-	display: block;
-	padding:0;
-	padding-top:100px;
-	background:image_url('logo.w.svg') no-repeat;
-	background-size: contain;
-	margin:10px 10px 10px 10px;
-  z-index: 10;
-	position: relative;
-}
-
-.short .navbar-brand {
-	width:160px;
-	padding-top:64px;
-	margin-bottom: 10px;
-}
-
-.collections {
-	display: none;
-}
-
-.short .collections {
-	left:155px;
-	display:block;
-	bottom:-1px;
-}
-
-.navbar-brand .glyphicon {
-	display: none;
-}
-
-.navbar-default .title-bar .navbar-nav > li > a {
-	border-radius: 6px 6px 0 0 ;
-	color:$grey;
-	padding-bottom: 12px;
-}
-
-.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
-	background:auto;
-	color:auto;
-}
-
 .jumbotron {
 	background-image:image_url('collections.icon.svg');
 	background-repeat: no-repeat;
@@ -229,18 +169,6 @@ div.dataTables_filter {
 	display: none;
 }
 
-.navbar-default .title-bar .navbar-nav.wayfinder > li > a {
-	border:solid $grey;
-	border-width: 1px 1px 1px 0;
-	border-radius:0 6px 6px 0;
-	background: #fff;
-	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.176);
-	float: left;
-	z-index: 40;
-	left:-1px;
-	padding:10px;
-}
-
 .wayfinder .caret {
 	display: none;
 }
@@ -297,69 +225,6 @@ div.dataTables_filter {
 
 .row-fluid .col-md-11 {
 	width: calc(100% - 24px)
-}
-
-.nav-panel {
-	width: 100%;
-	margin-right: 10px;
-	position: relative;
-	min-height: 28px;
-	min-width: 15px;
-	ul {
-		margin: 0;
-		padding:10px ;
-		list-style-type: none;
-		border-top-right-radius: 0;
-		border:solid 1px;
-		border-color: #e3e3e3;
-		width:calc(100% - 20px);
-		position: relative;
-		left:0;
-		top:0;
-		li {
-			margin-bottom: 1em;
-			font-size:16px;
-			padding:2px 5px;
-		}
-		li.selected {
-			background: #e3e3e3;
-			a {
-					color:#333;
-				}
-			}
-		li:last-child {
-			margin-bottom: 0;
-		}
-		.header {
-			color:#777;
-			font-size:13px;
-		}
-		.divider {
-			background-color: #e5e5e5;
-    		height: 1px;
-    		margin: 9px 0;
-    		overflow: hidden;
-		}
-	}
-}
-
-
-
-.nav-panel #trig {
-
-	border:solid 1px;
-	border-color: #e3e3e3;
-	border-width: 1px 1px 1px 0;
-	background: whitesmoke;
-	padding:2px 3px 2px 2px;
-	margin-left: -1px;
-	position: absolute;
-	right:1px;
-	top:0;
-}
-
-.col-md-1 .nav-panel #trig {
-	border-left-width: 1px;
 }
 
 
