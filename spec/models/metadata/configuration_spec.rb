@@ -9,8 +9,8 @@ RSpec.describe Metadata::Configuration do
   end
   let(:facet_data) do
     [
-      { name: "string_field_facet", field_name: "string_field", active: true },
-      { name: "string_field_facet_2", field_name: "string_field", active: true, label: "Custom Label" },
+      { name: "string_field_facet", field_name: "string_field", active: true, order: 0 },
+      { name: "string_field_facet_2", field_name: "string_field", active: true, label: "Custom Label", order: 0 },
     ]
   end
   let(:sort_data) do
@@ -203,6 +203,59 @@ RSpec.describe Metadata::Configuration do
     it "returns false if the metadata has been saved successfully" do
       allow(data).to receive("save").and_return(false)
       expect(subject.save_field(:field_name, update_values)).to be(false)
+    end
+  end
+
+  describe "#save_facet" do
+    let(:facet) { double(described_class::Facet, valid?: true, update: true, to_hash: { name: "name" }) }
+    let(:update_values) { { label: "label", order: 1 } }
+
+    before(:each) do
+      allow(data).to receive(:save).and_return(true)
+      allow(subject).to receive(:facet).and_return(facet)
+    end
+
+    it "retrieves the facet from the name passed in" do
+      expect(subject).to receive(:facet).with(:facet_name).and_return(facet)
+      subject.save_facet(:facet_name, update_values)
+    end
+
+    it "creates a new facet if the facet is not found" do
+      allow(subject).to receive(:facet).with(:facet_name).and_return(nil)
+      allow(described_class::Facet).to receive(:new).and_return(facet)
+      expect(described_class::Facet).to receive(:new).with(update_values).and_return(facet)
+      subject.save_facet(:facet_name, update_values)
+    end
+
+    it "calls update on the facet when it already exists" do
+      expect(facet).to receive(:update).with(update_values).and_return(true)
+      subject.save_facet(:facet_name, update_values)
+    end
+
+    it "returns false if the update of the facet fails" do
+      allow(facet).to receive(:update).with(update_values).and_return(false)
+      allow(facet).to receive(:valid?).and_return(false)
+      expect(subject.save_facet(:facet_name, update_values)).to be(false)
+    end
+
+    it "updates the facets configuration " do
+      expect(data).to receive("facets=")
+      subject.save_facet(:facet_name, update_values)
+    end
+
+    it "saves the facets configuration" do
+      expect(data).to receive("save").and_return(true)
+      subject.save_facet(:facet_name, update_values)
+    end
+
+    it "returns the facet if the metadata has been saved successfully" do
+      allow(data).to receive("save").and_return(true)
+      expect(subject.save_facet(:facet_name, update_values)).to eq(facet)
+    end
+
+    it "returns false if the metadata has been saved successfully" do
+      allow(data).to receive("save").and_return(false)
+      expect(subject.save_facet(:facet_name, update_values)).to be(false)
     end
   end
 end

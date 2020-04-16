@@ -29,15 +29,15 @@ RSpec.describe PersonAPISearch do
 
     describe "special characters" do
       let(:query) { "<test>" }
-      it "encodes the query string and adds a wildcard" do
-        expect(subject.send(:query_search_string)).to eq("%3Ctest%3E*")
+      it "encodes the query string" do
+        expect(subject.send(:query_search_string)).to eq("%3Ctest%3E")
       end
     end
   end
 
   describe "#results" do
     it "calls HesburghAPI::PersonSearch with a formatted term" do
-      expect(HesburghAPI::PersonSearch).to receive(:search).with("test*").and_return([])
+      expect(HesburghAPI::PersonSearch).to receive(:search).with("test").and_return([])
       expect(subject.results).to eq([])
     end
 
