@@ -9,9 +9,7 @@ var IconButton = mui.IconButton;
 
 var MetaDataConfigurationListItem = React.createClass({
   propTypes: {
-    id: React.PropTypes.number.isRequired,
     field: React.PropTypes.object.isRequired,
-    index: React.PropTypes.number,
     handleEditClick: React.PropTypes.func.isRequired,
     handleRightClick: React.PropTypes.func.isRequired,
   },

@@ -28,6 +28,29 @@ module Metadata
       end
     end
 
+    def save_facet(name, values)
+      f = facet(name)
+
+      if !f
+        facets
+        f = new_facet(values)
+        @facets << f
+      elsif values != nil
+        f.update(values)
+      else
+        facets.delete_if { |facet| facet.name === name }
+      end
+
+      return false if !f.valid?
+
+      data.facets = facets.map { |facet| facet.to_hash.except(:field) } # exclude "field" when saving to db
+      if data.save
+        f
+      else
+        false
+      end
+    end
+
     def fields
       @fields ||= build_fields
     end
@@ -157,6 +180,10 @@ module Metadata
 
     def new_field(field_data)
       self.class::Field.new(**field_data)
+    end
+
+    def new_facet(facet_data)
+      self.class::Facet.new(**facet_data)
     end
   end
 end

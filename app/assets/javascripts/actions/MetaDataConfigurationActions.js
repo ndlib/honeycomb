@@ -145,6 +145,133 @@ class MetaDataConfigurationActions extends NodeEventEmitter {
       }).bind(this)
     });
   }
+
+  changeFacet(facetName, facetValues, pushToUrl) {
+    // Clone values in order to revert the store if the change fails
+    const match = MetaDataConfigurationStore.facets.find(facet => facet.name === facetName)
+    if (!match) {
+      return
+    }
+    const previousValues = update(match, {})
+
+    $.ajax({
+      url: `${pushToUrl}/${facetName}`,
+      dataType: "json",
+      method: "PUT",
+      data: facetValues,
+      success: (function(result) {
+        AppDispatcher.dispatch({
+          actionType: MetaDataConfigurationActionTypes.MDC_CHANGE_FACET,
+          name: result.facet.name,
+          values: result.facet,
+        })
+        this.emit("ChangeFacetFinished", true, result)
+        AppEventEmitter.emit("MessageCenterDisplay", "info", "Collection updated")
+      }).bind(this),
+      error: (function(xhr) {
+        // Request to change failed, revert the store to previous values on if it is updated
+        AppDispatcher.dispatch({
+          actionType: MetaDataConfigurationActionTypes.MDC_CHANGE_FACET,
+          name: facetName,
+          values: previousValues,
+        })
+        // Communicate the error to the user
+        this.emit("ChangeFacetFinished", false, xhr);
+        AppEventEmitter.emit("MessageCenterDisplay", "error", "Save failed. Please refresh and try again.");
+      }).bind(this)
+    })
+  }
+
+  createFacet(facetName, facetValues, pushToUrl) {
+    const requiredValues = _.pick(facetValues, 'name', 'field_name', 'label', 'limit', 'order')
+    const postValues = _.omit(requiredValues, function(value) { return _.isNull(value) })
+
+    $.ajax({
+      url: pushToUrl,
+      dataType: "json",
+      method: "POST",
+      data: postValues,
+      success: (function(result) {
+        AppDispatcher.dispatch({
+          actionType: MetaDataConfigurationActionTypes.MDC_CHANGE_FACET,
+          name: result.facet.name,
+          values: result.facet,
+        })
+        this.emit("CreateFacetFinished", true, result)
+        AppEventEmitter.emit("MessageCenterDisplay", "info", "Collection updated")
+      }).bind(this),
+      error: (function(xhr) {
+        // Communicate the error to the user
+        this.emit("CreateFacetFinished", false, xhr)
+        AppEventEmitter.emit("MessageCenterDisplay", "error", "Create failed. Please select a unique field and try again.")
+      }).bind(this)
+    })
+  }
+
+  removeFacet(facetName, pushToUrl) {
+    // Clone values in order to revert the store if the remove fails
+    const match = MetaDataConfigurationStore.facets.find(facet => facet.name === facetName)
+    const previousValues = update(match, {})
+
+    // Optimistically change the store
+    AppDispatcher.dispatch({
+      actionType: MetaDataConfigurationActionTypes.MDC_REMOVE_FACET,
+      name: facetName,
+    })
+
+    $.ajax({
+      url: `${pushToUrl}/${facetName}`,
+      dataType: "json",
+      method: "DELETE",
+      success: (function() {
+        // Store was already changed, nothing to do here
+        this.emit("RemoveFacetFinished", true)
+        AppEventEmitter.emit("MessageCenterDisplay", "info", "Collection updated")
+      }).bind(this),
+      error: (function(xhr) {
+        // Request to change failed, revert the store to previous values
+        AppDispatcher.dispatch({
+          actionType: MetaDataConfigurationActionTypes.MDC_CHANGE_FACET,
+          name: facetName,
+          values: previousValues,
+        });
+        // Communicate the error to the user
+        this.emit("RemoveFacetFinished", false, xhr)
+        AppEventEmitter.emit("MessageCenterDisplay", "error", APIResponseMixin.apiErrorToString(xhr))
+      }).bind(this)
+    });
+  }
+
+  reorderFacets(newOrder, baseUrl) {
+    const oldOrder = _.map(MetaDataConfigurationStore.facets, function (data) {
+      return { name: data.name, order: data.order }
+    })
+
+    AppDispatcher.dispatch({
+      actionType: MetaDataConfigurationActionTypes.MDC_REORDER_FACETS,
+      newFacetOrder: newOrder,
+    })
+
+    $.ajax({
+      url: `${baseUrl}/reorder`,
+      dataType: "json",
+      method: "PUT",
+      data: {
+        facets: newOrder,
+      },
+      success: (function() {
+        this.emit("FacetReorderFinished", true)
+      }).bind(this),
+      error: (function(xhr) {
+        AppDispatcher.dispatch({
+          actionType: MetaDataConfigurationActionTypes.MDC_REORDER_FACETS,
+          newFacetOrder: oldOrder,
+        })
+        this.emit("FacetReorderFinished", false, xhr)
+        AppEventEmitter.emit("MessageCenterDisplay", "error", "Reorder Failed.  Please try again. If the problem persists, please contact WSE unit.");
+      }).bind(this),
+    });
+  }
 }
 
 module.exports = new MetaDataConfigurationActions();
