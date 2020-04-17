@@ -185,8 +185,8 @@ class MetaDataConfigurationActions extends NodeEventEmitter {
   }
 
   createFacet(facetName, facetValues, pushToUrl) {
-    var requiredValues = _.pick(facetValues, 'name', 'field_name', 'label', 'limit', 'order');
-    var postValues = _.omit(requiredValues, function(value) { return _.isNull(value) });
+    var requiredValues = _.pick(facetValues, "name", "field_name", "label", "limit", "order");
+    var postValues = _.omit(requiredValues, function(value) { return _.isNull(value); });
 
     $.ajax({
       url: pushToUrl,
