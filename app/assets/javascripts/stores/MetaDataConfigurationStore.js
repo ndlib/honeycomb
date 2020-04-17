@@ -45,14 +45,14 @@ class MetaDataConfigurationStore extends EventEmitter {
   }
 
   reorderFacets(newFacetOrder) {
-    newFacetOrder.map(data => {
-      const match = this._data.facets.find(facet => facet.name === data.name)
+    newFacetOrder.map(function(data) {
+      const match = this._data.facets.find(function(facet) { return facet.name === data.name; });
       if (match) {
-        match.order = data.order
+        match.order = data.order;
       }
-    })
+    }.bind(this));
 
-    this.emit("MetaDataConfigurationStoreChanged")
+    this.emit("MetaDataConfigurationStoreChanged");
   }
 
   changeField(name, values) {
@@ -67,33 +67,31 @@ class MetaDataConfigurationStore extends EventEmitter {
   changeFacet(name, values) {
     // Must have an order value
     if (!values.order) {
-      values.order = this.facets.length + 1
+      values.order = this.facets.length + 1;
     }
     // Get field from the store's fields
     if (!values.field) {
-      values.field = this.fields[values.field_name]
+      values.field = this.fields[values.field_name];
     }
 
-    const index = this._data.facets.findIndex(facet => facet.name === name)
+    const index = this._data.facets.findIndex(function(facet) { return facet.name === name; });
     if (index === -1) {
       // create
-      this._data.facets.push({
-        ...values,
-        name: name,
-      })
+      values.name = name;
+      this._data.facets.push(values);
     } else {
       // update
-      this._data.facets[index] = values
+      this._data.facets[index] = values;
     }
-    this.emit("MetaDataConfigurationStoreChanged")
+    this.emit("MetaDataConfigurationStoreChanged");
   }
 
   removeFacet(name) {
-    const index = this._data.facets.findIndex(facet => facet.name === name)
+    const index = this._data.facets.findIndex(function(facet) { return facet.name === name; });
     if (index !== -1) {
-      this._data.facets.splice(index, 1)
+      this._data.facets.splice(index, 1);
     }
-    this.emit("MetaDataConfigurationStoreChanged")
+    this.emit("MetaDataConfigurationStoreChanged");
   }
 
   // Pass false for useCache if you want to force a new load from the api
