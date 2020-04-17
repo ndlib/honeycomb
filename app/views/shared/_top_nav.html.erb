@@ -7,6 +7,9 @@
       <div class="navbar-collapse collapse">
 
         <%= yield :collection_top_nav %>
+        <% if !content_for?(:collection_top_nav) %>
+          <div></div> <!-- empty div is a spacer so the right side will be aligned correctly -->
+        <% end %>
 
         <ul class="nav navbar-nav navbar-right">
           <!--<li>
