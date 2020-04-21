@@ -1,41 +1,41 @@
-const React = require("react")
-const mui = require("material-ui")
+var React = require("react");
+var mui = require("material-ui");
 
-const ReactLink = require('react/lib/ReactLink')
-const ReactStateSetters = require('react/lib/ReactStateSetters')
-const update = require('react/lib/update')
+var ReactLink = require('react/lib/ReactLink');
+var ReactStateSetters = require('react/lib/ReactStateSetters');
+var update = require('react/lib/update');
 
-const MetaDataConfigurationFacetItem = require("./MetaDataConfigurationFacetItem")
-const MetadataConfigurationEventTypes = require("./MetaDataConfigurationEventTypes")
-const MetaDataConfigurationActions = require("../../../actions/MetaDataConfigurationActions")
-const MetaDataFacetDialog = require("../MetaDataFacetDialog")
-const AvailableDropTarget = StylableDropTarget(MetadataConfigurationEventTypes.FacetDnD)
+var MetaDataConfigurationFacetItem = require("./MetaDataConfigurationFacetItem");
+var MetadataConfigurationEventTypes = require("./MetaDataConfigurationEventTypes");
+var MetaDataConfigurationActions = require("../../../actions/MetaDataConfigurationActions");
+var MetaDataFacetDialog = require("../MetaDataFacetDialog");
+var AvailableDropTarget = StylableDropTarget(MetadataConfigurationEventTypes.FacetDnD);
 
-const Colors = require("material-ui/lib/styles/colors")
-const MoreVertIcons = require("material-ui/lib/svg-icons/navigation/more-vert")
-const FloatingActionButton = require("material-ui/lib/floating-action-button")
-const ContentAdd = require("material-ui/lib/svg-icons/content/add")
+var Colors = require("material-ui/lib/styles/colors");
+var MoreVertIcons = require("material-ui/lib/svg-icons/navigation/more-vert");
+var FloatingActionButton = require("material-ui/lib/floating-action-button");
+var ContentAdd = require("material-ui/lib/svg-icons/content/add");
 
-const Paper = mui.Paper
-const List = mui.List
-const Toggle = mui.Toggle
-const Toolbar = mui.Toolbar
-const ToolbarGroup = mui.ToolbarGroup
-const ToolbarTitle = mui.ToolbarTitle
-const FontIcon = mui.FontIcon
+var Paper = mui.Paper;
+var List = mui.List;
+var Toggle = mui.Toggle;
+var Toolbar = mui.Toolbar;
+var ToolbarGroup = mui.ToolbarGroup;
+var ToolbarTitle = mui.ToolbarTitle;
+var FontIcon = mui.FontIcon;
 
-const listStyle = {
+var listStyle = {
   paddingBottom: "0px",
 }
 
-const addButtonStyle = {
+var addButtonStyle = {
   position: "absolute",
   top: "-16px",
   left: "8px",
   zIndex: "1"
 }
 
-const MetaDataConfigurationFacets = React.createClass({
+var MetaDataConfigurationFacets = React.createClass({
   propTypes: {
     baseUpdateUrl: React.PropTypes.string.isRequired,
   },
@@ -61,38 +61,40 @@ const MetaDataConfigurationFacets = React.createClass({
   },
 
   filteredFacets(showInactive) {
-    const facets = _.filter(MetaDataConfigurationStore.facets, (facet) => showInactive || facet.active)
-    return _.sortBy(facets, 'order')
+    var facets = _.filter(MetaDataConfigurationStore.facets, function (facet) {
+      return showInactive || facet.active;
+    });
+    return _.sortBy(facets, 'order');
   },
 
   handleNewClick() {
-    this.setState({ selectedFacet: '' })
+    this.setState({ selectedFacet: '' });
   },
 
 
   handleEditClick(facet, event) {
     // Ignore the click if it was on the drag icon
     if (!event.target.classList.contains('material-icons')) {
-      this.setState({ selectedFacet: facet.name || facet.field.name })
+      this.setState({ selectedFacet: facet.name || facet.field.name });
     }
   },
 
   handleRemove(facetName) {
-    MetaDataConfigurationActions.removeFacet(facetName, this.props.baseUpdateUrl)
+    MetaDataConfigurationActions.removeFacet(facetName, this.props.baseUpdateUrl);
   },
 
   handleClose() {
-    this.setState({ selectedFacet: undefined })
+    this.setState({ selectedFacet: undefined });
   },
 
   handleDrop(target, source) {
-    const fromIndex = source.index
-    const toIndex = target.index
+    var fromIndex = source.index;
+    var toIndex = target.index;
 
     if (fromIndex === toIndex) {
-      return
+      return;
     }
-    let removeIndex = fromIndex;
+    var removeIndex = fromIndex;
     if (toIndex < fromIndex) {
       removeIndex++;
     }
@@ -104,14 +106,14 @@ const MetaDataConfigurationFacets = React.createClass({
           [removeIndex, 1],
         ]
       }
-    }), this.pushChanges)
+    }), this.pushChanges);
   },
 
   pushChanges() {
-    const reorder = this.state.facets.map((facet, index) => {
+    var reorder = this.state.facets.map(function(facet, index) {
       return { name: facet.name, order: index+1 }
-    })
-    MetaDataConfigurationActions.reorderFacets(reorder, this.props.baseUpdateUrl)
+    });
+    MetaDataConfigurationActions.reorderFacets(reorder, this.props.baseUpdateUrl);
   },
 
   render() {
@@ -139,7 +141,8 @@ const MetaDataConfigurationFacets = React.createClass({
             hoverClassName="metadata-configuration-target-onhover"
             data={{ index: 0 }}
           />
-          {this.state.facets.map((facet, index) => (
+        {this.state.facets.map(function(facet, index) {
+          return (
             <div key={facet.name}>
               <MetaDataConfigurationFacetItem
                 facet={facet}
@@ -154,11 +157,12 @@ const MetaDataConfigurationFacets = React.createClass({
                 data={{ index: index+1 }}
               />
             </div>
-          ))}
+          )
+        }.bind(this))}
         </List>
       </div>
-    )
+    );
   },
 })
 
-module.exports = MetaDataConfigurationFacets
+module.exports = MetaDataConfigurationFacets;
