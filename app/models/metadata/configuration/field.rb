@@ -5,7 +5,8 @@ module Metadata
       TYPES = [:string, :html, :date]
 
       attr_accessor :name, :active, :type, :label, :multiple, :required, :default_form_field,
-                    :optional_form_field, :order, :hidden, :placeholder, :help, :boost, :immutable
+                    :optional_form_field, :order, :hidden, :placeholder, :help, :boost, :immutable,
+                    :fieldSearch
 
       validates :name, :type, :label, :order, presence: true
       validates :order, :boost, numericality: { only_integer: true }
@@ -25,7 +26,8 @@ module Metadata
         placeholder: "",
         multiple: false,
         required: false,
-        immutable: ["name"]
+        immutable: ["name"],
+        fieldSearch: true
       )
         if hidden.nil?
           hidden = false
@@ -44,6 +46,7 @@ module Metadata
         @help = help
         @boost = boost
         @immutable = immutable
+        @fieldSearch = fieldSearch
         validate
       end
 
@@ -70,6 +73,7 @@ module Metadata
           help: help,
           boost: boost,
           immutable: immutable,
+          fieldSearch: fieldSearch,
         }
       end
 
@@ -104,7 +108,7 @@ module Metadata
         hash[:default_form_field] = hash.delete(:defaultFormField) if hash[:defaultFormField]
         hash[:optional_form_field] = hash.delete(:optionalFormField) if hash[:optionalFormField]
 
-        convert_strings_to_booleans([:multiple, :required, :default_form_field, :optional_form_field, :active], hash)
+        convert_strings_to_booleans([:multiple, :required, :default_form_field, :optional_form_field, :active, :fieldSearch], hash)
       end
 
       def convert_strings_to_booleans(keys, hash)

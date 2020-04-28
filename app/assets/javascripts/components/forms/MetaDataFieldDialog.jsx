@@ -129,6 +129,7 @@ var MetaDataFieldDialog = React.createClass({
       this.allowMultipleCheckbox(),
       <mui.Checkbox style={{ width: "100%" }} label="Require presence on all items?" checkedLink={ this.linkFieldState('required') } />,
       this.defaultFormFieldCheckbox(),
+      <mui.Checkbox style={{ width: "100%" }} label="Show in field search list?" checkedLink={ this.linkFieldState('fieldSearch') } />,
     ];
   },
 
