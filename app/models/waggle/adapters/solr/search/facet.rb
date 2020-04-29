@@ -26,6 +26,10 @@ module Waggle
           def values
             @values ||= facet_rows.each_slice(2).map { |row| Waggle::Adapters::Solr::Search::FacetValue.new(row) }
           end
+
+          def order
+            facet_config.order
+          end
         end
       end
     end

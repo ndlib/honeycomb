@@ -3,6 +3,8 @@ var Types = {
   CardDroppedOnTarget: "SiteObjectCardDroppedOnTarget",
   FacetDnD: "FacetDnD",
   FacetDroppedOnTarget: "FacetDroppedOnTarget",
+  SortDnD: "SortDnD",
+  SortDroppedOnTarget: "SortDroppedOnTarget",
 };
 
 module.exports = Types;

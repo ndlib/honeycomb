@@ -100,6 +100,11 @@ Rails.application.routes.draw do
             put :reorder
           end
         end
+        resources :sorts, only: [:create, :update, :destroy], defaults: { format: :json } do
+          collection do
+            put :reorder
+          end
+        end
       end
     end
     resources :items,
