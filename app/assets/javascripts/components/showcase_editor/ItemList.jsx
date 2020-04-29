@@ -72,12 +72,13 @@ var ItemList = React.createClass({
     this.executeQuery();
   },
 
-  executeQuery: function() {
+  executeQuery: function(searchTerm) {
     var rows = 1000000;
     SearchActions.executeQuery(this.props.itemSearchUrl, {
       sortField: 'last_updated',
       sortDirection: 'desc',
       rowLimit: rows,
+      searchTerm: searchTerm,
     });
   },
 
@@ -97,26 +98,7 @@ var ItemList = React.createClass({
   },
 
   handleInput: function(input) {
-    var items = SearchStore.hits;
-
-    var count = 0;
-    var currentOptions = this.state.currentOptions;
-    for(var i = 0; i < items.length; ++i) {
-      var lowerKey = items[i].name.toLowerCase();
-      var valid = lowerKey.includes(input.toLowerCase());
-
-      if (valid) {
-        currentOptions[lowerKey] = true;
-        count += 1;
-      } else if(currentOptions[lowerKey]) {
-        delete currentOptions[lowerKey];
-      }
-    }
-    this.setState({
-      currentOptions: currentOptions,
-      currentCount: count,
-      start: 0,
-    });
+    this.executeQuery(input)
   },
 
   pageButton: function(start, icon) {
