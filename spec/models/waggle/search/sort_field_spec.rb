@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe Waggle::Search::SortField do
-  let(:sort_config) { instance_double(Metadata::Configuration::Sort, name: "creatorasc", label: "Creator", active: false) }
-  subject { described_class.new(name: "Name", value: "nameasc", active: false) }
+  let(:sort_config) { instance_double(Metadata::Configuration::Sort, name: "creatorasc", label: "Creator", active: false, order: 3) }
+  subject { described_class.new(name: "Name", value: "nameasc", active: false, order: 3) }
 
   describe "name" do
     it "is the name" do
@@ -13,6 +13,12 @@ RSpec.describe Waggle::Search::SortField do
   describe "value" do
     it "is the value" do
       expect(subject.value).to eq("nameasc")
+    end
+  end
+
+  describe "order" do
+    it "is the order" do
+      expect(subject.order).to eq(3)
     end
   end
 

@@ -1,6 +1,0 @@
-/* this is a really dumb way to find the dropdown, because
-this version of Material UI doesn't provide a way to style it. */
-.select-field div[tabindex="0"] {
-  max-height: 500px;
-  overflow-y: auto !important;
-}

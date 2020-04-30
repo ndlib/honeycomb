@@ -276,6 +276,137 @@ class MetaDataConfigurationActions extends NodeEventEmitter {
       }).bind(this),
     });
   }
+
+  changeSort(sortName, sortValues, pushToUrl) {
+    // Clone values in order to revert the store if the change fails
+    var match = MetaDataConfigurationStore.sorts.find(function(sort) {
+      return sort.name === sortName;
+    });
+    if (!match) {
+      return;
+    }
+    var previousValues = update(match, {});
+
+    $.ajax({
+      url: `${pushToUrl}/${sortName}`,
+      dataType: "json",
+      method: "PUT",
+      data: sortValues,
+      success: (function(result) {
+        AppDispatcher.dispatch({
+          actionType: MetaDataConfigurationActionTypes.MDC_CHANGE_SORT,
+          name: result.sort.name,
+          values: result.sort,
+        });
+        this.emit("ChangeSortFinished", true, result);
+        AppEventEmitter.emit("MessageCenterDisplay", "info", "Collection updated");
+      }).bind(this),
+      error: (function(xhr) {
+        // Request to change failed, revert the store to previous values on if it is updated
+        AppDispatcher.dispatch({
+          actionType: MetaDataConfigurationActionTypes.MDC_CHANGE_SORT,
+          name: sortName,
+          values: previousValues,
+        });
+        // Communicate the error to the user
+        this.emit("ChangeSortFinished", false, xhr);
+        AppEventEmitter.emit("MessageCenterDisplay", "error", "Save failed. Please refresh and try again.");
+      }).bind(this)
+    });
+  }
+
+  createSort(sortName, sortValues, pushToUrl) {
+    var requiredValues = _.pick(sortValues, "name", "field_name", "label", "order");
+    var postValues = _.omit(requiredValues, function(value) { return _.isNull(value); });
+
+    $.ajax({
+      url: pushToUrl,
+      dataType: "json",
+      method: "POST",
+      data: postValues,
+      success: (function(result) {
+        AppDispatcher.dispatch({
+          actionType: MetaDataConfigurationActionTypes.MDC_CHANGE_SORT,
+          name: result.sort.name,
+          values: result.sort,
+        })
+        this.emit("CreateSortFinished", true, result);
+        AppEventEmitter.emit("MessageCenterDisplay", "info", "Collection updated");
+      }).bind(this),
+      error: (function(xhr) {
+        // Communicate the error to the user
+        this.emit("CreateSortFinished", false, xhr);
+        AppEventEmitter.emit("MessageCenterDisplay", "error", "Create failed. Please select a unique field + direction combination.");
+      }).bind(this)
+    });
+  }
+
+  removeSort(sortName, pushToUrl) {
+    // Clone values in order to revert the store if the remove fails
+    var match = MetaDataConfigurationStore.sorts.find(function(sort) {
+      return sort.name === sortName;
+    });
+    var previousValues = update(match, {});
+
+    // Optimistically change the store
+    AppDispatcher.dispatch({
+      actionType: MetaDataConfigurationActionTypes.MDC_REMOVE_SORT,
+      name: sortName,
+    });
+
+    $.ajax({
+      url: `${pushToUrl}/${sortName}`,
+      dataType: "json",
+      method: "DELETE",
+      success: (function() {
+        // Store was already changed, nothing to do here
+        this.emit("RemoveSortFinished", true);
+        AppEventEmitter.emit("MessageCenterDisplay", "info", "Collection updated");
+      }).bind(this),
+      error: (function(xhr) {
+        // Request to change failed, revert the store to previous values
+        AppDispatcher.dispatch({
+          actionType: MetaDataConfigurationActionTypes.MDC_CHANGE_SORT,
+          name: sortName,
+          values: previousValues,
+        });
+        // Communicate the error to the user
+        this.emit("RemoveSortFinished", false, xhr);
+        AppEventEmitter.emit("MessageCenterDisplay", "error", APIResponseMixin.apiErrorToString(xhr));
+      }).bind(this)
+    });
+  }
+
+  reorderSorts(newOrder, baseUrl) {
+    var oldOrder = _.map(MetaDataConfigurationStore.sorts, function (data) {
+      return { name: data.name, order: data.order };
+    });
+
+    AppDispatcher.dispatch({
+      actionType: MetaDataConfigurationActionTypes.MDC_REORDER_SORTS,
+      newSortOrder: newOrder,
+    });
+
+    $.ajax({
+      url: `${baseUrl}/reorder`,
+      dataType: "json",
+      method: "PUT",
+      data: {
+        sorts: newOrder,
+      },
+      success: (function() {
+        this.emit("SortReorderFinished", true);
+      }).bind(this),
+      error: (function(xhr) {
+        AppDispatcher.dispatch({
+          actionType: MetaDataConfigurationActionTypes.MDC_REORDER_SORTS,
+          newSortOrder: oldOrder,
+        });
+        this.emit("SortReorderFinished", false, xhr);
+        AppEventEmitter.emit("MessageCenterDisplay", "error", "Reorder Failed.  Please try again. If the problem persists, please contact WSE unit.");
+      }).bind(this),
+    });
+  }
 }
 
 module.exports = new MetaDataConfigurationActions();

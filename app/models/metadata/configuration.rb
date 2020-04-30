@@ -51,6 +51,29 @@ module Metadata
       end
     end
 
+    def save_sort(name, values)
+      s = sort(name)
+
+      if !s
+        sorts
+        s = new_sort(values)
+        @sorts << s
+      elsif values != nil
+        s.update(values)
+      else
+        sorts.delete_if { |sort| sort.name === name }
+      end
+
+      return false if !s.valid?
+
+      data.sorts = sorts.map { |sort| sort.to_hash.except(:field) } # exclude "field" when saving to db
+      if data.save
+        s
+      else
+        false
+      end
+    end
+
     def fields
       @fields ||= build_fields
     end
@@ -184,6 +207,10 @@ module Metadata
 
     def new_facet(facet_data)
       self.class::Facet.new(**facet_data)
+    end
+
+    def new_sort(sort_data)
+      self.class::Sort.new(**sort_data)
     end
   end
 end

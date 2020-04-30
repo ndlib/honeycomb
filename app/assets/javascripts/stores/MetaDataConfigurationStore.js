@@ -24,14 +24,23 @@ class MetaDataConfigurationStore extends EventEmitter {
       case MetaDataConfigurationActionTypes.MDC_CHANGE_FACET:
         this.changeFacet(action.name, action.values);
         break;
+      case MetaDataConfigurationActionTypes.MDC_CHANGE_SORT:
+        this.changeSort(action.name, action.values);
+        break;
       case MetaDataConfigurationActionTypes.MDC_REORDER_FIELDS:
         this.reorderFields(action.newFieldOrder);
         break;
       case MetaDataConfigurationActionTypes.MDC_REORDER_FACETS:
         this.reorderFacets(action.newFacetOrder);
         break;
+      case MetaDataConfigurationActionTypes.MDC_REORDER_SORTS:
+        this.reorderSorts(action.newSortOrder);
+        break;
       case MetaDataConfigurationActionTypes.MDC_REMOVE_FACET:
         this.removeFacet(action.name);
+        break;
+      case MetaDataConfigurationActionTypes.MDC_REMOVE_SORT:
+        this.removeSort(action.name);
         break;
     }
   }
@@ -47,6 +56,17 @@ class MetaDataConfigurationStore extends EventEmitter {
   reorderFacets(newFacetOrder) {
     newFacetOrder.map(function(data) {
       const match = this._data.facets.find(function(facet) { return facet.name === data.name; });
+      if (match) {
+        match.order = data.order;
+      }
+    }.bind(this));
+
+    this.emit("MetaDataConfigurationStoreChanged");
+  }
+
+  reorderSorts(newSortOrder) {
+    newSortOrder.map(function(data) {
+      const match = this._data.sorts.find(function(sort) { return sort.name === data.name; });
       if (match) {
         match.order = data.order;
       }
@@ -86,10 +106,40 @@ class MetaDataConfigurationStore extends EventEmitter {
     this.emit("MetaDataConfigurationStoreChanged");
   }
 
+  changeSort(name, values) {
+    // Must have an order value
+    if (!values.order) {
+      values.order = this.sorts.length + 1;
+    }
+    // Get field from the store's fields
+    if (!values.field) {
+      values.field = this.fields[values.field_name];
+    }
+
+    const index = this._data.sorts.findIndex(function(sort) { return sort.name === name; });
+    if (index === -1) {
+      // create
+      values.name = name;
+      this._data.sorts.push(values);
+    } else {
+      // update
+      this._data.sorts[index] = values;
+    }
+    this.emit("MetaDataConfigurationStoreChanged");
+  }
+
   removeFacet(name) {
     const index = this._data.facets.findIndex(function(facet) { return facet.name === name; });
     if (index !== -1) {
       this._data.facets.splice(index, 1);
+    }
+    this.emit("MetaDataConfigurationStoreChanged");
+  }
+
+  removeSort(name) {
+    const index = this._data.sorts.findIndex(function(sort) { return sort.name === name; });
+    if (index !== -1) {
+      this._data.sorts.splice(index, 1);
     }
     this.emit("MetaDataConfigurationStoreChanged");
   }

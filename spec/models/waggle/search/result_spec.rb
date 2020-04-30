@@ -78,9 +78,9 @@ RSpec.describe Waggle::Search::Result do
 
     it "only returns fields that are active" do
       sorts = [
-        double(Object, active: true, label: "label", name: "one"),
-        double(Object, active: true, label: "label", name: "two"),
-        double(Object, active: false, label: "label", name: "three")
+        double(Object, active: true, label: "label", name: "one", order: 1),
+        double(Object, active: true, label: "label", name: "two", order: nil),
+        double(Object, active: false, label: "label", name: "three", order: 2)
       ]
       expected_attributes = [
         { active: true, name: "Relevance", value: "score" },

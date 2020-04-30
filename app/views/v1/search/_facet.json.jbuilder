@@ -7,3 +7,4 @@ json.values facet.values do |value|
   json.value value.value
   json.count value.count
 end
+json.order facet.order

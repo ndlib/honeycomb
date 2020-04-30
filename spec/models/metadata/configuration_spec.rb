@@ -15,8 +15,8 @@ RSpec.describe Metadata::Configuration do
   end
   let(:sort_data) do
     [
-      { name: "string_field_sort", field_name: "string_field", direction: "asc" },
-      { name: "string_field_sort_2", field_name: "string_field", direction: "desc", label: "Descending Label" },
+      { name: "string_field_sort", field_name: "string_field", direction: "asc", order: 0 },
+      { name: "string_field_sort_2", field_name: "string_field", direction: "desc", label: "Descending Label", order: 0 },
     ]
   end
   let(:data) do
@@ -256,6 +256,59 @@ RSpec.describe Metadata::Configuration do
     it "returns false if the metadata has been saved successfully" do
       allow(data).to receive("save").and_return(false)
       expect(subject.save_facet(:facet_name, update_values)).to be(false)
+    end
+  end
+
+  describe "#save_sort" do
+    let(:sort) { double(described_class::Sort, valid?: true, update: true, to_hash: { name: "name" }) }
+    let(:update_values) { { label: "label", order: 1 } }
+
+    before(:each) do
+      allow(data).to receive(:save).and_return(true)
+      allow(subject).to receive(:sort).and_return(sort)
+    end
+
+    it "retrieves the sort from the name passed in" do
+      expect(subject).to receive(:sort).with(:sort_name).and_return(sort)
+      subject.save_sort(:sort_name, update_values)
+    end
+
+    it "creates a new sort if the sort is not found" do
+      allow(subject).to receive(:sort).with(:sort_name).and_return(nil)
+      allow(described_class::Sort).to receive(:new).and_return(sort)
+      expect(described_class::Sort).to receive(:new).with(update_values).and_return(sort)
+      subject.save_sort(:sort_name, update_values)
+    end
+
+    it "calls update on the sort when it already exists" do
+      expect(sort).to receive(:update).with(update_values).and_return(true)
+      subject.save_sort(:sort_name, update_values)
+    end
+
+    it "returns false if the update of the sort fails" do
+      allow(sort).to receive(:update).with(update_values).and_return(false)
+      allow(sort).to receive(:valid?).and_return(false)
+      expect(subject.save_sort(:sort_name, update_values)).to be(false)
+    end
+
+    it "updates the sorts configuration " do
+      expect(data).to receive("sorts=")
+      subject.save_sort(:sort_name, update_values)
+    end
+
+    it "saves the sorts configuration" do
+      expect(data).to receive("save").and_return(true)
+      subject.save_sort(:sort_name, update_values)
+    end
+
+    it "returns the sort if the metadata has been saved successfully" do
+      allow(data).to receive("save").and_return(true)
+      expect(subject.save_sort(:sort_name, update_values)).to eq(sort)
+    end
+
+    it "returns false if the metadata fails to save successfully" do
+      allow(data).to receive("save").and_return(false)
+      expect(subject.save_sort(:sort_name, update_values)).to be(false)
     end
   end
 end
