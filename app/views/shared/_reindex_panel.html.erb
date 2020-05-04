@@ -1,0 +1,16 @@
+<div class="panel panel-danger">
+  <div class="panel-heading">
+    <h3 class="panel-title"><%= t('.title', default: 'Proceed with caution') %></h3>
+  </div>
+  <div class="panel-body">
+    <h4 class=""><%= t("#{i18n_key_base}.heading", default: "Reindex this #{default_name}") %></h4>
+    <p class=""><%= t("#{i18n_key_base}.message", default: "This will reindex all items in the #{default_name}. This may take several minutes to complete depending on collection size. Items may not be discoverable on the live site while reindexing is in progress.") %></p>
+    <%= link_to content_tag('span', t("#{i18n_key_base}.heading", default: "Reindex this #{default_name}") , class: ''),
+                path,
+                class: "btn btn-small btn-default btn-danger",
+                method: :post,
+                data: { confirm: "#{t("#{i18n_key_base}.message",
+                        default: "This will reindex all items in the #{default_name}. This may take several minutes to complete depending on collection size. Items may not be discoverable on the live site while reindexing is in progress.")} Are you sure you wish to continue?" }
+    %>
+  </div>
+</div>

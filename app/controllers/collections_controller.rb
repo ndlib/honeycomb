@@ -114,6 +114,18 @@ class CollectionsController < ApplicationController
     end
   end
 
+  def reindex
+    collection = CollectionQuery.new.find(params[:id])
+    check_user_edits!(collection)
+
+    if QueueJob.call(ReindexCollectionJob, collection_id: params[:id])
+      flash[:notice] = t(".success")
+      redirect_to settings_form_collection_path(collection, form: "metadata")
+    else
+      render :settings
+    end
+  end
+
   protected
 
   def save_params

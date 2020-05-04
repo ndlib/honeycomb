@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resources :errors
 
   resources :collections,
-            only: [:index, :show, :new, :create, :edit, :update, :destroy] do
+            only: [:index, :show, :new, :create, :edit, :update, :destroy, :reindex] do
     collection do
       get :import_google_sheet_callback, controller: "import"
       get :export_google_sheet_callback, controller: "export"
@@ -36,6 +36,7 @@ Rails.application.routes.draw do
       put :unpublish
       post :get_google_import_authorization_uri, controller: "import"
       post :get_google_export_authorization_uri, controller: "export"
+      post :reindex
     end
 
     resources :items, only: [:index, :new, :create]

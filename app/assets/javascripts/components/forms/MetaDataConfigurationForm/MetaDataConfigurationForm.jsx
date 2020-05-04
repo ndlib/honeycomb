@@ -17,6 +17,9 @@ var TabStyle = { borderRight: "1px white solid" };
 var TabsStyle = {
   backgroundColor: "#7F8C8D",
 };
+var ComponentStyle = {
+  marginBottom: "40px",
+};
 
 var MetaDataConfigurationForm = React.createClass({
   propTypes: {
@@ -26,7 +29,7 @@ var MetaDataConfigurationForm = React.createClass({
 
   render: function(){
     return (
-      <Tabs tabItemContainerStyle={ TabsStyle }>
+      <Tabs style={ComponentStyle} tabItemContainerStyle={ TabsStyle }>
         <Tab label="Edit" style={TabStyle}>
           <MetaDataConfigurationList baseUpdateUrl={this.props.baseUpdateUrl} />
         </Tab>

@@ -99,9 +99,14 @@ en:
       success: 'Collection updated'
     destroy:
       success: "Collection deleted"
+    reindex:
+      success: "Reindex queued. Please allow a few minutes for indexing to process."
     delete_panel:
       heading: Delete this Collection
       message: "Proceed with caution. This will also remove all items and showcases."
+    reindex_panel:
+      heading: Reindex this Collection
+      message: "Reindex all items in this collection. This may take several minutes to complete depending on collection size. Items may not be discoverable on the live site while reindexing is in progress."
   import:
     import_google_sheet_callback:
       title: "Import Results"

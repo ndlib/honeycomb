@@ -4,3 +4,4 @@
   facetUpdateUrl: v1_collection_configurations_facets_path(@collection.unique_id),
   sortUpdateUrl: v1_collection_configurations_sorts_path(@collection.unique_id),
 ) %>
+<%= ReindexPanel.new(@collection).display %>

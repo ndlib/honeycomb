@@ -108,6 +108,7 @@ namespace :sneakers do
       workers = []
       worker_classes = [
         HoneypotImageWorker,
+        HoneycombIndexWorker,
       ]
       worker_classes.each do |worker_class|
         SneakersRakeHelper::test_worker(worker_class)

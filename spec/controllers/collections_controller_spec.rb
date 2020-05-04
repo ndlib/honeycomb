@@ -283,6 +283,37 @@ RSpec.describe CollectionsController, type: :controller do
     end
   end
 
+  describe "reindex" do
+    subject { post :reindex, update_params }
+
+    before(:each) do
+      allow_any_instance_of(CollectionQuery).to receive(:find).and_return(collection)
+      allow(QueueJob).to receive(:call).and_return(true)
+      allow(Collection).to receive(:find).and_return(collection)
+    end
+
+    it "checks the editor permissions" do
+      expect_any_instance_of(CollectionsController).to receive(:check_user_edits!).with(collection)
+      subject
+    end
+
+    it "uses collection query to get the collection" do
+      expect_any_instance_of(CollectionQuery).to receive(:find).with("1").and_return(collection)
+      subject
+    end
+
+    it "queues the ReindexCollectionJob" do
+      expect(QueueJob).to receive(:call).with(ReindexCollectionJob, collection_id: "1").and_return(true)
+      subject
+    end
+
+    it "redirects on success" do
+      subject
+      expect(response).to be_redirect
+      expect(flash[:notice]).to_not be_nil
+    end
+  end
+
   describe "site_setup" do
     subject { get :site_setup, id: collection.id }
     before(:each) do
