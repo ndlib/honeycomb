@@ -316,7 +316,7 @@ class MetaDataConfigurationActions extends NodeEventEmitter {
   }
 
   createSort(sortName, sortValues, pushToUrl) {
-    var requiredValues = _.pick(sortValues, "name", "field_name", "label", "order");
+    var requiredValues = _.pick(sortValues, "name", "field_name", "label", "direction", "order");
     var postValues = _.omit(requiredValues, function(value) { return _.isNull(value); });
 
     $.ajax({
