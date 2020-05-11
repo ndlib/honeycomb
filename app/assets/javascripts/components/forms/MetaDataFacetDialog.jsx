@@ -195,7 +195,7 @@ var MetaDataFacetDialog = React.createClass({
     var fieldOptions = Object.values(MetaDataConfigurationStore.fields || {})
        // only allow active string fields as facets
       .filter(function(field) {
-        return field.active && field.type === 'string' && (
+        return field.active && (
           // exclude fields that already have facets, unless this is the edit form in which case it needs to be there
           !this.state.createForm || !MetaDataConfigurationStore.facets.find(function(facet) { return facet.field_name === field.name; })
         );
