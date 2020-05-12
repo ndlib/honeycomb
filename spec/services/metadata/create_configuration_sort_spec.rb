@@ -10,7 +10,7 @@ RSpec.describe Metadata::CreateConfigurationSort do
     allow_any_instance_of(CollectionConfigurationQuery).to receive(:find).and_return(configuration)
     allow(configuration).to receive(:save_sort)
     allow(Metadata::ConfigurationInputCleaner).to receive(:call).and_return(data)
-    allow_any_instance_of(Metadata::CreateConfigurationSort).to receive(:duplicate_name?).and_return(false)
+    allow_any_instance_of(Metadata::CreateConfigurationSort).to receive(:duplicate?).and_return(false)
   end
 
   context "when name is unique" do
@@ -39,7 +39,7 @@ RSpec.describe Metadata::CreateConfigurationSort do
 
   context "when name is not unique" do
     before(:each) do
-      allow_any_instance_of(Metadata::CreateConfigurationSort).to receive(:duplicate_name?).and_return(true)
+      allow_any_instance_of(Metadata::CreateConfigurationSort).to receive(:duplicate?).and_return(true)
     end
 
     it "returns duplicate_found" do

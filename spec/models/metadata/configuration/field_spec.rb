@@ -11,6 +11,7 @@ RSpec.describe Metadata::Configuration::Field do
       help: "help",
       default_form_field: true,
       optional_form_field: false,
+      fieldSearch: false,
       order: 1,
       immutable: []
     }
@@ -230,6 +231,7 @@ RSpec.describe Metadata::Configuration::Field do
         required: false,
         default_form_field: true,
         optional_form_field: false,
+        fieldSearch: false,
         order: 1,
         placeholder: "placeholder",
         help: "help",
