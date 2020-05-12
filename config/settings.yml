@@ -36,6 +36,17 @@ pre_production:
     bucket: testlibnd-wse-honeycomb-pprd
     profile: honeycomb
 
+prep:
+  <<: *vm
+  # cas_base: https://login.nd.edu/cas
+  image_server_url: https://honeypotpprd.library.nd.edu
+  beehive_url: https://collections-pprd.library.nd.edu
+  media_server_url: https://buzz-pprd.library.nd.edu
+  aws:
+    region: us-east-1
+    bucket: testlibnd-wse-honeycomb-pprd
+    profile: honeycomb
+
 production:
   <<: *vm
 #  cas_base: https://login.nd.edu/cas
