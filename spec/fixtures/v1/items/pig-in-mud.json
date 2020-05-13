@@ -4,6 +4,7 @@
   "@id":"https://localhost:3017/v1/collections/animals",
   "hasPart/items":"https://localhost:3017/v1/collections/animals/items",
   "hasPart/showcases":"https://localhost:3017/v1/collections/animals/showcases",
+  "hasPart/pages":"https://localhost:3017/v1/collections/animals/pages",
   "id":"animals",
   "slug":"pretty-animals",
   "name":"Pretty Animals CC Images of Animals",
