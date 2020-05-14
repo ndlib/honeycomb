@@ -59,16 +59,14 @@ var EntriesList = React.createClass({
     entries: React.PropTypes.array.isRequired,
     openUrl: React.PropTypes.string.isRequired,
     hasEntryCount: React.PropTypes.bool,
+    hasPublishedFilter: React.PropTypes.bool,
     deleteButtonType: React.PropTypes.string,
-  },
-
-  getDefaultProps: function() {
-    return { hasEntryCount: false };
   },
 
   getInitialState: function() {
     return {
       deleteColumn: 4,
+      showUnpublished: true,
     }
   },
 
@@ -119,31 +117,49 @@ var EntriesList = React.createClass({
   },
 
   items: function() {
-    return this.props.entries.map(function(entry) {
-      var dateOptions = { year: "numeric", month: "short", day: "numeric" };
-      var dateString = (new Date(entry.updated)).toLocaleDateString("en-US", dateOptions);
-      var todayString = (new Date()).toLocaleDateString("en-US", dateOptions);
-      if(dateString == todayString) {
-        dateString = (new Date(entry.updated)).toLocaleTimeString("en-US");
-      }
-      return (
-        <mui.TableRow key={ entry.id } style={ Styles.row }>
-            <mui.TableRowColumn style={ Styles.cells.thumbnail }>
-              <Thumbnail thumbnailUrl={ entry.thumb } thumbType={ this.props.entryType } />
-            </mui.TableRowColumn>
-            <mui.TableRowColumn style={ Styles.cells.itemName }>{ entry.name }</mui.TableRowColumn>
-            { this.entryCount(entry) }
-            <mui.TableRowColumn style={ Styles.cells.lastModifiedAt }>{ dateString }</mui.TableRowColumn>
-            { this.deleteColumn(false, entry.id) }
-        </mui.TableRow>
-      );
+    const includeUnpublished = this.state.showUnpublished;
+    return this.props.entries
+      .filter(function(entry) {
+        return includeUnpublished || entry.published;
+      })
+      .map(function(entry) {
+        var dateOptions = { year: "numeric", month: "short", day: "numeric" };
+        var dateString = (new Date(entry.updated)).toLocaleDateString("en-US", dateOptions);
+        var todayString = (new Date()).toLocaleDateString("en-US", dateOptions);
+        if(dateString == todayString) {
+          dateString = (new Date(entry.updated)).toLocaleTimeString("en-US");
+        }
+        return (
+          <mui.TableRow key={ entry.id } style={ Styles.row }>
+              <mui.TableRowColumn style={ Styles.cells.thumbnail }>
+                <Thumbnail thumbnailUrl={ entry.thumb } thumbType={ this.props.entryType } />
+              </mui.TableRowColumn>
+              <mui.TableRowColumn style={ Styles.cells.itemName }>{ entry.name }</mui.TableRowColumn>
+              { this.entryCount(entry) }
+              <mui.TableRowColumn style={ Styles.cells.lastModifiedAt }>{ dateString }</mui.TableRowColumn>
+              { this.deleteColumn(false, entry.id) }
+          </mui.TableRow>
+        );
     }.bind(this));
+  },
+
+  toggleShowUnpublished: function() {
+    this.setState({
+      showUnpublished: !this.state.showUnpublished,
+    });
   },
 
   render() {
     return (
       <div style={ Styles.outerDiv }>
         <div style={ Styles.table }>
+          { this.props.hasPublishedFilter && (
+            <mui.Checkbox
+              label='Show unpublished collections?'
+              checked={this.state.showUnpublished}
+              onCheck={this.toggleShowUnpublished}
+            />
+          )}
           <mui.Table selectable={false} fixedFooter={true} onCellClick={ this.openItem }>
             <mui.TableHeader displaySelectAll={false} adjustForCheckbox={false}>
               <mui.TableRow>

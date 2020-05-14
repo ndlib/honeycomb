@@ -43,6 +43,7 @@ class ListEntryGenerator
       updated: entry.updated_at,
       thumb: CollectionImage.url(entry),
       count: entry.items.size,
+      published: entry.published,
     }
   end
 
