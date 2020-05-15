@@ -13,7 +13,8 @@ RSpec.describe ListEntryGenerator do
                     pages: Page.all,
                     items: [],
                     updated_at: "0",
-                    image: image)
+                    image: image,
+                    published: true)
   end
   let(:showcase) do
     instance_double(Showcase,
@@ -62,6 +63,7 @@ RSpec.describe ListEntryGenerator do
       expect(returned[:updated]).to eq(collection.updated_at)
       expect(returned[:thumb]).to eq("img")
       expect(returned[:count]).to eq(collection.items.size)
+      expect(returned[:published]).to eq(collection.published)
     end
   end
 
