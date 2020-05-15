@@ -19,6 +19,10 @@ module V1
       h.v1_collection_showcases_url(object.unique_id)
     end
 
+    def pages_url
+      h.v1_collection_pages_url(object.unique_id)
+    end
+
     def metadata_configuration_url
       h.v1_collection_configurations_url(object.unique_id)
     end
