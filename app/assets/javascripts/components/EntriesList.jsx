@@ -50,7 +50,17 @@ var Styles = {
     itemName: {},
     lastModifiedAt: {},
   },
+  filterLabel: {
+    position: 'relative',
+    top: '-12px',
+  },
 };
+
+const publishedFilterOptions = [
+  { payload: 'all', text: 'All Collections' },
+  { payload: 'published', text: 'Published' },
+  { payload: 'unpublished', text: 'Unpublished' },
+];
 
 var EntriesList = React.createClass({
   propTypes: {
@@ -66,7 +76,7 @@ var EntriesList = React.createClass({
   getInitialState: function() {
     return {
       deleteColumn: 4,
-      showUnpublished: true,
+      publishedFilterIndex: 0,
     }
   },
 
@@ -117,10 +127,10 @@ var EntriesList = React.createClass({
   },
 
   items: function() {
-    const includeUnpublished = this.state.showUnpublished;
+    const filterValue = publishedFilterOptions[this.state.publishedFilterIndex].payload;
     return this.props.entries
       .filter(function(entry) {
-        return includeUnpublished || entry.published;
+        return (entry.published && filterValue !== 'unpublished') || (!entry.published && filterValue !== 'published');
       })
       .map(function(entry) {
         var dateOptions = { year: "numeric", month: "short", day: "numeric" };
@@ -143,9 +153,9 @@ var EntriesList = React.createClass({
     }.bind(this));
   },
 
-  toggleShowUnpublished: function() {
+  setPublishedFilter: function(e, selectedIndex) {
     this.setState({
-      showUnpublished: !this.state.showUnpublished,
+      publishedFilterIndex: selectedIndex,
     });
   },
 
@@ -154,11 +164,14 @@ var EntriesList = React.createClass({
       <div style={ Styles.outerDiv }>
         <div style={ Styles.table }>
           { this.props.hasPublishedFilter && (
-            <mui.Checkbox
-              label='Show unpublished collections?'
-              checked={this.state.showUnpublished}
-              onCheck={this.toggleShowUnpublished}
-            />
+            <div>
+              <span style={Styles.filterLabel}>Filter:</span>
+              <mui.DropDownMenu
+                menuItems={publishedFilterOptions}
+                selectedIndex={this.state.publishedFilterIndex}
+                onChange={this.setPublishedFilter}
+              />
+            </div>
           )}
           <mui.Table selectable={false} fixedFooter={true} onCellClick={ this.openItem }>
             <mui.TableHeader displaySelectAll={false} adjustForCheckbox={false}>
