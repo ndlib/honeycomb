@@ -77,12 +77,13 @@ var EntriesList = React.createClass({
     return {
       deleteColumn: 4,
       publishedFilterIndex: 0,
+      filteredEntries: this.props.entries,
     }
   },
 
   openItem: function(rowNumber, columnId) {
     if(columnId != this.state.deleteColumn) {
-      var selectedId = this.props.entries[rowNumber].id;
+      var selectedId = this.state.filteredEntries[rowNumber].id;
       window.location = this.props.openUrl.replace("<id>", selectedId);
     }
   },
@@ -127,35 +128,34 @@ var EntriesList = React.createClass({
   },
 
   items: function() {
-    const filterValue = publishedFilterOptions[this.state.publishedFilterIndex].payload;
-    return this.props.entries
-      .filter(function(entry) {
-        return (entry.published && filterValue !== 'unpublished') || (!entry.published && filterValue !== 'published');
-      })
-      .map(function(entry) {
-        var dateOptions = { year: "numeric", month: "short", day: "numeric" };
-        var dateString = (new Date(entry.updated)).toLocaleDateString("en-US", dateOptions);
-        var todayString = (new Date()).toLocaleDateString("en-US", dateOptions);
-        if(dateString == todayString) {
-          dateString = (new Date(entry.updated)).toLocaleTimeString("en-US");
-        }
-        return (
-          <mui.TableRow key={ entry.id } style={ Styles.row }>
-              <mui.TableRowColumn style={ Styles.cells.thumbnail }>
-                <Thumbnail thumbnailUrl={ entry.thumb } thumbType={ this.props.entryType } />
-              </mui.TableRowColumn>
-              <mui.TableRowColumn style={ Styles.cells.itemName }>{ entry.name }</mui.TableRowColumn>
-              { this.entryCount(entry) }
-              <mui.TableRowColumn style={ Styles.cells.lastModifiedAt }>{ dateString }</mui.TableRowColumn>
-              { this.deleteColumn(false, entry.id) }
-          </mui.TableRow>
-        );
+    return this.state.filteredEntries.map(function(entry) {
+      var dateOptions = { year: "numeric", month: "short", day: "numeric" };
+      var dateString = (new Date(entry.updated)).toLocaleDateString("en-US", dateOptions);
+      var todayString = (new Date()).toLocaleDateString("en-US", dateOptions);
+      if(dateString == todayString) {
+        dateString = (new Date(entry.updated)).toLocaleTimeString("en-US");
+      }
+      return (
+        <mui.TableRow key={ entry.id } style={ Styles.row }>
+            <mui.TableRowColumn style={ Styles.cells.thumbnail }>
+              <Thumbnail thumbnailUrl={ entry.thumb } thumbType={ this.props.entryType } />
+            </mui.TableRowColumn>
+            <mui.TableRowColumn style={ Styles.cells.itemName }>{ entry.name }</mui.TableRowColumn>
+            { this.entryCount(entry) }
+            <mui.TableRowColumn style={ Styles.cells.lastModifiedAt }>{ dateString }</mui.TableRowColumn>
+            { this.deleteColumn(false, entry.id) }
+        </mui.TableRow>
+      );
     }.bind(this));
   },
 
   setPublishedFilter: function(e, selectedIndex) {
+    const filterValue = publishedFilterOptions[selectedIndex].payload;
     this.setState({
       publishedFilterIndex: selectedIndex,
+      filteredEntries: this.props.entries.filter(function(entry) {
+        return (entry.published && filterValue !== 'unpublished') || (!entry.published && filterValue !== 'published');
+      }),
     });
   },
 
