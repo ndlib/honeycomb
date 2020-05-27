@@ -10,14 +10,10 @@ set :repo_url, "https://github.com/ndlib/honeycomb.git"
 set :log_level, :info
 
 # Default branch is :master
-if fetch(:stage).to_s == "production"
-  set :branch, "v2018.3"
+if ENV["SCM_BRANCH"] && !(ENV["SCM_BRANCH"] == "")
+  set :branch, ENV["SCM_BRANCH"]
 else
-  if ENV["SCM_BRANCH"] && !(ENV["SCM_BRANCH"] == "")
-    set :branch, ENV["SCM_BRANCH"]
-  else
-    ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
-  end
+  ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 end
 
 # Default deploy_to directory is /var/www/my_app
