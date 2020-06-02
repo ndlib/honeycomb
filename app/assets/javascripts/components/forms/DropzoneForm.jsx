@@ -55,6 +55,9 @@ var DropzoneForm = React.createClass({
       clickable: "#dz-" + this.props.baseID,
       parallelUploads: 100,
       maxFiles: (this.props.multifileUpload ? 100 : 1),
+      maxFilesize: 25, // MB
+      filesizeBase: 1000,
+      dictFileTooBig: "File is too big ({{filesize}}MB). Max filesize: {{maxFilesize}}MB.",
       dictRemoveFile: "Cancel Upload",
       someprop: "prop",
       complete: this.completeCallback,
@@ -62,6 +65,12 @@ var DropzoneForm = React.createClass({
   },
 
   startedCallback: function() {
+    var shouldAlert = this.dropzone.files.some(function (file) {
+      return file.size >= 10000000 && file.size < 25000000 // > 10MB and < max file size (25MB)
+    });
+    if (shouldAlert) {
+      alert("Images larger than 10MB can have issues processing. If the image does not show after several minutes, you may need to try reuploading or shrinking the image.");
+    }
     if (this.props.startedCallback) {
       this.props.startedCallback(this.dropzone);
     }
