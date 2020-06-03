@@ -9,10 +9,6 @@ test:
   <<: *default
   port: 8981
   path: /solr/test
-pre_production:
-  <<: *default
-  port: 8080
-  path: /solr/honeycomb
 prep:
   <<: *default
   port: 8080

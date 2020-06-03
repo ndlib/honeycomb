@@ -203,12 +203,6 @@ production:
   license_key: '169164c18729decf16d07b4c1ad20e1d3418112d'
   app_name: Honeycomb
 
-pre_production:
-  <<: *default_settings
-  monitor_mode: true
-  license_key: '348cd858122b9ebabab148e3a220cc8346629faa'
-  app_name: Honeycomb (pprd)
-
 prep:
   <<: *default_settings
   monitor_mode: true

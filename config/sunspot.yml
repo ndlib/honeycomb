@@ -12,15 +12,6 @@ test:
     log_level: INFO
     path: /solr/test
 
-pre_production:
-  solr:
-    hostname: localhost
-    port: 8080
-    log_level: WARNING
-    path: /solr/honeycomb
-    # read_timeout: 2
-    # open_timeout: 0.5
-
 prep:
   solr:
     hostname: localhost
