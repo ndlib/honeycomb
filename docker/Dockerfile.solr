@@ -1,0 +1,22 @@
+FROM solr:6.3.0-slim
+
+# RUN wget http://archive.apache.org/dist/lucene/solr/4.10.4/solr-4.10.4.zip
+
+# RUN unzip -d . -qo solr-4.10.4.zip
+
+# RUN rm solr-4.10.4.zip
+
+COPY solr/solr.xml /var/solr/solr.xml
+# COPY solr/configsets/honeycomb/conf/ /var/solr/development-core/conf/ 
+# COPY solr/configsets/honeycomb/conf/ /var/solr/test-core/conf/
+COPY solr/configsets/honeycomb /opt/solr/server/solr/configsets/honeycomb 
+
+# RUN mkdir /var/solr/development-core/lib && mkdir /var/solr/test-core/lib
+# RUN cd /var/solr/development-core/lib && wget https://repo1.maven.org/maven2/com/ibm/icu/icu4j/59.1/icu4j-59.1.jar && wget https://repo1.maven.org/maven2/org/apache/lucene/lucene-analyzers-icu/4.10.4/lucene-analyzers-icu-4.10.4.jar
+# RUN cd /var/solr/test-core/lib && wget https://repo1.maven.org/maven2/com/ibm/icu/icu4j/59.1/icu4j-59.1.jar && wget https://repo1.maven.org/maven2/org/apache/lucene/lucene-analyzers-icu/4.10.4/lucene-analyzers-icu-4.10.4.jar
+
+
+#RUN chown solr /opt/solr/example/solr/solr.xml && chown -R solr /opt/solr/example/solr/development-core/ && chown -R solr /opt/solr/example/solr/test-core/
+
+# ENV SOLR_HOME /solr-4.10.4
+# WORKDIR /solr-4.10.4
