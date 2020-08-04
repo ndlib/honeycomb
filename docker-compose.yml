@@ -7,6 +7,7 @@ services:
     ports:
       - "5432:5432"
     environment:
+      POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
   rails:
     build:
@@ -45,6 +46,3 @@ services:
       dockerfile: docker/Dockerfile.solr
     ports:
       - "8983:8983"
-    command: 
-      - solr-precreate
-      - honeycomb
