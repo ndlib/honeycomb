@@ -14,12 +14,13 @@
   "awetheri",
   "jgondron",
   "lrobins5",
-  "mkirkpa2"
+  "mkirkpa2",
+  "ialford"
 ].each do |username|
   u = User.where(username: username).first || User.new(username: username)
   u.admin = true
   u.save!
 end
 
-brood = Brood::Repo.new(github: "ndlib/honeycomb-brood")
+brood = Brood::Repo.new(github: "ialford/honeycomb-brood")
 brood.grow!

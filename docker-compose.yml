@@ -1,5 +1,4 @@
-# To start Solr and MySQL as background daemon: docker-compose up -d
-# To also start up the rails app as background daemon: docker-compose -f docker-compose.yml -f docker-compose-rails.yml up -d
+# To also start up the environment as a background daemon: docker-compose up -d
 # Both of the above commands run from the root of the repository
 version: '3.2'
 services:
@@ -9,12 +8,6 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
-    # volumes:
-    #   - ./docker/mysql-utf8.cnf:/etc/mysql/conf.d/mysql-utf8.cnf
-    # healthcheck:
-    #     interval: 30s
-    #     timeout: 10s
-    #     retries: 5
   rails:
     build:
       context: .
@@ -29,13 +22,20 @@ services:
       SOLR_URL: http://solr:8983/solr
       SOLR_HOST: solr
       SOLR_PORT: 8983
+      OKTA_CLIENT_ID: ${OKTA_CLIENT_ID}
+      OKTA_CLIENT_SECRET: ${OKTA_CLIENT_SECRET}
+      OKTA_REDIRECT_URL: ${OKTA_REDIRECT_URL}
+      OKTA_BASE_URL: ${OKTA_BASE_URL}
+      OKTA_LOGOUT_URL: ${OKTA_LOGOUT_URL}
+      OKTA_AUTH_ID: ${OKTA_AUTH_ID}
       # Need to pass the user running docker into the container so that
       # config/admin_usernames.yml pulls in the user as an admin. This is
       # to replicate existing behavior on OSX and may not work correctly on
       # another OS
-      USER: #{USER}
+      USER: ${USER}
     ports:
       - "3000:3000"
+      - "3018:3018"
     depends_on:
       - postgres
       - solr
@@ -45,7 +45,6 @@ services:
       dockerfile: docker/Dockerfile.solr
     ports:
       - "8983:8983"
-    # command: ["solr", "start", "-p", "8983", "-s", "/var/solr", "-f"]
     command: 
       - solr-precreate
       - honeycomb

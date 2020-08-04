@@ -12,12 +12,16 @@ cp /bundle/Gemfile.lock ./
 chmod u+x docker/wait-for-it.sh && bash docker/wait-for-it.sh -t 120 ${DB_HOST}:5432
 bash docker/wait-for-it.sh -t 120 ${SOLR_HOST}:8983
 
-# In production we'll be using a persistant database, but not a solr instance,
-# so reindex everything on start
-# bundle exec rake solr:index:all
+bundle exec rake assets:precompile
+
+### Run setup on the fresh database
+bundle exec rake db:setup RAILS_ENV=development
+
+### Seed the development DB, if we're in development
+# bundle exec rake db:seed RAILS_ENV=development
 
 ### Uncomment below for development ###
-exec bundle exec rails s -e development -b 0.0.0.0 
+SSL=true exec bundle exec rails s -e development -b 0.0.0.0 -p 3000
 
 ### Uncomment out below for production ###
 # exec bundle exec rails s -b 0.0.0.0
