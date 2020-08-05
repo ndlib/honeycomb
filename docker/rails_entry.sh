@@ -17,9 +17,6 @@ bundle exec rake assets:precompile
 ### Run setup on the fresh database
 bundle exec rake db:setup RAILS_ENV=development
 
-### Seed the development DB, if we're in development
-# bundle exec rake db:seed RAILS_ENV=development
-
 ### Uncomment below for development ###
 SSL=true exec bundle exec rails s -e development -b 0.0.0.0 -p 3000
 
