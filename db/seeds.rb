@@ -22,5 +22,5 @@
   u.save!
 end
 
-brood = Brood::Repo.new(github: "ialford/honeycomb-brood")
+brood = Brood::Repo.new(github: "ndlib/honeycomb-brood")
 brood.grow!
