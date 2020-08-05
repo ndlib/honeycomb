@@ -36,7 +36,6 @@ services:
       USER: ${USER}
     ports:
       - "3000:3000"
-      - "3018:3018"
     depends_on:
       - postgres
       - solr
