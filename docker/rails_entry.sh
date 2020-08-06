@@ -12,11 +12,6 @@ cp /bundle/Gemfile.lock ./
 chmod u+x docker/wait-for-it.sh && bash docker/wait-for-it.sh -t 120 ${DB_HOST}:5432
 bash docker/wait-for-it.sh -t 120 ${SOLR_HOST}:8983
 
-bundle exec rake assets:precompile
-
-### Run setup on the fresh database
-bundle exec rake db:setup RAILS_ENV=development
-
 ### Uncomment below for development ###
 SSL=true exec bundle exec rails s -e development -b 0.0.0.0 -p 3000
 
