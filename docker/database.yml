@@ -1,0 +1,29 @@
+##########################################
+# Shared settings
+##########################################
+
+postgres_settings: &postgres_settings
+  adapter: postgresql
+  pool:    5
+  timeout: 5000
+  encoding: utf8
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
+  database: <%= ENV['DB_NAME'] %>
+  host: <%= ENV['DB_HOST'] %>
+  port: 5432
+
+development:
+  <<: *postgres_settings
+
+test:
+  <<: *postgres_settings
+
+pre_production:
+  <<: *postgres_settings
+
+production:
+  <<: *postgres_settings
+
+cucumber:
+  <<: *postgres_settings

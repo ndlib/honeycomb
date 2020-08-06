@@ -1,0 +1,47 @@
+# To also start up the environment as a background daemon: docker-compose up -d
+# Both of the above commands run from the root of the repository
+version: '3.2'
+services:
+  postgres:
+    image: postgres:9.5.4
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+  rails:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.rails
+    command: bash docker/rails_entry.sh
+    environment:
+      RAILS_ENV: development
+      DB_HOST: postgres
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      SOLR_URL: http://solr:8983/solr
+      SOLR_HOST: solr
+      SOLR_PORT: 8983
+      OKTA_CLIENT_ID: ${OKTA_CLIENT_ID}
+      OKTA_CLIENT_SECRET: ${OKTA_CLIENT_SECRET}
+      OKTA_REDIRECT_URL: ${OKTA_REDIRECT_URL}
+      OKTA_BASE_URL: ${OKTA_BASE_URL}
+      OKTA_LOGOUT_URL: ${OKTA_LOGOUT_URL}
+      OKTA_AUTH_ID: ${OKTA_AUTH_ID}
+      # Need to pass the user running docker into the container so that
+      # config/admin_usernames.yml pulls in the user as an admin. This is
+      # to replicate existing behavior on OSX and may not work correctly on
+      # another OS
+      USER: ${USER}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - solr
+  solr:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.solr
+    ports:
+      - "8983:8983"
