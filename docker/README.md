@@ -31,6 +31,18 @@ Solr should finish next, leveraging the schema files located in `solr/` to creat
 
 Ruby/Rails will be the last service to start, as it is dependent on the other two services being available.
 
+### Development
+
+_Note: the commands to finish the development environment will create a fresh database from seed data. This is a potentially destructive action with the wrong environment variables. Developers should ensure they are not pointing at a database that they wish to persist._
+
+To finish the development environment, additional commands will need to be run as follows:
+
+```console
+docker-compose exec rails bundle exec rake assets:precompile
+docker-compose exec rails bundle exec rake db:setup RAILS_ENV=development
+open https://localhost:3000
+```
+
 * Rails will add the local Docker network to allowed hosts within the application. Without this step, you will be unable to access the webapp.
 * Rails will precompile assets for the development environment.
 * Rails will seed data into the database via the `db:setup` rake task. The Solr index will be built as the database is seeded. Currently, two collections will be built: `Pretty Animals` and `Places and Monuments`. The other collections in the seed repository error as of 2020-08-05.
