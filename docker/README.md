@@ -48,6 +48,28 @@ open https://localhost:3000
 * Rails will seed data into the database via the `db:setup` rake task. The Solr index will be built as the database is seeded. Currently, two collections will be built: `Pretty Animals` and `Places and Monuments`. The other collections in the seed repository error as of 2020-08-05.
 * The webapp will start over SSL - once done, you can access the webapp at `https://localhost:3000`.
 
+### Running Unit Tests
+
+As a developer is working on application changes, you may wish to run unit tests prior to commiting code. The commands under [development](#development) do not need to be run in order to tun the unit test suite. To run unit tests within the built Docker environment, the following commands can be run:
+
+```console
+docker-compose exec rails bundle exec rake --trace db:migrate test RAILS_ENV=test
+```
+
+The environment will now be prepared for running unit tests, which can be done as follows:
+
+```console
+docker-compose exec rails bundle exec rspec spec
+```
+
+The output of the unit tests will be visible in the terminal window. If you would like to output the `rspec` output to a file, it could be done with a command similar to the following:
+
+```console
+docker-compose exec rails bundle exec rspec spec > ~/rspec_honeycomb_ruby2_4.txt
+```
+
 ## Terminating the Environment
 
-To terminate the container environment, press Control-C (on a Mac/Linux machine). There are additional commands to reclaim local space that could be run on the local machine. These should be run at the developers' own risk. Instructions can be found [here](http://jimhoskins.com/2013/07/27/remove-untagged-docker-images.html).
+To terminate the container environment, press Control-C (on a Mac/Linux machine) in the Terminal window where you originally ran your `docker-compose up --build` command.
+
+There are additional commands to reclaim local space that could be run on the local machine. These should be run at the developers' own risk. Instructions can be found [here](http://jimhoskins.com/2013/07/27/remove-untagged-docker-images.html).
