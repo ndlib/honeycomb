@@ -50,7 +50,7 @@ open https://localhost:3000
 
 ### Running Unit Tests
 
-As a developer is working on application changes, you may wish to run unit tests prior to commiting code. The commands under [development](#development) do not need to be run in order to tun the unit test suite. To run unit tests within the built Docker environment, the following commands can be run:
+As a developer is working on application changes, you may wish to run unit tests prior to commiting code. The commands under [development](#development) do not need to be run in order to run the unit test suite. The container first needs to be restarted after modifying the docker-compose.yml and changed the RAILS_ENV to "test". To run unit tests within the built Docker environment, the following commands can be run:
 
 ```console
 docker-compose exec rails bundle exec rake --trace db:migrate test RAILS_ENV=test

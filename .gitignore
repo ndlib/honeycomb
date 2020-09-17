@@ -50,3 +50,6 @@ config/hesburgh_api.yml
 
 # Ignore junk
 .DS_Store
+
+# Ignore docker ENV setup
+/docker/set_env.sh
