@@ -3,3 +3,5 @@ FROM solr:6.3-slim
 COPY solr/core.properties /opt/solr/server/solr/core.properties
 COPY solr/solr.xml /opt/solr/server/solr/solr.xml
 COPY solr/configsets/honeycomb /opt/solr/server/solr/configsets/honeycomb
+
+COPY docker/solr_aws_precreate.sh /docker-entrypoint-initdb.d/solr_aws_precreate.sh
