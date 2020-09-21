@@ -10,7 +10,7 @@
     "es6-promise": "^3.1.2",
     "eventemitter": "0.3.3",
     "flux": "2.1.1",
-    "jquery": "2.2.0",
+    "jquery": "3.5.0",
     "keymirror": "0.1.1",
     "material-ui": "^0.13.4",
     "object-assign": "3.0.0",
