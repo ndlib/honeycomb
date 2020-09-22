@@ -1,0 +1,23 @@
+# To also start up the environment as a background daemon: docker-compose up -d
+# Both of the above commands run from the root of the repository
+version: '3.2'
+services:
+  rails:
+    environment:
+      RAILS_ENV: production
+      RAILS_LOG_TO_STOUT: "true"
+    volumes: 
+      - static-content:/project_root/public/assets
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.nginx
+    command: bash project_root/nginx_entry.sh
+    environment: 
+      RAILS_HOST: rails
+    ports:
+      - "80:80"
+    volumes:
+      - static-content:/project_root/assets
+volumes:
+  static-content:
