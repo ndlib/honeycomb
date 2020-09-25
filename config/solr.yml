@@ -7,7 +7,7 @@ development:
   path: /solr/honeycomb
 test:
   <<: *default
-  port: 8981
+  port: 8983
   path: /solr/test
 prep:
   <<: *default

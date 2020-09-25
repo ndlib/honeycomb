@@ -16,11 +16,8 @@ RSpec.describe Index::Item do
 
     it "rescues from and notifies about errors" do
       expect(Waggle).to receive(:index!).and_raise(Errno::ECONNREFUSED)
-      expect(NotifyError).to receive(:call).with(
+      expect(Raven).to receive(:capture_exception).with(
         exception: kind_of(Errno::ECONNREFUSED),
-        parameters: { item: item },
-        component: described_class.to_s,
-        action: "index!"
       )
       expect(subject).to be_nil
     end
@@ -40,11 +37,8 @@ RSpec.describe Index::Item do
 
     it "rescues from and notifies about errors" do
       expect(Waggle).to receive(:remove!).and_raise(Errno::ECONNREFUSED)
-      expect(NotifyError).to receive(:call).with(
+      expect(Raven).to receive(:capture_exception).with(
         exception: kind_of(Errno::ECONNREFUSED),
-        parameters: { item: item },
-        component: described_class.to_s,
-        action: "remove!"
       )
       expect(subject).to be_nil
     end

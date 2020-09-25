@@ -32,7 +32,7 @@ module Index
     private_class_method :item_to_waggle_item
 
     def self.notify_error(exception:, item:, action:)
-      NotifyError.call(exception: exception, parameters: { item: item }, component: to_s, action: action)
+      Raven.capture_exception(exception)
       if Rails.env.development?
         raise exception
       end

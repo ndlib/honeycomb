@@ -21,7 +21,7 @@ RSpec.describe Waggle::Adapters::Solr::Session do
 
     it "builds an RSolr client" do
       expect(RSolr).to receive(:connect).with(
-        url: "http://localhost:8981/solr/test",
+        url: "http://localhost:8983/solr/test",
         read_timeout: nil,
         open_timeout: nil,
       ).and_call_original

@@ -61,9 +61,9 @@ group :application do
 
   # Background processing
   gem "sneakers"
-  
-  # For Errbit
-  gem "airbrake"
+
+  # For Sentry
+  gem "sentry-raven"
 
   # Javascript assets
   # Use Uglifier as compressor for JavaScript assets
@@ -153,8 +153,7 @@ group :deployment do
   gem "capistrano-rails", "~> 1.1"
   gem "capistrano-npm"
   gem "newrelic_rpm"
-  # For Errbit
-  gem "airbrake"
+  gem "sentry-raven"
 end
 
 # Use debugger
