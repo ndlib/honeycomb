@@ -10,7 +10,7 @@ module ErrorHelper
   def catch_500(exception = nil)
     @masquerading_user = determine_masquerade
     if exception.present?
-      env["airbrake.error_id"] = notify_airbrake(exception)
+      Raven.capture_exception(exception)
       logger.error exception.message
       logger.error Rails.backtrace_cleaner.clean(exception.backtrace).join("\n")
     end

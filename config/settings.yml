@@ -6,7 +6,7 @@ defaults: &defaults
 
 local: &local
   <<: *defaults
-  image_server_url: https://honeypot.library.nd.edu
+  image_server_url: 'https://honeypot.library.nd.edu'
   beehive_url: 'https://localhost:3018'
   media_server_url: 'http://localhost:3023'
   aws:

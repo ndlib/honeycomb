@@ -13,7 +13,7 @@ class MapUserToApi
     map_attributes
     user
   rescue StandardError => exception
-    notify_error(exception)
+    Raven.capture_exception(exception)
     user
   end
 
@@ -54,9 +54,5 @@ class MapUserToApi
 
   def fetch(key, default = nil)
     api_attributes.fetch(key.to_s, default)
-  end
-
-  def notify_error(exception)
-    NotifyError.call(exception: exception, parameters: { username: user.username }, component: self.class.to_s, action: "map!")
   end
 end

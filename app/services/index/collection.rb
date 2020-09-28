@@ -29,7 +29,7 @@ module Index
     end
 
     def self.notify_error(exception:, collection:, action:)
-      NotifyError.call(exception: exception, parameters: { collection: collection }, component: to_s, action: action)
+      Raven.capture_exception(exception)
       fail exception if Rails.env.development?
     end
     private_class_method :notify_error

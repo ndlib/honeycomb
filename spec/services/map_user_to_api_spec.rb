@@ -23,9 +23,9 @@ describe MapUserToApi do
     subject
   end
 
-  it "does not raise an exception if one is encountered and notifies via NotifyError" do
+  it "does not raise an exception if one is encountered and notifies Sentry" do
     expect(HesburghAPI::PersonSearch).to receive(:find).with(user.username).and_raise("error encountered")
-    expect(NotifyError).to receive(:call).and_call_original
+    expect(Raven).to receive(:capture_exception).and_call_original
     subject
   end
 
