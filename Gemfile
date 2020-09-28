@@ -113,7 +113,7 @@ group :development, :test do
   gem "faker"
   gem "spring"
   gem "spring-commands-rspec"
-  gem "rake", "< 11"
+  gem "rake", "< 13"
 
   gem "quiet_assets"
 
