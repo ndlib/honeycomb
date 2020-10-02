@@ -3,5 +3,4 @@
 sed -i "s;\${RAILS_HOST};$RAILS_HOST;g" /etc/nginx/conf.d/default.conf
 
 bash /project_root/wait-for-it.sh -t 120 --strict ${RAILS_HOST}:3000
-
 exec nginx -g 'daemon off;'

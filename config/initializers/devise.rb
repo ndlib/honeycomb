@@ -4,24 +4,32 @@
 require 'omniauth-oktaoauth'
 
 Devise.setup do |config|
-
-  # Okta
-  require 'omniauth-oktaoauth'
-  okta_issuer = Rails.application.secrets.okta['base_auth_url'] + Rails.application.secrets.okta['auth_server_id']
-  config.omniauth(:oktaoauth,
-                  Rails.application.secrets.okta["client_id"],
-                  Rails.application.secrets.okta["client_secret"],
-                  :scope => 'openid profile email netid',
-                  :fields => ['profile', 'email', 'netid'],
-                  :client_options => {
-                    site: okta_issuer,
-                    authorize_url: okta_issuer + "/v1/authorize",
-                    token_url: okta_issuer + "/v1/token",
-                  },
-                  :redirect_uri => Rails.application.secrets.okta["redirect_url"],
-                  :auth_server_id => Rails.application.secrets.okta["auth_server_id"],
-                  :issuer => okta_issuer,
-                  :strategy_class => OmniAuth::Strategies::Oktaoauth)
+  # I cannot seem to get this initializer to be ignored when precompiling assets.
+  # Have to add a specific env when precompiling so that it will just use a dummy
+  # secret key and skip the omniauth stuff since we won't have those secret values
+  if ENV['ASSET_PRECOMPILE'].present?
+    config.secret_key = 'e08359113980fceb3b62152286866deac83789900db39acd16712910259d904089a53ebebf614db39844ddd467f004ae426424095083b447d9173c0ee6041de2'
+  else
+    # Okta
+    require 'omniauth-oktaoauth'
+    okta_secrets = Rails.application.secrets.okta
+    raise StandardError, "Not all okta secrets are present." unless okta_secrets.values.all?(&:present?)
+    okta_issuer = okta_secrets['base_auth_url'] + okta_secrets['auth_server_id']
+    config.omniauth(:oktaoauth,
+                    okta_secrets["client_id"],
+                    okta_secrets["client_secret"],
+                    :scope => 'openid profile email netid',
+                    :fields => ['profile', 'email', 'netid'],
+                    :client_options => {
+                      site: okta_issuer,
+                      authorize_url: okta_issuer + "/v1/authorize",
+                      token_url: okta_issuer + "/v1/token",
+                    },
+                    :redirect_uri => okta_secrets["redirect_url"],
+                    :auth_server_id => okta_secrets["auth_server_id"],
+                    :issuer => okta_issuer,
+                    :strategy_class => OmniAuth::Strategies::Oktaoauth)
+  end
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,

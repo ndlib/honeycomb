@@ -8,6 +8,6 @@ Sneakers.configure(
   exchange: "honeycomb",
   exchange_type: "topic",
   durable: true,
-  log: "log/sneakers.log",
+  log: ENV["RAILS_LOG_TO_STDOUT"].present? ? STDOUT : "log/sneakers.log",
 )
-Sneakers.logger.level = Logger::INFO
+Sneakers.logger.level = Logger::WARN

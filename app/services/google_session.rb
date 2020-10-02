@@ -1,15 +1,19 @@
 require "google/api_client"
 require "google_drive"
+require "google_drive/session"
 
 class GoogleSession
-  attr_reader :auth, :session
+  attr_reader :auth, :session, :client
 
   # rubocop:disable Metrics/AbcSize
   # All options to simplify this either make it less readable or
   # go against our convention of using attr readers
   def initialize(client: nil)
-    client = client || Google::APIClient.new
-    @auth = client.authorization
+    # Need to explicitly set the user agent to prevent newline characters
+    @client = client || Google::APIClient.new(application_name: 'Honeycomb',
+      application_version: '1.0',
+      user_agent: 'google_drive Ruby library/0.4.0 google-api-ruby-client (gzip)')
+    @auth = @client.authorization
     auth.client_id = Rails.application.secrets.google["client_id"]
     auth.client_secret = Rails.application.secrets.google["client_secret"]
     auth.scope = ["https://www.googleapis.com/auth/drive.file"]
@@ -30,7 +34,8 @@ class GoogleSession
     auth.redirect_uri = callback_uri
     auth.code = auth_code
     auth.fetch_access_token!
-    @session = GoogleDrive.login_with_oauth(auth.access_token)
+    client.authorization.access_token = auth.access_token
+    @session = GoogleDrive::Session.new(client)
   end
 
   # Gets a worksheet at the given file url

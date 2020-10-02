@@ -1,6 +1,6 @@
 # To also start up the environment as a background daemon: docker-compose up -d
 # Both of the above commands run from the root of the repository
-version: '3.2'
+version: '2'
 services:
   postgres:
     image: postgres:9.5.4
@@ -11,24 +11,30 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
   rails:
     build:
+      args:
+        - RAILS_ENV=development
       context: .
       dockerfile: docker/Dockerfile.rails
-    command: bash docker/rails_entry.sh
+    command: bundle exec rails s -b 0.0.0.0 -p 3000
     environment:
+      SSL: "true"
       RAILS_ENV: development
       DB_HOST: postgres
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
-      SOLR_URL: http://solr:8983/solr
       SOLR_HOST: solr
       SOLR_PORT: 8983
       OKTA_CLIENT_ID: ${OKTA_CLIENT_ID}
       OKTA_CLIENT_SECRET: ${OKTA_CLIENT_SECRET}
-      OKTA_REDIRECT_URL: ${OKTA_REDIRECT_URL}
-      OKTA_BASE_URL: ${OKTA_BASE_URL}
-      OKTA_LOGOUT_URL: ${OKTA_LOGOUT_URL}
       OKTA_AUTH_ID: ${OKTA_AUTH_ID}
+      OKTA_REDIRECT_URL: https://localhost:3000/users/auth/oktaoauth/callback
+      OKTA_BASE_URL: https://okta.nd.edu/oauth2/
+      OKTA_LOGOUT_URL: https://okta.nd.edu/
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      GOOGLE_DEVELOPER_KEY: ${GOOGLE_DEVELOPER_KEY}
+      GOOGLE_APP_ID: "${GOOGLE_APP_ID}"
       # Need to pass the user running docker into the container so that
       # config/admin_usernames.yml pulls in the user as an admin. This is
       # to replicate existing behavior on OSX and may not work correctly on
@@ -36,6 +42,8 @@ services:
       USER: ${USER}
     ports:
       - "3000:3000"
+    volumes:
+      - ./Gemfile.lock:/project_root/Gemfile.lock
     depends_on:
       - postgres
       - solr

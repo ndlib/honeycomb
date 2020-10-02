@@ -59,3 +59,5 @@ config/hesburgh_api.yml
 
 # Ignore docker ENV setup
 /docker/set_env.sh
+
+**/.env

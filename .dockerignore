@@ -1,0 +1,10 @@
+**/.env
+**/.git
+/log/*.log
+/log/*.log.*
+/tmp
+/public/system/*
+/vendor/bundle
+/ssi/*
+/coverage
+/node_modules

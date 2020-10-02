@@ -25,10 +25,10 @@ class RetryWorker < ActiveJob::QueueAdapters::SneakersAdapter::JobWrapper
   def work(*args)
     original_work(*args)
   rescue StandardError => e
-    Raven.capture_exception(e)
     logger.error e.message
     logger.error args
     logger.error e.backtrace.join("\n")
+    Raven.capture_exception(e)
     reject!
   end
 end

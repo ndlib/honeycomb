@@ -39,6 +39,7 @@ module ItemAdmin
     config.browserify_rails.commandline_options = "--transform  [ reactify --es6 ] --extension=\".jsx\""
 
     config.assets.precompile = [proc { |path| !File.extname(path).in?([".js", ".css", ".map", ".gzip", ""]) }, /(?:\/|\\|\A)application\.(css|js)$/]
+    config.assets.initialize_on_precompile = false
 
     config.active_record.raise_in_transactional_callbacks = true
 

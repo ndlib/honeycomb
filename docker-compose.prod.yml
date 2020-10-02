@@ -1,13 +1,22 @@
-# To also start up the environment as a background daemon: docker-compose up -d
-# Both of the above commands run from the root of the repository
-version: '3.2'
+# Override the default docker-compose.yml with this file to simulate the way
+# this application will be run in production.
+# Request cycle is alb:443 (terminates ssl) -> nginx:80 (static files) -> rails:3000 (non-static files)
+version: '2'
 services:
   rails:
+    build:
+      args:
+        - RAILS_ENV=production
+    command: bundle exec rails s -b 0.0.0.0
     environment:
+      SSL: "false"
       RAILS_ENV: production
-      RAILS_LOG_TO_STOUT: "true"
-    volumes: 
-      - static-content:/project_root/public/assets
+      RAILS_LOG_TO_STDOUT: "true"
+      RAILS_LOG_AUTOFLUSH: "true"
+      RAILS_LOG_LEVEL: DEBUG
+      OKTA_REDIRECT_URL: https://localhost/users/auth/oktaoauth/callback
+      # Do not use this value in actual production env
+      SECRET_KEY_BASE: e08359113980fceb3b62152286866deac83789900db39acd16712910259d904089a53ebebf614db39844ddd467f004ae426424095083b447d9173c0ee6041de2
   nginx:
     build:
       context: .
@@ -17,7 +26,16 @@ services:
       RAILS_HOST: rails
     ports:
       - "80:80"
+    volumes_from:
+      - rails:ro
+  alb:
+    command: bash /alb_entry.sh
+    image: nginx
     volumes:
-      - static-content:/project_root/assets
-volumes:
-  static-content:
+      - ./docker/alb_entry.sh:/alb_entry.sh:ro
+      - ./docker/wait-for-it.sh:/wait-for-it.sh:ro
+      - ./docker/alb.conf:/etc/nginx/nginx.conf:ro
+      - ./localhost.crt:/etc/ssl/localhost.crt:ro
+      - ./localhost.key:/etc/ssl/localhost.key:ro
+    ports:
+      - "443:443"
