@@ -14,8 +14,15 @@ module Waggle
               if value.respond_to?(:to_str)
                 value = value.to_s
                 # If day and month are missing, append them so we have a valid date
-                while value.count('-') < 2 do
-                  value = value + "-01"
+                # First, account for BC dates
+                if value.match?(/^-/)
+                  while value.count('-') < 3 do
+                    value = value + "-01"
+                  end
+                else
+                  while value.count('-') < 2 do
+                    value = value + "-01"
+                  end
                 end
                 value = ::DateTime.parse(value)
               elsif value.respond_to?(:to_datetime)
