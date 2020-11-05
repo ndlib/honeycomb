@@ -5,6 +5,12 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+# Ignore local scripts
+/bin/*
+
+# Ignore development env file
+/config/environments/development.rb
+
 # Ignore bundler config.
 /.bundle
 
