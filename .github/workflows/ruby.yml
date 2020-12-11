@@ -11,6 +11,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres
+
     steps:
     - uses: actions/checkout@v2
     - name: Setup Node.js 12
@@ -23,6 +27,7 @@ jobs:
       uses: ruby/setup-ruby@21351ecc0a7c196081abca5dc55b08f085efe09a
       with:
         ruby-version: 2.6
+        bundler-cache: true
     - name: Install dependencies
       run: bundle install
     - name: Setup database
@@ -32,9 +37,16 @@ jobs:
         psql -c 'create database honeycomb_test' -U postgres
         psql -c 'create role root superuser createdb createrole inherit login replication' -U postgres
         RAILS_ENV=test bundle exec rake --trace db:migrate test
-    - name: Run Tests and publish code coverage
-      uses: paambaati/codeclimate-action@v2.7.4
+    - name: Setup Code Climate test-reporter
+      run: |
+        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        chmod +x ./cc-test-reporter
+        ./cc-test-reporter before-build
+    - name: Run tests
+      run: bundle exec rspec spec
+    - name: Publish code coverage
       env:
         CC_TEST_REPORTER_ID: d27c5b84a9b2ca09b11fbed190cdd93fcbe2a5a21fd19283a5ebebad4e2552be
-      with:
-        coverageCommand: bundle exec rspec spec
+      run: |
+        export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
+        ./cc-test-reporter after-build -r ${CC_TEST_REPORTER_ID}
