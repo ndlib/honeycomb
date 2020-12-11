@@ -36,11 +36,12 @@ jobs:
     - name: Bundler install
       run: bundle install --jobs 4 --retry 3
     - name: Setup database
-    - run: cp config/secrets.example.yml config/secrets.yml
-    - run: cp config/database_example.yml config/database.yml
-    - run: psql -c 'create database honeycomb_test' -U postgres
-    - run: psql -c 'create role root superuser createdb createrole inherit login replication' -U postgres
-    - run: bundle exec rake --trace db:migrate test
+      run: |
+        cp config/secrets.example.yml config/secrets.yml
+        cp config/database_example.yml config/database.yml
+        psql -c 'create database honeycomb_test' -U postgres
+        psql -c 'create role root superuser createdb createrole inherit login replication' -U postgres
+        bundle exec rake --trace db:migrate test
     - name: Setup Code Climate test-reporter
       run: |
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
