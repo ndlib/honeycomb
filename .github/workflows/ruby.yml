@@ -43,6 +43,13 @@ jobs:
     - name: Bundler install
       run: bundle install --jobs 4 --retry 3
     - name: Setup database
+      env:
+        RAILS_ENV: test
+        POSTGRES_HOST: localhost
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        PGPASSWORD: postgres
+        POSTGRES_PORT: 5432
       run: |
         cp config/secrets.example.yml config/secrets.yml
         cp config/database_example.yml config/database.yml
