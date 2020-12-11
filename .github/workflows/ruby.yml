@@ -10,7 +10,7 @@ jobs:
   test:
     env:
       RAILS_ENV: test
-      POSTGRES_HOST: postgres
+      POSTGRES_HOST: localhost
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_PORT: 5432
@@ -38,17 +38,11 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@21351ecc0a7c196081abca5dc55b08f085efe09a
       with:
-        ruby-version: 2.6
+        ruby-version: 2.7.2
         bundler-cache: true
     - name: Bundler install
       run: bundle install --jobs 4 --retry 3
     - name: Setup database
-      env:
-        RAILS_ENV: test
-        POSTGRES_HOST: postgres
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
-        POSTGRES_PORT: 5432
       run: |
         cp config/secrets.example.yml config/secrets.yml
         cp config/database_example.yml config/database.yml
