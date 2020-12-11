@@ -48,8 +48,8 @@ jobs:
       run: |
         cp config/secrets.example.yml config/secrets.yml
         cp config/database_example.yml config/database.yml
-        psql -c 'create database honeycomb_test' -U postgres
-        psql -c 'create role root superuser createdb createrole inherit login replication' -U postgres -d honeycomb_test
+        psql -c 'create database honeycomb_test'
+        psql -c 'create role root superuser createdb createrole inherit login replication' -d honeycomb_test
         bundle exec rake --trace db:migrate test
     - name: Setup Code Climate test-reporter
       run: |
