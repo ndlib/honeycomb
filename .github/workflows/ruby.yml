@@ -19,7 +19,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:11.6-alpine
+        image: postgres:13
         ports:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
@@ -40,11 +40,15 @@ jobs:
       with:
         ruby-version: 2.6
         bundler-cache: true
-    - name: Install required apt packages
-      run: sudo apt-get -y install libpq-dev
     - name: Bundler install
       run: bundle install --jobs 4 --retry 3
     - name: Setup database
+      env:
+        RAILS_ENV: test
+        POSTGRES_HOST: localhost
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: postgres
+        POSTGRES_PORT: 5432
       run: |
         cp config/secrets.example.yml config/secrets.yml
         cp config/database_example.yml config/database.yml
