@@ -8,12 +8,19 @@ on:
 
 jobs:
   test:
+    env:
+      RAILS_ENV: test
 
     runs-on: ubuntu-latest
 
     services:
       postgres:
         image: postgres
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: 
 
     steps:
     - uses: actions/checkout@v2
@@ -28,15 +35,15 @@ jobs:
       with:
         ruby-version: 2.6
         bundler-cache: true
-    - name: Install dependencies
-      run: bundle install
+    - name: Bundler install
+      run: bundle install --jobs 4 --retry 3
     - name: Setup database
       run: |
         cp config/secrets.example.yml config/secrets.yml
         cp config/database_example.yml config/database.yml
         psql -c 'create database honeycomb_test' -U postgres
         psql -c 'create role root superuser createdb createrole inherit login replication' -U postgres
-        RAILS_ENV=test bundle exec rake --trace db:migrate test
+        bundle exec rake --trace db:migrate test
     - name: Setup Code Climate test-reporter
       run: |
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
@@ -44,6 +51,8 @@ jobs:
         ./cc-test-reporter before-build
     - name: Run tests
       run: bundle exec rspec spec
+      env:
+        COVERAGE: true
     - name: Publish code coverage
       env:
         CC_TEST_REPORTER_ID: d27c5b84a9b2ca09b11fbed190cdd93fcbe2a5a21fd19283a5ebebad4e2552be
