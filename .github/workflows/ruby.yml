@@ -11,6 +11,7 @@ jobs:
     env:
       RAILS_ENV: test
       POSTGRES_HOST: localhost
+      POSTGRES_DATABASE: honeycomb_test
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_PORT: 5432
@@ -46,9 +47,9 @@ jobs:
       env:
         RAILS_ENV: test
         PGHOST: localhost
+        PGDATABASE: honeycomb_test
         PGUSER: postgres
         PGPASSWORD: postgres
-        PGDATABASE: honeycomb_test
         PGPORT: 5432
       run: |
         cp config/secrets.example.yml config/secrets.yml
