@@ -10,6 +10,9 @@ jobs:
   test:
     env:
       RAILS_ENV: test
+      POSTGRES_HOST: localhost
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
 
     runs-on: ubuntu-latest
 
@@ -20,7 +23,6 @@ jobs:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
         env:
-          POSTGRES_HOST: postgres
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
 
@@ -40,8 +42,6 @@ jobs:
     - name: Bundler install
       run: bundle install --jobs 4 --retry 3
     - name: Setup database
-      env:
-        POSTGRES_HOST: postgres
       run: |
         cp config/secrets.example.yml config/secrets.yml
         cp config/database_example.yml config/database.yml
