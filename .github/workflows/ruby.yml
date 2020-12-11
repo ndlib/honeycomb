@@ -45,11 +45,11 @@ jobs:
     - name: Setup database
       env:
         RAILS_ENV: test
-        POSTGRES_HOST: localhost
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: postgres
+        PGHOST: localhost
+        PGUSER: postgres
         PGPASSWORD: postgres
-        POSTGRES_PORT: 5432
+        PGDATABASE: honeycomb_test
+        PGPORT: 5432
       run: |
         cp config/secrets.example.yml config/secrets.yml
         cp config/database_example.yml config/database.yml
