@@ -41,8 +41,7 @@ jobs:
         ruby-version: 2.6
         bundler-cache: true
     - name: Install required apt packages
-    run: |
-      sudo apt-get -y install libpq-dev
+      run: sudo apt-get -y install libpq-dev
     - name: Bundler install
       run: bundle install --jobs 4 --retry 3
     - name: Setup database
