@@ -41,8 +41,10 @@ jobs:
     - name: Setup database
       env:
         RAILS_ENV: test
+        PGHOST: localhost
         PGUSER: postgres
         PGPASSWORD: postgres
+        PGPORT: 5432
       run: |
         cp config/secrets.example.yml config/secrets.yml
         cp config/database_example.yml config/database.yml
