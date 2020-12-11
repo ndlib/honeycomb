@@ -11,7 +11,6 @@ jobs:
     env:
       RAILS_ENV: test
       POSTGRES_HOST: localhost
-      POSTGRES_DATABASE: honeycomb_test
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_PORT: 5432
@@ -47,7 +46,6 @@ jobs:
       env:
         RAILS_ENV: test
         PGHOST: localhost
-        PGDATABASE: honeycomb_test
         PGUSER: postgres
         PGPASSWORD: postgres
         PGPORT: 5432
@@ -55,7 +53,7 @@ jobs:
         cp config/secrets.example.yml config/secrets.yml
         cp config/database_example.yml config/database.yml
         psql -c 'create database honeycomb_test' -U postgres
-        psql -c 'create role root superuser createdb createrole inherit login replication' -U postgres
+        psql -c 'create role root superuser createdb createrole inherit login replication' -U postgres -d honeycomb_test
         bundle exec rake --trace db:migrate test
     - name: Setup Code Climate test-reporter
       run: |
