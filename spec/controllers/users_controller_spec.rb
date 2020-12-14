@@ -2,7 +2,7 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe UsersController, type: :controller do
-  let(:user) { instance_double(User, id: 100, username: "username", collection_users: [], destroy!: true) }
+  let(:user) { instance_double(User, id: 101, username: "username", collection_users: [], destroy!: true) }
   let(:admin_user) { double(User, id: 99, username: "dwolfe2", admin?: true) }
   let(:users) { [user] }
   let(:relation) { User.all }
@@ -56,7 +56,7 @@ RSpec.describe UsersController, type: :controller do
     end
 
     it "on success, redirects, and flashes " do
-      delete :destroy, id: 100
+      delete :destroy, id: 101
       expect(response).to be_redirect
       expect(flash[:notice]).to_not be_nil
     end
@@ -70,69 +70,69 @@ RSpec.describe UsersController, type: :controller do
       before do
         allow(user).to receive(:destroy).and_return(true)
       end
-      subject { delete :destroy, id: 100 }
+      subject { delete :destroy, id: 101 }
     end
   end
 
   describe "GET #edit" do
     it "returns a 200" do
-      get :edit, id: 100
+      get :edit, id: 101
       expect(response).to be_success
       expect(response).to have_http_status(200)
       expect(response).to render_template("edit")
     end
 
     it "finds an existing user " do
-      expect(User).to receive(:find).with("100").and_return(user)
-      get :edit, id: 100
+      expect(User).to receive(:find).with("101").and_return(user)
+      get :edit, id: 101
     end
 
     it_behaves_like "a private content-based etag cacher" do
-      subject { get :edit, id: 100 }
+      subject { get :edit, id: 101 }
     end
   end
 
   describe "GET #show" do
     it "returns a 200" do
-      get :show, id: 100
+      get :show, id: 101
       expect(response).to be_success
       expect(response).to have_http_status(200)
       expect(response).to render_template("show")
     end
 
     it "finds an existing user " do
-      expect(User).to receive(:find).with("100").and_return(user)
-      get :show, id: 100
+      expect(User).to receive(:find).with("101").and_return(user)
+      get :show, id: 101
     end
 
     it_behaves_like "a private content-based etag cacher" do
-      subject { get :show, id: 100 }
+      subject { get :show, id: 101 }
     end
   end
 
   describe "PUT #update" do
     before(:each) do
-      expect(User).to receive(:find).with("100").and_return(user)
+      expect(User).to receive(:find).with("101").and_return(user)
       expect(user).to receive(:save)
     end
 
     it "redirects on save" do
-      put :update, id: 100
+      put :update, id: 101
       expect(response).to be_redirect
     end
 
     it "finds an existing user " do
-      put :update, id: 100
+      put :update, id: 101
     end
 
     it_behaves_like "a private content-based etag cacher" do
-      subject { put :update, id: 100 }
+      subject { put :update, id: 101 }
     end
   end
 
   describe "PUT #revoke_admin" do
     it "sets the admin to false and redirects to user path" do
-      expect(User).to receive(:find).with("100").and_return(user)
+      expect(User).to receive(:find).with("101").and_return(user)
       expect(RevokeAdminOnUser).to receive(:call).with(user)
       put :revoke_admin, user_id: user.id
       expect(flash[:notice]).to_not be_nil
@@ -149,7 +149,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe "PUT #set_admin" do
     it "sets the admin to true and redirects to user path" do
-      expect(User).to receive(:find).with("100").and_return(user)
+      expect(User).to receive(:find).with("101").and_return(user)
       expect(SetAdminOnUser).to receive(:call).with(user)
       put :set_admin, user_id: user.id
       expect(flash[:notice]).to_not be_nil
