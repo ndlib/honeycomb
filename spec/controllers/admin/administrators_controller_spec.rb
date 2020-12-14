@@ -2,7 +2,7 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe Admin::AdministratorsController, type: :controller do
-  let(:user) { instance_double(User, id: 100, username: "netid") }
+  let(:user) { instance_double(User, id: 103, username: "netid") }
 
   before(:each) do
     sign_in_admin
@@ -66,7 +66,7 @@ RSpec.describe Admin::AdministratorsController, type: :controller do
 
   describe "DELETE #destroy" do
     before do
-      allow_any_instance_of(AdministratorQuery).to receive(:find).with("100").and_return(user)
+      allow_any_instance_of(AdministratorQuery).to receive(:find).with("103").and_return(user)
     end
 
     it "checks the admin permissions" do
