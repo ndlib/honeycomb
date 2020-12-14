@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe CollectionUserDecorator do
-  let(:user) { instance_double(User, display_name: "display_name", username: "username") }
+  let(:user) { instance_double(User, id: 2, display_name: "display_name", username: "username2") }
   let(:collection_user) { instance_double(CollectionUser, user_id: 1, collection_id: 2, user: user) }
   subject { described_class.new(collection_user) }
 
@@ -34,7 +34,7 @@ RSpec.describe CollectionUserDecorator do
   describe "#editor_hash" do
     it "returns a hash" do
       expect(subject.editor_hash).to be_a_kind_of(Hash)
-      expect(subject.editor_hash).to eq(id: 1, name: "display_name", username: "username", removeUrl: "/collections/2/editors/1")
+      expect(subject.editor_hash).to eq(id: 1, name: "display_name", username: "username2", removeUrl: "/collections/2/editors/1")
     end
   end
 

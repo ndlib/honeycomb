@@ -2,7 +2,7 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe UsersController, type: :controller do
-  let(:user) { instance_double(User, id: 101, username: "username", collection_users: [], destroy!: true) }
+  let(:user) { instance_double(User, id: 101, username: "username101", collection_users: [], destroy!: true) }
   let(:admin_user) { double(User, id: 99, username: "dwolfe2", admin?: true) }
   let(:users) { [user] }
   let(:relation) { User.all }
