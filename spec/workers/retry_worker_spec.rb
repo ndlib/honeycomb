@@ -41,11 +41,8 @@ RSpec.describe RetryWorker, type: :worker do
       end
 
       it "notifies on errors and rejects" do
-        error_arguments = {
-          exception: kind_of(RuntimeError)
-        }
         expect(subject).to receive(:original_work).and_raise(RuntimeError)
-        expect(Raven).to receive(:capture_exception).with(error_arguments)
+        expect(Raven).to receive(:capture_exception)
         expect(subject).to receive(:reject!).and_return(:reject)
         expect(subject.work(test: "test")).to eq(:reject)
       end

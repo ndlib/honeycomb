@@ -48,18 +48,7 @@ jobs:
         cp config/database_example.yml config/database.yml
         psql -c 'create database honeycomb_test'
         bundle exec rake --trace db:migrate test
-    - name: Setup Code Climate test-reporter
-      run: |
-        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-        chmod +x ./cc-test-reporter
-        ./cc-test-reporter before-build
     - name: Run tests
       run: bundle exec rspec spec
       env:
         COVERAGE: true
-    - name: Publish code coverage
-      env:
-        CC_TEST_REPORTER_ID: d27c5b84a9b2ca09b11fbed190cdd93fcbe2a5a21fd19283a5ebebad4e2552be
-      run: |
-        export GIT_BRANCH="${GITHUB_REF/refs\/heads\//}"
-        ./cc-test-reporter after-build -r ${CC_TEST_REPORTER_ID}
