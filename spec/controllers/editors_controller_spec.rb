@@ -3,7 +3,7 @@ require "cache_spec_helper"
 
 RSpec.describe EditorsController, type: :controller do
   let(:collection) { instance_double(Collection, id: 1, collection_users: []) }
-  let(:user) { instance_double(User, id: 100, username: "username", name: "name", display_name: "displayname") }
+  let(:user) { instance_double(User, id: 104, username: "username104", name: "name", display_name: "displayname") }
   let(:collection_user) { instance_double(CollectionUser, id: 1, user_id: user.id, collection_id: collection.id, user: user) }
 
   before(:each) do

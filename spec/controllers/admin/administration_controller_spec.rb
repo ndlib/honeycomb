@@ -2,7 +2,7 @@ require "rails_helper"
 require "cache_spec_helper"
 
 RSpec.describe Admin::AdministrationController, type: :controller do
-  let(:user) { instance_double(User, id: 100, username: "netid") }
+  let(:user) { instance_double(User, id: 102, username: "netid102") }
 
   before(:each) do
     sign_in_admin

@@ -1,6 +1,6 @@
 # Honeycomb - Collection and Item administration
 
-[![Build Status](https://travis-ci.org/ndlib/honeycomb.svg?branch=master)](https://travis-ci.org/ndlib/honeycomb)
+[![Build Status](https://github.com/ndlib/honeycomb/actions?query=workflow%3A%22Rspec+Tests+CI%22)](https://github.com/ndlib/honeycomb/workflows/Rspec%20Tests%20CI/badge.svg)
 [![Coverage Status](https://img.shields.io/coveralls/ndlib/honeycomb.svg)](https://coveralls.io/r/ndlib/honeycomb?branch=master)
 [![Code Climate](https://codeclimate.com/github/ndlib/honeycomb/badges/gpa.svg)](https://codeclimate.com/github/ndlib/honeycomb)
 

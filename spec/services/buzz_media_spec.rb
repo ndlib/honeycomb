@@ -4,7 +4,7 @@ RSpec.describe BuzzMedia do
   subject { described_class.new(media: video) }
   let(:buzz_media_id) { "aaaa-bbbb-cccc" }
   let(:media_server_json) { JSON.parse(File.read(File.join(Rails.root, "spec/fixtures/buzz_response.json"))) }
-  let(:collection) { instance_double(Collection, id: 100) }
+  let(:collection) { instance_double(Collection, id: 105) }
 
   before(:each) do
     allow(AllocateS3Url).to receive(:public_url).and_return("public url")

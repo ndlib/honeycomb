@@ -30,9 +30,7 @@ RSpec.describe Index::Collection do
 
     it "rescues from and notifies about errors" do
       expect(Waggle).to receive(:index!).and_raise(Errno::ECONNREFUSED)
-      expect(Raven).to receive(:capture_exception).with(
-        exception: kind_of(Errno::ECONNREFUSED),
-      )
+      expect(Raven).to receive(:capture_exception)
       expect(subject).to be_nil
     end
   end
@@ -63,9 +61,7 @@ RSpec.describe Index::Collection do
 
     it "rescues from and notifies about errors" do
       expect(Waggle).to receive(:remove!).and_raise(Errno::ECONNREFUSED)
-      expect(Raven).to receive(:capture_exception).with(
-        exception: kind_of(Errno::ECONNREFUSED),
-      )
+      expect(Raven).to receive(:capture_exception)
       expect(subject).to be_nil
     end
   end
