@@ -7,7 +7,7 @@ Devise.setup do |config|
   # I cannot seem to get this initializer to be ignored when precompiling assets.
   # Have to add a specific env when precompiling so that it will just use a dummy
   # secret key and skip the omniauth stuff since we won't have those secret values
-  if ENV['ASSET_PRECOMPILE'].present?
+  if ENV['ASSET_PRECOMPILE'].present? || ENV['CI'].present?
     config.secret_key = 'e08359113980fceb3b62152286866deac83789900db39acd16712910259d904089a53ebebf614db39844ddd467f004ae426424095083b447d9173c0ee6041de2'
   else
     # Okta
