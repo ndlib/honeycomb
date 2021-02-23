@@ -2,7 +2,7 @@ RSpec.describe Waggle::Adapters::Solr::Session do
   let(:instance) { described_class.new }
 
   describe "config" do
-    let(:default_config) { YAML.load_file(File.join(Rails.root, "config", "solr.yml")).fetch(Rails.env) }
+    let(:default_config) {{ "hostname"=>"solr", "port"=>8983, "path"=>"/solr/honeycomb" }}
     it "defaults to the values configured in config/solr.yml" do
       expect(subject.config).to eq(default_config)
     end
