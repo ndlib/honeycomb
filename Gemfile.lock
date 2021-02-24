@@ -160,7 +160,7 @@ GEM
       simplecov (>= 0.7)
       term-ansicolor
       thor
-    crass (1.0.3)
+    crass (1.0.6)
     dalli (2.7.4)
     debug_inspector (0.0.3)
     devise (3.4.1)
@@ -297,7 +297,7 @@ GEM
     newrelic_rpm (3.9.6.257)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
-    nokogumbo (1.4.1)
+    nokogumbo (1.5.0)
       nokogiri
     oauth (0.5.3)
     oauth2 (1.4.0)
@@ -430,10 +430,10 @@ GEM
       ruby-progressbar (~> 1.7)
     ruby-graphviz (1.2.2)
     ruby-progressbar (1.9.0)
-    sanitize (4.0.0)
+    sanitize (4.6.6)
       crass (~> 1.0.2)
       nokogiri (>= 1.4.4)
-      nokogumbo (= 1.4.1)
+      nokogumbo (~> 1.4)
     sass (3.2.19)
     sass-rails (4.0.5)
       railties (>= 4.0.0, < 5.0)
