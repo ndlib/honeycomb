@@ -1,4 +1,6 @@
 FROM ruby:2.4.10-slim
+ARG RAILS_ENV
+
 # apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AA8E81B4331F7F50 && nodejs-legacy libmysql++-dev
 RUN apt-get update -qq && apt-get install --no-install-recommends -y build-essential libpq-dev wget nodejs npm unzip libssl-dev git file imagemagick && rm -rf /var/lib/apt/lists/*
 
@@ -13,12 +15,19 @@ RUN mkdir /project_root
 WORKDIR /project_root
 COPY . /project_root
 
-# Install necessary Node modules
-RUN npm install
-
 # Gemfile.lock may have changed after bundling, copy it back into the project_root
 RUN cp /bundle/Gemfile.lock /project_root/
+
+# Install necessary Node modules
+RUN npm install
 
 COPY docker/database.yml /project_root/config/database.yml
 COPY docker/solr.yml /project_root/config/solr.yml
 COPY config/secrets.example.yml /project_root/config/secrets.yml
+COPY docker/rails_entry.sh /project_root/rails_entry.sh
+
+RUN if [ "$RAILS_ENV" = "production" ]; then ASSET_PRECOMPILE=true bundle exec rake assets:precompile; fi
+VOLUME /project_root/public
+RUN mkdir /mnt/honeycomb
+RUN mkdir -p /project_root/tmp/pids/
+ENTRYPOINT ["bash", "rails_entry.sh"]

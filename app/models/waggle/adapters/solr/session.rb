@@ -54,7 +54,10 @@ module Waggle
         end
 
         def load_configuration
-          YAML.load_file(File.join(Rails.root, "config", "solr.yml")).fetch(Rails.env)
+          path = File.join(Rails.root, "config", "solr.yml")
+          template = ERB.new(File.read(path))
+          processed = template.result(binding)
+          YAML.load(processed).fetch(Rails.env)
         end
 
         def connection_url

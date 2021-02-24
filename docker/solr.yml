@@ -11,10 +11,11 @@
 # how to start up solr, generally for automated testing.
 
 compose: &compose
-  url: http://solr:8983/solr
-  hostname: solr
+  # hostname: ${SOLR_HOST}
+  # port: ${SOLR_PORT}
+  hostname: <%= ENV["SOLR_HOST"] %>
+  port: <%= ENV["SOLR_PORT"] %>
   path: /solr/honeycomb
-  port: 8983
 development:
   <<: *compose
 test:

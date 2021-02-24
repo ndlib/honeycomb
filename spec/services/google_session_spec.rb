@@ -17,7 +17,8 @@ RSpec.describe GoogleSession do
                     "authorization_uri" => nil,
                     "code=" => nil,
                     "fetch_access_token!" => nil,
-                    "access_token" => nil)
+                    "access_token" => nil,
+                    "access_token=" => nil)
   end
   let(:subject) { GoogleSession.new(client: client) }
 
@@ -42,17 +43,18 @@ RSpec.describe GoogleSession do
 
   describe "connect" do
     it "requests an access token" do
+      allow(GoogleDrive::Session).to receive(:new).and_return("session")
       expect(auth).to receive(:fetch_access_token!)
       subject.connect(auth_code: "auth_code", callback_uri: "callback_uri")
     end
 
     it "makes a login request with GoogleDrive" do
-      expect(GoogleDrive).to receive(:login_with_oauth)
+      expect(GoogleDrive::Session).to receive(:new)
       subject.connect(auth_code: "auth_code", callback_uri: "callback_uri")
     end
 
     it "sets the session" do
-      allow(GoogleDrive).to receive(:login_with_oauth).and_return("session")
+      allow(GoogleDrive::Session).to receive(:new).and_return("session")
       subject.connect(auth_code: "auth_code", callback_uri: "callback_uri")
       expect(subject.session).to eq("session")
     end

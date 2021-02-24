@@ -1,19 +1,9 @@
 # All the things that will execute when starting the rails service
-# Copy the generated lock file back into the project root. This is to sync this change back to the
-# application after the container has mounted the sync volume
-
-cp /bundle/Gemfile.lock ./
-
-# Have to do this here to allow using localhost when deployed with ECS awsvpc
-# Could not see a way to have this solr.yml read env
-# sed -i "s;\${SOLR_URL};$SOLR_URL;g" /project_root/config/solr.yml
+ln -s /mnt/honeycomb /project_root/public/system/images
 
 ### Wait for dependencies
-chmod u+x docker/wait-for-it.sh && bash docker/wait-for-it.sh -t 120 ${DB_HOST}:5432
-bash docker/wait-for-it.sh -t 120 ${SOLR_HOST}:8983
+if ! docker/wait-for-it.sh -t 120 ${DB_HOST}:5432; then exit 1; fi
+if ! docker/wait-for-it.sh -t 120 ${SOLR_HOST}:8983; then exit 1; fi
 
-### Uncomment below for development ###
-SSL=true exec bundle exec rails s -e development -b 0.0.0.0 -p 3000
-
-### Uncomment out below for production ###
-# exec bundle exec rails s -b 0.0.0.0
+echo Running container in "$PWD" with the following command: "$@"
+exec "$@"

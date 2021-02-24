@@ -42,13 +42,22 @@ Rails.application.configure do
   # config.force_ssl = true
 
   # Set to :debug to see everything in the log.
-  config.log_level = :info
+  # config.log_level = :info
+  # Allow setting log level through env. Values are:
+  #   DEBUG INFO WARN ERROR FATAL UNKNOWN
+  config.log_level = ENV.fetch("RAILS_LOG_LEVEL","WARN")
+  config.colorize_logging = false
 
   # Prepend all log lines with the following tags.
   # config.log_tags = [ :subdomain, :uuid ]
 
   # Use a different logger for distributed setups.
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+  if ENV["RAILS_LOG_TO_STDOUT"].present?
+    STDOUT.sync = true if ENV["RAILS_LOG_AUTOFLUSH"].present?
+    config.logger = ActiveSupport::TaggedLogging.new(Logger.new(STDOUT))
+  end
+
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -59,9 +68,8 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
-
   default_url_options = {
-    host: "honeycomb.library.nd.edu",
+    host: ENV["HONEYCOMB_HOST"].presence || 'honeycomb.library.nd.edu',
     protocol: "https"
   }
   config.action_mailer.default_url_options = default_url_options

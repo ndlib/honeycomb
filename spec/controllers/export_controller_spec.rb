@@ -7,6 +7,7 @@ RSpec.describe ExportController, type: :controller do
   before(:each) do
     @user = sign_in_admin
     allow_any_instance_of(CollectionQuery).to receive(:find).and_return(collection)
+    allow(GoogleDrive::Session).to receive(:new).and_return("session")
   end
 
   describe "get_authorization_uri" do

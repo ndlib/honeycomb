@@ -6,16 +6,23 @@ defaults: &defaults
 
 local: &local
   <<: *defaults
-  image_server_url: 'https://honeypot.library.nd.edu'
-  beehive_url: 'https://localhost:3018'
+  image_server_url: 'http://localhost:3019'
+  beehive_url: 'http://localhost:3018'
   media_server_url: 'http://localhost:3023'
   aws:
     region: us-east-1
     bucket: testlibnd-wse-honeycomb-dev
     profile: honeycomb
 
-vm: &vm
+from_env: &from_env
   <<: *defaults
+  image_server_url: <%= ENV["HONEYPOT_HOST"] %>
+  beehive_url: <%= ENV["BEEHIVE_HOST"] %>
+  media_server_url: <%= ENV["BUZZ_HOST"] %>
+  aws:
+    region: <%= ENV["MEDIA_BUCKET_REGION"] %>
+    bucket: <%= ENV["MEDIA_BUCKET_NAME"] %>
+    profile: <%= ENV["AWS_PROFILE"] %>
 
 development:
   <<: *local
@@ -24,28 +31,9 @@ development:
 test:
   <<: *local
   background_processing: false
-  image_server_url: 'http://localhost:3019'
-  beehive_url: 'http://localhost:3018'
-  media_server_url: 'http://localhost:3023'
 
 prep:
-  <<: *vm
-  # cas_base: https://login.nd.edu/cas
-  image_server_url: https://honeypotpprd.library.nd.edu
-  beehive_url: https://collections-prep.library.nd.edu
-  media_server_url: https://buzz-pprd.library.nd.edu
-  aws:
-    region: us-east-1
-    bucket: testlibnd-wse-honeycomb-pprd
-    profile: honeycomb
+  <<: *from_env
 
 production:
-  <<: *vm
-#  cas_base: https://login.nd.edu/cas
-  image_server_url: https://honeypot.library.nd.edu
-  beehive_url: https://collections.library.nd.edu
-  media_server_url: https://buzz.library.nd.edu
-  aws:
-    region: us-east-1
-    bucket: honeycomb-media-wse-library-nd-edu
-    profile: a_wse_honeycomb
+  <<: *from_env
