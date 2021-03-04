@@ -1,0 +1,101 @@
+{
+	"info": {
+		"_postman_id": "cee4ba0d-4df6-489d-b63f-64e1ac802c20",
+		"name": "Honeycomb Smoke Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Collections",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bce9b692-ad78-4130-9105-f3ee0f88ac7f",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app-host}}/v1/collections",
+					"host": [
+						"{{app-host}}"
+					],
+					"path": [
+						"v1",
+						"collections"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Homepage (unauthenticated)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "23968005-a1ed-4719-a9b5-df5cbba26a08",
+						"exec": [
+							"pm.test(\"Redirects to oktaoauth\", function () {",
+							"    pm.response.to.have.status(302);",
+							"    pm.response.to.have.header(\"Location\");",
+							"    pm.response.to.be.header(\"Location\", `${pm.variables.get('app-host')}/users/auth/oktaoauth`);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app-host}}",
+					"host": [
+						"{{app-host}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "69946a3c-afc8-43dd-87b8-f5b91b02457a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "714baca9-ede5-4d6d-baa5-59fcfe59b113",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "33a33375-cf34-4d05-a367-2b1037aee791",
+			"key": "app-host",
+			"value": "https://jg-honeycomb-test.libraries.nd.edu"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

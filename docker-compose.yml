@@ -19,10 +19,11 @@ services:
     environment:
       SSL: "true"
       RAILS_ENV: development
-      DB_HOST: postgres
+      DB_HOSTNAME: postgres
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_NAME: ${DB_NAME}
+      DB_PORT: 5432
       SOLR_HOST: solr
       SOLR_PORT: 8983
       OKTA_CLIENT_ID: ${OKTA_CLIENT_ID}
