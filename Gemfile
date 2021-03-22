@@ -95,6 +95,9 @@ group :application do
   gem "rack-cache"
   gem "dalli"
   gem 'cacheable_flash'
+
+  # For ECS health checks
+  gem 'health_bit'
 end
 
 group :development do
