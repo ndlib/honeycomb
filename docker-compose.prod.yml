@@ -24,6 +24,8 @@ services:
     command: bash project_root/nginx_entry.sh
     environment: 
       RAILS_HOST: rails
+      RAILS_RATE_LIMIT: 200
+      RAILS_BURST_LIMIT: 20
     ports:
       - "80:80"
     volumes_from:
