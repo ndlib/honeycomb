@@ -242,6 +242,8 @@ GEM
       guard
       spring
     hashie (3.5.7)
+    health_bit (0.1.8)
+      rack
     hike (1.2.3)
     hitimes (1.2.4)
     http-cookie (1.0.3)
@@ -558,6 +560,7 @@ DEPENDENCIES
   guard-rails
   guard-rspec
   guard-spring
+  health_bit
   hesburgh_api!
   hesburgh_infrastructure!
   jbuilder (~> 2.0)
