@@ -25,6 +25,7 @@ COPY docker/database.yml /project_root/config/database.yml
 COPY docker/solr.yml /project_root/config/solr.yml
 COPY config/secrets.example.yml /project_root/config/secrets.yml
 COPY docker/rails_entry.sh /project_root/rails_entry.sh
+COPY docker/rails_migrate.sh /project_root/rails_migrate.sh
 
 RUN if [ "$RAILS_ENV" = "production" ]; then ASSET_PRECOMPILE=true bundle exec rake assets:precompile; fi
 VOLUME /project_root/public

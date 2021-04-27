@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # All the things that will execute when starting the rails service
 ln -s /mnt/honeycomb /project_root/public/system/images
 
