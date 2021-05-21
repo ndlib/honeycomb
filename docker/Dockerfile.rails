@@ -4,31 +4,47 @@ ARG RAILS_ENV
 # apt-key adv --keyserver keyserver.ubuntu.com --recv-keys AA8E81B4331F7F50 && nodejs-legacy libmysql++-dev
 RUN apt-get update -qq && apt-get install --no-install-recommends -y build-essential libpq-dev wget nodejs npm unzip libssl-dev git file imagemagick && rm -rf /var/lib/apt/lists/*
 
-# Put the installed gems outside of project_root so that the sync volume won't interfere
-RUN mkdir /bundle
-COPY Gemfile /bundle
-COPY Gemfile.lock /bundle
-WORKDIR /bundle
-RUN bundle install  --without headless --path /bundle
+# In a mutable host scenario, Capistrano would handle symlinking ./public/system to a persistent
+# directory on the host. We'll have to recreate this pattern by providing a mount target (/mnt/system) 
+# that we'll mount a persistent volume to later and symlink ./public/system to that mount point. 
+# Note: We can create the mount point as part of the build, but we'll have to symlink it in 
+# rails_entry.sh since Docker does not allow symlinking outside of the context
+RUN mkdir /mnt/system
 
-RUN mkdir /project_root
+RUN groupadd -r rails && useradd --no-log-init -r -g rails rails
+RUN mkdir /home/rails && chown rails:rails /home/rails
+RUN mkdir /bundle && chown rails:rails /bundle
+RUN mkdir /project_root && chown rails:rails /project_root
+
+USER rails:rails
+
+# Put the installed gems outside of project_root so that the sync volume won't interfere
+COPY --chown=rails:rails Gemfile /bundle
+COPY --chown=rails:rails Gemfile.lock /bundle
+WORKDIR /bundle
+RUN bundle install --without headless --path /bundle
+
 WORKDIR /project_root
-COPY . /project_root
+COPY --chown=rails:rails . /project_root
 
 # Gemfile.lock may have changed after bundling, copy it back into the project_root
-RUN cp /bundle/Gemfile.lock /project_root/
+RUN ls -la /bundle
+RUN cp -v /bundle/Gemfile.lock /project_root/
 
 # Install necessary Node modules
 RUN npm install
 
-COPY docker/database.yml /project_root/config/database.yml
-COPY docker/solr.yml /project_root/config/solr.yml
-COPY config/secrets.example.yml /project_root/config/secrets.yml
-COPY docker/rails_entry.sh /project_root/rails_entry.sh
-COPY docker/rails_migrate.sh /project_root/rails_migrate.sh
+# Overwrite project configs with docker compatible configs
+COPY --chown=rails:rails docker/database.yml /project_root/config/database.yml
+COPY --chown=rails:rails docker/solr.yml /project_root/config/solr.yml
+COPY --chown=rails:rails config/secrets.example.yml /project_root/config/secrets.yml
+
+# Add entry point scripts
+COPY --chown=rails:rails docker/rails_entry.sh /project_root/rails_entry.sh
+COPY --chown=rails:rails docker/rails_migrate.sh /project_root/rails_migrate.sh
 
 RUN if [ "$RAILS_ENV" = "production" ]; then ASSET_PRECOMPILE=true bundle exec rake assets:precompile; fi
 VOLUME /project_root/public
-RUN mkdir /mnt/honeycomb
 RUN mkdir -p /project_root/tmp/pids/
+
 ENTRYPOINT ["bash", "rails_entry.sh"]

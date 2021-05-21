@@ -17,6 +17,8 @@ services:
       OKTA_REDIRECT_URL: https://localhost/users/auth/oktaoauth/callback
       # Do not use this value in actual production env
       SECRET_KEY_BASE: e08359113980fceb3b62152286866deac83789900db39acd16712910259d904089a53ebebf614db39844ddd467f004ae426424095083b447d9173c0ee6041de2
+    volumes:
+      - ./public/system:/mnt/system
   nginx:
     build:
       context: .
