@@ -18,7 +18,7 @@ GIT
 
 GIT
   remote: https://github.com/ndlib/hesburgh_api.git
-  revision: ecff95532186162e27affc092ac64cdbb6cce97f
+  revision: 712ee7882db922d8c40a5c3f10e4145d8f6c82ac
   specs:
     hesburgh_api (0.0.3)
       excon
