@@ -1,0 +1,8 @@
+settings_from_env: &settings_from_env
+  token: <%= ENV['HAPI_TOKEN'] %>
+  url: <%= ENV['HAPI_URL'] %>
+pre_production:
+  <<: *settings_from_env
+production:
+  <<: *settings_from_env
+  

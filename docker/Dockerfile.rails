@@ -35,6 +35,7 @@ RUN cp -v /bundle/Gemfile.lock /project_root/
 RUN npm install
 
 # Overwrite project configs with docker compatible configs
+COPY --chown=rails:rails docker/hesburgh_api.yml /project_root/config/hesburgh_api.yml
 COPY --chown=rails:rails docker/database.yml /project_root/config/database.yml
 COPY --chown=rails:rails docker/solr.yml /project_root/config/solr.yml
 COPY --chown=rails:rails config/secrets.example.yml /project_root/config/secrets.yml
