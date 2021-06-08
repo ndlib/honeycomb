@@ -36,6 +36,8 @@ services:
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
       GOOGLE_DEVELOPER_KEY: ${GOOGLE_DEVELOPER_KEY}
       GOOGLE_APP_ID: "${GOOGLE_APP_ID}"
+      HAPI_TOKEN: "${HAPI_TOKEN}"
+      HAPI_URL: "${HAPI_URL}"
       # Need to pass the user running docker into the container so that
       # config/admin_usernames.yml pulls in the user as an admin. This is
       # to replicate existing behavior on OSX and may not work correctly on
